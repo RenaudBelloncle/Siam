@@ -1,5 +1,6 @@
 package Siam.Interface;
 
+import Siam.Game;
 import Siam.Joueur;
 
 import javax.imageio.ImageIO;
@@ -12,9 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class ChoixCamp extends JPanel implements ActionListener {
+public class ChoixCamp extends JFrame implements ActionListener {
 
     static final Random random = new Random();
+    private Game game;
     private Joueur joueur;
     private Outils outil;
 
@@ -23,17 +25,22 @@ public class ChoixCamp extends JPanel implements ActionListener {
     private ButtonGroup BGchoix;
     private JButton valider, annuler;
 
-    public ChoixCamp(Joueur joueur){
+    public ChoixCamp(Game game, Joueur joueur) {
+        this.game = game;
         this.joueur = joueur;
         outil = new Outils();
         choixCamp();
+        setControlChoixCamp(this);
     }
 
     public void choixCamp(){
         initChoixCamp();
         afficheChoixCamp();
         setSize(600, 400);
-        setControlChoixCamp(this);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setTitle("Siam");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void initChoixCamp(){
@@ -105,8 +112,7 @@ public class ChoixCamp extends JPanel implements ActionListener {
         panPrincipal.add(panValiderBouton);
         panPrincipal.setLayout(new BoxLayout(panPrincipal, BoxLayout.Y_AXIS));
 
-        add(panPrincipal);
-        setLayout(new GridLayout(1,1));
+        setContentPane(panPrincipal);
     }
 
     public void setControlChoixCamp(ActionListener listener){
