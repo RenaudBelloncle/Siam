@@ -17,6 +17,7 @@ public class Outils {
             e.printStackTrace();
         }
     }
+
     public static Font loadFont(String string) throws FontFormatException, IOException {
         File fileFont = new File(string);
         return Font.createFont(Font.TRUETYPE_FONT, fileFont);

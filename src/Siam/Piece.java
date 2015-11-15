@@ -26,4 +26,6 @@ public abstract class Piece {
     public void setOrientation(int orientation) {
         this.orientation = orientation;
     }
+
+    public abstract void render();
 }

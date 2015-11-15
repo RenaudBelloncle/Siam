@@ -10,7 +10,12 @@ public class PieceUnitTest {
 
     @Before
     public void setUp() {
-        piece = new Piece(new Case(0,0), 0) {};
+        piece = new Piece(new Case(0,0), 0) {
+            @Override
+            public void render() {
+
+            }
+        };
     }
 
     @Test

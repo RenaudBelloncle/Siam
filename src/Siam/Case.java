@@ -14,12 +14,12 @@ public class Case {
         return abscisse;
     }
 
-    public int getOrdonnee() {
-        return ordonnee;
-    }
-
     public void setAbscisse(int abscisse) {
         this.abscisse = abscisse;
+    }
+
+    public int getOrdonnee() {
+        return ordonnee;
     }
 
     public void setOrdonnee(int ordonnee) {
