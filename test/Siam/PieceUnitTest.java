@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Interface.Ecran;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class PieceUnitTest {
     public void setUp() {
         piece = new Piece(new Case(0,0), 0) {
             @Override
-            public void render() {
+            public void render(Ecran ecran) {
 
             }
         };

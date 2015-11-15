@@ -1,5 +1,7 @@
 package Siam;
 
+import Siam.Interface.Ecran;
+
 public abstract class Piece {
 
     private Case position;
@@ -27,5 +29,5 @@ public abstract class Piece {
         this.orientation = orientation;
     }
 
-    public abstract void render();
+    public abstract void render(Ecran ecran);
 }
