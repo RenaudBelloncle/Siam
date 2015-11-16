@@ -136,7 +136,7 @@ public class ChoixCamp extends JFrame implements ActionListener {
             else {
                 joueur.setCamp(random.nextInt(2));
             }
-            System.out.println(joueur.getCamp());
+            game.start(this);
         }
         else if (source == getAnnuler()){
             System.exit(0);

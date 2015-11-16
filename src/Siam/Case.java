@@ -1,6 +1,9 @@
 package Siam;
 
-public class Case {
+import Siam.Interface.Ecran;
+import Siam.Interface.Sprite;
+
+public class Case implements Constantes{
 
     private int abscisse;
     private int ordonnee;
@@ -24,5 +27,9 @@ public class Case {
 
     public void setOrdonnee(int ordonnee) {
         this.ordonnee = ordonnee;
+    }
+
+    public void render(Ecran ecran){
+        ecran.renderSprite(abscisse*TAILLE_SPRITE+BORDURE_FENETRE/2, ordonnee*TAILLE_SPRITE+BORDURE_FENETRE/2, Sprite.caseVide,false,false);
     }
 }
