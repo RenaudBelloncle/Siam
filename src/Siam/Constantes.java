@@ -1,0 +1,10 @@
+package Siam;
+
+public interface Constantes {
+    int NOMBRE_CASE_INI = 5;
+    int TAILLE_SPRITE = 128;
+    int BORDURE_FENETRE = 150;
+    int LARGEUR_FENETRE_INI = TAILLE_SPRITE*NOMBRE_CASE_INI+BORDURE_FENETRE;
+    int HAUTEUR_FENETRE_INI = LARGEUR_FENETRE_INI;
+
+}
