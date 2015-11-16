@@ -30,6 +30,6 @@ public class Case implements Constantes{
     }
 
     public void render(Ecran ecran){
-        ecran.renderSprite(abscisse*128+BORDURE_FENETRE/2, ordonnee*128+BORDURE_FENETRE/2, Sprite.caseVide,false,false);
+        ecran.renderSprite(abscisse*TAILLE_SPRITE+BORDURE_FENETRE/2, ordonnee*TAILLE_SPRITE+BORDURE_FENETRE/2, Sprite.caseVide,false,false);
     }
 }
