@@ -1,5 +1,7 @@
 package Siam;
 
+import Siam.Interface.Ecran;
+
 import java.util.List;
 
 public class Joueur {
@@ -31,5 +33,11 @@ public class Joueur {
 
     public int getRhinoceros(){
         return this.rhinoceros;
+    }
+
+    public void render(Ecran ecran){
+        for(Piece p : pieces){
+            p.render(ecran);
+        }
     }
 }

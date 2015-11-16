@@ -19,14 +19,14 @@ public class CaseUnitTest {
     }
 
     @Test
-    public void testGetOrdonnee() {
-        Assert.assertEquals(0, aCase.getOrdonnee());
-    }
-
-    @Test
     public void testSetAbscisse() {
         aCase.setAbscisse(5);
         Assert.assertEquals(5, aCase.getAbscisse());
+    }
+
+    @Test
+    public void testGetOrdonnee() {
+        Assert.assertEquals(0, aCase.getOrdonnee());
     }
 
     @Test

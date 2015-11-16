@@ -1,5 +1,6 @@
 package Siam.Interface;
 
+import Siam.Game;
 import Siam.Joueur;
 
 import javax.imageio.ImageIO;
@@ -12,18 +13,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class ChoixCamp extends JFrame implements ActionListener{
+public class ChoixCamp extends JFrame implements ActionListener {
 
-    Random random = new Random();
-    private Joueur joueur = new Joueur();
-    private Outils outil = new Outils();
+    static final Random random = new Random();
+    private Game game;
+    private Joueur joueur;
+    private Outils outil;
 
     private JLabel titreCB;
     private JRadioButton JRBelephant, JRBrhinoceros, aleatoire;
     private ButtonGroup BGchoix;
     private JButton valider, annuler;
 
-    public ChoixCamp(){
+    public ChoixCamp(Game game, Joueur joueur) {
+        this.game = game;
+        this.joueur = joueur;
+        outil = new Outils();
         choixCamp();
         setControlChoixCamp(this);
     }
@@ -34,7 +39,7 @@ public class ChoixCamp extends JFrame implements ActionListener{
         setSize(600, 400);
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Choix du camp");
+        setTitle("Siam");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -81,7 +86,6 @@ public class ChoixCamp extends JFrame implements ActionListener{
             e.printStackTrace();
         }
 
-
         //changement de la police
         outil.changerFontJLabel(titreCB, 60, Color.orange, outil.getFontMenu());
         outil.changerFontButton(valider, 50, Color.orange, outil.getFontTexte());
@@ -89,7 +93,6 @@ public class ChoixCamp extends JFrame implements ActionListener{
         outil.changerFontJRadioButton(JRBelephant, 35, Color.orange, outil.getFontTexte());
         outil.changerFontJRadioButton(JRBrhinoceros, 35, Color.orange, outil.getFontTexte());
         outil.changerFontJRadioButton(aleatoire, 35, Color.orange, outil.getFontTexte());
-
 
         panTitre.add(titreCB);
         panBouton1.add(JRBelephant);
@@ -102,7 +105,7 @@ public class ChoixCamp extends JFrame implements ActionListener{
         panValiderBouton.add(annuler);
 
         panGBouton.setLayout(new BoxLayout(panGBouton, BoxLayout.X_AXIS));
-        panValiderBouton.setLayout(new GridLayout(1,2));
+        panValiderBouton.setLayout(new GridLayout(1, 2));
 
         panPrincipal.add(panTitre);
         panPrincipal.add(panGBouton);
@@ -121,7 +124,6 @@ public class ChoixCamp extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         Object source = e.getSource();
 
         if (source == getValider()){
@@ -134,10 +136,10 @@ public class ChoixCamp extends JFrame implements ActionListener{
             else {
                 joueur.setCamp(random.nextInt(2));
             }
-            System.out.println(joueur.getCamp());
+            game.start(this);
         }
         else if (source == getAnnuler()){
-            setVisible(false);
+            System.exit(0);
         }
     }
 
