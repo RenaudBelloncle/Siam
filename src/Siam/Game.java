@@ -16,7 +16,7 @@ public class Game implements Runnable, Constantes {
     private Plateau plateau;
     private Joueur[] joueurs;
 
-    // L'écran gère un tableau de pixel
+    // L'ï¿½cran gï¿½re un tableau de pixel
     private JFrame fenetre;
     private Ecran ecran;
     private BufferedImage image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
@@ -40,12 +40,13 @@ public class Game implements Runnable, Constantes {
         running = true;
         thread = new Thread(this, "Affichage");
 
-        // Fenêtre + début de gestion graphique
+        // Fenetre + debut de gestion graphique
         fenetre = _fenetre;
+        fenetre.removeAll();
         Dimension size = new Dimension(LARGEUR_FENETRE_INI, HAUTEUR_FENETRE_INI);
         fenetre.setPreferredSize(size);
         ecran = new Ecran(LARGEUR_FENETRE_INI, HAUTEUR_FENETRE_INI);
-        fenetre.setTitle("Jeu de Siam");
+        fenetre.setTitle("Siam");
         fenetre.setResizable(false);
         fenetre.pack();
         fenetre.setLocationRelativeTo(null);
