@@ -19,6 +19,10 @@ public class Joueur {
         pieceSurPlateau = 0;
     }
 
+    public Plateau getPlateau() {
+        return plateau;
+    }
+
     public void setPlateau(Plateau plateau) {
         this.plateau = plateau;
     }
@@ -33,13 +37,16 @@ public class Joueur {
 
     public void posePiece(int colonne, int ligne) {
         if (restePiece()) {
-            pieceSurPlateau++;
-            if (camp == 0) {
-                animals.add(new Animal(colonne, ligne, 0, 0));
-                plateau.posePiece(animals.get(pieceSurPlateau-1));
-            } else {
-                animals.add(new Animal(colonne, ligne, 0, 1));
-                plateau.posePiece(animals.get(pieceSurPlateau-1));
+            if (!(plateau.getCase(colonne,ligne) instanceof Piece)) {
+                pieceSurPlateau++;
+                System.out.println(pieceSurPlateau);
+                if (camp == 0) {
+                    animals.add(new Animal(colonne, ligne, 0, 0));
+                    plateau.posePiece(animals.get(pieceSurPlateau - 1));
+                } else {
+                    animals.add(new Animal(colonne, ligne, 0, 1));
+                    plateau.posePiece(animals.get(pieceSurPlateau - 1));
+                }
             }
         }
     }

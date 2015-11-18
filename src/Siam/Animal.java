@@ -5,15 +5,25 @@ import Siam.Interface.Sprite;
 
 public class Animal extends Piece {
 
+    private int orientation;
     private int camp;
 
     public Animal() {
-        super();
+        this(0, 0, 0, 0);
     }
 
     public Animal(int abscisse, int ordonnee, int orientation, int camp) {
-        super(abscisse, ordonnee, orientation);
+        super(abscisse, ordonnee);
+        this.orientation = orientation;
         this.camp = camp;
+    }
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(int orientation) {
+        this.orientation = orientation;
     }
 
     public void render(Ecran ecran) {

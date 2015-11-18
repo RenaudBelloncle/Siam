@@ -16,6 +16,9 @@ public class Plateau {
                 plateau[x][y] = new Case(x,y);
             }
         }
+        plateau[2][2] = new Montagne(2,2);
+        plateau[1][2] = new Montagne(1,2);
+        plateau[3][2] = new Montagne(3,2);
     }
 
     public Case getCase(int x, int y){
