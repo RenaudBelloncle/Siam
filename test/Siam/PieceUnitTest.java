@@ -4,6 +4,7 @@ import Siam.Interface.Ecran;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class PieceUnitTest {
 
@@ -11,25 +12,27 @@ public class PieceUnitTest {
 
     @Before
     public void setUp() {
-        piece = new Piece(new Case(0,0), 0) {
+        piece = new Piece() {
             @Override
-            public void render(Ecran ecran) {
-
-            }
+            public void render(Ecran ecran) {}
         };
     }
 
     @Test
     public void testGetPosition() {
-        Assert.assertEquals(0, piece.getPosition()[0]);
-        Assert.assertEquals(0, piece.getPosition()[1]);
+        Case aCase = Mockito.mock(Case.class);
+        piece = new Piece(aCase, 0) {
+            @Override
+            public void render(Ecran ecran) {}
+        };
+        Assert.assertSame(aCase, piece.getPosition());
     }
 
     @Test
     public void testSetPosition() {
-        piece.setPosition(5,5);
-        Assert.assertEquals(5, piece.getPosition()[0]);
-        Assert.assertEquals(5, piece.getPosition()[1]);
+        Case aCase = Mockito.mock(Case.class);
+        piece.setPosition(aCase);
+        Assert.assertSame(aCase, piece.getPosition());
     }
 
     @Test
