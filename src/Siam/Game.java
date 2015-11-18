@@ -30,14 +30,14 @@ public class Game implements Runnable, Constantes {
     private boolean running;
 
     public Game() {
-        this(new Joueur(0), new Joueur(1), new Plateau(NOMBRE_CASE_INI), false);
+        this(new Joueur(0), new Joueur(1), false);
     }
 
-    public Game(Joueur joueur1, Joueur joueur2, Plateau plateau, boolean insertionPiece) {
+    public Game(Joueur joueur1, Joueur joueur2, boolean insertionPiece) {
+        this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
         joueurs[1] = joueur2;
-        this.plateau = plateau;
         joueurActif = joueurs[0];
 
         image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
@@ -65,10 +65,6 @@ public class Game implements Runnable, Constantes {
 
     public void setJoueurActif(Joueur joueur) {
         joueurActif = joueur;
-    }
-
-    public Plateau getPlateau() {
-        return plateau;
     }
 
     public synchronized void start(JFrame _fenetre) {

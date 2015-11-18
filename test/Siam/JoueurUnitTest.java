@@ -1,20 +1,20 @@
 package Siam;
 
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class JoueurUnitTest {
 
-    private Joueur joueur;
-
-    @Before
-    public void setUp() {
-        joueur = new Joueur(0);
+    @Test
+    public void testGetCamp(){
+        Joueur j = new Joueur(0);
+        Assert.assertEquals(0, j.getCamp());
     }
 
     @Test
-    public void testRestePiece() {
-
+    public void testSetCamp(){
+        Joueur j = new Joueur(0);
+        j.setCamp(1);
+        Assert.assertEquals(1, j.getCamp());
     }
-
 }

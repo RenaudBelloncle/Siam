@@ -3,7 +3,8 @@ package Siam;
 import Siam.Interface.Ecran;
 
 public class Plateau {
-    int tailleCote;
+
+    private int tailleCote;
     private Case[][] plateau;
 
     public Plateau(int tailleCote){

@@ -11,13 +11,13 @@ public class Animal extends Piece {
         super();
     }
 
-    public Animal(Case position, int orientation, int camp) {
-        super(position,orientation);
+    public Animal(int abscisse, int ordonnee, int orientation, int camp) {
+        super(abscisse, ordonnee, orientation);
         this.camp = camp;
     }
 
     public void render(Ecran ecran) {
-        if (camp == 0) ecran.renderSprite(getPosition().getAbscisse(), getPosition().getOrdonnee(), Sprite.casePionJoueur1, false, false);
-        if (camp == 1) ecran.renderSprite(getPosition().getAbscisse(), getPosition().getOrdonnee(), Sprite.casePionJoueur2, false, false);
+        if (camp == 0) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1, false, false);
+        if (camp == 1) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2, false, false);
     }
 }

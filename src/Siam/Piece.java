@@ -2,26 +2,17 @@ package Siam;
 
 import Siam.Interface.Ecran;
 
-public abstract class Piece {
+public abstract class Piece extends Case {
 
-    private Case position;
     private int orientation;
 
     public Piece() {
-        this(null,0);
+        this(0,0,0);
     }
 
-    public Piece(Case position, int orientation) {
-        this.position = position;
+    public Piece(int abscisse, int ordonnee, int orientation) {
+        super(abscisse, ordonnee);
         this.orientation = orientation;
-    }
-
-    public Case getPosition() {
-        return position;
-    }
-
-    public void setPosition(Case position) {
-        this.position = position;
     }
 
     public int getOrientation() {

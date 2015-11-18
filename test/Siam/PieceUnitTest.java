@@ -19,23 +19,6 @@ public class PieceUnitTest {
     }
 
     @Test
-    public void testGetPosition() {
-        Case aCase = Mockito.mock(Case.class);
-        piece = new Piece(aCase, 0) {
-            @Override
-            public void render(Ecran ecran) {}
-        };
-        Assert.assertSame(aCase, piece.getPosition());
-    }
-
-    @Test
-    public void testSetPosition() {
-        Case aCase = Mockito.mock(Case.class);
-        piece.setPosition(aCase);
-        Assert.assertSame(aCase, piece.getPosition());
-    }
-
-    @Test
     public void testGetOrientation() {
         Assert.assertEquals(0, piece.getOrientation());
     }

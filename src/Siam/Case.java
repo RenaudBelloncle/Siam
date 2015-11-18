@@ -3,7 +3,7 @@ package Siam;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
-public class Case implements Constantes{
+public class Case {
 
     private int abscisse;
     private int ordonnee;
@@ -30,6 +30,6 @@ public class Case implements Constantes{
     }
 
     public void render(Ecran ecran){
-        ecran.renderSprite(abscisse*TAILLE_SPRITE+BORDURE_FENETRE/2, ordonnee*TAILLE_SPRITE+BORDURE_FENETRE/2, Sprite.caseVide,false,false);
+        ecran.renderSprite(abscisse, ordonnee, Sprite.caseVide,false,false);
     }
 }
