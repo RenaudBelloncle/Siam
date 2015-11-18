@@ -7,18 +7,21 @@ public abstract class Piece {
     private Case position;
     private int orientation;
 
+    public Piece() {
+        this(null,0);
+    }
+
     public Piece(Case position, int orientation) {
         this.position = position;
         this.orientation = orientation;
     }
 
-    public int[] getPosition() {
-        return new int[]{position.getAbscisse(), position.getOrdonnee()};
+    public Case getPosition() {
+        return position;
     }
 
-    public void setPosition(int abscisse, int ordonnee) {
-        position.setAbscisse(abscisse);
-        position.setOrdonnee(ordonnee);
+    public void setPosition(Case position) {
+        this.position = position;
     }
 
     public int getOrientation() {

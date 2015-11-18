@@ -2,42 +2,33 @@ package Siam;
 
 import Siam.Interface.Ecran;
 
-import java.util.List;
 
 public class Joueur {
 
-    private List<Piece> pieces;
-    private final int elephant = 0;
-    private final int rhinoceros = 1;
+    private Animal[] animals;
     private int camp;
 
-    public Joueur(){
-        this.camp=0;
-    }
-
     public Joueur(int camp){
+        animals = new Animal[5];
         this.camp = camp;
     }
 
-    public void setCamp(int camp){
-        this.camp=camp;
+    public void posePiece(Case aCase) {
+        if (camp == 0) {
+            animals[0] = new Animal(aCase,0,0);
+            System.out.println("Piece créer");
+        } else {
+            animals[0] = new Animal(aCase,0,1);
+            System.out.println("Piece créer");
+        }
     }
 
-    public int getCamp(){
-        return this.camp;
-    }
-
-    public int getElephant(){
-        return this.elephant;
-    }
-
-    public int getRhinoceros(){
-        return this.rhinoceros;
+    public boolean restePiece() {
+        for(Piece piece : animals) if (piece.getPosition() == null) return true;
+        return false;
     }
 
     public void render(Ecran ecran){
-        for(Piece p : pieces){
-            p.render(ecran);
-        }
+        if (animals != null) for(Piece piece : animals) piece.render(ecran);
     }
 }

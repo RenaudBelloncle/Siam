@@ -16,40 +16,81 @@ public class Game implements Runnable, Constantes {
     private Plateau plateau;
     private Joueur[] joueurs;
 
-    // L'�cran g�re un tableau de pixel
+    // L'ecran gere un tableau de pixel
     private JFrame fenetre;
     private Ecran ecran;
-    private BufferedImage image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
-    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+    private BufferedImage image;
+    private int[] pixels;
+
+    private DetectionSouris detectionSouris;
+    private boolean insertionPiece;
+    private Joueur joueurActif;
 
     private Thread thread;
-    private boolean running = false;
+    private boolean running;
 
     public Game() {
+        this(new Joueur(0), new Joueur(1), new Plateau(NOMBRE_CASE_INI), false);
+    }
+
+    public Game(Joueur joueur1, Joueur joueur2, Plateau plateau, boolean insertionPiece) {
         joueurs = new Joueur[2];
-        joueurs[0] = new Joueur();
-        joueurs[1] = new Joueur();
-        plateau = new Plateau(NOMBRE_CASE_INI);
+        joueurs[0] = joueur1;
+        joueurs[1] = joueur2;
+        this.plateau = plateau;
+        joueurActif = joueurs[0];
+
+        image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
+        pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
+        this.insertionPiece = insertionPiece;
+        running = false;
     }
 
     public Joueur[] getJoueurs() {
         return joueurs;
     }
 
+    public boolean isInsertionPiece() {
+        return insertionPiece;
+    }
+
+    public void setInsertionPiece(boolean insertionPiece) {
+        this.insertionPiece = insertionPiece;
+    }
+
+    public Joueur getJoueurActif() {
+        return joueurActif;
+    }
+
+    public void setJoueurActif(Joueur joueur) {
+        joueurActif = joueur;
+    }
+
+    public Plateau getPlateau() {
+        return plateau;
+    }
+
     public synchronized void start(JFrame _fenetre) {
         running = true;
         thread = new Thread(this, "Affichage");
+        detectionSouris = new DetectionSouris(this);
 
         // Fenetre + debut de gestion graphique
         fenetre = _fenetre;
         fenetre.removeAll();
         Dimension size = new Dimension(LARGEUR_FENETRE_INI, HAUTEUR_FENETRE_INI);
         fenetre.setPreferredSize(size);
+
+        fenetre.addMouseListener(detectionSouris);
+
         ecran = new Ecran(LARGEUR_FENETRE_INI, HAUTEUR_FENETRE_INI);
+
         fenetre.setTitle("Siam");
         fenetre.setResizable(false);
         fenetre.pack();
         fenetre.setLocationRelativeTo(null);
+
         fenetre.setVisible(true);
 
         thread.start();
@@ -84,6 +125,7 @@ public class Game implements Runnable, Constantes {
         }
         ecran.clear();
         plateau.render(ecran);
+        for(Joueur joueur : joueurs) joueur.render(ecran);
 
         for (int i = 0; i < pixels.length; i++){
             pixels[i] = ecran.getPixel(i);

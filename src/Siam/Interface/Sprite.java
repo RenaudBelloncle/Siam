@@ -12,8 +12,8 @@ public class Sprite implements Constantes{
     private int[] pixels;
 
     public static Sprite caseVide = new Sprite("/images/spriteBasique/case.png");
-    public static Sprite casePionJoueur2 = new Sprite("/images/spriteBasique/pionNoir.png");
     public static Sprite casePionJoueur1 = new Sprite("/images/spriteBasique/pionBlanc.png");
+    public static Sprite casePionJoueur2 = new Sprite("/images/spriteBasique/pionNoir.png");
     public static Sprite caseMontagne = new Sprite("/images/spriteBasique/montagne.png");
 
     public Sprite(String _path){
@@ -36,7 +36,7 @@ public class Sprite implements Constantes{
         }
     }
 
-    // Charge un sprite à partir d'une image
+    // Charge un sprite ï¿½ partir d'une image
     private void load(){
         try {
             BufferedImage image = ImageIO.read(Sprite.class.getResource(path));
