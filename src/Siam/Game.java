@@ -40,6 +40,9 @@ public class Game implements Runnable, Constantes {
         joueurs[1] = joueur2;
         joueurActif = joueurs[0];
 
+        joueurs[0].setPlateau(plateau);
+        joueurs[1].setPlateau(plateau);
+
         image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
@@ -67,13 +70,13 @@ public class Game implements Runnable, Constantes {
         joueurActif = joueur;
     }
 
-    public synchronized void start(JFrame _fenetre) {
+    public synchronized void start(JFrame fenetre) {
         running = true;
         thread = new Thread(this, "Affichage");
         detectionSouris = new DetectionSouris(this);
 
         // Fenetre + debut de gestion graphique
-        fenetre = _fenetre;
+        this.fenetre = fenetre;
         fenetre.removeAll();
         Dimension size = new Dimension(LARGEUR_FENETRE_INI, HAUTEUR_FENETRE_INI);
         fenetre.setPreferredSize(size);
@@ -121,7 +124,6 @@ public class Game implements Runnable, Constantes {
         }
         ecran.clear();
         plateau.render(ecran);
-        for(Joueur joueur : joueurs) joueur.render(ecran);
 
         for (int i = 0; i < pixels.length; i++){
             pixels[i] = ecran.getPixel(i);

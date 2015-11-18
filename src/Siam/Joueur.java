@@ -9,6 +9,7 @@ import java.util.List;
 public class Joueur {
 
     private List<Animal> animals;
+    private Plateau plateau;
     private int camp;
     private int pieceSurPlateau;
 
@@ -16,6 +17,10 @@ public class Joueur {
         animals = new ArrayList<>();
         this.camp = camp;
         pieceSurPlateau = 0;
+    }
+
+    public void setPlateau(Plateau plateau) {
+        this.plateau = plateau;
     }
 
     public int getCamp() {
@@ -31,9 +36,10 @@ public class Joueur {
             pieceSurPlateau++;
             if (camp == 0) {
                 animals.add(new Animal(colonne, ligne, 0, 0));
-
+                plateau.posePiece(animals.get(pieceSurPlateau-1));
             } else {
                 animals.add(new Animal(colonne, ligne, 0, 1));
+                plateau.posePiece(animals.get(pieceSurPlateau-1));
             }
         }
     }

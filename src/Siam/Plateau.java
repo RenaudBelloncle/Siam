@@ -26,6 +26,10 @@ public class Plateau {
         return tailleCote;
     }
 
+    public void posePiece(Piece piece) {
+        plateau[piece.getAbscisse()][piece.getOrdonnee()] = piece;
+    }
+
     public void render(Ecran ecran){
         for(int i = 0; i < tailleCote; i ++){
             for(int j = 0; j < tailleCote; j++){
