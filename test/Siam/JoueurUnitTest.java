@@ -11,18 +11,18 @@ public class JoueurUnitTest {
 
     @Before
     public void setUp() {
-        joueur = new Joueur(0);
+        joueur = new Joueur(Camp.ELEPHANT);
     }
 
     @Test
     public void testGetCamp() {
-        Assert.assertEquals(0, joueur.getCamp());
+        Assert.assertEquals(Camp.ELEPHANT, joueur.getCamp());
     }
 
     @Test
     public void testSetCamp() {
-        joueur.setCamp(1);
-        Assert.assertEquals(1, joueur.getCamp());
+        joueur.setCamp(Camp.RHINOCEROS);
+        Assert.assertEquals(Camp.RHINOCEROS, joueur.getCamp());
     }
 
     @Test

@@ -20,9 +20,11 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
     }
 
     private void clickPerformed(int colonne, int ligne) {
-        game.setInsertionPiece(true);
-        if (game.isInsertionPiece()) {
-            game.getJoueurActif().posePiece(colonne, ligne);
+        if(game.isPlacerPiece()) {
+            if (colonne == 0 || colonne == 4 || ligne == 0 || ligne == 4) {
+                game.getJoueurActif().posePiece(colonne, ligne);
+                game.setPlacerPiece(false);
+            }
         }
     }
 }
