@@ -12,6 +12,14 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
     }
 
     public void mouseClicked(MouseEvent event) {
+        if (event.getX() >= BORDURE_FENETRE + TAILLE_SPRITE*NOMBRE_CASE_INI && event.getX() <= BORDURE_FENETRE + TAILLE_SPRITE*NOMBRE_CASE_INI + LARGEUR_BOUTON) {
+            int ligne = 0;
+            if (event.getY() >= BORDURE_FENETRE/2 && event.getY() <= BORDURE_FENETRE/2 + HAUTEUR_BOUTON) ligne = 1;
+            else if (event.getY() >= BORDURE_FENETRE/2 + HAUTEUR_BOUTON + 25 && event.getY() <= BORDURE_FENETRE/2 + HAUTEUR_BOUTON * 2 + 25) ligne = 2;
+            else if (event.getY() >= BORDURE_FENETRE/2 + HAUTEUR_BOUTON * 2 + 25 * 2 && event.getY() <= BORDURE_FENETRE/2 + HAUTEUR_BOUTON * 3 + 25 * 2) ligne = 3;
+            else if (event.getY() >= BORDURE_FENETRE/2 + HAUTEUR_BOUTON * 3 + 25 * 3 && event.getY() <= BORDURE_FENETRE/2 + HAUTEUR_BOUTON * 4 + 25 * 3) ligne = 4;
+            clickBouton(ligne);
+        }
         if (event.getX() < BORDURE_FENETRE/2 || event.getX() > (1+NOMBRE_CASE_INI)*TAILLE_SPRITE) return;
         if (event.getY() < BORDURE_FENETRE/2 || event.getY() > (1+NOMBRE_CASE_INI)*TAILLE_SPRITE) return;
         int colonne = (event.getX() - BORDURE_FENETRE/2) / TAILLE_SPRITE;
@@ -26,5 +34,10 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 game.setPlacerPiece(false);
             }
         }
+    }
+
+    private void clickBouton(int ligne) {
+        if (ligne == 0) return;
+        System.out.println("Bouton " + ligne);
     }
 }
