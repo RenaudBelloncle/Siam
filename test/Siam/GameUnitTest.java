@@ -19,7 +19,7 @@ public class GameUnitTest {
         Joueur[] joueurs = new Joueur[2];
         joueurs[0] = Mockito.mock(Joueur.class);
         joueurs[1] = Mockito.mock(Joueur.class);
-        game = new Game(joueurs[0], joueurs[1], false, false, false, false, false);
+        game = new Game(joueurs[0], joueurs[1], false, false, false, false, false, false);
         Assert.assertArrayEquals(joueurs, game.getJoueurs());
     }
 
@@ -49,7 +49,7 @@ public class GameUnitTest {
     public void testGetJoueurActif() {
         Joueur joueur1 = Mockito.mock(Joueur.class);
         Joueur joueur2 = Mockito.mock(Joueur.class);
-        game = new Game(joueur1, joueur2, false, false, false, false, false);
+        game = new Game(joueur1, joueur2, false, false, false, false, false, false);
         Assert.assertSame(joueur1, game.getJoueurActif());
     }
 

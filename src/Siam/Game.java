@@ -44,16 +44,18 @@ public class Game implements Runnable, Constantes {
     private boolean sortirPiece;
     private boolean deplacerPiece;
     private boolean changerOrientation;
+    private boolean selectionnerOrientation;
     private Joueur joueurActif;
+    private Animal animalSelectionnee;
 
     private Thread thread;
     private boolean running;
 
     public Game() {
-        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false);
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false);
     }
 
-    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece, boolean deplacerPiece, boolean changerOrientation) {
+    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece, boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation) {
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
@@ -89,6 +91,7 @@ public class Game implements Runnable, Constantes {
         this.sortirPiece = sortirPiece;
         this.deplacerPiece = deplacerPiece;
         this.changerOrientation = changerOrientation;
+        this.selectionnerOrientation = selectionnerOrientation;
         running = false;
     }
 
@@ -136,12 +139,33 @@ public class Game implements Runnable, Constantes {
         this.changerOrientation = changerOrientation;
     }
 
+    public boolean isSelectionnerOrientation() {
+        return selectionnerOrientation;
+    }
+
+    public void setSelectionnerOrientation(boolean selectionnerOrientation) {
+        this.selectionnerOrientation = selectionnerOrientation;
+    }
+
     public Joueur getJoueurActif() {
         return joueurActif;
     }
 
     public void setJoueurActif(Joueur joueur) {
         joueurActif = joueur;
+    }
+
+    public Animal getAnimalSelectionnee() {
+        return animalSelectionnee;
+    }
+
+    public void setAnimalSelectionnee(Animal animalSelectionnee) {
+        this.animalSelectionnee = animalSelectionnee;
+    }
+
+    public void changerJoueurActif() {
+        if (joueurActif == joueurs[0]) joueurActif = joueurs[1];
+        else joueurActif = joueurs[0];
     }
 
     public synchronized void start(JFrame fenetre) {
@@ -208,7 +232,7 @@ public class Game implements Runnable, Constantes {
         if (changerOrientation) boutonChangerOrientationSelec.render(ecran);
         else boutonChangerOrientation.render(ecran);
 
-        if (changerOrientation) {
+        if (selectionnerOrientation) {
             flecheHautSelec.render(ecran);
             flecheBasSelec.render(ecran);
             flecheDroiteSelec.render(ecran);

@@ -35,11 +35,10 @@ public class Joueur {
         this.camp = camp;
     }
 
-    public void posePiece(int colonne, int ligne) {
+    public Animal posePiece(int colonne, int ligne) {
         if (restePiece()) {
             if (!(plateau.getCase(colonne,ligne) instanceof Piece)) {
                 pieceSurPlateau++;
-                System.out.println(pieceSurPlateau);
                 if (camp == Camp.ELEPHANT) {
                     animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT, false));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
@@ -47,8 +46,10 @@ public class Joueur {
                     animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS, false));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 }
+                return animals.get(pieceSurPlateau - 1);
             }
         }
+        return null;
     }
 
     public boolean restePiece() {
