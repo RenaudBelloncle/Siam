@@ -4,6 +4,7 @@ import Siam.Interface.Ecran;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class Joueur {
@@ -54,6 +55,16 @@ public class Joueur {
 
     public boolean restePiece() {
         return pieceSurPlateau < 5;
+    }
+
+    public void sortirPiece(int colonne, int ligne) {
+        pieceSurPlateau--;
+        ListIterator<Animal> listIterator = animals.listIterator();
+        while(listIterator.hasNext()) {
+            Animal animal = listIterator.next();
+            if (animal.getAbscisse() == colonne && animal.getOrdonnee() == ligne) listIterator.remove();
+        }
+        plateau.sortirPiece(colonne, ligne);
     }
 
     public void render(Ecran ecran){

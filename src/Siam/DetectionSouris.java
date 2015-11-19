@@ -75,7 +75,19 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
 
     private void clickBouton(int ligne) {
         if (ligne == 1 && !game.isSelectionnerOrientation()) game.setPlacerPiece(true);
-        if (ligne == 2 && game.isPieceSelectionnee()) game.setSortirPiece(true);
+        if (ligne == 2 && game.isPieceSelectionnee()) {
+            if (game.getAnimalSelectionnee().getAbscisse() == 0 || game.getAnimalSelectionnee().getAbscisse() == 4 || game.getAnimalSelectionnee().getOrdonnee() == 0 || game.getAnimalSelectionnee().getOrdonnee() == 4) {
+                game.setSortirPiece(true);
+                game.getJoueurActif().sortirPiece(game.getAnimalSelectionnee().getAbscisse(), game.getAnimalSelectionnee().getOrdonnee());
+                game.changerJoueurActif();
+            } else {
+                game.getAnimalSelectionnee().setSelected(false);
+            }
+            game.setAnimalSelectionnee(null);
+            game.setSelectionnerOrientation(false);
+            game.setPieceSelectionnee(false);
+            game.setSortirPiece(false);
+        }
         if (ligne == 3 && game.isPieceSelectionnee()) game.setDeplacerPiece(true);
         if (ligne == 4 && game.isPieceSelectionnee()) {
             game.setChangerOrientation(true);
