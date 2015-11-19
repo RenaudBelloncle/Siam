@@ -55,10 +55,10 @@ public class Game implements Runnable, Constantes {
     private boolean running;
 
     public Game() {
-        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false);
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
     }
 
-    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece, boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation) {
+    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece, boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation, Animal animalSelectionnee) {
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
@@ -98,6 +98,9 @@ public class Game implements Runnable, Constantes {
         this.deplacerPiece = deplacerPiece;
         this.changerOrientation = changerOrientation;
         this.selectionnerOrientation = selectionnerOrientation;
+
+        this.animalSelectionnee = animalSelectionnee;
+
         running = false;
     }
 

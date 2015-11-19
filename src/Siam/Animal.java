@@ -28,6 +28,10 @@ public class Animal extends Piece {
         this.orientation = orientation;
     }
 
+    public boolean isSelected() {
+        return selected;
+    }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }

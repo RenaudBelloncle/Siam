@@ -37,5 +37,10 @@ public class PlateauUnitTest {
         plateau.posePiece(piece);
         Assert.assertSame(piece, plateau.getCase(0, 0));
     }
+
+    @Test
+    public void testSortirPiece() {
+        //TODO
+    }
 }
 
