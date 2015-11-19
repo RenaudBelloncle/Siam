@@ -1,6 +1,9 @@
 package Siam;
 
+import Siam.Interface.Bouton;
 import Siam.Interface.Ecran;
+import Siam.Interface.Sprite;
+import Siam.Interface.SpriteBouton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +23,11 @@ public class Game implements Runnable, Constantes {
     private BufferedImage image;
     private int[] pixels;
 
+    private Bouton boutonPoserPiece;
+    private Bouton boutonSortirPiece;
+    private Bouton boutonDeplacerPiece;
+    private Bouton boutonChangerOrientation;
+
     private DetectionSouris detectionSouris;
     private boolean pieceSelectionnee;
     private boolean placerPiece;
@@ -29,7 +37,7 @@ public class Game implements Runnable, Constantes {
     private boolean running;
 
     public Game() {
-        this(new Joueur(0), new Joueur(1), false, false);
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false);
     }
 
     public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece) {
@@ -41,6 +49,11 @@ public class Game implements Runnable, Constantes {
 
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
+
+        boutonPoserPiece = new Bouton(0, 0, SpriteBouton.boutonPoserPiece);
+        boutonSortirPiece = new Bouton(0, 125, SpriteBouton.boutonSortirPiece);
+        boutonDeplacerPiece = new Bouton(0, 250, SpriteBouton.boutonDeplacerPiece);
+        boutonChangerOrientation = new Bouton(0, 375, SpriteBouton.boutonChangerOrientation);
 
         image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -132,6 +145,10 @@ public class Game implements Runnable, Constantes {
         }
         ecran.clear();
         plateau.render(ecran);
+        boutonPoserPiece.render(ecran);
+        boutonSortirPiece.render(ecran);
+        boutonDeplacerPiece.render(ecran);
+        boutonChangerOrientation.render(ecran);
 
         for (int i = 0; i < pixels.length; i++){
             pixels[i] = ecran.getPixel(i);
