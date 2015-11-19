@@ -29,7 +29,7 @@ public class Game implements Runnable, Constantes {
     private boolean running;
 
     public Game() {
-        this(new Joueur(0), new Joueur(1), false, false);
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false);
     }
 
     public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece) {

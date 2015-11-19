@@ -10,10 +10,10 @@ public class Joueur {
 
     private List<Animal> animals;
     private Plateau plateau;
-    private int camp;
+    private Camp camp;
     private int pieceSurPlateau;
 
-    public Joueur(int camp){
+    public Joueur(Camp camp){
         animals = new ArrayList<>();
         this.camp = camp;
         pieceSurPlateau = 0;
@@ -27,11 +27,11 @@ public class Joueur {
         this.plateau = plateau;
     }
 
-    public int getCamp() {
+    public Camp getCamp() {
         return camp;
     }
 
-    public void setCamp(int camp) {
+    public void setCamp(Camp camp) {
         this.camp = camp;
     }
 
@@ -40,11 +40,11 @@ public class Joueur {
             if (!(plateau.getCase(colonne,ligne) instanceof Piece)) {
                 pieceSurPlateau++;
                 System.out.println(pieceSurPlateau);
-                if (camp == 0) {
-                    animals.add(new Animal(colonne, ligne, 0, 0));
+                if (camp == Camp.ELEPHANT) {
+                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 } else {
-                    animals.add(new Animal(colonne, ligne, 0, 1));
+                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 }
             }
