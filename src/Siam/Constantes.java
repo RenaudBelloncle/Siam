@@ -3,6 +3,7 @@ package Siam;
 public interface Constantes {
     int NOMBRE_CASE_INI = 5;
     int TAILLE_SPRITE = 128;
+    int HAUTEUR_BOUTON = 100;
     int LARGEUR_BOUTON = 200;
     int BORDURE_FENETRE = 150;
     int HAUTEUR_FENETRE_INI = TAILLE_SPRITE*NOMBRE_CASE_INI+BORDURE_FENETRE;
