@@ -11,8 +11,6 @@ import java.util.Random;
 
 public class Game implements Runnable, Constantes {
 
-    static final Random random = new Random();
-
     private Plateau plateau;
     private Joueur[] joueurs;
 
@@ -23,17 +21,18 @@ public class Game implements Runnable, Constantes {
     private int[] pixels;
 
     private DetectionSouris detectionSouris;
-    private boolean insertionPiece;
+    private boolean pieceSelectionnee;
+    private boolean placerPiece;
     private Joueur joueurActif;
 
     private Thread thread;
     private boolean running;
 
     public Game() {
-        this(new Joueur(0), new Joueur(1), false);
+        this(new Joueur(0), new Joueur(1), false, false);
     }
 
-    public Game(Joueur joueur1, Joueur joueur2, boolean insertionPiece) {
+    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece) {
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
@@ -46,7 +45,8 @@ public class Game implements Runnable, Constantes {
         image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
-        this.insertionPiece = insertionPiece;
+        this.pieceSelectionnee = pieceSelectionnee;
+        this.placerPiece = placerPiece;
         running = false;
     }
 
@@ -54,12 +54,20 @@ public class Game implements Runnable, Constantes {
         return joueurs;
     }
 
-    public boolean isInsertionPiece() {
-        return insertionPiece;
+    public boolean isPieceSelectionnee() {
+        return pieceSelectionnee;
     }
 
-    public void setInsertionPiece(boolean insertionPiece) {
-        this.insertionPiece = insertionPiece;
+    public void setPieceSelectionnee(boolean pieceSelectionnee) {
+        this.pieceSelectionnee = pieceSelectionnee;
+    }
+
+    public boolean isPlacerPiece() {
+        return placerPiece;
+    }
+
+    public void setPlacerPiece(boolean placerPiece) {
+        this.placerPiece = placerPiece;
     }
 
     public Joueur getJoueurActif() {

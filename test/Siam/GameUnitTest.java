@@ -19,26 +19,37 @@ public class GameUnitTest {
         Joueur[] joueurs = new Joueur[2];
         joueurs[0] = Mockito.mock(Joueur.class);
         joueurs[1] = Mockito.mock(Joueur.class);
-        game = new Game(joueurs[0], joueurs[1], false);
+        game = new Game(joueurs[0], joueurs[1], false, false);
         Assert.assertArrayEquals(joueurs, game.getJoueurs());
     }
 
     @Test
-    public void testIsInsertionPiece() {
-        Assert.assertFalse(game.isInsertionPiece());
+    public void testIsPieceSelectionnee() {
+        Assert.assertFalse(game.isPieceSelectionnee());
     }
 
     @Test
-    public void testSetInsertionPiece() {
-        game = new Game(new Joueur(0), new Joueur(0), true);
-        Assert.assertTrue(game.isInsertionPiece());
+    public void testSetPieceSelectionnee() {
+        game.setPieceSelectionnee(true);
+        Assert.assertTrue(game.isPieceSelectionnee());
+    }
+
+    @Test
+    public void testIsPlacerPiece() {
+        Assert.assertFalse(game.isPlacerPiece());
+    }
+
+    @Test
+    public void testSetPlacerPiece() {
+        game.setPlacerPiece(true);
+        Assert.assertTrue(game.isPlacerPiece());
     }
 
     @Test
     public void testGetJoueurActif() {
         Joueur joueur1 = Mockito.mock(Joueur.class);
         Joueur joueur2 = Mockito.mock(Joueur.class);
-        game = new Game(joueur1, joueur2, false);
+        game = new Game(joueur1, joueur2, false, false);
         Assert.assertSame(joueur1, game.getJoueurActif());
     }
 
