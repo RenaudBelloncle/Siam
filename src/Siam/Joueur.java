@@ -2,33 +2,72 @@ package Siam;
 
 import Siam.Interface.Ecran;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 
 public class Joueur {
 
-    private Animal[] animals;
-    private int camp;
+    private List<Animal> animals;
+    private Plateau plateau;
+    private Camp camp;
+    private int pieceSurPlateau;
 
-    public Joueur(int camp){
-        animals = new Animal[5];
+    public Joueur(Camp camp){
+        animals = new ArrayList<>();
+        this.camp = camp;
+        pieceSurPlateau = 0;
+    }
+
+    public Plateau getPlateau() {
+        return plateau;
+    }
+
+    public void setPlateau(Plateau plateau) {
+        this.plateau = plateau;
+    }
+
+    public Camp getCamp() {
+        return camp;
+    }
+
+    public void setCamp(Camp camp) {
         this.camp = camp;
     }
 
-    public void posePiece(Case aCase) {
-        if (camp == 0) {
-            animals[0] = new Animal(aCase,0,0);
-            System.out.println("Piece créer");
-        } else {
-            animals[0] = new Animal(aCase,0,1);
-            System.out.println("Piece créer");
+    public Animal posePiece(int colonne, int ligne) {
+        if (restePiece()) {
+            if (!(plateau.getCase(colonne,ligne) instanceof Piece)) {
+                pieceSurPlateau++;
+                if (camp == Camp.ELEPHANT) {
+                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT, false));
+                    plateau.posePiece(animals.get(pieceSurPlateau - 1));
+                } else {
+                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS, false));
+                    plateau.posePiece(animals.get(pieceSurPlateau - 1));
+                }
+                return animals.get(pieceSurPlateau - 1);
+            }
         }
+        return null;
     }
 
     public boolean restePiece() {
-        for(Piece piece : animals) if (piece.getPosition() == null) return true;
-        return false;
+        return pieceSurPlateau < 5;
+    }
+
+    public void sortirPiece(int colonne, int ligne) {
+        pieceSurPlateau--;
+        ListIterator<Animal> listIterator = animals.listIterator();
+        while(listIterator.hasNext()) {
+            Animal animal = listIterator.next();
+            if (animal.getAbscisse() == colonne && animal.getOrdonnee() == ligne) listIterator.remove();
+        }
+        plateau.sortirPiece(colonne, ligne);
     }
 
     public void render(Ecran ecran){
-        if (animals != null) for(Piece piece : animals) piece.render(ecran);
+        for(Piece piece : animals) piece.render(ecran);
     }
 }

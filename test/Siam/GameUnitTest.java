@@ -19,26 +19,89 @@ public class GameUnitTest {
         Joueur[] joueurs = new Joueur[2];
         joueurs[0] = Mockito.mock(Joueur.class);
         joueurs[1] = Mockito.mock(Joueur.class);
-        game = new Game(joueurs[0], joueurs[1], new Plateau(0), false);
+        game = new Game(joueurs[0], joueurs[1], false, false, false, false, false, false, null);
         Assert.assertArrayEquals(joueurs, game.getJoueurs());
     }
 
     @Test
-    public void testIsInsertionPiece() {
-        Assert.assertFalse(game.isInsertionPiece());
+    public void testIsPieceSelectionnee() {
+        Assert.assertFalse(game.isPieceSelectionnee());
     }
 
     @Test
-    public void testSetInsertionPiece() {
-        game = new Game(new Joueur(0), new Joueur(0), new Plateau(0), true);
-        Assert.assertTrue(game.isInsertionPiece());
+    public void testSetPieceSelectionnee() {
+        game.setPieceSelectionnee(true);
+        Assert.assertTrue(game.isPieceSelectionnee());
+    }
+
+    @Test
+    public void testIsPlacerPiece() {
+        Assert.assertFalse(game.isPlacerPiece());
+    }
+
+    @Test
+    public void testSetPlacerPiece() {
+        game.setPlacerPiece(true);
+        Assert.assertTrue(game.isPlacerPiece());
+    }
+
+    @Test
+    public void testIsSortirPiece() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        Assert.assertFalse(game.isSortirPiece());
+    }
+
+    @Test
+    public void testSetSortirPiece() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        game.setSortirPiece(true);
+        Assert.assertTrue(game.isSortirPiece());
+    }
+
+    @Test
+    public void testIsDeplacerPiece() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        Assert.assertFalse(game.isDeplacerPiece());
+    }
+
+    @Test
+    public void testSetDeplacerPiece() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        game.setDeplacerPiece(true);
+        Assert.assertTrue(game.isDeplacerPiece());
+    }
+
+    @Test
+    public void testIsChangerOrientation() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        Assert.assertFalse(game.isChangerOrientation());
+    }
+
+    @Test
+    public void testSetChangerOrientation() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        game.setChangerOrientation(true);
+        Assert.assertTrue(game.isChangerOrientation());
+    }
+
+    @Test
+    public void testIsSelectionnerOrientation() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        Assert.assertFalse(game.isSelectionnerOrientation());
+    }
+
+    @Test
+    public void testSetSelectionnerOrientation() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        game.setSelectionnerOrientation(true);
+        Assert.assertTrue(game.isSelectionnerOrientation());
     }
 
     @Test
     public void testGetJoueurActif() {
         Joueur joueur1 = Mockito.mock(Joueur.class);
         Joueur joueur2 = Mockito.mock(Joueur.class);
-        game = new Game(joueur1, joueur2, new Plateau(0), false);
+        game = new Game(joueur1, joueur2, false, false, false, false, false, false, null);
         Assert.assertSame(joueur1, game.getJoueurActif());
     }
 
@@ -50,9 +113,27 @@ public class GameUnitTest {
     }
 
     @Test
-    public void testGetPlateau() {
-        Plateau plateau = Mockito.mock(Plateau.class);
-        game = new Game(new Joueur(0), new Joueur(0), plateau, false);
-        Assert.assertSame(plateau, game.getPlateau());
+    public void testGetAnimalSelectionnee() {
+        Animal animal = Mockito.mock(Animal.class);
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, animal);
+        Assert.assertSame(animal, game.getAnimalSelectionnee());
+    }
+
+    @Test
+    public void testSetAnimalSelectionne() {
+        game = new Game(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        Animal animal = Mockito.mock(Animal.class);
+        game.setAnimalSelectionnee(animal);
+        Assert.assertSame(animal, game.getAnimalSelectionnee());
+    }
+
+    @Test
+    public void testChangerJoueursActif() {
+        Joueur joueur1 = Mockito.mock(Joueur.class);
+        Joueur joueur2 = Mockito.mock(Joueur.class);
+        game = new Game(joueur1, joueur2, false, false, false, false, false, false, null);
+        Assert.assertSame(joueur1, game.getJoueurActif());
+        game.changerJoueurActif();
+        Assert.assertSame(joueur2, game.getJoueurActif());
     }
 }

@@ -3,7 +3,8 @@ package Siam;
 import Siam.Interface.Ecran;
 
 public class Plateau {
-    int tailleCote;
+
+    private int tailleCote;
     private Case[][] plateau;
 
     public Plateau(int tailleCote){
@@ -15,6 +16,9 @@ public class Plateau {
                 plateau[x][y] = new Case(x,y);
             }
         }
+        plateau[2][2] = new Montagne(2,2);
+        plateau[1][2] = new Montagne(1,2);
+        plateau[3][2] = new Montagne(3,2);
     }
 
     public Case getCase(int x, int y){
@@ -23,6 +27,14 @@ public class Plateau {
 
     public int getTailleCote(){
         return tailleCote;
+    }
+
+    public void posePiece(Piece piece) {
+        plateau[piece.getAbscisse()][piece.getOrdonnee()] = piece;
+    }
+
+    public void sortirPiece(int colonne, int ligne) {
+        plateau[colonne][ligne] = new Case(colonne, ligne);
     }
 
     public void render(Ecran ecran){
