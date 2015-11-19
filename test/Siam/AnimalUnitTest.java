@@ -10,7 +10,7 @@ public class AnimalUnitTest {
 
     @Before
     public void setUp() {
-        animal = new Animal(0, 0, Orientation.HAUT, Camp.ELEPHANT);
+        animal = new Animal(0, 0, Orientation.HAUT, Camp.ELEPHANT, false);
     }
 
     @Test

@@ -1,9 +1,6 @@
 package Siam;
 
-import Siam.Interface.Bouton;
-import Siam.Interface.Ecran;
-import Siam.Interface.Sprite;
-import Siam.Interface.SpriteBouton;
+import Siam.Interface.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,20 +24,36 @@ public class Game implements Runnable, Constantes {
     private Bouton boutonSortirPiece;
     private Bouton boutonDeplacerPiece;
     private Bouton boutonChangerOrientation;
+    private Bouton boutonPoserPieceSelec;
+    private Bouton boutonSortirPieceSelec;
+    private Bouton boutonDeplacerPieceSelec;
+    private Bouton boutonChangerOrientationSelec;
+
+    private Fleche flecheHaut;
+    private Fleche flecheBas;
+    private Fleche flecheDroite;
+    private Fleche flecheGauche;
+    private Fleche flecheHautSelec;
+    private Fleche flecheBasSelec;
+    private Fleche flecheDroiteSelec;
+    private Fleche flecheGaucheSelec;
 
     private DetectionSouris detectionSouris;
     private boolean pieceSelectionnee;
     private boolean placerPiece;
+    private boolean sortirPiece;
+    private boolean deplacerPiece;
+    private boolean changerOrientation;
     private Joueur joueurActif;
 
     private Thread thread;
     private boolean running;
 
     public Game() {
-        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false);
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false);
     }
 
-    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece) {
+    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece, boolean deplacerPiece, boolean changerOrientation) {
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
@@ -54,12 +67,28 @@ public class Game implements Runnable, Constantes {
         boutonSortirPiece = new Bouton(0, 125, SpriteBouton.boutonSortirPiece);
         boutonDeplacerPiece = new Bouton(0, 250, SpriteBouton.boutonDeplacerPiece);
         boutonChangerOrientation = new Bouton(0, 375, SpriteBouton.boutonChangerOrientation);
+        boutonPoserPieceSelec = new Bouton(0, 0, SpriteBouton.boutonPoserPieceSelec);
+        boutonSortirPieceSelec = new Bouton(0, 125, SpriteBouton.boutonSortirPieceSelec);
+        boutonDeplacerPieceSelec = new Bouton(0, 250, SpriteBouton.boutonDeplacerPieceSelec);
+        boutonChangerOrientationSelec = new Bouton(0, 375, SpriteBouton.boutonChangerOrientationSelec);
+
+        flecheHaut = new Fleche(75, 0, SpriteFleche.flecheBas, Orientation.HAUT);
+        flecheBas = new Fleche(75, 100, SpriteFleche.flecheBas, Orientation.BAS);
+        flecheDroite = new Fleche(125, 50, SpriteFleche.flecheDroite, Orientation.DROITE);
+        flecheGauche = new Fleche(25, 50, SpriteFleche.flecheDroite, Orientation.GAUCHE);
+        flecheHautSelec = new Fleche(75, 0, SpriteFleche.flecheBasSelec, Orientation.HAUT);
+        flecheBasSelec = new Fleche(75, 100, SpriteFleche.flecheBasSelec, Orientation.BAS);
+        flecheDroiteSelec = new Fleche(125, 50, SpriteFleche.flecheDroiteSelec, Orientation.DROITE);
+        flecheGaucheSelec = new Fleche(25, 50, SpriteFleche.flecheDroiteSelec, Orientation.GAUCHE);
 
         image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
         this.pieceSelectionnee = pieceSelectionnee;
         this.placerPiece = placerPiece;
+        this.sortirPiece = sortirPiece;
+        this.deplacerPiece = deplacerPiece;
+        this.changerOrientation = changerOrientation;
         running = false;
     }
 
@@ -81,6 +110,30 @@ public class Game implements Runnable, Constantes {
 
     public void setPlacerPiece(boolean placerPiece) {
         this.placerPiece = placerPiece;
+    }
+
+    public boolean isSortirPiece() {
+        return sortirPiece;
+    }
+
+    public void setSortirPiece(boolean sortirPiece) {
+        this.sortirPiece = sortirPiece;
+    }
+
+    public boolean isDeplacerPiece() {
+        return deplacerPiece;
+    }
+
+    public void setDeplacerPiece(boolean deplacerPiece) {
+        this.deplacerPiece = deplacerPiece;
+    }
+
+    public boolean isChangerOrientation() {
+        return changerOrientation;
+    }
+
+    public void setChangerOrientation(boolean changerOrientation) {
+        this.changerOrientation = changerOrientation;
     }
 
     public Joueur getJoueurActif() {
@@ -145,10 +198,27 @@ public class Game implements Runnable, Constantes {
         }
         ecran.clear();
         plateau.render(ecran);
-        boutonPoserPiece.render(ecran);
-        boutonSortirPiece.render(ecran);
-        boutonDeplacerPiece.render(ecran);
-        boutonChangerOrientation.render(ecran);
+
+        if (placerPiece) boutonPoserPieceSelec.render(ecran);
+        else boutonPoserPiece.render(ecran);
+        if (sortirPiece) boutonSortirPieceSelec.render(ecran);
+        else boutonSortirPiece.render(ecran);
+        if (deplacerPiece) boutonDeplacerPieceSelec.render(ecran);
+        else boutonDeplacerPiece.render(ecran);
+        if (changerOrientation) boutonChangerOrientationSelec.render(ecran);
+        else boutonChangerOrientation.render(ecran);
+
+        if (changerOrientation) {
+            flecheHautSelec.render(ecran);
+            flecheBasSelec.render(ecran);
+            flecheDroiteSelec.render(ecran);
+            flecheGaucheSelec.render(ecran);
+        } else {
+            flecheHaut.render(ecran);
+            flecheBas.render(ecran);
+            flecheDroite.render(ecran);
+            flecheGauche.render(ecran);
+        }
 
         for (int i = 0; i < pixels.length; i++){
             pixels[i] = ecran.getPixel(i);

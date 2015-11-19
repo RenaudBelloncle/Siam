@@ -41,10 +41,10 @@ public class Joueur {
                 pieceSurPlateau++;
                 System.out.println(pieceSurPlateau);
                 if (camp == Camp.ELEPHANT) {
-                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT));
+                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT, false));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 } else {
-                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS));
+                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS, false));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 }
             }

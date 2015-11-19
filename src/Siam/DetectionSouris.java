@@ -32,12 +32,16 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             if (colonne == 0 || colonne == 4 || ligne == 0 || ligne == 4) {
                 game.getJoueurActif().posePiece(colonne, ligne);
                 game.setPlacerPiece(false);
+                if (game.getJoueurActif() == game.getJoueurs()[0]) game.setJoueurActif(game.getJoueurs()[1]);
+                else game.setJoueurActif(game.getJoueurs()[0]);
             }
         }
     }
 
     private void clickBouton(int ligne) {
-        if (ligne == 0) return;
-        System.out.println("Bouton " + ligne);
+        if (ligne == 1) game.setPlacerPiece(true);
+        if (ligne == 2 && game.isPieceSelectionnee()) game.setSortirPiece(true);
+        if (ligne == 3 && game.isPieceSelectionnee()) game.setDeplacerPiece(true);
+        if (ligne == 4 && game.isPieceSelectionnee()) game.setChangerOrientation(true);
     }
 }

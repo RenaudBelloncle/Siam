@@ -16,6 +16,10 @@ public class Sprite implements Constantes{
     public static Sprite casePionJoueur2 = new Sprite("/images/spriteBasique/pionNoir.png");
     public static Sprite casePionJoueur1Gauche = new Sprite("/images/spriteBasique/pionBlancGauche.png");
     public static Sprite casePionJoueur2Gauche = new Sprite("/images/spriteBasique/pionNoirGauche.png");
+    public static Sprite casePionJoueur1Selec = new Sprite("/images/spriteBasique/pionBlancSelec.png");
+    public static Sprite casePionJoueur2Selec = new Sprite("/images/spriteBasique/pionNoirSelec.png");
+    public static Sprite casePionJoueur1GaucheSelec = new Sprite("/images/spriteBasique/pionBlancGaucheSelec.png");
+    public static Sprite casePionJoueur2GaucheSelec = new Sprite("/images/spriteBasique/pionNoirGaucheSelec.png");
     public static Sprite caseMontagne = new Sprite("/images/spriteBasique/montagne.png");
 
     public Sprite(String path){
