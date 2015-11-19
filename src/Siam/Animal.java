@@ -32,6 +32,14 @@ public class Animal extends Piece {
         this.selected = selected;
     }
 
+    public Camp getCamp() {
+        return camp;
+    }
+
+    public void setCamp(Camp camp) {
+        this.camp = camp;
+    }
+
     public void render(Ecran ecran) {
         if (camp == Camp.ELEPHANT) {
             if (selected) {

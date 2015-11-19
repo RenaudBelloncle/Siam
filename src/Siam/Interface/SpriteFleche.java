@@ -15,6 +15,9 @@ public class SpriteFleche implements Constantes {
     public static SpriteFleche flecheDroite = new SpriteFleche("/images/spriteBasique/Droite.png");
     public static SpriteFleche flecheDroiteSelec = new SpriteFleche("/images/spriteBasique/DroiteSelec.png");
 
+    public static SpriteFleche elephant = new SpriteFleche("/images/spriteBasique/Elephant.png");
+    public static SpriteFleche rhinoceros = new SpriteFleche("/images/spriteBasique/Rhinoceros.png");
+
     public SpriteFleche(String path){
         pixels = new int[TAILLE_SPRITE_FLECHE * TAILLE_SPRITE_FLECHE];
         this.path = path;

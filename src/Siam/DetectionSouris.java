@@ -6,9 +6,11 @@ import java.awt.event.MouseEvent;
 public class DetectionSouris extends MouseInputAdapter implements Constantes {
 
     private Game game;
+    private Plateau plateau;
 
-    public DetectionSouris(Game game) {
+    public DetectionSouris(Game game, Plateau plateau) {
         this.game = game;
+        this.plateau = plateau;
     }
 
     public void mouseClicked(MouseEvent event) {
@@ -36,6 +38,13 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
     }
 
     private void clickPerformed(int colonne, int ligne) {
+        if (game.isPieceSelectionnee()) {
+            game.getAnimalSelectionnee().setSelected(false);
+            game.setAnimalSelectionnee(null);
+            game.setSelectionnerOrientation(false);
+            game.setPieceSelectionnee(false);
+            if (game.isChangerOrientation()) game.setChangerOrientation(false);
+        }
         if(game.isPlacerPiece()) {
             if (!game.getJoueurActif().restePiece()) {
                 game.setPlacerPiece(false);
@@ -43,20 +52,35 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             }
             if (colonne == 0 || colonne == 4 || ligne == 0 || ligne == 4) {
                 Animal animal = game.getJoueurActif().posePiece(colonne, ligne);
+                if (animal == null) {
+                    game.setPlacerPiece(false);
+                    return;
+                }
                 animal.setSelected(true);
                 game.setAnimalSelectionnee(animal);
                 game.setPlacerPiece(false);
                 game.setSelectionnerOrientation(true);
-                game.changerJoueurActif();
+            }
+        } else {
+            if (plateau.getCase(colonne, ligne) instanceof Animal) {
+                if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == game.getJoueurActif().getCamp()) {
+                    Animal animal = (Animal)plateau.getCase(colonne, ligne);
+                    animal.setSelected(true);
+                    game.setPieceSelectionnee(true);
+                    game.setAnimalSelectionnee(animal);
+                }
             }
         }
     }
 
     private void clickBouton(int ligne) {
-        if (ligne == 1 && !game.isPieceSelectionnee() && !game.isSelectionnerOrientation()) game.setPlacerPiece(true);
+        if (ligne == 1 && !game.isSelectionnerOrientation()) game.setPlacerPiece(true);
         if (ligne == 2 && game.isPieceSelectionnee()) game.setSortirPiece(true);
         if (ligne == 3 && game.isPieceSelectionnee()) game.setDeplacerPiece(true);
-        if (ligne == 4 && game.isPieceSelectionnee()) game.setChangerOrientation(true);
+        if (ligne == 4 && game.isPieceSelectionnee()) {
+            game.setChangerOrientation(true);
+            game.setSelectionnerOrientation(true);
+        }
     }
 
     private void clickFleche(Orientation orientation) {
@@ -76,6 +100,9 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             game.getAnimalSelectionnee().setSelected(false);
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
+            game.setPieceSelectionnee(false);
+            if (game.isChangerOrientation()) game.setChangerOrientation(false);
+            game.changerJoueurActif();
         }
     }
 }

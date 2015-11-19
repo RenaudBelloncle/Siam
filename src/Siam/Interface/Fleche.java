@@ -21,5 +21,6 @@ public class Fleche {
         if (orientation == Orientation.BAS) ecran.renderFleche(abscisse, ordonnne, sprite, false, false);
         if (orientation == Orientation.GAUCHE) ecran.renderFleche(abscisse, ordonnne, sprite, true, false);
         if (orientation == Orientation.DROITE) ecran.renderFleche(abscisse, ordonnne, sprite, false, false);
+        if (orientation == null) ecran.renderFleche(abscisse, ordonnne, sprite, false, false);
     }
 }

@@ -38,6 +38,9 @@ public class Game implements Runnable, Constantes {
     private Fleche flecheDroiteSelec;
     private Fleche flecheGaucheSelec;
 
+    private Fleche elephant;
+    private Fleche rhinoceros;
+
     private DetectionSouris detectionSouris;
     private boolean pieceSelectionnee;
     private boolean placerPiece;
@@ -82,6 +85,9 @@ public class Game implements Runnable, Constantes {
         flecheBasSelec = new Fleche(75, 100, SpriteFleche.flecheBasSelec, Orientation.BAS);
         flecheDroiteSelec = new Fleche(125, 50, SpriteFleche.flecheDroiteSelec, Orientation.DROITE);
         flecheGaucheSelec = new Fleche(25, 50, SpriteFleche.flecheDroiteSelec, Orientation.GAUCHE);
+
+        elephant = new Fleche(75, 50, SpriteFleche.elephant, null);
+        rhinoceros = new Fleche(75, 50, SpriteFleche.rhinoceros, null);
 
         image = new BufferedImage(LARGEUR_FENETRE_INI,HAUTEUR_FENETRE_INI, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -171,7 +177,7 @@ public class Game implements Runnable, Constantes {
     public synchronized void start(JFrame fenetre) {
         running = true;
         thread = new Thread(this, "Affichage");
-        detectionSouris = new DetectionSouris(this);
+        detectionSouris = new DetectionSouris(this, plateau);
 
         // Fenetre + debut de gestion graphique
         this.fenetre = fenetre;
@@ -243,6 +249,9 @@ public class Game implements Runnable, Constantes {
             flecheDroite.render(ecran);
             flecheGauche.render(ecran);
         }
+
+        if (joueurActif.getCamp() == Camp.ELEPHANT) elephant.render(ecran);
+        else rhinoceros.render(ecran);
 
         for (int i = 0; i < pixels.length; i++){
             pixels[i] = ecran.getPixel(i);

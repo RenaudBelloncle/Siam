@@ -130,18 +130,18 @@ public class ChoixCamp extends JFrame implements ActionListener {
         if (source == getValider()){
             if(getJRBelephant().isSelected()){
                 game.setJoueurActif(game.getJoueurs()[0]);
-                joueur.setCamp(Camp.ELEPHANT);
+                //joueur.setCamp(Camp.ELEPHANT);
             }
             else if (getJRBrhinoceros().isSelected()){
                 game.setJoueurActif(game.getJoueurs()[1]);
-                joueur.setCamp(Camp.RHINOCEROS);
+                //joueur.setCamp(Camp.RHINOCEROS);
             }
             else {
                 game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
-                if(random.nextBoolean())
+                /*if(random.nextBoolean())
                     joueur.setCamp(Camp.ELEPHANT);
                 else
-                    joueur.setCamp(Camp.RHINOCEROS);
+                    joueur.setCamp(Camp.RHINOCEROS);*/
             }
             game.start(this);
         }
