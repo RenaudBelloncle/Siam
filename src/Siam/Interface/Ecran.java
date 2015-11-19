@@ -1,6 +1,8 @@
 package Siam.Interface;
 
-public class Ecran {
+import Siam.Constantes;
+
+public class Ecran implements Constantes {
     private int largeur, hauteur;
     private int[] pixels;
 
@@ -28,18 +30,18 @@ public class Ecran {
         return hauteur;
     }
 
-    // Prend les coordonnées d'un sprite et place ses pixels dans le tableau de pixel
+    // Prend les coordonnees d'un sprite et place ses pixels dans le tableau de pixel
     public void renderSprite(int xp, int yp, Sprite sprite, boolean xflip, boolean yflip){
-        xp -= 0;
-        yp -= 0;
+        xp = xp * TAILLE_SPRITE + BORDURE_FENETRE/2;
+        yp = yp * TAILLE_SPRITE + BORDURE_FENETRE/2;
 
-        for(int y = 0; y < sprite.getSize(); y++){
+        for (int y = 0; y < sprite.getSize(); y++) {
             int ya = yp + y;
             int ys = y;
             if(yflip)ys = 127-y;
-            for(int x = 0; x < sprite.getSize(); x++){
+            for (int x = 0; x < sprite.getSize(); x++) {
                 int xs = x;
-                if(xflip) xs = 127-x;
+                if (xflip) xs = 127-x;
                 int xa = xp + x;
                 if(xa < -sprite.getSize() || xa >= largeur || ya < 0 || ya >= hauteur) break;
                 if(xa < 0) xa = 0;
