@@ -33,6 +33,10 @@ public class Plateau {
         plateau[piece.getAbscisse()][piece.getOrdonnee()] = piece;
     }
 
+    public void sortirPiece(int colonne, int ligne) {
+        plateau[colonne][ligne] = new Case(colonne, ligne);
+    }
+
     public void render(Ecran ecran){
         for(int i = 0; i < tailleCote; i ++){
             for(int j = 0; j < tailleCote; j++){

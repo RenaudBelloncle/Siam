@@ -4,6 +4,7 @@ import Siam.Interface.Ecran;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class Joueur {
@@ -35,24 +36,35 @@ public class Joueur {
         this.camp = camp;
     }
 
-    public void posePiece(int colonne, int ligne) {
+    public Animal posePiece(int colonne, int ligne) {
         if (restePiece()) {
             if (!(plateau.getCase(colonne,ligne) instanceof Piece)) {
                 pieceSurPlateau++;
-                System.out.println(pieceSurPlateau);
                 if (camp == Camp.ELEPHANT) {
-                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT));
+                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT, false));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 } else {
-                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS));
+                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS, false));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 }
+                return animals.get(pieceSurPlateau - 1);
             }
         }
+        return null;
     }
 
     public boolean restePiece() {
         return pieceSurPlateau < 5;
+    }
+
+    public void sortirPiece(int colonne, int ligne) {
+        pieceSurPlateau--;
+        ListIterator<Animal> listIterator = animals.listIterator();
+        while(listIterator.hasNext()) {
+            Animal animal = listIterator.next();
+            if (animal.getAbscisse() == colonne && animal.getOrdonnee() == ligne) listIterator.remove();
+        }
+        plateau.sortirPiece(colonne, ligne);
     }
 
     public void render(Ecran ecran){
