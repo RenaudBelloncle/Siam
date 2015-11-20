@@ -15,6 +15,10 @@ public class SpriteBouton implements Constantes{
     public static SpriteBouton boutonDeplacerPiece = new SpriteBouton("/images/spriteBasique/BoutonDeplacerPiece.png");
     public static SpriteBouton boutonSortirPiece = new SpriteBouton("/images/spriteBasique/BoutonSortirPiece.png");
     public static SpriteBouton boutonChangerOrientation = new SpriteBouton("/images/spriteBasique/BoutonChangerOrientation.png");
+    public static SpriteBouton boutonPoserPieceSelec = new SpriteBouton("/images/spriteBasique/BoutonPoserPieceSelec.png");
+    public static SpriteBouton boutonDeplacerPieceSelec = new SpriteBouton("/images/spriteBasique/BoutonDeplacerPieceSelec.png");
+    public static SpriteBouton boutonSortirPieceSelec = new SpriteBouton("/images/spriteBasique/BoutonSortirPieceSelec.png");
+    public static SpriteBouton boutonChangerOrientationSelec = new SpriteBouton("/images/spriteBasique/BoutonChangerOrientationSelec.png");
 
     public SpriteBouton(String path){
         pixels = new int[HAUTEUR_BOUTON * LARGEUR_BOUTON];
@@ -35,7 +39,7 @@ public class SpriteBouton implements Constantes{
     }
 
     private void setColour(int colour) {
-        for(int i = 0; i < TAILLE_SPRITE * TAILLE_SPRITE; i++){
+        for(int i = 0; i < HAUTEUR_BOUTON * LARGEUR_BOUTON; i++){
             pixels[i] = colour;
         }
     }
