@@ -8,8 +8,14 @@ import org.junit.Test;
 public class SpriteUnitTest {
 
     @Test
-    public void testGetSize(){
-        Sprite sprite = new Sprite("/images/spriteTest.png");
-        Assert.assertEquals(sprite.getSize(), 128);
+    public void testGetLargeur(){
+        Sprite sprite = new Sprite("/images/spriteTest.png",128,128);
+        Assert.assertEquals(sprite.getLargeur(), 128);
+    }
+
+    @Test
+    public void testGetHauteur(){
+        Sprite sprite = new Sprite("/images/spriteTest.png",128,128);
+        Assert.assertEquals(sprite.getHauteur(), 128);
     }
 }
