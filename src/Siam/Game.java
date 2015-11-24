@@ -9,6 +9,7 @@ public class Game implements Runnable, Constantes {
     private Plateau plateau;
     private Joueur[] joueurs;
 
+    private VueJeu vueJeu;
     private JFrame fenetre;
 
     private DetectionSouris souris;
@@ -140,7 +141,7 @@ public class Game implements Runnable, Constantes {
         running = true;
         thread = new Thread(this, "Affichage");
 
-        new VueJeu(this, plateau, fenetre, souris);
+        vueJeu = new VueJeu(this, fenetre, souris);
         thread.start();
     }
 
@@ -155,8 +156,35 @@ public class Game implements Runnable, Constantes {
 
     public void run() {
         while(running) {
+            affichageBouton();
             fenetre.repaint();
         }
         stop();
+    }
+
+    private void affichageBouton() {
+        if (pieceSelectionnee) {
+            vueJeu.getDeplacer().setEnabled(true);
+            vueJeu.getSortir().setEnabled(true);
+            vueJeu.getOrienter().setEnabled(true);
+        }
+        if (selectionnerOrientation) {
+            vueJeu.getPoser().setEnabled(false);
+            vueJeu.getFlecheHaut().setEnabled(true);
+            vueJeu.getFlecheBas().setEnabled(true);
+            vueJeu.getFlecheDroite().setEnabled(true);
+            vueJeu.getFlecheGauche().setEnabled(true);
+        }
+        if (!pieceSelectionnee && !selectionnerOrientation) {
+            if (!joueurActif.restePiece()) vueJeu.getPoser().setEnabled(false);
+            else vueJeu.getPoser().setEnabled(true);
+            vueJeu.getDeplacer().setEnabled(false);
+            vueJeu.getSortir().setEnabled(false);
+            vueJeu.getOrienter().setEnabled(false);
+            vueJeu.getFlecheHaut().setEnabled(false);
+            vueJeu.getFlecheBas().setEnabled(false);
+            vueJeu.getFlecheDroite().setEnabled(false);
+            vueJeu.getFlecheGauche().setEnabled(false);
+        }
     }
 }

@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 public class VueJeu implements ActionListener, Constantes {
 
     private Game game;
-    private Plateau plateau;
     private JFrame fenetre;
 
     private DetectionSouris souris;
@@ -23,7 +22,7 @@ public class VueJeu implements ActionListener, Constantes {
     private JButton flecheGauche;
     private JButton flecheBas;
 
-    public VueJeu(Game game, Plateau plateau, JFrame fenetre, DetectionSouris souris){
+    public VueJeu(Game game, JFrame fenetre, DetectionSouris souris){
         this.game = game;
         this.fenetre = fenetre;
         this.souris = souris;
@@ -67,6 +66,14 @@ public class VueJeu implements ActionListener, Constantes {
 
         panelJeu.add(panelPlateau);
 
+        deplacer.setEnabled(false);
+        sortir.setEnabled(false);
+        orienter.setEnabled(false);
+        flecheHaut.setEnabled(false);
+        flecheBas.setEnabled(false);
+        flecheGauche.setEnabled(false);
+        flecheDroite.setEnabled(false);
+
         panelPoser.add(poser);
         panelDeplacer.add(deplacer);
         panelSortir.add(sortir);
@@ -108,7 +115,9 @@ public class VueJeu implements ActionListener, Constantes {
     @Override
     public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
-        if (source == poser && !game.isSelectionnerOrientation()) game.setPlacerPiece(true);
+        if (source == poser && !game.isSelectionnerOrientation()) {
+            game.setPlacerPiece(true);
+        }
         if (source == sortir && game.isPieceSelectionnee()) {
             if (game.getAnimalSelectionnee().getAbscisse() == 0 || game.getAnimalSelectionnee().getAbscisse() == 4 || game.getAnimalSelectionnee().getOrdonnee() == 0 || game.getAnimalSelectionnee().getOrdonnee() == 4) {
                 game.setSortirPiece(true);
@@ -165,5 +174,37 @@ public class VueJeu implements ActionListener, Constantes {
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();
         }
+    }
+
+    public JButton getPoser() {
+        return poser;
+    }
+
+    public JButton getDeplacer() {
+        return deplacer;
+    }
+
+    public JButton getSortir() {
+        return sortir;
+    }
+
+    public JButton getOrienter() {
+        return orienter;
+    }
+
+    public JButton getFlecheHaut() {
+        return flecheHaut;
+    }
+
+    public JButton getFlecheDroite() {
+        return flecheDroite;
+    }
+
+    public JButton getFlecheGauche() {
+        return flecheGauche;
+    }
+
+    public JButton getFlecheBas() {
+        return flecheBas;
     }
 }

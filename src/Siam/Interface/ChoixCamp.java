@@ -49,9 +49,9 @@ public class ChoixCamp implements ActionListener {
 
     public void initChoixCamp(){
         titreCB = new JLabel("Choisis un camp");
-        JRBelephant = new JRadioButton("Éléphant");
+        JRBelephant = new JRadioButton("Éléphant", true);
         JRBrhinoceros = new JRadioButton("Rhinocéros");
-        aleatoire = new JRadioButton("Aléatoire", true);
+        aleatoire = new JRadioButton("Aléatoire");
         BGchoix = new ButtonGroup();
         BGchoix.add(JRBelephant);
         BGchoix.add(JRBrhinoceros);
