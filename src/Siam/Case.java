@@ -13,6 +13,11 @@ public class Case {
         this.ordonnee = ordonnee;
     }
 
+    public Case(Case caseModel){
+        this.ordonnee = caseModel.ordonnee;
+        this.abscisse = caseModel.abscisse;
+    }
+
     public int getAbscisse() {
         return abscisse;
     }
@@ -31,5 +36,9 @@ public class Case {
 
     public void render(Ecran ecran){
         ecran.renderSprite(abscisse, ordonnee, Sprite.caseVide,false,false);
+    }
+
+    public boolean isVoid(){
+        return true;
     }
 }

@@ -70,4 +70,13 @@ public class Joueur {
     public void render(Ecran ecran){
         for(Piece piece : animals) piece.render(ecran);
     }
+
+    public boolean moveAnimalOnFreeCase(Animal animal, Case targetCase){
+        //test du contenu de la case
+        if(targetCase.isVoid()){
+            getPlateau().deplacerPiece(animal, targetCase.getAbscisse(), targetCase.getOrdonnee());
+            return true;
+        }
+        return false;
+    }
 }

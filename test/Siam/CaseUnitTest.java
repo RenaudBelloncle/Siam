@@ -34,4 +34,6 @@ public class CaseUnitTest {
         aCase.setOrdonnee(5);
         Assert.assertEquals(5, aCase.getOrdonnee());
     }
+
+
 }

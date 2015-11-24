@@ -20,6 +20,7 @@ public class Game implements Runnable, Constantes {
     private boolean deplacerPiece;
     private boolean changerOrientation;
     private boolean selectionnerOrientation;
+    private boolean enCoursDeDeplacement;
     private Joueur joueurActif;
     private Animal animalSelectionnee;
 
@@ -52,6 +53,7 @@ public class Game implements Runnable, Constantes {
         this.deplacerPiece = deplacerPiece;
         this.changerOrientation = changerOrientation;
         this.selectionnerOrientation = selectionnerOrientation;
+        this.enCoursDeDeplacement = false;
 
         this.animalSelectionnee = animalSelectionnee;
 
@@ -112,6 +114,14 @@ public class Game implements Runnable, Constantes {
         this.selectionnerOrientation = selectionnerOrientation;
     }
 
+    public boolean isEnCoursDeDeplacement() {
+        return enCoursDeDeplacement;
+    }
+
+    public void setEnCoursDeDeplacement(boolean enCoursDeDeplacement) {
+        this.enCoursDeDeplacement = enCoursDeDeplacement;
+    }
+
     public Joueur getJoueurActif() {
         return joueurActif;
     }
@@ -163,19 +173,18 @@ public class Game implements Runnable, Constantes {
     }
 
     private void affichageBouton() {
-        if (pieceSelectionnee) {
+        if(enCoursDeDeplacement){
+            vueJeu.getDeplacer().setEnabled(false);
+            vueJeu.getSortir().setEnabled(false);
+            vueJeu.getOrienter().setEnabled(false);
+            vueJeu.getPoser().setEnabled(false);
+        }
+        else if (pieceSelectionnee) {
             vueJeu.getDeplacer().setEnabled(true);
             vueJeu.getSortir().setEnabled(true);
             vueJeu.getOrienter().setEnabled(true);
         }
-        if (selectionnerOrientation) {
-            vueJeu.getPoser().setEnabled(false);
-            vueJeu.getFlecheHaut().setEnabled(true);
-            vueJeu.getFlecheBas().setEnabled(true);
-            vueJeu.getFlecheDroite().setEnabled(true);
-            vueJeu.getFlecheGauche().setEnabled(true);
-        }
-        if (!pieceSelectionnee && !selectionnerOrientation) {
+        else if (!pieceSelectionnee && !selectionnerOrientation) {
             if (!joueurActif.restePiece()) vueJeu.getPoser().setEnabled(false);
             else vueJeu.getPoser().setEnabled(true);
             vueJeu.getDeplacer().setEnabled(false);
@@ -186,5 +195,21 @@ public class Game implements Runnable, Constantes {
             vueJeu.getFlecheDroite().setEnabled(false);
             vueJeu.getFlecheGauche().setEnabled(false);
         }
+
+        if (selectionnerOrientation) {
+            vueJeu.getPoser().setEnabled(false);
+            vueJeu.getFlecheHaut().setEnabled(true);
+            vueJeu.getFlecheBas().setEnabled(true);
+            vueJeu.getFlecheDroite().setEnabled(true);
+            vueJeu.getFlecheGauche().setEnabled(true);
+        }
+
+    }
+
+    public void deselection(){
+        getAnimalSelectionnee().setSelected(false);
+        setAnimalSelectionnee(null);
+        setSelectionnerOrientation(false);
+        setPieceSelectionnee(false);
     }
 }
