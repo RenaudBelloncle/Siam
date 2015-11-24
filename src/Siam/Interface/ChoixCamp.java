@@ -1,5 +1,7 @@
 package Siam.Interface;
 
+import Siam.Camp;
+import Siam.Constantes;
 import Siam.Game;
 
 import javax.imageio.ImageIO;
@@ -12,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class ChoixCamp implements ActionListener {
+public class ChoixCamp implements ActionListener, Constantes {
 
     static final Random random = new Random();
 
@@ -22,23 +24,21 @@ public class ChoixCamp implements ActionListener {
 
     private JLabel titreCB;
     private JRadioButton JRBelephant, JRBrhinoceros, aleatoire;
+    private ButtonGroup BGchoix;
     private JButton valider, annuler;
 
     public ChoixCamp(Game game, JFrame fenetre) {
         this.game = game;
         this.fenetre = fenetre;
         outil = new OutilsFont();
-
         choixCamp();
-
         setControlChoixCamp(this);
     }
 
     public void choixCamp(){
         initChoixCamp();
         afficheChoixCamp();
-
-        fenetre.setSize(600, 400);
+        fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
         fenetre.setResizable(false);
         fenetre.setTitle("Siam");
@@ -51,7 +51,7 @@ public class ChoixCamp implements ActionListener {
         JRBelephant = new JRadioButton("Éléphant", true);
         JRBrhinoceros = new JRadioButton("Rhinocéros");
         aleatoire = new JRadioButton("Aléatoire");
-        ButtonGroup BGchoix = new ButtonGroup();
+        BGchoix = new ButtonGroup();
         BGchoix.add(JRBelephant);
         BGchoix.add(JRBrhinoceros);
         BGchoix.add(aleatoire);
@@ -82,19 +82,20 @@ public class ChoixCamp implements ActionListener {
 
                 public void paintComponent(Graphics g) {
                     super.paintComponent(g);
-                    g.drawImage(image, 0, 0, 600, 400, this);
+                    g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
                 }
             };
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        outil.changerFontJLabel(titreCB, 60, Color.orange, outil.getFontMenu());
-        outil.changerFontButton(valider, 50, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(annuler, 50, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(JRBelephant, 35, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(JRBrhinoceros, 35, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(aleatoire, 35, Color.orange, outil.getFontTexte());
+        //changement de la police
+        outil.changerFontJLabel(titreCB, 95, Color.orange, outil.getFontMenu());
+        outil.changerFontButton(valider, 80, Color.orange, outil.getFontTexte());
+        outil.changerFontButton(annuler, 80, Color.orange, outil.getFontTexte());
+        outil.changerFontJRadioButton(JRBelephant, 60, Color.orange, outil.getFontTexte());
+        outil.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outil.getFontTexte());
+        outil.changerFontJRadioButton(aleatoire, 60, Color.orange, outil.getFontTexte());
 
         panTitre.add(titreCB);
         panBouton1.add(JRBelephant);
@@ -135,7 +136,9 @@ public class ChoixCamp implements ActionListener {
             else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
             game.start();
         }
-        else if (source == getAnnuler()) System.exit(0);
+        else if (source == getAnnuler()){
+            Menu menu = new Menu(game, game.getFenetre());
+        }
     }
 
     public JButton getValider(){
