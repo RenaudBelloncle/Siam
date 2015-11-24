@@ -70,7 +70,13 @@ public class PlateauUnitTest {
 
     @Test
     public void testSortirPiece() {
-        //TODO
+        Piece piece = Mockito.mock(Piece.class);
+        Mockito.when(piece.getAbscisse()).thenReturn(0);
+        Mockito.when(piece.getOrdonnee()).thenReturn(0);
+        plateau.posePiece(piece);
+        Assert.assertSame(piece, plateau.getCase(0, 0));
+        plateau.sortirPiece(0, 0);
+        Assert.assertNotSame(piece, plateau.getCase(0, 0));
     }
 
     @Test
