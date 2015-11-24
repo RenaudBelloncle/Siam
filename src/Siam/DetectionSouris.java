@@ -37,13 +37,13 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             else if(game.getJoueurActif().moveAnimalOnFreeCase(game.getAnimalSelectionnee(),
                     plateau.getCase(colonne, ligne)))
             {
-                //TODO
+                //TODO JP
                 game.setEnCoursDeDeplacement(true);
                 game.setSelectionnerOrientation(true);
                 game.setDeplacerPiece(false);
             }
             else {
-                //TODO
+                //TODO JP
                 game.deselection();
             }
             game.setDeplacerPiece(false);

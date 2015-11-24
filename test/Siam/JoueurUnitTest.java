@@ -2,7 +2,9 @@ package Siam;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 
 public class JoueurUnitTest {
@@ -38,21 +40,39 @@ public class JoueurUnitTest {
         joueur.posePiece(0, 0);
         Assert.assertNotSame(joueur.getPlateau().getCase(1, 1), joueur.getPlateau().getCase(0, 0));
         Assert.assertNull(joueur.posePiece(0, 0));
-        joueur.posePiece(1, 1);
-        joueur.posePiece(2, 2);
-        joueur.posePiece(3, 3);
-        joueur.posePiece(4, 4);
-        //TODO
     }
 
     @Test
     public void testRestePiece() {
-        //TODO
+        Plateau plateau = Mockito.mock(Plateau.class);
+        Case aCase = Mockito.mock(Case.class);
+        Mockito.when(plateau.getCase(0, 0)).thenReturn(aCase);
+        Mockito.when(plateau.getCase(0, 1)).thenReturn(aCase);
+        Mockito.when(plateau.getCase(0, 2)).thenReturn(aCase);
+        Mockito.when(plateau.getCase(0, 3)).thenReturn(aCase);
+        Mockito.when(plateau.getCase(0, 4)).thenReturn(aCase);
+
+        joueur.setPlateau(plateau);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 0);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 1);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 2);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 3);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 4);
+        Assert.assertFalse(joueur.restePiece());
     }
 
     @Test
     public void testSortirPiece() {
-        //TODO
+        joueur.setPlateau(new Plateau(5));
+        joueur.posePiece(0, 0);
+        Animal animal = (Animal)joueur.getPlateau().getCase(0, 0);
+        joueur.sortirPiece(0, 0);
+        Assert.assertNotSame(animal, joueur.getPlateau().getCase(0, 0));
     }
 
     @Test
@@ -78,7 +98,7 @@ public class JoueurUnitTest {
 
     @Test
     public void testMoveAnimalToPush(){
-        //TODO
+        //TODO JP
         //chope la ligne de piece dans la meme direction
         //fait les calculs : montagne -1, animal mal orient� = 0, animal bien orient� = 1, animal oppos� = 1
         //si > 0 pousse ,si == 0 && montagne pousse
