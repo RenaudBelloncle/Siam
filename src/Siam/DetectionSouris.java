@@ -44,6 +44,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             }
             else {
                 //TODO
+                game.deselection();
             }
             game.setDeplacerPiece(false);
         }
