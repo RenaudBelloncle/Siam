@@ -124,11 +124,11 @@ public class VueJeu implements ActionListener, Constantes {
                 game.getJoueurActif().sortirPiece(game.getAnimalSelectionnee().getAbscisse(), game.getAnimalSelectionnee().getOrdonnee());
                 game.changerJoueurActif();
             } else {
-                game.getAnimalSelectionnee().setSelected(false);
+                game.getAnimalSelectionnee().setSelectionnee(false);
             }
+            game.setPieceSelectionnee(false);
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
-            game.setPieceSelectionnee(false);
             game.setSortirPiece(false);
         }
         if (source == deplacer && game.isPieceSelectionnee()) {
@@ -140,40 +140,40 @@ public class VueJeu implements ActionListener, Constantes {
         }
         if (game.isSelectionnerOrientation() && source == flecheHaut) {
             game.getAnimalSelectionnee().setOrientation(Orientation.HAUT);
-            game.getAnimalSelectionnee().setSelected(false);
+            game.getAnimalSelectionnee().setSelectionnee(false);
+            game.setPieceSelectionnee(false);
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
-            game.setPieceSelectionnee(false);
             game.setEnCoursDeDeplacement(false);
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();
         }
         if (game.isSelectionnerOrientation() && source == flecheDroite) {
             game.getAnimalSelectionnee().setOrientation(Orientation.DROITE);
-            game.getAnimalSelectionnee().setSelected(false);
+            game.getAnimalSelectionnee().setSelectionnee(false);
+            game.setPieceSelectionnee(false);
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
-            game.setPieceSelectionnee(false);
             game.setEnCoursDeDeplacement(false);
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();
         }
         if (game.isSelectionnerOrientation() && source == flecheBas) {
             game.getAnimalSelectionnee().setOrientation(Orientation.BAS);
-            game.getAnimalSelectionnee().setSelected(false);
+            game.getAnimalSelectionnee().setSelectionnee(false);
+            game.setPieceSelectionnee(false);
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
-            game.setPieceSelectionnee(false);
             game.setEnCoursDeDeplacement(false);
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();
         }
         if (game.isSelectionnerOrientation() && source == flecheGauche) {
             game.getAnimalSelectionnee().setOrientation(Orientation.GAUCHE);
-            game.getAnimalSelectionnee().setSelected(false);
+            game.getAnimalSelectionnee().setSelectionnee(false);
+            game.setPieceSelectionnee(false);
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
-            game.setPieceSelectionnee(false);
             game.setEnCoursDeDeplacement(false);
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();

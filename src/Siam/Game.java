@@ -181,10 +181,10 @@ public class Game implements Runnable, Constantes {
         }
         else if (pieceSelectionnee) {
             vueJeu.getDeplacer().setEnabled(true);
-            vueJeu.getSortir().setEnabled(true);
+            if (animalSelectionnee.getAbscisse() == 0 || animalSelectionnee.getOrdonnee() == 0 || animalSelectionnee.getAbscisse() == NOMBRE_CASE_INI-1 || animalSelectionnee.getOrdonnee() == NOMBRE_CASE_INI-1) vueJeu.getSortir().setEnabled(true);
             vueJeu.getOrienter().setEnabled(true);
         }
-        else if (!pieceSelectionnee && !selectionnerOrientation) {
+        else if (!selectionnerOrientation) {
             if (!joueurActif.restePiece()) vueJeu.getPoser().setEnabled(false);
             else vueJeu.getPoser().setEnabled(true);
             vueJeu.getDeplacer().setEnabled(false);
@@ -195,7 +195,6 @@ public class Game implements Runnable, Constantes {
             vueJeu.getFlecheDroite().setEnabled(false);
             vueJeu.getFlecheGauche().setEnabled(false);
         }
-
         if (selectionnerOrientation) {
             vueJeu.getPoser().setEnabled(false);
             vueJeu.getFlecheHaut().setEnabled(true);
@@ -207,9 +206,9 @@ public class Game implements Runnable, Constantes {
     }
 
     public void deselection(){
-        getAnimalSelectionnee().setSelected(false);
+        setPieceSelectionnee(false);
+        getAnimalSelectionnee().setSelectionnee(false);
         setAnimalSelectionnee(null);
         setSelectionnerOrientation(false);
-        setPieceSelectionnee(false);
     }
 }

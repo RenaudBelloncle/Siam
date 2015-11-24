@@ -27,13 +27,13 @@ public class AnimalUnitTest {
 
     @Test
     public void testIsSelected() {
-        Assert.assertFalse(animal.isSelected());
+        Assert.assertFalse(animal.estSelectionnee());
     }
 
     @Test
     public void testSetSelected() {
-        animal.setSelected(true);
-        Assert.assertTrue(animal.isSelected());
+        animal.setSelectionnee(true);
+        Assert.assertTrue(animal.estSelectionnee());
     }
 
     @Test

@@ -59,7 +59,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                     game.setPlacerPiece(false);
                     return;
                 }
-                animal.setSelected(true);
+                animal.setSelectionnee(true);
                 game.setAnimalSelectionnee(animal);
                 game.setPlacerPiece(false);
                 game.setSelectionnerOrientation(true);
@@ -68,7 +68,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             if (plateau.getCase(colonne, ligne) instanceof Animal) {
                 if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == game.getJoueurActif().getCamp()) {
                     Animal animal = (Animal)plateau.getCase(colonne, ligne);
-                    animal.setSelected(true);
+                    animal.setSelectionnee(true);
                     game.setPieceSelectionnee(true);
                     game.setAnimalSelectionnee(animal);
                 }

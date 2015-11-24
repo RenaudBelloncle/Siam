@@ -63,7 +63,7 @@ public class JoueurUnitTest {
         joueur.setPlateau(plateau);
 
         Mockito.when(plateau.getCase(0, 1)).thenReturn(targetCase);
-        Mockito.when(targetCase.isVoid()).thenReturn(false, true);
+        Mockito.when(targetCase.estVide()).thenReturn(false, true);
         Mockito.when(targetCase.getAbscisse()).thenReturn(0);
         Mockito.when(targetCase.getOrdonnee()).thenReturn(0);
 
