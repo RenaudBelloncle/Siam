@@ -9,8 +9,10 @@ public class Game implements Runnable, Constantes {
     private Plateau plateau;
     private Joueur[] joueurs;
 
-    // L'ecran gere un tableau de pixel
+    private VueJeu vueJeu;
     private JFrame fenetre;
+
+    private DetectionSouris souris;
 
     private boolean pieceSelectionnee;
     private boolean placerPiece;
@@ -41,6 +43,8 @@ public class Game implements Runnable, Constantes {
 
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
+
+        souris = new DetectionSouris(this, plateau);
 
         this.pieceSelectionnee = pieceSelectionnee;
         this.placerPiece = placerPiece;
@@ -137,8 +141,7 @@ public class Game implements Runnable, Constantes {
         running = true;
         thread = new Thread(this, "Affichage");
 
-        // Fenetre + debut de gestion graphique
-        new VueJeu(this,fenetre);
+        vueJeu = new VueJeu(this, fenetre, souris);
         thread.start();
     }
 
@@ -153,15 +156,35 @@ public class Game implements Runnable, Constantes {
 
     public void run() {
         while(running) {
-            update();
+            affichageBouton();
             fenetre.repaint();
         }
         stop();
     }
 
-    public void update() {
-
+    private void affichageBouton() {
+        if (pieceSelectionnee) {
+            vueJeu.getDeplacer().setEnabled(true);
+            vueJeu.getSortir().setEnabled(true);
+            vueJeu.getOrienter().setEnabled(true);
+        }
+        if (selectionnerOrientation) {
+            vueJeu.getPoser().setEnabled(false);
+            vueJeu.getFlecheHaut().setEnabled(true);
+            vueJeu.getFlecheBas().setEnabled(true);
+            vueJeu.getFlecheDroite().setEnabled(true);
+            vueJeu.getFlecheGauche().setEnabled(true);
+        }
+        if (!pieceSelectionnee && !selectionnerOrientation) {
+            if (!joueurActif.restePiece()) vueJeu.getPoser().setEnabled(false);
+            else vueJeu.getPoser().setEnabled(true);
+            vueJeu.getDeplacer().setEnabled(false);
+            vueJeu.getSortir().setEnabled(false);
+            vueJeu.getOrienter().setEnabled(false);
+            vueJeu.getFlecheHaut().setEnabled(false);
+            vueJeu.getFlecheBas().setEnabled(false);
+            vueJeu.getFlecheDroite().setEnabled(false);
+            vueJeu.getFlecheGauche().setEnabled(false);
+        }
     }
-
-
 }
