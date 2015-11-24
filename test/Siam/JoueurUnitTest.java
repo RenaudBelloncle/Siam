@@ -1,11 +1,8 @@
 package Siam;
 
-import Siam.Exception.RestePieceException;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 
 public class JoueurUnitTest {
@@ -37,11 +34,19 @@ public class JoueurUnitTest {
 
     @Test
     public void testPosePiece() {
+        joueur.setPlateau(new Plateau(5));
+        joueur.posePiece(0, 0);
+        Assert.assertNotSame(joueur.getPlateau().getCase(1, 1), joueur.getPlateau().getCase(0, 0));
+        Assert.assertNull(joueur.posePiece(0, 0));
+        joueur.posePiece(1, 1);
+        joueur.posePiece(2, 2);
+        joueur.posePiece(3, 3);
+        joueur.posePiece(4, 4);
         //TODO
     }
 
     @Test
-    public void testRestePiece() throws Exception {
+    public void testRestePiece() {
         //TODO
     }
 
@@ -75,7 +80,7 @@ public class JoueurUnitTest {
     public void testMoveAnimalToPush(){
         //TODO
         //chope la ligne de piece dans la meme direction
-        //fait les calculs : montagne -1, animal mal orienté = 0, animal bien orienté = 1, animal opposé = 1
+        //fait les calculs : montagne -1, animal mal orientï¿½ = 0, animal bien orientï¿½ = 1, animal opposï¿½ = 1
         //si > 0 pousse ,si == 0 && montagne pousse
         //sinon ne marche pas
     }

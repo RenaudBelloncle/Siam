@@ -22,7 +22,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
     }
 
     private void clickPerformed(int colonne, int ligne) {
-        if (game.isPieceSelectionnee() && !game.isDeplacerPiece()) {
+        if (game.isPieceSelectionnee() && !game.isDeplacerPiece() && !game.isEnCoursDeDeplacement()) {
             game.deselection();
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
         }
@@ -63,7 +63,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 game.setPlacerPiece(false);
                 game.setSelectionnerOrientation(true);
             }
-        } else if(!game.isSelectionnerOrientation()) {
+        } else if(!game.isSelectionnerOrientation() && !game.isEnCoursDeDeplacement()) {
             if (plateau.getCase(colonne, ligne) instanceof Animal) {
                 if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == game.getJoueurActif().getCamp()) {
                     Animal animal = (Animal)plateau.getCase(colonne, ligne);
