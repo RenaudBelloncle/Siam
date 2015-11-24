@@ -132,7 +132,7 @@ public class VueJeu implements ActionListener, Constantes {
             game.setSortirPiece(false);
         }
         if (source == deplacer && game.isPieceSelectionnee()) {
-            game.setDeplacerPiece(false);
+            game.setDeplacerPiece(true);
         }
         if (source == orienter && game.isPieceSelectionnee()) {
             game.setChangerOrientation(true);
@@ -144,6 +144,7 @@ public class VueJeu implements ActionListener, Constantes {
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
             game.setPieceSelectionnee(false);
+            game.setEnCoursDeDeplacement(false);
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();
         }
@@ -153,6 +154,7 @@ public class VueJeu implements ActionListener, Constantes {
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
             game.setPieceSelectionnee(false);
+            game.setEnCoursDeDeplacement(false);
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();
         }
@@ -162,6 +164,7 @@ public class VueJeu implements ActionListener, Constantes {
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
             game.setPieceSelectionnee(false);
+            game.setEnCoursDeDeplacement(false);
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();
         }
@@ -171,6 +174,7 @@ public class VueJeu implements ActionListener, Constantes {
             game.setAnimalSelectionnee(null);
             game.setSelectionnerOrientation(false);
             game.setPieceSelectionnee(false);
+            game.setEnCoursDeDeplacement(false);
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
             game.changerJoueurActif();
         }
