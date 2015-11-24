@@ -38,7 +38,7 @@ public class Case {
         ecran.renderSprite(abscisse, ordonnee, Sprite.caseVide,false,false);
     }
 
-    public boolean isVoid(){
+    public boolean estVide(){
         return true;
     }
 }

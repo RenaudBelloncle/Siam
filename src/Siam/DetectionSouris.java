@@ -26,7 +26,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             game.deselection();
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
         }
-        if(game.isDeplacerPiece()){
+        if(game.isDeplacerPiece()) {
             if(!game.getPlateau().testCaseAdjacente(game.getAnimalSelectionnee(),
                     plateau.getCase(colonne, ligne)))
             {
@@ -37,13 +37,14 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             else if(game.getJoueurActif().moveAnimalOnFreeCase(game.getAnimalSelectionnee(),
                     plateau.getCase(colonne, ligne)))
             {
-                //TODO
+                //TODO JP
                 game.setEnCoursDeDeplacement(true);
                 game.setSelectionnerOrientation(true);
                 game.setDeplacerPiece(false);
             }
             else {
-                //TODO
+                //TODO JP
+                game.deselection();
             }
             game.setDeplacerPiece(false);
         }
@@ -58,16 +59,16 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                     game.setPlacerPiece(false);
                     return;
                 }
-                animal.setSelected(true);
+                animal.setSelectionnee(true);
                 game.setAnimalSelectionnee(animal);
                 game.setPlacerPiece(false);
                 game.setSelectionnerOrientation(true);
             }
-        } else if(!game.isSelectionnerOrientation() && !game.isEnCoursDeDeplacement()) {
+        } else if(!game.isSelectionnerOrientation() && !game.isEnCoursDeDeplacement() && !game.isDeplacerPiece()) {
             if (plateau.getCase(colonne, ligne) instanceof Animal) {
                 if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == game.getJoueurActif().getCamp()) {
                     Animal animal = (Animal)plateau.getCase(colonne, ligne);
-                    animal.setSelected(true);
+                    animal.setSelectionnee(true);
                     game.setPieceSelectionnee(true);
                     game.setAnimalSelectionnee(animal);
                 }

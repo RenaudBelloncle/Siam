@@ -1,14 +1,13 @@
 package Siam.Interface;
+
 import Siam.Constantes;
 import Siam.DetectionSouris;
 import Siam.Game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-
 
 public class PanelPlateau extends JPanel implements Constantes{
     private BufferedImage image;

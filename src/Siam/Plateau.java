@@ -14,20 +14,23 @@ public class Plateau {
         plateau = new Case[tailleCote][tailleCote];
 
         for(int y = 0; y < tailleCote; y++){
-            for(int x = 0; x < tailleCote; x++){
-                plateau[x][y] = new Case(x,y);
-            }
+            for(int x = 0; x < tailleCote; x++) plateau[x][y] = new Case(x,y);
         }
+
+        initMontagne();
+    }
+
+    public void initMontagne() {
         plateau[2][2] = new Montagne(2,2);
         plateau[1][2] = new Montagne(1,2);
         plateau[3][2] = new Montagne(3,2);
     }
 
-    public Case getCase(int x, int y){
+    public Case getCase(int x, int y) {
         return plateau[x][y];
     }
 
-    public int getTailleCote(){
+    public int getTailleCote() {
         return tailleCote;
     }
 
@@ -39,7 +42,7 @@ public class Plateau {
         plateau[colonne][ligne] = new Case(colonne, ligne);
     }
 
-    public void render(Ecran ecran){
+    public void render(Ecran ecran) {
         for(int i = 0; i < tailleCote; i ++){
             for(int j = 0; j < tailleCote; j++){
                 getCase(j,i).render(ecran);
@@ -48,28 +51,22 @@ public class Plateau {
     }
 
     //Methode qui ne test rien, FAIRE LES TESTS AVANT l'appel de cette methode
-    public void deplacerPiece(Piece piece, int absTarget, int ordTarget){
+    public void deplacerPiece(Piece piece, int absTarget, int ordTarget) {
         plateau[absTarget][ordTarget] = piece;
         plateau[piece.getAbscisse()][piece.getOrdonnee()] = new Case(piece.getAbscisse(), piece.getOrdonnee());
         piece.setAbscisse(absTarget);
         piece.setOrdonnee(ordTarget);
     }
 
-    public boolean testCaseAdjacente(Case case1, Case case2){
+    public boolean testCaseAdjacente(Case case1, Case case2) {
         int diffAbs = case1.getAbscisse() - case2.getAbscisse();
         int diffOrd = case1.getOrdonnee() - case2.getOrdonnee();
-
-        if((diffAbs == 1 || diffAbs == -1) && diffOrd == 0
-        || diffAbs == 0 && (diffOrd == 1 || diffOrd == -1))
-        {
-            return true;
-        }
-        return false;
+        return (diffAbs == 1 || diffAbs == -1) && diffOrd == 0 || diffAbs == 0 && (diffOrd == 1 || diffOrd == -1);
     }
 
-    public ArrayList<Piece> getLinePushed(Animal pusher){
+    public ArrayList<Piece> getLinePushed(Animal pusher) {
         boolean nextCaseIsNotVoid = true;
-        ArrayList<Piece> ret = new ArrayList<Piece>();
+        ArrayList<Piece> ret = new ArrayList<>();
         ret.add(pusher);
         int currentAbs = pusher.getAbscisse();
         int currentOrd = pusher.getOrdonnee();
@@ -97,7 +94,7 @@ public class Plateau {
                     || currentOrd < 0 || currentOrd >= tailleCote){
                 nextCaseIsNotVoid = false;
             }
-            else if(getCase(currentAbs, currentOrd).isVoid()){
+            else if(getCase(currentAbs, currentOrd).estVide()){
                 nextCaseIsNotVoid = false;
             }
             else{
@@ -125,16 +122,16 @@ public class Plateau {
                 oppose = Orientation.GAUCHE;
                 break;
         }
-        for(int i = 0; i < ligne.size(); i++){
-            if(ligne.get(i) instanceof Animal){
-                if(((Animal)ligne.get(i)).getOrientation() == orientationPush){
+        for (Piece aLigne : ligne) {
+            if (aLigne instanceof Animal) {
+                if (((Animal) aLigne).getOrientation() == orientationPush) {
                     ret.addSomme(1);
                 }
-                if(((Animal)ligne.get(i)).getOrientation() == oppose){
+                if (((Animal) aLigne).getOrientation() == oppose) {
                     ret.addSomme(-1);
                 }
             }
-            if(ligne.get(i) instanceof Montagne){
+            if (aLigne instanceof Montagne) {
                 ret.addSomme(-1);
                 ret.setPeutEtreNull(true);
             }
@@ -142,15 +139,7 @@ public class Plateau {
         return ret;
     }
 
-    public boolean analyseTokenPoussee(TokenSommePoussee token){
-        if(token.getSomme() > 0){
-            return true;
-        }
-
-        if(token.getSomme() < 0){
-            return false;
-        }
-
-        return token.isPeutEtreNull();
+    public boolean analyseTokenPoussee(TokenSommePoussee token) {
+        return token.getSomme() > 0 || token.getSomme() >= 0 && token.isPeutEtreNull();
     }
 }

@@ -1,8 +1,6 @@
 package Siam.Interface;
 
-import Siam.Camp;
 import Siam.Game;
-import Siam.Joueur;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,28 +15,29 @@ import java.util.Random;
 public class ChoixCamp implements ActionListener {
 
     static final Random random = new Random();
+
     private Game game;
-    private Joueur joueur;
     private JFrame fenetre;
     private OutilsFont outil;
 
     private JLabel titreCB;
     private JRadioButton JRBelephant, JRBrhinoceros, aleatoire;
-    private ButtonGroup BGchoix;
     private JButton valider, annuler;
 
-    public ChoixCamp(Game game, Joueur joueur,JFrame _fenetre) {
+    public ChoixCamp(Game game, JFrame fenetre) {
         this.game = game;
-        this.joueur = joueur;
-        fenetre = _fenetre;
+        this.fenetre = fenetre;
         outil = new OutilsFont();
+
         choixCamp();
+
         setControlChoixCamp(this);
     }
 
     public void choixCamp(){
         initChoixCamp();
         afficheChoixCamp();
+
         fenetre.setSize(600, 400);
         fenetre.setLocationRelativeTo(null);
         fenetre.setResizable(false);
@@ -52,7 +51,7 @@ public class ChoixCamp implements ActionListener {
         JRBelephant = new JRadioButton("Éléphant", true);
         JRBrhinoceros = new JRadioButton("Rhinocéros");
         aleatoire = new JRadioButton("Aléatoire");
-        BGchoix = new ButtonGroup();
+        ButtonGroup BGchoix = new ButtonGroup();
         BGchoix.add(JRBelephant);
         BGchoix.add(JRBrhinoceros);
         BGchoix.add(aleatoire);
@@ -90,7 +89,6 @@ public class ChoixCamp implements ActionListener {
             e.printStackTrace();
         }
 
-        //changement de la police
         outil.changerFontJLabel(titreCB, 60, Color.orange, outil.getFontMenu());
         outil.changerFontButton(valider, 50, Color.orange, outil.getFontTexte());
         outil.changerFontButton(annuler, 50, Color.orange, outil.getFontTexte());
@@ -130,27 +128,14 @@ public class ChoixCamp implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (source == getValider()){
-            if(getJRBelephant().isSelected()){
-                game.setJoueurActif(game.getJoueurs()[0]);
-                //joueur.setCamp(Camp.ELEPHANT);
-            }
-            else if (getJRBrhinoceros().isSelected()){
-                game.setJoueurActif(game.getJoueurs()[1]);
-                //joueur.setCamp(Camp.RHINOCEROS);
-            }
-            else {
-                game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
-                /*if(random.nextBoolean())
-                    joueur.setCamp(Camp.ELEPHANT);
-                else
-                    joueur.setCamp(Camp.RHINOCEROS);*/
-            }
+        if (source == getValider())
+        {
+            if(getJRBelephant().isSelected())game.setJoueurActif(game.getJoueurs()[0]);
+            else if (getJRBrhinoceros().isSelected())game.setJoueurActif(game.getJoueurs()[1]);
+            else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
             game.start();
         }
-        else if (source == getAnnuler()){
-            System.exit(0);
-        }
+        else if (source == getAnnuler()) System.exit(0);
     }
 
     public JButton getValider(){
