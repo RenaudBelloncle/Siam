@@ -22,16 +22,34 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
     }
 
     private void clickPerformed(int colonne, int ligne) {
-        if (game.isPieceSelectionnee()) {
-            game.getAnimalSelectionnee().setSelected(false);
-            game.setAnimalSelectionnee(null);
-            game.setSelectionnerOrientation(false);
-            game.setPieceSelectionnee(false);
+        if (game.isPieceSelectionnee() && !game.isDeplacerPiece() && !game.isEnCoursDeDeplacement()) {
+            game.deselection();
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
         }
-        if(game.isPlacerPiece()) {
+        if(game.isDeplacerPiece()){
+            if(!game.getPlateau().testCaseAdjacente(game.getAnimalSelectionnee(),
+                    plateau.getCase(colonne, ligne)))
+            {
+                game.deselection();
+                game.setDeplacerPiece(false);
+            }
+
+            else if(game.getJoueurActif().moveAnimalOnFreeCase(game.getAnimalSelectionnee(),
+                    plateau.getCase(colonne, ligne)))
+            {
+                //TODO
+                game.setEnCoursDeDeplacement(true);
+                game.setSelectionnerOrientation(true);
+                game.setDeplacerPiece(false);
+            }
+            else {
+                //TODO
+            }
+            game.setDeplacerPiece(false);
+        }
+        if (game.isPlacerPiece()) {
             if (!game.getJoueurActif().restePiece()) {
-                game.setPlacerPiece(false);
+                game.deselection();
                 return;
             }
             if (colonne == 0 || colonne == 4 || ligne == 0 || ligne == 4) {
@@ -45,7 +63,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 game.setPlacerPiece(false);
                 game.setSelectionnerOrientation(true);
             }
-        } else {
+        } else if(!game.isSelectionnerOrientation() && !game.isEnCoursDeDeplacement()) {
             if (plateau.getCase(colonne, ligne) instanceof Animal) {
                 if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == game.getJoueurActif().getCamp()) {
                     Animal animal = (Animal)plateau.getCase(colonne, ligne);
