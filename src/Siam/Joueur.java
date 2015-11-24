@@ -79,4 +79,20 @@ public class Joueur {
         }
         return false;
     }
+
+    //TODO CHANGER LE RETOUR DE LA FONCTION POUR QUELLE DONNE LE JOUEUR GAGNANT
+    public TokenResultatPoussee MoveAnimalToPush(Animal pusher){
+        ArrayList<Piece> ligne = plateau.getLinePushed(pusher);
+        TokenSommePoussee resultat = plateau.calculResultatPoussee(ligne);
+        boolean pousseeReussie = false;
+        Camp campGagnant = null;
+        if(plateau.analyseTokenPoussee(resultat)){
+            Piece pieceSortie = plateau.decalageLigne(ligne);
+            pousseeReussie = true;
+            if(pieceSortie != null && pieceSortie instanceof Montagne){
+                //appell condition de victoire
+            }
+        }
+        return new TokenResultatPoussee(pousseeReussie, camp);
+    }
 }

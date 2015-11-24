@@ -3,6 +3,7 @@ package Siam;
 import Siam.Interface.*;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Game implements Runnable, Constantes {
 
@@ -211,5 +212,35 @@ public class Game implements Runnable, Constantes {
         setAnimalSelectionnee(null);
         setSelectionnerOrientation(false);
         setPieceSelectionnee(false);
+    }
+
+    public boolean testOrientationEntreAnimalEtCase(Animal animal,Case uneCase){
+        switch(animal.getOrientation()){
+            case BAS:
+                return animal.getAbscisse() == uneCase.getAbscisse()
+                        && animal.getOrdonnee() + 1 == uneCase.getOrdonnee();
+            case HAUT:
+                return animal.getAbscisse() == uneCase.getAbscisse()
+                        && animal.getOrdonnee()  -1 == uneCase.getOrdonnee();
+            case DROITE:
+                return animal.getAbscisse() + 1 == uneCase.getAbscisse()
+                        && animal.getOrdonnee() == uneCase.getOrdonnee();
+            case GAUCHE:
+                return animal.getAbscisse() - 1 == uneCase.getAbscisse()
+                        && animal.getOrdonnee() == uneCase.getOrdonnee();
+        }
+        return false;
+    }
+
+    //TODO pour Nathan !
+    public Camp trouveCampGagnant(ArrayList <Piece> ligne){
+        //recuperer l'orientation de la premiere case, qui contient l'animal qui pousse, et stocker cette orientation
+                //dans une variable "orientationPoussee" par ex
+        //parcourir le tab ligne en partant de la fin (on peut commencer par l'avant derniere case
+                //car la derniere case contient une montagne (normalement)
+        //verifier si la case actuel est un animal et si il est orienté dans la meme direction que orientationPoussee
+                //si c'est le cas, retourner le camp de cette animal
+
+        return null; // a supprimer (cette ligne est la pour que le code compile en attendant que la methode soit implementé)
     }
 }

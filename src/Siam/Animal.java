@@ -72,8 +72,4 @@ public class Animal extends Piece {
             }
         }
     }
-
-    public boolean isVoid(){
-        return false;
-    }
 }

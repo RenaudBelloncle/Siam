@@ -175,8 +175,43 @@ public class PlateauUnitTest {
 
     @Test
     public void testDecalageLigne(){
-        //recupere une ligne et la decale
-        //gere la sortie des pieces et retourne les pieces sorties
+        Animal pusher = Mockito.mock(Animal.class);
+        Mockito.when(pusher.getAbscisse()).thenReturn(0);
+        Mockito.when(pusher.getOrdonnee()).thenReturn(0);
+        Mockito.when(pusher.getOrientation()).thenReturn(Orientation.DROITE);
+        plateau.posePiece(pusher);
+        Montagne montagne = Mockito.mock(Montagne.class);
+        Mockito.when(montagne.getAbscisse()).thenReturn(1);
+        Mockito.when(montagne.getOrdonnee()).thenReturn(0);
+        plateau.posePiece(montagne);
+        Animal animal2 = Mockito.mock(Animal.class);
+        Mockito.when(animal2.getAbscisse()).thenReturn(1);
+        Mockito.when(animal2.getOrdonnee()).thenReturn(1);
+        Mockito.when(animal2.getOrientation()).thenReturn(Orientation.HAUT);
+        plateau.posePiece(animal2);
+        Piece piece2 = Mockito.mock(Piece.class);
+        Mockito.when(piece2.getAbscisse()).thenReturn(0);
+        Mockito.when(piece2.getOrdonnee()).thenReturn(3);
+        plateau.posePiece(piece2);
+
+        ArrayList <Piece> ligne = new ArrayList<>();
+        ligne.add(pusher);
+        ligne.add(montagne);
+
+        Piece pieceRetournee = plateau.decalageLigne(ligne);
+
+        //decalage simple
+        Assert.assertEquals(pieceRetournee, null);
+
+        //decalage avec sortie
+        ligne.clear();
+        ligne.add(animal2);
+        ligne.add(pusher);
+
+        pieceRetournee = plateau.decalageLigne(ligne);
+        boolean ret = pieceRetournee != null;
+
+        Assert.assertEquals(ret, true);
     }
 }
 
