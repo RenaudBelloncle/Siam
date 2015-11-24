@@ -14,11 +14,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class ChoixCamp extends JFrame implements ActionListener {
+public class ChoixCamp implements ActionListener {
 
     static final Random random = new Random();
     private Game game;
     private Joueur joueur;
+    private JFrame fenetre;
     private OutilsFont outil;
 
     private JLabel titreCB;
@@ -26,9 +27,10 @@ public class ChoixCamp extends JFrame implements ActionListener {
     private ButtonGroup BGchoix;
     private JButton valider, annuler;
 
-    public ChoixCamp(Game game, Joueur joueur) {
+    public ChoixCamp(Game game, Joueur joueur,JFrame _fenetre) {
         this.game = game;
         this.joueur = joueur;
+        fenetre = _fenetre;
         outil = new OutilsFont();
         choixCamp();
         setControlChoixCamp(this);
@@ -37,18 +39,19 @@ public class ChoixCamp extends JFrame implements ActionListener {
     public void choixCamp(){
         initChoixCamp();
         afficheChoixCamp();
-        setSize(600, 400);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setTitle("Siam");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setSize(600, 400);
+        fenetre.setLocationRelativeTo(null);
+        fenetre.setResizable(false);
+        fenetre.setTitle("Siam");
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setVisible(true);
     }
 
     public void initChoixCamp(){
         titreCB = new JLabel("Choisis un camp");
-        JRBelephant = new JRadioButton("Éléphant");
+        JRBelephant = new JRadioButton("Éléphant", true);
         JRBrhinoceros = new JRadioButton("Rhinocéros");
-        aleatoire = new JRadioButton("Aléatoire", true);
+        aleatoire = new JRadioButton("Aléatoire");
         BGchoix = new ButtonGroup();
         BGchoix.add(JRBelephant);
         BGchoix.add(JRBrhinoceros);
@@ -113,7 +116,7 @@ public class ChoixCamp extends JFrame implements ActionListener {
         panPrincipal.add(panValiderBouton);
         panPrincipal.setLayout(new BoxLayout(panPrincipal, BoxLayout.Y_AXIS));
 
-        setContentPane(panPrincipal);
+        fenetre.setContentPane(panPrincipal);
     }
 
     public void setControlChoixCamp(ActionListener listener){
@@ -143,7 +146,7 @@ public class ChoixCamp extends JFrame implements ActionListener {
                 else
                     joueur.setCamp(Camp.RHINOCEROS);*/
             }
-            game.start(this);
+            game.start();
         }
         else if (source == getAnnuler()){
             System.exit(0);
