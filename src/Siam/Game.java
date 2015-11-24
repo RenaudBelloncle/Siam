@@ -9,8 +9,9 @@ public class Game implements Runnable, Constantes {
     private Plateau plateau;
     private Joueur[] joueurs;
 
-    // L'ecran gere un tableau de pixel
     private JFrame fenetre;
+
+    private DetectionSouris souris;
 
     private boolean pieceSelectionnee;
     private boolean placerPiece;
@@ -41,6 +42,8 @@ public class Game implements Runnable, Constantes {
 
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
+
+        souris = new DetectionSouris(this, plateau);
 
         this.pieceSelectionnee = pieceSelectionnee;
         this.placerPiece = placerPiece;
@@ -137,8 +140,7 @@ public class Game implements Runnable, Constantes {
         running = true;
         thread = new Thread(this, "Affichage");
 
-        // Fenetre + debut de gestion graphique
-        new VueJeu(this,fenetre);
+        new VueJeu(this, plateau, fenetre, souris);
         thread.start();
     }
 
@@ -153,15 +155,8 @@ public class Game implements Runnable, Constantes {
 
     public void run() {
         while(running) {
-            update();
             fenetre.repaint();
         }
         stop();
     }
-
-    public void update() {
-
-    }
-
-
 }
