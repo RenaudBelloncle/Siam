@@ -99,9 +99,7 @@ public class JoueurUnitTest {
     @Test
     public void testMoveAnimalToPush(){
         //TODO JP
-        //chope la ligne de piece dans la meme direction
-        //fait les calculs : montagne -1, animal mal orient� = 0, animal bien orient� = 1, animal oppos� = 1
-        //si > 0 pousse ,si == 0 && montagne pousse
-        //sinon ne marche pas
+        // quand j'aurais la foi
+        //verifier la condition de victoire
     }
 }

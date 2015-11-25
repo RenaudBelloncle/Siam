@@ -26,24 +26,28 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             game.deselection();
             if (game.isChangerOrientation()) game.setChangerOrientation(false);
         }
-        if(game.isDeplacerPiece()) {
+        if(game.isDeplacerPiece() && game.getAnimalSelectionnee() != null) {
             if(!game.getPlateau().testCaseAdjacente(game.getAnimalSelectionnee(),
                     plateau.getCase(colonne, ligne)))
             {
                 game.deselection();
                 game.setDeplacerPiece(false);
             }
-
             else if(game.getJoueurActif().moveAnimalOnFreeCase(game.getAnimalSelectionnee(),
-                    plateau.getCase(colonne, ligne)))
+                        plateau.getCase(colonne, ligne)))
             {
-                //TODO JP
                 game.setEnCoursDeDeplacement(true);
                 game.setSelectionnerOrientation(true);
                 game.setDeplacerPiece(false);
             }
             else {
-                //TODO JP
+                if(game.testOrientationEntreAnimalEtCase(game.getAnimalSelectionnee(),
+                        plateau.getCase(colonne, ligne))) {
+                    TokenResultatPoussee ret = game.getJoueurActif().MoveAnimalToPush(game.getAnimalSelectionnee());
+                    if(ret.isPousseeEffectue()){
+                        game.changerJoueurActif();
+                    }
+                }
                 game.deselection();
             }
             game.setDeplacerPiece(false);

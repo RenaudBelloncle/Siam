@@ -13,4 +13,8 @@ public abstract class Piece extends Case {
     }
 
     public abstract void render(Ecran ecran);
+
+    public boolean isVoid(){
+        return false;
+    }
 }
