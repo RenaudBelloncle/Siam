@@ -142,4 +142,45 @@ public class Plateau {
     public boolean analyseTokenPoussee(TokenSommePoussee token) {
         return token.getSomme() > 0 || token.getSomme() >= 0 && token.isPeutEtreNull();
     }
+
+    public Piece decalageLigne(ArrayList<Piece> ligne)
+    {
+        Orientation orientationLigne = ((Animal)ligne.get(0)).getOrientation();
+        int ajoutx = 0;
+        int ajouty = 0;
+        Piece ret = null;
+
+        switch(orientationLigne){
+            case BAS:
+                ajouty = 1;
+                break;
+            case HAUT:
+                ajouty = -1;
+                break;
+            case GAUCHE:
+                ajoutx = -1;
+                break;
+            case DROITE:
+                ajoutx = 1;
+                break;
+        }
+        int absDernierePiece = ligne.get(ligne.size()-1).getAbscisse() + ajoutx;
+        int ordDernierePiece = ligne.get(ligne.size()-1).getOrdonnee() + ajouty;
+
+        if(absDernierePiece < 0 || absDernierePiece >= tailleCote
+                || ordDernierePiece < 0 || ordDernierePiece >= tailleCote)
+        {
+            ret = ligne.get(ligne.size()-1);
+        }
+        else
+        {
+            deplacerPiece(ligne.get(ligne.size()-1), absDernierePiece, ordDernierePiece);
+        }
+
+        for(int i = ligne.size() - 2; i >= 0 ; i--){
+            deplacerPiece(ligne.get(i), ligne.get(i).getAbscisse() + ajoutx,
+                    ligne.get(i).getOrdonnee() + ajouty);
+        }
+        return ret;
+    }
 }
