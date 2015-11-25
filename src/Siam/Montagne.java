@@ -12,4 +12,8 @@ public class Montagne extends Piece {
     public void render(Ecran ecran) {
         ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.caseMontagne, false, false);
     }
+
+    public boolean estVide(){
+        return false;
+    }
 }

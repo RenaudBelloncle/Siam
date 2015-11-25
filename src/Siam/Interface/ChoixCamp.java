@@ -1,8 +1,8 @@
 package Siam.Interface;
 
 import Siam.Camp;
+import Siam.Constantes;
 import Siam.Game;
-import Siam.Joueur;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,11 +14,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class ChoixCamp implements ActionListener {
+public class ChoixCamp implements ActionListener, Constantes {
 
     static final Random random = new Random();
+
     private Game game;
-    private Joueur joueur;
     private JFrame fenetre;
     private OutilsFont outil;
 
@@ -27,10 +27,9 @@ public class ChoixCamp implements ActionListener {
     private ButtonGroup BGchoix;
     private JButton valider, annuler;
 
-    public ChoixCamp(Game game, Joueur joueur,JFrame _fenetre) {
+    public ChoixCamp(Game game, JFrame fenetre) {
         this.game = game;
-        this.joueur = joueur;
-        fenetre = _fenetre;
+        this.fenetre = fenetre;
         outil = new OutilsFont();
         choixCamp();
         setControlChoixCamp(this);
@@ -39,7 +38,7 @@ public class ChoixCamp implements ActionListener {
     public void choixCamp(){
         initChoixCamp();
         afficheChoixCamp();
-        fenetre.setSize(600, 400);
+        fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
         fenetre.setResizable(false);
         fenetre.setTitle("Siam");
@@ -49,9 +48,9 @@ public class ChoixCamp implements ActionListener {
 
     public void initChoixCamp(){
         titreCB = new JLabel("Choisis un camp");
-        JRBelephant = new JRadioButton("Éléphant");
+        JRBelephant = new JRadioButton("Éléphant", true);
         JRBrhinoceros = new JRadioButton("Rhinocéros");
-        aleatoire = new JRadioButton("Aléatoire", true);
+        aleatoire = new JRadioButton("Aléatoire");
         BGchoix = new ButtonGroup();
         BGchoix.add(JRBelephant);
         BGchoix.add(JRBrhinoceros);
@@ -83,7 +82,7 @@ public class ChoixCamp implements ActionListener {
 
                 public void paintComponent(Graphics g) {
                     super.paintComponent(g);
-                    g.drawImage(image, 0, 0, 600, 400, this);
+                    g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
                 }
             };
         } catch (IOException e) {
@@ -91,12 +90,12 @@ public class ChoixCamp implements ActionListener {
         }
 
         //changement de la police
-        outil.changerFontJLabel(titreCB, 60, Color.orange, outil.getFontMenu());
-        outil.changerFontButton(valider, 50, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(annuler, 50, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(JRBelephant, 35, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(JRBrhinoceros, 35, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(aleatoire, 35, Color.orange, outil.getFontTexte());
+        outil.changerFontJLabel(titreCB, 95, Color.orange, outil.getFontMenu());
+        outil.changerFontButton(valider, 80, Color.orange, outil.getFontTexte());
+        outil.changerFontButton(annuler, 80, Color.orange, outil.getFontTexte());
+        outil.changerFontJRadioButton(JRBelephant, 60, Color.orange, outil.getFontTexte());
+        outil.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outil.getFontTexte());
+        outil.changerFontJRadioButton(aleatoire, 60, Color.orange, outil.getFontTexte());
 
         panTitre.add(titreCB);
         panBouton1.add(JRBelephant);
@@ -130,26 +129,15 @@ public class ChoixCamp implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (source == getValider()){
-            if(getJRBelephant().isSelected()){
-                game.setJoueurActif(game.getJoueurs()[0]);
-                //joueur.setCamp(Camp.ELEPHANT);
-            }
-            else if (getJRBrhinoceros().isSelected()){
-                game.setJoueurActif(game.getJoueurs()[1]);
-                //joueur.setCamp(Camp.RHINOCEROS);
-            }
-            else {
-                game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
-                /*if(random.nextBoolean())
-                    joueur.setCamp(Camp.ELEPHANT);
-                else
-                    joueur.setCamp(Camp.RHINOCEROS);*/
-            }
+        if (source == getValider())
+        {
+            if(getJRBelephant().isSelected())game.setJoueurActif(game.getJoueurs()[0]);
+            else if (getJRBrhinoceros().isSelected())game.setJoueurActif(game.getJoueurs()[1]);
+            else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
             game.start();
         }
         else if (source == getAnnuler()){
-            System.exit(0);
+            Menu menu = new Menu(game, game.getFenetre());
         }
     }
 

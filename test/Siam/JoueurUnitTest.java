@@ -1,6 +1,5 @@
 package Siam;
 
-import Siam.Exception.RestePieceException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,16 +36,70 @@ public class JoueurUnitTest {
 
     @Test
     public void testPosePiece() {
-        //TODO
+        joueur.setPlateau(new Plateau(5));
+        joueur.posePiece(0, 0);
+        Assert.assertNotSame(joueur.getPlateau().getCase(1, 1), joueur.getPlateau().getCase(0, 0));
+        Assert.assertNull(joueur.posePiece(0, 0));
     }
 
     @Test
-    public void testRestePiece() throws Exception {
-        //TODO
+    public void testRestePiece() {
+        Plateau plateau = Mockito.mock(Plateau.class);
+        Case aCase = Mockito.mock(Case.class);
+        Mockito.when(plateau.getCase(0, 0)).thenReturn(aCase);
+        Mockito.when(plateau.getCase(0, 1)).thenReturn(aCase);
+        Mockito.when(plateau.getCase(0, 2)).thenReturn(aCase);
+        Mockito.when(plateau.getCase(0, 3)).thenReturn(aCase);
+        Mockito.when(plateau.getCase(0, 4)).thenReturn(aCase);
+
+        joueur.setPlateau(plateau);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 0);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 1);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 2);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 3);
+        Assert.assertTrue(joueur.restePiece());
+        joueur.posePiece(0, 4);
+        Assert.assertFalse(joueur.restePiece());
     }
 
     @Test
     public void testSortirPiece() {
-        //TODO
+        joueur.setPlateau(new Plateau(5));
+        joueur.posePiece(0, 0);
+        Animal animal = (Animal)joueur.getPlateau().getCase(0, 0);
+        joueur.sortirPiece(0, 0);
+        Assert.assertNotSame(animal, joueur.getPlateau().getCase(0, 0));
+    }
+
+    @Test
+    public void testMoveAnimalOnFreeCase(){
+        Animal animal = Mockito.mock(Animal.class);
+        Plateau plateau = Mockito.mock(Plateau.class);
+        Case targetCase = Mockito.mock(Case.class);
+        joueur.setPlateau(plateau);
+
+        Mockito.when(plateau.getCase(0, 1)).thenReturn(targetCase);
+        Mockito.when(targetCase.estVide()).thenReturn(false, true);
+        Mockito.when(targetCase.getAbscisse()).thenReturn(0);
+        Mockito.when(targetCase.getOrdonnee()).thenReturn(0);
+
+        //test case adjacente et non vide
+        boolean ret = joueur.moveAnimalOnFreeCase(animal, targetCase);
+        Assert.assertEquals(ret, false);
+
+        //test case adjacente et vide
+        ret = joueur.moveAnimalOnFreeCase(animal, targetCase);
+        Assert.assertEquals(ret, true);
+    }
+
+    @Test
+    public void testMoveAnimalToPush(){
+        //TODO JP
+        // quand j'aurais la foi
+        //verifier la condition de victoire
     }
 }

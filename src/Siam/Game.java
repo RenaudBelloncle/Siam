@@ -3,14 +3,17 @@ package Siam;
 import Siam.Interface.*;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Game implements Runnable, Constantes {
 
     private Plateau plateau;
     private Joueur[] joueurs;
 
-    // L'ecran gere un tableau de pixel
+    private VueJeu vueJeu;
     private JFrame fenetre;
+
+    private DetectionSouris souris;
 
     private boolean pieceSelectionnee;
     private boolean placerPiece;
@@ -18,6 +21,7 @@ public class Game implements Runnable, Constantes {
     private boolean deplacerPiece;
     private boolean changerOrientation;
     private boolean selectionnerOrientation;
+    private boolean enCoursDeDeplacement;
     private Joueur joueurActif;
     private Animal animalSelectionnee;
 
@@ -42,12 +46,15 @@ public class Game implements Runnable, Constantes {
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
 
+        souris = new DetectionSouris(this, plateau);
+
         this.pieceSelectionnee = pieceSelectionnee;
         this.placerPiece = placerPiece;
         this.sortirPiece = sortirPiece;
         this.deplacerPiece = deplacerPiece;
         this.changerOrientation = changerOrientation;
         this.selectionnerOrientation = selectionnerOrientation;
+        this.enCoursDeDeplacement = false;
 
         this.animalSelectionnee = animalSelectionnee;
 
@@ -108,6 +115,14 @@ public class Game implements Runnable, Constantes {
         this.selectionnerOrientation = selectionnerOrientation;
     }
 
+    public boolean isEnCoursDeDeplacement() {
+        return enCoursDeDeplacement;
+    }
+
+    public void setEnCoursDeDeplacement(boolean enCoursDeDeplacement) {
+        this.enCoursDeDeplacement = enCoursDeDeplacement;
+    }
+
     public Joueur getJoueurActif() {
         return joueurActif;
     }
@@ -137,8 +152,7 @@ public class Game implements Runnable, Constantes {
         running = true;
         thread = new Thread(this, "Affichage");
 
-        // Fenetre + debut de gestion graphique
-        new VueJeu(this,fenetre);
+        vueJeu = new VueJeu(this, fenetre, souris);
         thread.start();
     }
 
@@ -153,15 +167,79 @@ public class Game implements Runnable, Constantes {
 
     public void run() {
         while(running) {
-            update();
+            affichageBouton();
             fenetre.repaint();
         }
         stop();
     }
 
-    public void update() {
+    private void affichageBouton() {
+        if(enCoursDeDeplacement){
+            vueJeu.getDeplacer().setEnabled(false);
+            vueJeu.getSortir().setEnabled(false);
+            vueJeu.getOrienter().setEnabled(false);
+            vueJeu.getPoser().setEnabled(false);
+        }
+        else if (pieceSelectionnee) {
+            vueJeu.getDeplacer().setEnabled(true);
+            if (animalSelectionnee.getAbscisse() == 0 || animalSelectionnee.getOrdonnee() == 0 || animalSelectionnee.getAbscisse() == NOMBRE_CASE_INI-1 || animalSelectionnee.getOrdonnee() == NOMBRE_CASE_INI-1) vueJeu.getSortir().setEnabled(true);
+            vueJeu.getOrienter().setEnabled(true);
+        }
+        else if (!selectionnerOrientation) {
+            if (!joueurActif.restePiece()) vueJeu.getPoser().setEnabled(false);
+            else vueJeu.getPoser().setEnabled(true);
+            vueJeu.getDeplacer().setEnabled(false);
+            vueJeu.getSortir().setEnabled(false);
+            vueJeu.getOrienter().setEnabled(false);
+            vueJeu.getFlecheHaut().setEnabled(false);
+            vueJeu.getFlecheBas().setEnabled(false);
+            vueJeu.getFlecheDroite().setEnabled(false);
+            vueJeu.getFlecheGauche().setEnabled(false);
+        }
+        if (selectionnerOrientation) {
+            vueJeu.getPoser().setEnabled(false);
+            vueJeu.getFlecheHaut().setEnabled(true);
+            vueJeu.getFlecheBas().setEnabled(true);
+            vueJeu.getFlecheDroite().setEnabled(true);
+            vueJeu.getFlecheGauche().setEnabled(true);
+        }
 
     }
 
+    public void deselection(){
+        setPieceSelectionnee(false);
+        getAnimalSelectionnee().setSelectionnee(false);
+        setAnimalSelectionnee(null);
+        setSelectionnerOrientation(false);
+    }
 
+    public boolean testOrientationEntreAnimalEtCase(Animal animal,Case uneCase){
+        switch(animal.getOrientation()){
+            case BAS:
+                return animal.getAbscisse() == uneCase.getAbscisse()
+                        && animal.getOrdonnee() + 1 == uneCase.getOrdonnee();
+            case HAUT:
+                return animal.getAbscisse() == uneCase.getAbscisse()
+                        && animal.getOrdonnee()  -1 == uneCase.getOrdonnee();
+            case DROITE:
+                return animal.getAbscisse() + 1 == uneCase.getAbscisse()
+                        && animal.getOrdonnee() == uneCase.getOrdonnee();
+            case GAUCHE:
+                return animal.getAbscisse() - 1 == uneCase.getAbscisse()
+                        && animal.getOrdonnee() == uneCase.getOrdonnee();
+        }
+        return false;
+    }
+
+    //TODO Nathan
+    public Camp trouveCampGagnant(ArrayList <Piece> ligne){
+        //recuperer l'orientation de la premiere case, qui contient l'animal qui pousse, et stocker cette orientation
+                //dans une variable "orientationPoussee" par ex
+        //parcourir le tab ligne en partant de la fin (on peut commencer par l'avant derniere case
+                //car la derniere case contient une montagne (normalement)
+        //verifier si la case actuel est un animal et si il est orient� dans la meme direction que orientationPoussee
+                //si c'est le cas, retourner le camp de cette animal
+
+        return null; // a supprimer (cette ligne est la pour que le code compile en attendant que la methode soit implement�)
+    }
 }
