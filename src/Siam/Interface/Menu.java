@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Menu extends JFrame implements ActionListener, Constantes {
+public class Menu implements ActionListener, Constantes {
 
     private Game game;
     private OutilsFont outil;

@@ -1,5 +1,8 @@
 package Siam;
 
+import Siam.Interface.AffichageGagnant;
+import Siam.Interface.Menu;
+
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;
 
@@ -45,6 +48,10 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                         plateau.getCase(colonne, ligne))) {
                     TokenResultatPoussee ret = game.getJoueurActif().MoveAnimalToPush(game.getAnimalSelectionnee());
                     if(ret.isPousseeEffectue()){
+                        if(ret.getCampGagnant() != null){
+                            game.stop();
+                            new AffichageGagnant(game, game.getFenetre(), ret.getCampGagnant());
+                        }
                         game.changerJoueurActif();
                     }
                 }

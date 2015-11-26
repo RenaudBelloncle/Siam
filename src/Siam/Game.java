@@ -149,11 +149,39 @@ public class Game implements Runnable, Constantes {
     }
 
     public synchronized void start() {
+        initGame();
+
         running = true;
         thread = new Thread(this, "Affichage");
 
         vueJeu = new VueJeu(this, fenetre, souris);
         thread.start();
+    }
+
+    public void initGame() {
+        this.plateau = new Plateau(NOMBRE_CASE_INI);
+        joueurs = new Joueur[2];
+        joueurs[0] = new Joueur(Camp.ELEPHANT);
+        joueurs[1] = new Joueur(Camp.RHINOCEROS);
+        joueurActif = joueurs[0];
+        fenetre = new JFrame();
+
+        joueurs[0].setPlateau(plateau);
+        joueurs[1].setPlateau(plateau);
+
+        souris = new DetectionSouris(this, plateau);
+
+        pieceSelectionnee = false;
+        placerPiece = false;
+        sortirPiece = false;
+        deplacerPiece = false;
+        changerOrientation = false;
+        selectionnerOrientation = false;
+        enCoursDeDeplacement = false;
+
+        animalSelectionnee = null;
+
+        running = false;
     }
 
     public synchronized void stop() {
