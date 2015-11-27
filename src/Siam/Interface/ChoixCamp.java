@@ -5,6 +5,7 @@ import Siam.Enum.Camp;
 import Siam.Enum.Theme;
 import Siam.Game;
 import Siam.Joueur;
+import Siam.Sons.Musique;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,11 +31,15 @@ public class ChoixCamp implements ActionListener, Constantes {
     private JButton valider, annuler;
 
     private Theme theme;
+    private Musique libMuse;
+    private boolean son;
 
-    public ChoixCamp(Game game, JFrame fenetre, Theme theme) {
+    public ChoixCamp(Game game, JFrame fenetre, Theme theme, Musique libMuse, boolean son) {
         this.game = game;
         this.fenetre = fenetre;
         this.theme = theme;
+        this.libMuse = libMuse;
+        this.son = son;
         outil = new OutilsFont();
         lanceChoixCamp();
         setControlChoixCamp(this);
@@ -136,11 +141,13 @@ public class ChoixCamp implements ActionListener, Constantes {
             else if (getJRBrhinoceros().isSelected())game.setJoueurActif(game.getJoueurs()[1]);
             else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
             game.setTheme(theme);
+            game.setLibMuse(libMuse);
+            game.setSon(son);
             game.initGame(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
             game.start();
         }
         else if (source == getAnnuler()){
-            new Menu(game, game.getFenetre(), theme);
+            new Menu(game, game.getFenetre(), theme, libMuse, son);
         }
     }
 

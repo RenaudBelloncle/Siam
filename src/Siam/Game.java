@@ -3,6 +3,7 @@ package Siam;
 import Siam.Enum.Camp;
 import Siam.Enum.Theme;
 import Siam.Interface.*;
+import Siam.Sons.Musique;
 
 import javax.swing.*;
 
@@ -14,6 +15,8 @@ public class Game implements Runnable, Constantes {
     private VueJeu vueJeu;
     private JFrame fenetre;
     private Theme theme;
+    private Musique libMuse;
+    private  boolean son;
 
     private DetectionSouris souris;
 
@@ -62,6 +65,9 @@ public class Game implements Runnable, Constantes {
         this.animalSelectionnee = animalSelectionnee;
 
         theme = Theme.STANDARD;
+        libMuse = new Musique();
+        libMuse.start();
+        son = true;
 
         running = false;
     }
@@ -159,6 +165,22 @@ public class Game implements Runnable, Constantes {
 
     public Theme getTheme() {
         return theme;
+    }
+
+    public void setLibMuse(Musique libMuse) {
+        this.libMuse = libMuse;
+    }
+
+    public Musique getMusique() {
+        return libMuse;
+    }
+
+    public void setSon(boolean son) {
+        this.son = son;
+    }
+
+    public boolean isSon() {
+        return son;
     }
 
     public void initGame(Joueur joueur1, Joueur joueur2) {
