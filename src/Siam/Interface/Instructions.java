@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Instructions extends JFrame implements ActionListener {
+public class Instructions extends JFrame {
 
     private OutilsFont outil;
 
@@ -33,13 +33,11 @@ public class Instructions extends JFrame implements ActionListener {
         outil = new OutilsFont();
         initInstructions();
         afficherInstructions();
-        setControlInstructions(this);
 
         setSize(500, 500);
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Siam");
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setVisible(true);
     }
 
@@ -183,14 +181,5 @@ public class Instructions extends JFrame implements ActionListener {
         panPrincipal.add(panTest, BorderLayout.CENTER);
 
         setContentPane(panPrincipal);
-    }
-
-    public void setControlInstructions(ActionListener listener){
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-
     }
 }

@@ -31,11 +31,11 @@ public class ChoixCamp implements ActionListener, Constantes {
         this.game = game;
         this.fenetre = fenetre;
         outil = new OutilsFont();
-        choixCamp();
+        lanceChoixCamp();
         setControlChoixCamp(this);
     }
 
-    public void choixCamp(){
+    public void lanceChoixCamp(){
         initChoixCamp();
         afficheChoixCamp();
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
