@@ -1,11 +1,10 @@
 package Siam;
 
+import Siam.Enum.Orientation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.ArrayEquals;
 
 import java.util.ArrayList;
 
@@ -126,7 +125,7 @@ public class PlateauUnitTest {
         Mockito.when(animal3.getOrientation()).thenReturn(Orientation.GAUCHE,
                 Orientation.GAUCHE, Orientation.GAUCHE);
 
-        //calcul d'une ligne avec des animaux qui ne genent pas la poussée
+        //calcul d'une ligne avec des animaux qui ne genent pas la poussï¿½e
         ligne.add(animal1);
         ligne.add(animal2);
         TokenSommePoussee resultatPoussee = plateau.calculResultatPoussee(ligne);

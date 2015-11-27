@@ -1,8 +1,10 @@
 package Siam.Interface;
 
-import Siam.Camp;
 import Siam.Constantes;
+import Siam.Enum.Camp;
+import Siam.Enum.Theme;
 import Siam.Game;
+import Siam.Joueur;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,9 +29,12 @@ public class ChoixCamp implements ActionListener, Constantes {
     private ButtonGroup BGchoix;
     private JButton valider, annuler;
 
-    public ChoixCamp(Game game, JFrame fenetre) {
+    private Theme theme;
+
+    public ChoixCamp(Game game, JFrame fenetre, Theme theme) {
         this.game = game;
         this.fenetre = fenetre;
+        this.theme = theme;
         outil = new OutilsFont();
         lanceChoixCamp();
         setControlChoixCamp(this);
@@ -76,18 +81,14 @@ public class ChoixCamp implements ActionListener, Constantes {
         panBouton3.setOpaque(false);
         panValiderBouton.setOpaque(false);
 
-        try {
-            panPrincipal = new JPanel() {
-                BufferedImage image = ImageIO.read(new File("res/images/menu.png"));
+        panPrincipal = new JPanel() {
+            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme,"FondCamp");
 
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
-                }
-            };
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+            }
+        };
 
         //changement de la police
         outil.changerFontJLabel(titreCB, 95, Color.orange, outil.getFontMenu());
@@ -134,10 +135,12 @@ public class ChoixCamp implements ActionListener, Constantes {
             if(getJRBelephant().isSelected())game.setJoueurActif(game.getJoueurs()[0]);
             else if (getJRBrhinoceros().isSelected())game.setJoueurActif(game.getJoueurs()[1]);
             else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
+            game.setTheme(theme);
+            game.initGame(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
             game.start();
         }
         else if (source == getAnnuler()){
-            Menu menu = new Menu(game, game.getFenetre());
+            new Menu(game, game.getFenetre(), theme);
         }
     }
 

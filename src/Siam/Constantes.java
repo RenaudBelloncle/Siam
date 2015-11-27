@@ -9,6 +9,4 @@ public interface Constantes {
     int HAUTEUR_FENETRE = LARGEUR_AFFICHAGE_PLATEAU;
     int LARGEUR_FENETRE = HAUTEUR_FENETRE+200;
     int NBTHEMES = 2;
-
-    final String[] tabFond = {"res/images/fondJungle.jpg", "res/images/fondNoel.jpg"};
 }

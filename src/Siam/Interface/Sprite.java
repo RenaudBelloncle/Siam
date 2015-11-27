@@ -11,16 +11,16 @@ public class Sprite implements Constantes{
     private int[] pixels;
     private int largeur, hauteur;
 
-    public static Sprite caseVide = new Sprite("/images/spriteBasique/case.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1 = new Sprite("/images/spriteBasique/pionBlanc.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2 = new Sprite("/images/spriteBasique/pionNoir.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1Gauche = new Sprite("/images/spriteBasique/pionBlancGauche.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2Gauche = new Sprite("/images/spriteBasique/pionNoirGauche.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1Selec = new Sprite("/images/spriteBasique/pionBlancSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2Selec = new Sprite("/images/spriteBasique/pionNoirSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1GaucheSelec = new Sprite("/images/spriteBasique/pionBlancGaucheSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2GaucheSelec = new Sprite("/images/spriteBasique/pionNoirGaucheSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite caseMontagne = new Sprite("/images/spriteBasique/montagne.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite caseVide = new Sprite("/Standard/Sprites/case.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite casePionJoueur1 = new Sprite("/Standard/Sprites/pionBlanc.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite casePionJoueur2 = new Sprite("/Standard/Sprites/pionNoir.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite casePionJoueur1Gauche = new Sprite("/Standard/Sprites/pionBlancGauche.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite casePionJoueur2Gauche = new Sprite("/Standard/Sprites/pionNoirGauche.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite casePionJoueur1Selec = new Sprite("/Standard/Sprites/pionBlancSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite casePionJoueur2Selec = new Sprite("/Standard/Sprites/pionNoirSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite casePionJoueur1GaucheSelec = new Sprite("/Standard/Sprites/pionBlancGaucheSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite casePionJoueur2GaucheSelec = new Sprite("/Standard/Sprites/pionNoirGaucheSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite caseMontagne = new Sprite("/Standard/Sprites/montagne.png",TAILLE_SPRITE,TAILLE_SPRITE);
 
     public Sprite(String path,int _hauteur, int _largeur){
         largeur = _largeur;
