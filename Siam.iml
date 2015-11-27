@@ -22,11 +22,11 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../mockito-all-1.10.19.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../Logiciel/mockito-all-1.10.19.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../mockito-all-1.10.19.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../Logiciel/mockito-all-1.10.19.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
