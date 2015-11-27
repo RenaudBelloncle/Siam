@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Menu implements ActionListener, Constantes {
+public class Menu extends JFrame implements ActionListener, Constantes {
 
     private Game game;
     private OutilsFont outil;
@@ -31,6 +31,10 @@ public class Menu implements ActionListener, Constantes {
     private JButton reseau;
     private JLabel multi;
     private JButton annuler;
+
+    public Menu(JFrame fenetre){
+        this(new Game(fenetre), fenetre);
+    }
 
     public Menu(Game game,JFrame fenetre){
         this.game = game;

@@ -1,7 +1,5 @@
 package Siam;
 
-import Siam.Interface.Ecran;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -85,9 +83,9 @@ public class Joueur {
             Piece pieceSortie = plateau.decalageLigne(ligne);
             pousseeReussie = true;
             if(pieceSortie != null && pieceSortie instanceof Montagne){
-                //appell condition de victoire
+                campGagnant=plateau.trouveCampGagnant(ligne);
             }
         }
-        return new TokenResultatPoussee(pousseeReussie, camp);
+        return new TokenResultatPoussee(pousseeReussie, campGagnant);
     }
 }
