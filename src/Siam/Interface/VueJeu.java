@@ -1,6 +1,7 @@
 package Siam.Interface;
 
 import Siam.*;
+import Siam.Enum.Orientation;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,5 +1,8 @@
 package Siam;
 
+import Siam.Enum.Camp;
+import Siam.Enum.Orientation;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;

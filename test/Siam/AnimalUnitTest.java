@@ -1,9 +1,10 @@
 package Siam;
 
+import Siam.Enum.Camp;
+import Siam.Enum.Orientation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public class AnimalUnitTest {
 

@@ -1,6 +1,7 @@
 package Siam.Interface;
 
 import Siam.Constantes;
+import Siam.Enum.Theme;
 import Siam.Game;
 
 import javax.imageio.ImageIO;
@@ -36,16 +37,21 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     private JPanel panVide;
     private JPanel panVide2;
 
-    private int theme= 0;
+    private Theme theme;
 
-    public Menu(JFrame fenetre){
-        this(new Game(fenetre), fenetre);
+    public Menu(Game game,JFrame fenetre) {
+        this(game, fenetre, Theme.STANDARD);
     }
 
-    public Menu(Game game,JFrame fenetre){
+    public Menu(JFrame fenetre) {
+        this(new Game(fenetre), fenetre, Theme.STANDARD);
+    }
+
+    public Menu(Game game,JFrame fenetre, Theme theme){
         this.game = game;
         this.fenetre = fenetre;
         outil = new OutilsFont();
+        this.theme = theme;
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
         fenetre.setResizable(false);
@@ -142,19 +148,14 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     }
 
     public void chargerImage(){
-        try {
-            panPrincipal = new JPanel() {
-                BufferedImage image = ImageIO.read(new File(tabFond[theme]));
-
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    fenetre.repaint();
-                    g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
-                }
-            };
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        panPrincipal = new JPanel() {
+            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme, "FondMenu");
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                fenetre.repaint();
+                g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+            }
+        };
     }
 
     public void initPanel(){
@@ -182,10 +183,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         themeSuivant.addActionListener(listener);
     }
 
-    public int getTheme(){
-        return theme;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -195,10 +192,10 @@ public class Menu extends JFrame implements ActionListener, Constantes {
             System.exit(0);
         }
         else if(source == jouer) {
-            new ChoixCamp(game, game.getFenetre());
+            new ChoixCamp(game, game.getFenetre(), theme);
         }
         else if(source == instructions) {
-            new Instructions();
+            new Instructions(theme);
         }
         else if(source == scores) {
             //TODO Afficher les scores
@@ -211,10 +208,15 @@ public class Menu extends JFrame implements ActionListener, Constantes {
             fenetre.setVisible(true);
         }
         else if(source == themeSuivant) {
-            theme += 1;
-
-            if (theme >1){
-                theme = 0;
+            switch (theme) {
+                case STANDARD:
+                    System.out.println("Noel");
+                    theme = Theme.NOEL;
+                    break;
+                case NOEL:
+                    System.out.println("Standard");
+                    theme = Theme.STANDARD;
+                    break;
             }
             afficheMenuOption();
             fenetre.setVisible(true);

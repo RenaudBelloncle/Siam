@@ -1,9 +1,10 @@
 package Siam;
 
+import Siam.Enum.Camp;
+import Siam.Enum.Theme;
 import Siam.Interface.*;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 public class Game implements Runnable, Constantes {
 
@@ -12,6 +13,7 @@ public class Game implements Runnable, Constantes {
 
     private VueJeu vueJeu;
     private JFrame fenetre;
+    private Theme theme;
 
     private DetectionSouris souris;
 
@@ -152,6 +154,14 @@ public class Game implements Runnable, Constantes {
 
     public JFrame getFenetre(){
         return fenetre;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+    }
+
+    public Theme getTheme() {
+        return theme;
     }
 
     public synchronized void start() {

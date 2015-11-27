@@ -1,4 +1,4 @@
-package Siam;
+package Siam.Enum;
 
 public enum  Orientation {
     HAUT,

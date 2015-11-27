@@ -1,5 +1,7 @@
 package Siam.Interface;
 
+import Siam.Enum.Theme;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +13,7 @@ import java.io.IOException;
 
 public class Instructions extends JFrame {
 
+    private Theme theme;
     private OutilsFont outil;
 
     private JLabel commentjouer;
@@ -29,7 +32,8 @@ public class Instructions extends JFrame {
     private JLabel part5;
     private JLabel titre;
 
-    public Instructions(){
+    public Instructions(Theme theme){
+        this.theme = theme;
         outil = new OutilsFont();
         initInstructions();
         afficherInstructions();
@@ -145,18 +149,14 @@ public class Instructions extends JFrame {
         panTest.setOpaque(false);
 
 
-        try {
-            panPrincipal = new JPanel() {
-                BufferedImage image = ImageIO.read(new File("res/images/menu.png"));
+        panPrincipal = new JPanel() {
+            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme, "FondMenu");
 
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.drawImage(image, 0, 0, 500, 500, this);
-                }
-            };
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, 500, 500, this);
+            }
+        };
 
         panPrincipal.setLayout(new BorderLayout());
         panRegle.setLayout(new BoxLayout(panRegle, BoxLayout.Y_AXIS));
