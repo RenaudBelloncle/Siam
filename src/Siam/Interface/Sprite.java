@@ -1,7 +1,6 @@
 package Siam.Interface;
 
 import Siam.Constantes;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -55,4 +54,3 @@ public class Sprite implements Constantes{
         }
     }
 }
-

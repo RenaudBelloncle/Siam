@@ -1,5 +1,7 @@
 package Siam;
 
+import Siam.Interface.EcranVictoire;
+
 import javax.swing.event.MouseInputAdapter;
 import java.awt.event.MouseEvent;
 
@@ -34,7 +36,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 game.setDeplacerPiece(false);
             }
             else if(game.getJoueurActif().moveAnimalOnFreeCase(game.getAnimalSelectionnee(),
-                        plateau.getCase(colonne, ligne)))
+                    plateau.getCase(colonne, ligne)))
             {
                 game.setEnCoursDeDeplacement(true);
                 game.setSelectionnerOrientation(true);
@@ -45,6 +47,10 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                         plateau.getCase(colonne, ligne))) {
                     TokenResultatPoussee ret = game.getJoueurActif().MoveAnimalToPush(game.getAnimalSelectionnee());
                     if(ret.isPousseeEffectue()){
+                        if(ret.getCampGagnant() != null) {
+                            new EcranVictoire(game.getFenetre() ,ret.getCampGagnant());
+                            return;
+                        }
                         game.changerJoueurActif();
                     }
                 }

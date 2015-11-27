@@ -28,20 +28,26 @@ public class Game implements Runnable, Constantes {
     private Thread thread;
     private boolean running;
 
+    public Game(JFrame fenetre) {
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null,
+                fenetre);
+    }
+
     public Game() {
-        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null);
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null,
+                new JFrame());
     }
 
     public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
                 boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation,
-                Animal animalSelectionnee) {
+                Animal animalSelectionnee, JFrame fenetre) {
 
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
         joueurs[1] = joueur2;
         joueurActif = joueurs[0];
-        fenetre = new JFrame();
+        this.fenetre = fenetre;
 
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
@@ -229,17 +235,5 @@ public class Game implements Runnable, Constantes {
                         && animal.getOrdonnee() == uneCase.getOrdonnee();
         }
         return false;
-    }
-
-    //TODO Nathan
-    public Camp trouveCampGagnant(ArrayList <Piece> ligne){
-        //recuperer l'orientation de la premiere case, qui contient l'animal qui pousse, et stocker cette orientation
-                //dans une variable "orientationPoussee" par ex
-        //parcourir le tab ligne en partant de la fin (on peut commencer par l'avant derniere case
-                //car la derniere case contient une montagne (normalement)
-        //verifier si la case actuel est un animal et si il est orient� dans la meme direction que orientationPoussee
-                //si c'est le cas, retourner le camp de cette animal
-
-        return null; // a supprimer (cette ligne est la pour que le code compile en attendant que la methode soit implement�)
     }
 }
