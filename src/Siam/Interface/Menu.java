@@ -3,6 +3,7 @@ package Siam.Interface;
 import Siam.Constantes;
 import Siam.Enum.Theme;
 import Siam.Game;
+import Siam.Sons.Musique;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
 
     private Game game;
     private OutilsFont outil;
+    private Musique libMuse;
     private JFrame fenetre;
 
     private JLabel titre;
@@ -38,10 +40,13 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     private JPanel panVide2;
 
     private Theme theme;
+    private boolean son;
 
-    public Menu(Game game,JFrame fenetre, Theme theme){
+    public Menu(Game game,JFrame fenetre, Theme theme, Musique libMuse, boolean musique){
         this.game = game;
         this.fenetre = fenetre;
+        this.libMuse = libMuse;
+        this.son = musique;
         outil = new OutilsFont();
         this.theme = theme;
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
@@ -70,7 +75,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         optionL = new JLabel("    Options");
         annuler = new JButton("Annuler");
         option = new JButton("Options");
-        couperSon = new JButton("Couper le son");
+        couperSon = new JButton("Musique On");
         themeSuivant = new JButton("Thème suivant");
 
     }
@@ -173,6 +178,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         annuler.addActionListener(listener);
         option.addActionListener(listener);
         themeSuivant.addActionListener(listener);
+        couperSon.addActionListener(listener);
     }
 
     @Override
@@ -184,7 +190,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
             System.exit(0);
         }
         else if(source == jouer) {
-            new ChoixCamp(game, game.getFenetre(), theme);
+            new ChoixCamp(game, game.getFenetre(), theme, libMuse, son);
         }
         else if(source == instructions) {
             new Instructions(theme);
@@ -207,6 +213,23 @@ public class Menu extends JFrame implements ActionListener, Constantes {
                 case NOEL:
                     theme = Theme.STANDARD;
                     break;
+            }
+            afficheMenuOption();
+            fenetre.setVisible(true);
+        }
+        else if(source == couperSon) {
+            if (son){
+                couperSon = new JButton("Musique Off");
+                libMuse.arret();
+                couperSon.addActionListener(this);
+                son = false;
+            }
+            else{
+                couperSon = new JButton("Musique On");
+                libMuse = new Musique();
+                libMuse.start();
+                couperSon.addActionListener(this);
+                son = true;
             }
             afficheMenuOption();
             fenetre.setVisible(true);

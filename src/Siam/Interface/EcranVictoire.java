@@ -4,6 +4,7 @@ import Siam.Enum.Camp;
 import Siam.Constantes;
 import Siam.Enum.Theme;
 import Siam.Game;
+import Siam.Sons.Musique;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,11 +23,15 @@ public class EcranVictoire implements ActionListener, Constantes {
     private JButton retour;
     private JLabel gagnant;
     private Theme theme;
+    private Musique libMuse;
+    private boolean son;
 
-    public EcranVictoire(Game game, JFrame fenetre, Camp campGagnant, Theme theme){
+    public EcranVictoire(Game game, JFrame fenetre, Camp campGagnant, Theme theme, Musique libMuse, boolean son){
         this.game = game;
         this.fenetre = fenetre;
         this.theme = theme;
+        this.libMuse = libMuse;
+        this.son = son;
         initEcranVictoire(campGagnant);
         afficheEcranVictoire();
         retour.addActionListener(this);
@@ -90,7 +95,7 @@ public class EcranVictoire implements ActionListener, Constantes {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == retour) {
-            new Menu(game, fenetre, theme);
+            new Menu(game, fenetre, theme, libMuse, son);
         }
     }
 }
