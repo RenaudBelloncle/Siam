@@ -1,21 +1,18 @@
 package Siam.Interface;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class OutilsFont {
 
-    private Font fontMenu, police, fontTexte, fontNoel;
+    private Font fontMenu, police, fontTexte;
 
     public OutilsFont() {
         try {
-            fontMenu = loadFont("res/font/FRAZZLE_.TTF");
-            fontTexte = loadFont("res/font/Alabama.ttf");
-            fontNoel = loadFont("res/font/Alabama.ttf");
+            fontMenu = loadFont("res/Standard/Fonts/FRAZZLE_.TTF");
+            fontTexte = loadFont("res/Standard/Fonts/Alabama.ttf");
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
@@ -91,13 +88,5 @@ public class OutilsFont {
 
     public Font getFontTexte() {
         return fontTexte;
-    }
-
-    public Font getFont(String font) {
-        if (font == "noel") {
-            return fontNoel;
-        }
-
-        return null;
     }
 }

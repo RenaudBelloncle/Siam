@@ -19,11 +19,11 @@ public class ImageLibrairie {
         imageCollection.put(Theme.NOEL, new HashMap<String, BufferedImage>());
         BufferedImage image;
         try {
-            image = ImageIO.read(getClass().getResource("/images/Standard/StandardFondMenu.jpg"));
+            image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondMenu.jpg"));
             imageCollection.get(Theme.STANDARD).put("FondMenu", image);
-            image = ImageIO.read(getClass().getResource("/images/Standard/StandardFondCamp.png"));
+            image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondCamp.png"));
             imageCollection.get(Theme.STANDARD).put("FondCamp", image);
-            image = ImageIO.read(getClass().getResource("/images/Noel/NoelFondMenu.jpg"));
+            image = ImageIO.read(getClass().getResource("/Noel/NoelFondMenu.jpg"));
             imageCollection.get(Theme.NOEL).put("FondMenu", image);
         } catch (IOException e) { System.out.println(e.getMessage()); }
     }
