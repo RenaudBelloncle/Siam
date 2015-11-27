@@ -3,6 +3,7 @@ package Siam.Interface;
 import Siam.Enum.Camp;
 import Siam.Constantes;
 import Siam.Enum.Theme;
+import Siam.Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,13 +16,15 @@ import java.io.IOException;
 
 public class EcranVictoire implements ActionListener, Constantes {
 
+    private Game game;
     private JFrame fenetre;
     private OutilsFont outils;
     private JButton retour;
     private JLabel gagnant;
     private Theme theme;
 
-    public EcranVictoire(JFrame fenetre, Camp campGagnant, Theme theme){
+    public EcranVictoire(Game game, JFrame fenetre, Camp campGagnant, Theme theme){
+        this.game = game;
         this.fenetre = fenetre;
         this.theme = theme;
         initEcranVictoire(campGagnant);
@@ -85,6 +88,9 @@ public class EcranVictoire implements ActionListener, Constantes {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new Menu(fenetre);
+        Object source = e.getSource();
+        if (source == retour) {
+            new Menu(game, fenetre, theme);
+        }
     }
 }

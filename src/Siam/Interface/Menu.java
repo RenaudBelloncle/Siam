@@ -39,14 +39,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
 
     private Theme theme;
 
-    public Menu(Game game,JFrame fenetre) {
-        this(game, fenetre, Theme.STANDARD);
-    }
-
-    public Menu(JFrame fenetre) {
-        this(new Game(fenetre), fenetre, Theme.STANDARD);
-    }
-
     public Menu(Game game,JFrame fenetre, Theme theme){
         this.game = game;
         this.fenetre = fenetre;

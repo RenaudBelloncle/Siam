@@ -30,11 +30,6 @@ public class Game implements Runnable, Constantes {
     private Thread thread;
     private boolean running;
 
-    public Game(JFrame fenetre) {
-        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null,
-                fenetre);
-    }
-
     public Game() {
         this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null,
                 new JFrame());
@@ -65,6 +60,8 @@ public class Game implements Runnable, Constantes {
         this.enCoursDeDeplacement = false;
 
         this.animalSelectionnee = animalSelectionnee;
+
+        theme = Theme.STANDARD;
 
         running = false;
     }
@@ -162,6 +159,29 @@ public class Game implements Runnable, Constantes {
 
     public Theme getTheme() {
         return theme;
+    }
+
+    public void initGame(Joueur joueur1, Joueur joueur2) {
+        this.plateau = new Plateau(NOMBRE_CASE_INI);
+        joueurs = new Joueur[2];
+        joueurs[0] = joueur1;
+        joueurs[1] = joueur2;
+        joueurActif = joueurs[0];
+
+        joueurs[0].setPlateau(plateau);
+        joueurs[1].setPlateau(plateau);
+
+        souris = new DetectionSouris(this, plateau);
+
+        pieceSelectionnee = false;
+        placerPiece = false;
+        sortirPiece = false;
+        deplacerPiece = false;
+        changerOrientation = false;
+        selectionnerOrientation = false;
+        enCoursDeDeplacement = false;
+
+        animalSelectionnee = null;
     }
 
     public synchronized void start() {

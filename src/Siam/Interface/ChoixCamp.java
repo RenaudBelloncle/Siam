@@ -1,8 +1,10 @@
 package Siam.Interface;
 
 import Siam.Constantes;
+import Siam.Enum.Camp;
 import Siam.Enum.Theme;
 import Siam.Game;
+import Siam.Joueur;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -134,6 +136,7 @@ public class ChoixCamp implements ActionListener, Constantes {
             else if (getJRBrhinoceros().isSelected())game.setJoueurActif(game.getJoueurs()[1]);
             else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
             game.setTheme(theme);
+            game.initGame(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
             game.start();
         }
         else if (source == getAnnuler()){
