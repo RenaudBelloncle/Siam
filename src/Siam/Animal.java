@@ -62,7 +62,6 @@ public class Animal extends Piece {
                 if (orientation == Orientation.DROITE) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1Gauche, true, false);
             }
         }
-
         if (camp == Camp.RHINOCEROS)
         {
             if (selectionnee)
