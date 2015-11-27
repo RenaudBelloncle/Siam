@@ -89,4 +89,3 @@ public class OutilsFont {
         return fontTexte;
     }
 }
-

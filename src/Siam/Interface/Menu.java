@@ -32,6 +32,10 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     private JLabel multi;
     private JButton annuler;
 
+    public Menu(JFrame fenetre){
+        this(new Game(fenetre), fenetre);
+    }
+
     public Menu(Game game,JFrame fenetre){
         this.game = game;
         this.fenetre = fenetre;
