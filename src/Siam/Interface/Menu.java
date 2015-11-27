@@ -210,11 +210,9 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         else if(source == themeSuivant) {
             switch (theme) {
                 case STANDARD:
-                    System.out.println("Noel");
                     theme = Theme.NOEL;
                     break;
                 case NOEL:
-                    System.out.println("Standard");
                     theme = Theme.STANDARD;
                     break;
             }
