@@ -162,6 +162,8 @@ public class Instructions extends JFrame {
             }
         };
 
+        changerFont();
+
         panPrincipal.setLayout(new BorderLayout());
         panRegle.setLayout(new BoxLayout(panRegle, BoxLayout.Y_AXIS));
 
