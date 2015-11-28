@@ -5,14 +5,11 @@ import Siam.Enum.Theme;
 import Siam.Game;
 import Siam.Sons.Musique;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Menu extends JFrame implements ActionListener, Constantes {
 
@@ -72,10 +69,11 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         quitter = new JButton("Quitter");
 
         multi = new JLabel("Jeux multi");
-        optionL = new JLabel("    Options");
+        optionL = new JLabel("Options", SwingConstants.CENTER);
         annuler = new JButton("Annuler");
         option = new JButton("Options");
-        couperSon = new JButton("Musique On");
+        if (son) couperSon = new JButton("Musique On");
+        else couperSon = new JButton("Musique Off");
         themeSuivant = new JButton("Thème suivant");
 
     }
@@ -229,6 +227,12 @@ public class Menu extends JFrame implements ActionListener, Constantes {
                     theme = Theme.STANDARD;
                     break;
             }
+            game.setTheme(theme);
+            if (son) {
+                libMuse.arret();
+                libMuse = new Musique(theme);
+                libMuse.start();
+            }
             afficheMenuOption();
             fenetre.setVisible(true);
         }
@@ -241,7 +245,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
             }
             else{
                 couperSon = new JButton("Musique On");
-                libMuse = new Musique();
+                libMuse = new Musique(theme);
                 libMuse.start();
                 couperSon.addActionListener(this);
                 son = true;

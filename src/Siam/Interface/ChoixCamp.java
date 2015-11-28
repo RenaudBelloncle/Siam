@@ -152,7 +152,6 @@ public class ChoixCamp implements ActionListener, Constantes {
             if(getJRBelephant().isSelected())game.setJoueurActif(game.getJoueurs()[0]);
             else if (getJRBrhinoceros().isSelected())game.setJoueurActif(game.getJoueurs()[1]);
             else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
-            game.setTheme(theme);
             game.setLibMuse(libMuse);
             game.setSon(son);
             game.initGame(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));

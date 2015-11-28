@@ -65,7 +65,7 @@ public class Game implements Runnable, Constantes {
         this.animalSelectionnee = animalSelectionnee;
 
         theme = Theme.STANDARD;
-        libMuse = new Musique();
+        libMuse = new Musique(theme);
         libMuse.start();
         son = true;
 
