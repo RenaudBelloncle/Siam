@@ -23,7 +23,7 @@ public class ImageLibrairie {
             imageCollection.get(Theme.STANDARD).put("FondMenu", image);
             image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondCamp.png"));
             imageCollection.get(Theme.STANDARD).put("FondCamp", image);
-            image = ImageIO.read(getClass().getResource("/Noel/NoelFondMenu.jpg"));
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
             imageCollection.get(Theme.NOEL).put("FondMenu", image);
         } catch (IOException e) { System.out.println(e.getMessage()); }
     }

@@ -46,11 +46,12 @@ public class Instructions extends JFrame {
     }
 
     public void initInstructions(){
-        commentjouer = new JLabel("Comment jouer :");
+        commentjouer = new JLabel("     Comment jouer :");
         but = new JLabel("<html><br>Après avoir choisi votre animal vous devez être " +
                 "le premier à sortir une région montagneuse (bloc de rochers)" +
                 " à l'extérieur du plateau.<br><br></html>");
-        titrebut = new JLabel("But du jeu :");
+
+        titrebut = new JLabel("     But du jeu :");
         intro = new JLabel("<html><br>Chaque joueur choisit son animal." +
                 " Les joueurs joueront à tour de rôle. " +
                 "Au début du jeu les animaux sont disposés à l'extérieur du plateau " +
@@ -65,17 +66,17 @@ public class Instructions extends JFrame {
                 "<br>-     Se déplacer en poussant d'autres pièces disposées sur le plateau.<br><br></html> ");
 
 
-        tpart1 = new JLabel("Poser une pièce :");
-        tpart2 = new JLabel("Se déplacer sans pousser :");
-        tpart3 = new JLabel("Changer l'orientation :");
-        tpart4 = new JLabel("Sortir une pièce :");
-        tpart5 = new JLabel("Se déplacer en poussant :");
+        tpart1 = new JLabel("   Poser une pièce :");
+        tpart2 = new JLabel("   Se déplacer sans pousser :");
+        tpart3 = new JLabel("   Changer l'orientation :");
+        tpart4 = new JLabel("   Sortir une pièce :");
+        tpart5 = new JLabel("   Se déplacer en poussant :");
 
-        part1 = new JLabel("<html><br>Vous devez entrer un de vos animaux par l'une des cases " +
+        part1 = new JLabel("<html><br> Vous devez entrer un de vos animaux par l'une des cases " +
                 "extérieures. " +
-                "Deux cas peuvent se présenter : " +
+                " Deux cas peuvent se présenter : <br>" +
                 "-     la case est libre et dans ce cas vous pouvez placer votre animal " +
-                "en l'orientant dans la direction de votre choix " +
+                "en l'orientant dans la direction de votre choix <br>" +
                 "-    la case est occupée et vous pouvez sous certaines conditions " +
                 "rentrer en effectuant un poussée. <br><br></html>");
         part2 = new JLabel("<html><br>Vous ne pouvez vous déplacer que d'une seule case" +
@@ -92,28 +93,28 @@ public class Instructions extends JFrame {
                 "L'animal sorti pourra être réutilisé et revenir sur le plateau à tout moment.<br><br></html> ");
         part5 = new JLabel("<html><br>Lorsque la case ou vous voulez vous rendre est occupée " +
                 "par une pièce  vous pouvez sous certaines conditions " +
-                "effectuer une poussée :"+
+                "effectuer une poussée :<br>"+
                 "   Vous ne pouvez pousser que dans une seule direction : " +
-                "vers l'avant de votre animal. " +
+                "vers l'avant de votre animal. <br>" +
                 "    Un animal peut pousser un rocher, deux animaux orientés" +
                 " dans la bonne direction peuvent pousser deux rochers," +
                 " et trois animaux orientés dans la bonne direction " +
-                "peuvent pousser trois rochers. " +
+                "peuvent pousser trois rochers.<br> " +
                 "   Un animal ne peut pousser un autre animal qui lui fait face."+
                 "Précision : un de vos animaux peut empêcher votre poussée," +
-                " un animal adverse peut aider votre poussée . " +
+                " un animal adverse peut aider votre poussée .<br> " +
                 "    Un animal peut pousser autant d'animaux que possible si " +
                 "ceux-ci ne sont pas orientés dans la direction opposée." +
                 " Vous pouvez pousser en entrant une pièce sur le plateau " +
                 "    Pour résoudre des situations de poussée plus compliquées," +
                 " il suffit de regarder les animaux qui se neutralisent " +
                 "et de voir si ceux qui restent sont en nombre suffisant" +
-                " pour pousser des rochers. " +
+                " pour pousser des rochers. <br>" +
                 "    Lorsqu'un rocher est expulsé la partie est terminée " +
                 "mais attention le gagnant est le joueur qui est " +
                 "le plus proche du rocher et dans le même sens de poussée." +
                 "  Un animal expulsé hors du plateau n'est pas éliminé ; " +
-                "il est récupéré et peut être joué à tout moment. " +
+                "il est récupéré et peut être joué à tout moment.<br> " +
                 "    Pendant une poussée, aucun animal ne peut changer d'orientation.<br><br></html>");
         titre = new JLabel("Instructions");
     }
@@ -123,6 +124,9 @@ public class Instructions extends JFrame {
         JPanel panTitre =new JPanel();
 
         JTextArea panRegle = new JTextArea(155, 1);
+        panRegle.setColumns(1);
+        panRegle.setLineWrap(true);
+        panRegle.setWrapStyleWord(true);
         panRegle.setEditable(false);
 
         JScrollPane panTest = new JScrollPane(panRegle);
@@ -161,6 +165,14 @@ public class Instructions extends JFrame {
         panPrincipal.setLayout(new BorderLayout());
         panRegle.setLayout(new BoxLayout(panRegle, BoxLayout.Y_AXIS));
 
+
+        panPrincipal.add(panTitre, BorderLayout.NORTH);
+        panPrincipal.add(panTest, BorderLayout.CENTER);
+
+        setContentPane(panPrincipal);
+    }
+
+    public void changerFont(){
         outil.changerFontJLabel(titre, 50, Color.black, outil.getFontMenu());
         outil.changerFontJLabel(titrebut, 40, Color.black, outil.getFontTexte());
         outil.changerFontJLabel(but, 20, Color.black, outil.getFontTexte());
@@ -176,10 +188,5 @@ public class Instructions extends JFrame {
         outil.changerFontJLabel(part3, 20, Color.black, outil.getFontTexte());
         outil.changerFontJLabel(part4, 20, Color.black, outil.getFontTexte());
         outil.changerFontJLabel(part5, 20, Color.black, outil.getFontTexte());
-
-        panPrincipal.add(panTitre, BorderLayout.NORTH);
-        panPrincipal.add(panTest, BorderLayout.CENTER);
-
-        setContentPane(panPrincipal);
     }
 }
