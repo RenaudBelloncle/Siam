@@ -8,11 +8,11 @@ import java.io.InputStream;
 public class MP3 {
 
     private Player player;
-    private InputStream is;
+    private InputStream inputStream;
 
-    public MP3(String filename) {
+    public MP3(String nom) {
         try {
-            is = new FileInputStream(filename);
+            inputStream = new FileInputStream(nom);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -20,7 +20,7 @@ public class MP3 {
 
     public void play() {
         try {
-            player = new Player(is);
+            player = new Player(inputStream);
             PlayerThread pt = new PlayerThread();
             pt.start();
             while (!player.isComplete()) {}

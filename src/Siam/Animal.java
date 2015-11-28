@@ -11,10 +11,6 @@ public class Animal extends Piece {
     private Camp camp;
     private boolean selectionnee;
 
-    public Animal() {
-        this(0, 0, Orientation.HAUT, Camp.ELEPHANT, false);
-    }
-
     public Animal(int abscisse, int ordonnee, Orientation orientation, Camp camp, boolean selectionnee) {
         super(abscisse, ordonnee);
         this.orientation = orientation;
@@ -46,22 +42,23 @@ public class Animal extends Piece {
         this.camp = camp;
     }
 
-    public void render(Ecran ecran) {
+    public void affichage(Ecran ecran) {
+        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.caseVide, false, false);
         if (camp == Camp.ELEPHANT)
         {
-            if (orientation == Orientation.HAUT) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1, false, false);
-            if (orientation == Orientation.BAS) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1, false, true);
-            if (orientation == Orientation.GAUCHE) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1Gauche, false, false);
-            if (orientation == Orientation.DROITE) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1Gauche, true, false);
-            if (selectionnee) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.focus, false, false);
+            if (orientation == Orientation.HAUT) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1, false, false);
+            if (orientation == Orientation.BAS) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1, false, true);
+            if (orientation == Orientation.GAUCHE) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1Gauche, false, false);
+            if (orientation == Orientation.DROITE) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur1Gauche, true, false);
+            if (selectionnee) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.focus, false, false);
         }
         if (camp == Camp.RHINOCEROS)
         {
-            if (orientation == Orientation.HAUT) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2, false, false);
-            if (orientation == Orientation.BAS) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2, false, true);
-            if (orientation == Orientation.GAUCHE) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2Gauche, false, false);
-            if (orientation == Orientation.DROITE) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2Gauche, true, false);
-            if (selectionnee) ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.focus, false, false);
+            if (orientation == Orientation.HAUT) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2, false, false);
+            if (orientation == Orientation.BAS) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2, false, true);
+            if (orientation == Orientation.GAUCHE) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2Gauche, false, false);
+            if (orientation == Orientation.DROITE) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.casePionJoueur2Gauche, true, false);
+            if (selectionnee) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.focus, false, false);
         }
     }
 

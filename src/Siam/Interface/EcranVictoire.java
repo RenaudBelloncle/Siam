@@ -3,41 +3,40 @@ package Siam.Interface;
 import Siam.Enum.Camp;
 import Siam.Constantes;
 import Siam.Enum.Theme;
-import Siam.Game;
+import Siam.Jeu;
 import Siam.Joueur;
 import Siam.Sons.Musique;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class EcranVictoire implements ActionListener, Constantes {
 
-    private Game game;
+    private Jeu jeu;
     private JFrame fenetre;
-    private OutilsFont outils;
+    private OutilsFont outilsFont;
+
     private JButton continuer;
     private JButton retourMenu;
     private JLabel gagnant;
+
     private Theme theme;
-    private Musique libMuse;
+    private Musique musique;
     private boolean son;
 
-    public EcranVictoire(Game game, JFrame fenetre, Camp campGagnant, Theme theme, Musique libMuse, boolean son){
-        this.game = game;
+    public EcranVictoire(Jeu jeu, JFrame fenetre, Camp campGagnant, Theme theme, Musique musique, boolean son){
+        this.jeu = jeu;
         this.fenetre = fenetre;
         this.theme = theme;
-        this.libMuse = libMuse;
+        this.musique = musique;
         this.son = son;
+
         initEcranVictoire(campGagnant);
         afficheEcranVictoire();
-        continuer.addActionListener(this);
-        retourMenu.addActionListener(this);
+        setControlEcranVictoire(this);
 
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
@@ -52,7 +51,7 @@ public class EcranVictoire implements ActionListener, Constantes {
         if(campGagnant == Camp.ELEPHANT)  str.append("Eléphants");
         else str.append("Rhinocéros");
         gagnant = new JLabel(String.valueOf(str));
-        outils = new OutilsFont();
+        outilsFont = new OutilsFont();
         continuer = new JButton("Continuer");
         retourMenu = new JButton("Retour au Menu");
     }
@@ -94,28 +93,33 @@ public class EcranVictoire implements ActionListener, Constantes {
 
     private void changerPolice() {
         if (theme == Theme.STANDARD) {
-            outils.changerFontJLabel(gagnant, 80, Color.orange, outils.getFontTexte());
-            outils.changerFontButton(continuer, 40, Color.orange, outils.getFontMenu());
-            outils.changerFontButton(retourMenu, 40, Color.orange, outils.getFontMenu());
+            outilsFont.changerFontJLabel(gagnant, 80, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(continuer, 40, Color.orange, outilsFont.getFontMenu());
+            outilsFont.changerFontButton(retourMenu, 40, Color.orange, outilsFont.getFontMenu());
         } else if (theme == Theme.NOEL) {
-            outils.changerFontJLabel(gagnant, 80, Color.black, outils.getFontTexte());
-            outils.changerFontButton(continuer, 40, Color.black, outils.getFontMenu());
-            outils.changerFontButton(retourMenu, 40, Color.black, outils.getFontMenu());
+            outilsFont.changerFontJLabel(gagnant, 80, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(continuer, 40, Color.black, outilsFont.getFontMenu());
+            outilsFont.changerFontButton(retourMenu, 40, Color.black, outilsFont.getFontMenu());
         }
+    }
+
+    private void setControlEcranVictoire(ActionListener listener) {
+        continuer.addActionListener(listener);
+        retourMenu.addActionListener(listener);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == continuer) {
-            game.setTheme(theme);
-            game.setLibMuse(libMuse);
-            game.setSon(son);
-            game.initGame(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
-            game.start();
+            jeu.setTheme(theme);
+            jeu.setMusique(musique);
+            jeu.setSon(son);
+            jeu.initJeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
+            jeu.start();
         }
         if (source == retourMenu) {
-            new Menu(game, fenetre, theme, libMuse, son);
+            new Menu(jeu, fenetre, theme, musique, son);
         }
     }
 }

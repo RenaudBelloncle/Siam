@@ -3,27 +3,24 @@ package Siam.Interface;
 import Siam.Constantes;
 import Siam.Enum.Camp;
 import Siam.Enum.Theme;
-import Siam.Game;
+import Siam.Jeu;
 import Siam.Joueur;
 import Siam.Sons.Musique;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 public class ChoixCamp implements ActionListener, Constantes {
 
-    static final Random random = new Random();
+    private static final Random random = new Random();
 
-    private Game game;
+    private Jeu jeu;
     private JFrame fenetre;
-    private OutilsFont outil;
+    private OutilsFont outilsFont;
 
     private JLabel titreCB;
     private JRadioButton JRBelephant, JRBrhinoceros, aleatoire;
@@ -31,23 +28,21 @@ public class ChoixCamp implements ActionListener, Constantes {
     private JButton valider, annuler;
 
     private Theme theme;
-    private Musique libMuse;
+    private Musique musique;
     private boolean son;
 
-    public ChoixCamp(Game game, JFrame fenetre, Theme theme, Musique libMuse, boolean son) {
-        this.game = game;
+    public ChoixCamp(Jeu jeu, JFrame fenetre, Theme theme, Musique musique, boolean son) {
+        this.jeu = jeu;
         this.fenetre = fenetre;
         this.theme = theme;
-        this.libMuse = libMuse;
+        this.musique = musique;
         this.son = son;
-        outil = new OutilsFont();
-        lanceChoixCamp();
-        setControlChoixCamp(this);
-    }
+        outilsFont = new OutilsFont();
 
-    public void lanceChoixCamp(){
         initChoixCamp();
         afficheChoixCamp();
+        setControlChoixCamp(this);
+
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
         fenetre.setResizable(false);
@@ -120,19 +115,19 @@ public class ChoixCamp implements ActionListener, Constantes {
 
     public void changerPolice() {
         if (theme == Theme.STANDARD) {
-            outil.changerFontJLabel(titreCB, 95, Color.orange, outil.getFontMenu());
-            outil.changerFontButton(valider, 80, Color.orange, outil.getFontTexte());
-            outil.changerFontButton(annuler, 80, Color.orange, outil.getFontTexte());
-            outil.changerFontJRadioButton(JRBelephant, 60, Color.orange, outil.getFontTexte());
-            outil.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outil.getFontTexte());
-            outil.changerFontJRadioButton(aleatoire, 60, Color.orange, outil.getFontTexte());
+            outilsFont.changerFontJLabel(titreCB, 95, Color.orange, outilsFont.getFontMenu());
+            outilsFont.changerFontButton(valider, 80, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(annuler, 80, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontJRadioButton(JRBelephant, 60, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontJRadioButton(aleatoire, 60, Color.orange, outilsFont.getFontTexte());
         } else if (theme == Theme.NOEL) {
-            outil.changerFontJLabel(titreCB, 95, Color.black, outil.getFontMenu());
-            outil.changerFontButton(valider, 80, Color.black, outil.getFontTexte());
-            outil.changerFontButton(annuler, 80, Color.black, outil.getFontTexte());
-            outil.changerFontJRadioButton(JRBelephant, 60, Color.black, outil.getFontTexte());
-            outil.changerFontJRadioButton(JRBrhinoceros, 60, Color.black, outil.getFontTexte());
-            outil.changerFontJRadioButton(aleatoire, 60, Color.black, outil.getFontTexte());
+            outilsFont.changerFontJLabel(titreCB, 95, Color.black, outilsFont.getFontMenu());
+            outilsFont.changerFontButton(valider, 80, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(annuler, 80, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontJRadioButton(JRBelephant, 60, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontJRadioButton(JRBrhinoceros, 60, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontJRadioButton(aleatoire, 60, Color.black, outilsFont.getFontTexte());
         }
     }
 
@@ -147,34 +142,18 @@ public class ChoixCamp implements ActionListener, Constantes {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (source == getValider())
+        if (source == valider)
         {
-            if(getJRBelephant().isSelected())game.setJoueurActif(game.getJoueurs()[0]);
-            else if (getJRBrhinoceros().isSelected())game.setJoueurActif(game.getJoueurs()[1]);
-            else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
-            game.setLibMuse(libMuse);
-            game.setSon(son);
-            game.initGame(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
-            game.start();
+            if(JRBelephant.isSelected()) jeu.setJoueurActif(jeu.getJoueurs()[0]);
+            else if (JRBrhinoceros.isSelected()) jeu.setJoueurActif(jeu.getJoueurs()[1]);
+            else jeu.setJoueurActif(jeu.getJoueurs()[random.nextInt(2)]);
+            jeu.setMusique(musique);
+            jeu.setSon(son);
+            jeu.initJeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
+            jeu.start();
         }
-        else if (source == getAnnuler()){
-            new Menu(game, game.getFenetre(), theme, libMuse, son);
+        else if (source == annuler){
+            new Menu(jeu, jeu.getFenetre(), theme, musique, son);
         }
-    }
-
-    public JButton getValider(){
-        return valider;
-    }
-
-    public JButton getAnnuler(){
-        return annuler;
-    }
-
-    public JRadioButton getJRBelephant() {
-        return JRBelephant;
-    }
-
-    public JRadioButton getJRBrhinoceros() {
-        return JRBrhinoceros;
     }
 }

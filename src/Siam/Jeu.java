@@ -7,7 +7,7 @@ import Siam.Sons.Musique;
 
 import javax.swing.*;
 
-public class Game implements Runnable, Constantes {
+public class Jeu implements Runnable, Constantes {
 
     private Plateau plateau;
     private Joueur[] joueurs;
@@ -15,7 +15,7 @@ public class Game implements Runnable, Constantes {
     private VueJeu vueJeu;
     private JFrame fenetre;
     private Theme theme;
-    private Musique libMuse;
+    private Musique musique;
     private  boolean son;
 
     private DetectionSouris souris;
@@ -27,20 +27,21 @@ public class Game implements Runnable, Constantes {
     private boolean changerOrientation;
     private boolean selectionnerOrientation;
     private boolean enCoursDeDeplacement;
+
     private Joueur joueurActif;
     private Animal animalSelectionnee;
 
     private Thread thread;
     private boolean running;
 
-    public Game() {
-        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null,
-                new JFrame());
+    public Jeu() {
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS),
+                false, false, false, false, false, false, null, new JFrame());
     }
 
-    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
-                boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation,
-                Animal animalSelectionnee, JFrame fenetre) {
+    public Jeu(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
+               boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation,
+               Animal animalSelectionnee, JFrame fenetre) {
 
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
@@ -65,8 +66,8 @@ public class Game implements Runnable, Constantes {
         this.animalSelectionnee = animalSelectionnee;
 
         theme = Theme.STANDARD;
-        libMuse = new Musique(theme);
-        libMuse.start();
+        musique = new Musique(theme);
+        musique.start();
         son = true;
 
         running = false;
@@ -167,12 +168,12 @@ public class Game implements Runnable, Constantes {
         return theme;
     }
 
-    public void setLibMuse(Musique libMuse) {
-        this.libMuse = libMuse;
+    public void setMusique(Musique musique) {
+        this.musique = musique;
     }
 
     public Musique getMusique() {
-        return libMuse;
+        return musique;
     }
 
     public void setSon(boolean son) {
@@ -183,7 +184,7 @@ public class Game implements Runnable, Constantes {
         return son;
     }
 
-    public void initGame(Joueur joueur1, Joueur joueur2) {
+    public void initJeu(Joueur joueur1, Joueur joueur2) {
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;

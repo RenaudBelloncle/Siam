@@ -12,9 +12,9 @@ import java.awt.image.BufferedImage;
 
 public class VueJeu implements ActionListener, Constantes {
 
-    private Game game;
+    private Jeu jeu;
     private JFrame fenetre;
-    private OutilsFont outil;
+    private OutilsFont outilsFont;
 
     private DetectionSouris souris;
 
@@ -27,23 +27,22 @@ public class VueJeu implements ActionListener, Constantes {
     private JButton flecheGauche;
     private JButton flecheBas;
 
-    public VueJeu(Game game, JFrame fenetre, DetectionSouris souris){
-        this.game = game;
+    public VueJeu(Jeu jeu, JFrame fenetre, DetectionSouris souris){
+        this.jeu = jeu;
         this.fenetre = fenetre;
         this.souris = souris;
 
-        outil = new OutilsFont();
+        outilsFont = new OutilsFont();
 
         initVueJeu();
         affichageVueJeu();
+        setControlBouton(this);
 
         fenetre.setTitle("Siam");
         fenetre.setResizable(false);
         fenetre.pack();
         fenetre.setLocationRelativeTo(null);
         fenetre.setVisible(true);
-
-        setControlBouton(this);
     }
 
     public void initVueJeu() {
@@ -58,7 +57,7 @@ public class VueJeu implements ActionListener, Constantes {
     }
 
     public void affichageVueJeu() {
-        PanelPlateau panelPlateau = new PanelPlateau(game, souris);
+        PanelPlateau panelPlateau = new PanelPlateau(jeu, souris);
         JPanel panelJeu = new JPanel();
         JPanel panelBouton = new JPanel();
         JPanel panelPoser = new JPanel();
@@ -107,7 +106,7 @@ public class VueJeu implements ActionListener, Constantes {
         panelBas.add(flecheBas);
 
         panelBouton = new JPanel() {
-            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(game.getTheme(), "FondMenu");
+            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(jeu.getTheme(), "FondMenu");
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 fenetre.repaint();
@@ -132,24 +131,24 @@ public class VueJeu implements ActionListener, Constantes {
     }
 
     private void changerPolice() {
-        if (game.getTheme() == Theme.STANDARD) {
-            outil.changerFontButton(poser, 30, Color.orange, outil.getFontTexte());
-            outil.changerFontButton(deplacer, 30, Color.orange, outil.getFontTexte());
-            outil.changerFontButton(sortir, 30, Color.orange, outil.getFontTexte());
-            outil.changerFontButton(orienter, 30, Color.orange, outil.getFontTexte());
-            outil.changerFontButton(flecheHaut, 30, Color.orange, outil.getFontTexte());
-            outil.changerFontButton(flecheBas, 30, Color.orange, outil.getFontTexte());
-            outil.changerFontButton(flecheGauche, 30, Color.orange, outil.getFontTexte());
-            outil.changerFontButton(flecheDroite, 30, Color.orange, outil.getFontTexte());
-        } else if (game.getTheme() == Theme.NOEL) {
-            outil.changerFontButton(poser, 30, Color.black, outil.getFontTexte());
-            outil.changerFontButton(deplacer, 30, Color.black, outil.getFontTexte());
-            outil.changerFontButton(sortir, 30, Color.black, outil.getFontTexte());
-            outil.changerFontButton(orienter, 30, Color.black, outil.getFontTexte());
-            outil.changerFontButton(flecheHaut, 30, Color.black, outil.getFontTexte());
-            outil.changerFontButton(flecheBas, 30, Color.black, outil.getFontTexte());
-            outil.changerFontButton(flecheGauche, 30, Color.black, outil.getFontTexte());
-            outil.changerFontButton(flecheDroite, 30, Color.black, outil.getFontTexte());
+        if (jeu.getTheme() == Theme.STANDARD) {
+            outilsFont.changerFontButton(poser, 30, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(deplacer, 30, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(sortir, 30, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(orienter, 30, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(flecheHaut, 30, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(flecheBas, 30, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(flecheGauche, 30, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(flecheDroite, 30, Color.orange, outilsFont.getFontTexte());
+        } else if (jeu.getTheme() == Theme.NOEL) {
+            outilsFont.changerFontButton(poser, 30, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(deplacer, 30, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(sortir, 30, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(orienter, 30, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(flecheHaut, 30, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(flecheBas, 30, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(flecheGauche, 30, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(flecheDroite, 30, Color.black, outilsFont.getFontTexte());
         }
     }
 
@@ -167,56 +166,56 @@ public class VueJeu implements ActionListener, Constantes {
     @Override
     public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
-        if (source == poser && !game.isSelectionnerOrientation()) {
-            game.setPlacerPiece(true);
+        if (source == poser && !jeu.isSelectionnerOrientation()) {
+            jeu.setPlacerPiece(true);
         }
-        if (source == sortir && game.isPieceSelectionnee()) {
-            if (game.getAnimalSelectionnee().getAbscisse() == 0 || game.getAnimalSelectionnee().getAbscisse() == 4 || game.getAnimalSelectionnee().getOrdonnee() == 0 || game.getAnimalSelectionnee().getOrdonnee() == 4) {
-                game.setSortirPiece(true);
-                game.getJoueurActif().sortirPiece(game.getAnimalSelectionnee().getAbscisse(), game.getAnimalSelectionnee().getOrdonnee());
-                game.changerJoueurActif();
+        if (source == sortir && jeu.isPieceSelectionnee()) {
+            if (jeu.getAnimalSelectionnee().getAbscisse() == 0 || jeu.getAnimalSelectionnee().getAbscisse() == 4 || jeu.getAnimalSelectionnee().getOrdonnee() == 0 || jeu.getAnimalSelectionnee().getOrdonnee() == 4) {
+                jeu.setSortirPiece(true);
+                jeu.getJoueurActif().sortirPiece(jeu.getAnimalSelectionnee().getAbscisse(), jeu.getAnimalSelectionnee().getOrdonnee());
+                jeu.changerJoueurActif();
             } else {
-                game.getAnimalSelectionnee().setSelectionnee(false);
+                jeu.getAnimalSelectionnee().setSelectionnee(false);
             }
-            game.setPieceSelectionnee(false);
-            game.setAnimalSelectionnee(null);
-            game.setSelectionnerOrientation(false);
-            game.setSortirPiece(false);
+            jeu.setPieceSelectionnee(false);
+            jeu.setAnimalSelectionnee(null);
+            jeu.setSelectionnerOrientation(false);
+            jeu.setSortirPiece(false);
         }
-        if (source == deplacer && game.isPieceSelectionnee()) {
-            game.setDeplacerPiece(true);
+        if (source == deplacer && jeu.isPieceSelectionnee()) {
+            jeu.setDeplacerPiece(true);
         }
-        if (source == orienter && game.isPieceSelectionnee()) {
-            game.setChangerOrientation(true);
-            game.setSelectionnerOrientation(true);
+        if (source == orienter && jeu.isPieceSelectionnee()) {
+            jeu.setChangerOrientation(true);
+            jeu.setSelectionnerOrientation(true);
         }
-        if (game.isSelectionnerOrientation() && source == flecheHaut) {
-            game.getAnimalSelectionnee().setOrientation(Orientation.HAUT);
-            game.deselection();
-            game.setEnCoursDeDeplacement(false);
-            if (game.isChangerOrientation()) game.setChangerOrientation(false);
-            game.changerJoueurActif();
+        if (jeu.isSelectionnerOrientation() && source == flecheHaut) {
+            jeu.getAnimalSelectionnee().setOrientation(Orientation.HAUT);
+            jeu.deselection();
+            jeu.setEnCoursDeDeplacement(false);
+            if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
+            jeu.changerJoueurActif();
         }
-        if (game.isSelectionnerOrientation() && source == flecheDroite) {
-            game.getAnimalSelectionnee().setOrientation(Orientation.DROITE);
-            game.deselection();
-            game.setEnCoursDeDeplacement(false);
-            if (game.isChangerOrientation()) game.setChangerOrientation(false);
-            game.changerJoueurActif();
+        if (jeu.isSelectionnerOrientation() && source == flecheDroite) {
+            jeu.getAnimalSelectionnee().setOrientation(Orientation.DROITE);
+            jeu.deselection();
+            jeu.setEnCoursDeDeplacement(false);
+            if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
+            jeu.changerJoueurActif();
         }
-        if (game.isSelectionnerOrientation() && source == flecheBas) {
-            game.getAnimalSelectionnee().setOrientation(Orientation.BAS);
-            game.deselection();
-            game.setEnCoursDeDeplacement(false);
-            if (game.isChangerOrientation()) game.setChangerOrientation(false);
-            game.changerJoueurActif();
+        if (jeu.isSelectionnerOrientation() && source == flecheBas) {
+            jeu.getAnimalSelectionnee().setOrientation(Orientation.BAS);
+            jeu.deselection();
+            jeu.setEnCoursDeDeplacement(false);
+            if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
+            jeu.changerJoueurActif();
         }
-        if (game.isSelectionnerOrientation() && source == flecheGauche) {
-            game.getAnimalSelectionnee().setOrientation(Orientation.GAUCHE);
-            game.deselection();
-            game.setEnCoursDeDeplacement(false);
-            if (game.isChangerOrientation()) game.setChangerOrientation(false);
-            game.changerJoueurActif();
+        if (jeu.isSelectionnerOrientation() && source == flecheGauche) {
+            jeu.getAnimalSelectionnee().setOrientation(Orientation.GAUCHE);
+            jeu.deselection();
+            jeu.setEnCoursDeDeplacement(false);
+            if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
+            jeu.changerJoueurActif();
         }
     }
 

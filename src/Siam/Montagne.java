@@ -9,8 +9,9 @@ public class Montagne extends Piece {
         super(colonne, ligne);
     }
 
-    public void render(Ecran ecran) {
-        ecran.renderSprite(getAbscisse(), getOrdonnee(), Sprite.caseMontagne, false, false);
+    public void affichage(Ecran ecran) {
+        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.caseVide, false, false);
+        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.caseMontagne, false, false);
     }
 
     public boolean estVide(){

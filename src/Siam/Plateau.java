@@ -44,15 +44,14 @@ public class Plateau {
         plateau[colonne][ligne] = new Case(colonne, ligne);
     }
 
-    public void render(Ecran ecran) {
+    public void affichage(Ecran ecran) {
         for(int i = 0; i < tailleCote; i ++){
             for(int j = 0; j < tailleCote; j++){
-                getCase(j,i).render(ecran);
+                getCase(j,i).affichage(ecran);
             }
         }
     }
 
-    //Methode qui ne test rien, FAIRE LES TESTS AVANT l'appel de cette methode
     public void deplacerPiece(Piece piece, int absTarget, int ordTarget) {
         plateau[absTarget][ordTarget] = piece;
         plateau[piece.getAbscisse()][piece.getOrdonnee()] = new Case(piece.getAbscisse(), piece.getOrdonnee());
@@ -66,15 +65,15 @@ public class Plateau {
         return (diffAbs == 1 || diffAbs == -1) && diffOrd == 0 || diffAbs == 0 && (diffOrd == 1 || diffOrd == -1);
     }
 
-    public ArrayList<Piece> getLinePushed(Animal pusher) {
-        boolean nextCaseIsNotVoid = true;
+    public ArrayList<Piece> getLignePoussee(Animal pousseur) {
+        boolean caseSuivanteNonVide = true;
         ArrayList<Piece> ret = new ArrayList<>();
-        ret.add(pusher);
-        int currentAbs = pusher.getAbscisse();
-        int currentOrd = pusher.getOrdonnee();
+        ret.add(pousseur);
+        int abscisse = pousseur.getAbscisse();
+        int ordonnee = pousseur.getOrdonnee();
         int ajoutx = 0;
         int ajouty = 0;
-        switch(pusher.getOrientation()){
+        switch(pousseur.getOrientation()){
             case BAS:
                 ajouty = 1;
                 break;
@@ -88,19 +87,19 @@ public class Plateau {
                 ajoutx = 1;
                 break;
         }
-        while(nextCaseIsNotVoid){
-            currentAbs += ajoutx;
-            currentOrd += ajouty;
+        while(caseSuivanteNonVide){
+            abscisse += ajoutx;
+            ordonnee += ajouty;
 
-            if(currentAbs < 0 || currentAbs >= tailleCote
-                    || currentOrd < 0 || currentOrd >= tailleCote){
-                nextCaseIsNotVoid = false;
+            if(abscisse < 0 || abscisse >= tailleCote
+                    || ordonnee < 0 || ordonnee >= tailleCote){
+                caseSuivanteNonVide = false;
             }
-            else if(getCase(currentAbs, currentOrd).estVide()){
-                nextCaseIsNotVoid = false;
+            else if(getCase(abscisse, ordonnee).estVide()){
+                caseSuivanteNonVide = false;
             }
             else{
-                ret.add((Piece)getCase(currentAbs, currentOrd));
+                ret.add((Piece)getCase(abscisse, ordonnee));
             }
         }
         return ret;

@@ -4,7 +4,7 @@ import Siam.Interface.Menu;
 
 public class Appli {
     public static void main(String[] args) {
-        Game game = new Game();
-        new Menu(game, game.getFenetre(), game.getTheme(),game.getMusique(), game.isSon());
+        Jeu jeu = new Jeu();
+        new Menu(jeu, jeu.getFenetre(), jeu.getTheme(),jeu.getMusique(), jeu.isSon());
     }
 }

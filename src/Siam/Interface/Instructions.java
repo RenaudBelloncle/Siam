@@ -2,19 +2,14 @@ package Siam.Interface;
 
 import Siam.Enum.Theme;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Instructions extends JFrame {
 
     private Theme theme;
-    private OutilsFont outil;
+    private OutilsFont outilsFont;
 
     private JLabel commentjouer;
     private JLabel intro;
@@ -34,7 +29,7 @@ public class Instructions extends JFrame {
 
     public Instructions(Theme theme){
         this.theme = theme;
-        outil = new OutilsFont();
+        outilsFont = new OutilsFont();
         initInstructions();
         afficherInstructions();
 
@@ -172,7 +167,7 @@ public class Instructions extends JFrame {
     }
 
     public void changerPolice(){
-        if (theme == Theme.STANDARD) outil.changerFontJLabel(titre, 50, Color.orange, outil.getFontMenu());
-        else if (theme == Theme.NOEL) outil.changerFontJLabel(titre, 50, Color.black, outil.getFontMenu());
+        if (theme == Theme.STANDARD) outilsFont.changerFontJLabel(titre, 50, Color.orange, outilsFont.getFontMenu());
+        else if (theme == Theme.NOEL) outilsFont.changerFontJLabel(titre, 50, Color.black, outilsFont.getFontMenu());
     }
 }
