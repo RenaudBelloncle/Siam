@@ -3,7 +3,6 @@ package Siam.Sons;
 import javazoom.jl.player.Player;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class MP3 {

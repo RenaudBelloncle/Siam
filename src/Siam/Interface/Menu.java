@@ -130,7 +130,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     }
 
     public void changerPolice(){
-        outil.changerFontJLabel(titre, 150, Color.orange, outil.getFontMenu());/*outil.getFont(int theme)*/
+        outil.changerFontJLabel(titre, 150, Color.orange, outil.getFontMenu());
         outil.changerFontButton(jouer, 60, Color.orange, outil.getFontTexte());
         outil.changerFontButton(scores, 60, Color.orange, outil.getFontTexte());
         outil.changerFontButton(option, 60, Color.orange, outil.getFontTexte());
