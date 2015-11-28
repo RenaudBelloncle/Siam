@@ -1,5 +1,7 @@
 package Siam.Interface;
 
+import Siam.Enum.Theme;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Instructions extends JFrame implements ActionListener {
+public class Instructions extends JFrame {
 
+    private Theme theme;
     private OutilsFont outil;
 
     private JLabel commentjouer;
@@ -29,17 +32,16 @@ public class Instructions extends JFrame implements ActionListener {
     private JLabel part5;
     private JLabel titre;
 
-    public Instructions(){
+    public Instructions(Theme theme){
+        this.theme = theme;
         outil = new OutilsFont();
         initInstructions();
         afficherInstructions();
-        setControlInstructions(this);
 
         setSize(500, 500);
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Siam");
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setVisible(true);
     }
 
@@ -147,18 +149,14 @@ public class Instructions extends JFrame implements ActionListener {
         panTest.setOpaque(false);
 
 
-        try {
-            panPrincipal = new JPanel() {
-                BufferedImage image = ImageIO.read(new File("res/images/menu.png"));
+        panPrincipal = new JPanel() {
+            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme, "FondMenu");
 
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.drawImage(image, 0, 0, 500, 500, this);
-                }
-            };
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, 500, 500, this);
+            }
+        };
 
         panPrincipal.setLayout(new BorderLayout());
         panRegle.setLayout(new BoxLayout(panRegle, BoxLayout.Y_AXIS));
@@ -183,14 +181,5 @@ public class Instructions extends JFrame implements ActionListener {
         panPrincipal.add(panTest, BorderLayout.CENTER);
 
         setContentPane(panPrincipal);
-    }
-
-    public void setControlInstructions(ActionListener listener){
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-
     }
 }

@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Enum.Camp;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

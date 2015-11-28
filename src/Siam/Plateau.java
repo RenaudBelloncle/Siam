@@ -1,5 +1,7 @@
 package Siam;
 
+import Siam.Enum.Camp;
+import Siam.Enum.Orientation;
 import Siam.Interface.Ecran;
 
 import java.util.ArrayList;

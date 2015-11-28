@@ -1,5 +1,7 @@
 package Siam;
 
+import Siam.Enum.Camp;
+
 public class TokenResultatPoussee {
     private boolean pousseeEffectue;
     private Camp campGagnant;
