@@ -7,22 +7,23 @@ import java.io.IOException;
 
 public class OutilsFont {
 
-    private Font fontMenu, police, fontTexte;
+    private Font fontMenu;
+    private Font police;
+    private Font fontTexte;
 
     public OutilsFont() {
         try {
-            fontMenu = loadFont("res/Standard/Fonts/FRAZZLE_.TTF");
-            fontTexte = loadFont("res/Standard/Fonts/Alabama.ttf");
+            fontMenu = chargerFont("res/Standard/Fonts/FRAZZLE_.TTF");
+            fontTexte = chargerFont("res/Standard/Fonts/Alabama.ttf");
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static Font loadFont(String string) throws FontFormatException, IOException {
+    public static Font chargerFont(String string) throws FontFormatException, IOException {
         File fileFont = new File(string);
         return Font.createFont(Font.TRUETYPE_FONT, fileFont);
     }
-
 
     public void changerFontButton(JButton bouton, int size, Color color, Font font) {
         police = font.deriveFont(Font.TRUETYPE_FONT, size);

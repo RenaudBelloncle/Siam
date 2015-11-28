@@ -7,11 +7,11 @@ import java.awt.event.MouseEvent;
 
 public class DetectionSouris extends MouseInputAdapter implements Constantes {
 
-    private Game game;
+    private Jeu jeu;
     private Plateau plateau;
 
-    public DetectionSouris(Game game, Plateau plateau) {
-        this.game = game;
+    public DetectionSouris(Jeu jeu, Plateau plateau) {
+        this.jeu = jeu;
         this.plateau = plateau;
     }
 
@@ -20,67 +20,68 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
         if (event.getY() < BORDURE_FENETRE/2 || event.getY() > (1+NOMBRE_CASE_INI)*TAILLE_SPRITE) return;
         int colonne = (event.getX() - BORDURE_FENETRE/2) / TAILLE_SPRITE;
         int ligne = (event.getY() - BORDURE_FENETRE/2) / TAILLE_SPRITE;
-        clickPerformed(colonne,ligne);
+        clicEffectue(colonne,ligne);
     }
 
-    private void clickPerformed(int colonne, int ligne) {
-        if (game.isPieceSelectionnee() && !game.isDeplacerPiece() && !game.isEnCoursDeDeplacement()) {
-            game.deselection();
-            if (game.isChangerOrientation()) game.setChangerOrientation(false);
+    private void clicEffectue(int colonne, int ligne) {
+        if (jeu.isPieceSelectionnee() && !jeu.isDeplacerPiece() && !jeu.isEnCoursDeDeplacement()) {
+            jeu.deselection();
+            if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
         }
-        if(game.isDeplacerPiece() && game.getAnimalSelectionnee() != null) {
-            if(!game.getPlateau().testCaseAdjacente(game.getAnimalSelectionnee(),
+        if(jeu.isDeplacerPiece() && jeu.getAnimalSelectionnee() != null) {
+            if(!jeu.getPlateau().testCaseAdjacente(jeu.getAnimalSelectionnee(),
                     plateau.getCase(colonne, ligne)))
             {
-                game.deselection();
-                game.setDeplacerPiece(false);
+                jeu.deselection();
+                jeu.setDeplacerPiece(false);
             }
-            else if(game.getJoueurActif().moveAnimalOnFreeCase(game.getAnimalSelectionnee(),
+            else if(jeu.getJoueurActif().deplaceAnimalSurCaseVide(jeu.getAnimalSelectionnee(),
                     plateau.getCase(colonne, ligne)))
             {
-                game.setEnCoursDeDeplacement(true);
-                game.setSelectionnerOrientation(true);
-                game.setDeplacerPiece(false);
+                jeu.setEnCoursDeDeplacement(true);
+                jeu.setSelectionnerOrientation(true);
+                jeu.setDeplacerPiece(false);
             }
             else {
-                if(game.testOrientationEntreAnimalEtCase(game.getAnimalSelectionnee(),
+                if(jeu.testOrientationEntreAnimalEtCase(jeu.getAnimalSelectionnee(),
                         plateau.getCase(colonne, ligne))) {
-                    TokenResultatPoussee ret = game.getJoueurActif().MoveAnimalToPush(game.getAnimalSelectionnee());
+                    TokenResultatPoussee ret = jeu.getJoueurActif().deplaceAnimalEnPoussant(jeu.getAnimalSelectionnee());
                     if(ret.isPousseeEffectue()){
                         if(ret.getCampGagnant() != null) {
-                            new EcranVictoire(game, game.getFenetre() ,ret.getCampGagnant(), game.getTheme(), game.getMusique(), game.isSon());
+                            jeu.getVueJeu().getMenuBar().removeAll();
+                            new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon());
                             return;
                         }
-                        game.changerJoueurActif();
+                        jeu.changerJoueurActif();
                     }
                 }
-                game.deselection();
+                jeu.deselection();
             }
-            game.setDeplacerPiece(false);
+            jeu.setDeplacerPiece(false);
         }
-        if (game.isPlacerPiece()) {
-            if (!game.getJoueurActif().restePiece()) {
-                game.deselection();
+        if (jeu.isPlacerPiece()) {
+            if (!jeu.getJoueurActif().restePiece()) {
+                jeu.deselection();
                 return;
             }
             if (colonne == 0 || colonne == 4 || ligne == 0 || ligne == 4) {
-                Animal animal = game.getJoueurActif().posePiece(colonne, ligne);
+                Animal animal = jeu.getJoueurActif().posePiece(colonne, ligne);
                 if (animal == null) {
-                    game.setPlacerPiece(false);
+                    jeu.setPlacerPiece(false);
                     return;
                 }
                 animal.setSelectionnee(true);
-                game.setAnimalSelectionnee(animal);
-                game.setPlacerPiece(false);
-                game.setSelectionnerOrientation(true);
+                jeu.setAnimalSelectionnee(animal);
+                jeu.setPlacerPiece(false);
+                jeu.setSelectionnerOrientation(true);
             }
-        } else if(!game.isSelectionnerOrientation() && !game.isEnCoursDeDeplacement() && !game.isDeplacerPiece()) {
+        } else if(!jeu.isSelectionnerOrientation() && !jeu.isEnCoursDeDeplacement() && !jeu.isDeplacerPiece()) {
             if (plateau.getCase(colonne, ligne) instanceof Animal) {
-                if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == game.getJoueurActif().getCamp()) {
+                if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == jeu.getJoueurActif().getCamp()) {
                     Animal animal = (Animal)plateau.getCase(colonne, ligne);
                     animal.setSelectionnee(true);
-                    game.setPieceSelectionnee(true);
-                    game.setAnimalSelectionnee(animal);
+                    jeu.setPieceSelectionnee(true);
+                    jeu.setAnimalSelectionnee(animal);
                 }
             }
         }

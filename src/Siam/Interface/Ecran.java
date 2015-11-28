@@ -4,7 +4,8 @@ import Siam.Constantes;
 
 public class Ecran implements Constantes {
 
-    private int largeur, hauteur;
+    private int largeur;
+    private int hauteur;
     private int[] pixels;
 
     public Ecran(int largeur, int hauteur){
@@ -13,7 +14,7 @@ public class Ecran implements Constantes {
         pixels = new int[largeur * hauteur];
     }
 
-    public void clear(){
+    public void vider(){
         for(int i =0; i < pixels.length; i++) pixels[i] = 0;
     }
 
@@ -21,8 +22,7 @@ public class Ecran implements Constantes {
         return pixels[index];
     }
 
-    // Prend les coordonnees d'un sprite et place ses pixels dans le tableau de pixel
-    public void renderSprite(int xp, int yp, Sprite sprite, boolean xflip, boolean yflip) {
+    public void affichageSprite(int xp, int yp, Sprite sprite, boolean xflip, boolean yflip) {
         xp = xp * TAILLE_SPRITE + BORDURE_FENETRE/2;
         yp = yp * TAILLE_SPRITE + BORDURE_FENETRE/2;
 

@@ -68,17 +68,16 @@ public class Joueur {
         plateau.sortirPiece(colonne, ligne);
     }
 
-    public boolean moveAnimalOnFreeCase(Animal animal, Case targetCase){
-        //test du contenu de la case
-        if(targetCase.estVide()){
-            getPlateau().deplacerPiece(animal, targetCase.getAbscisse(), targetCase.getOrdonnee());
+    public boolean deplaceAnimalSurCaseVide(Animal animal, Case caseCible){
+        if(caseCible.estVide()){
+            getPlateau().deplacerPiece(animal, caseCible.getAbscisse(), caseCible.getOrdonnee());
             return true;
         }
         return false;
     }
 
-    public TokenResultatPoussee MoveAnimalToPush(Animal pusher){
-        ArrayList<Piece> ligne = plateau.getLinePushed(pusher);
+    public TokenResultatPoussee deplaceAnimalEnPoussant(Animal pousseur){
+        ArrayList<Piece> ligne = plateau.getLignePoussee(pousseur);
         TokenSommePoussee resultat = plateau.calculResultatPoussee(ligne);
         boolean pousseeReussie = false;
         Camp campGagnant = null;
@@ -86,7 +85,7 @@ public class Joueur {
             Piece pieceSortie = plateau.decalageLigne(ligne);
             pousseeReussie = true;
             if(pieceSortie != null && pieceSortie instanceof Montagne){
-                campGagnant=plateau.trouveCampGagnant(ligne);
+                campGagnant = plateau.trouveCampGagnant(ligne);
             }
         }
         return new TokenResultatPoussee(pousseeReussie, campGagnant);

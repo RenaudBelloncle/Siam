@@ -87,11 +87,11 @@ public class JoueurUnitTest {
         Mockito.when(targetCase.getOrdonnee()).thenReturn(0);
 
         //test case adjacente et non vide
-        boolean ret = joueur.moveAnimalOnFreeCase(animal, targetCase);
+        boolean ret = joueur.deplaceAnimalSurCaseVide(animal, targetCase);
         Assert.assertEquals(ret, false);
 
         //test case adjacente et vide
-        ret = joueur.moveAnimalOnFreeCase(animal, targetCase);
+        ret = joueur.deplaceAnimalSurCaseVide(animal, targetCase);
         Assert.assertEquals(ret, true);
     }
 

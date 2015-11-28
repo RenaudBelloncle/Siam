@@ -93,7 +93,7 @@ public class PlateauUnitTest {
         Mockito.when(piece3.getOrdonnee()).thenReturn(0);
         plateau.posePiece(piece3);
 
-        ArrayList<Piece> ligne = plateau.getLinePushed(piece1);
+        ArrayList<Piece> ligne = plateau.getLignePoussee(piece1);
         Assert.assertEquals(ligne.size(), 1);
 
         Animal piece2 = Mockito.mock(Animal.class);
@@ -103,11 +103,11 @@ public class PlateauUnitTest {
         plateau.posePiece(piece2);
 
         //test d'une ligne contenant plusieurs pieces
-        ligne = plateau.getLinePushed(piece1);
+        ligne = plateau.getLignePoussee(piece1);
         Assert.assertEquals(ligne.size(), 2);
 
         //test d'une ligne qui est sur le bord
-        ligne = plateau.getLinePushed(piece2);
+        ligne = plateau.getLignePoussee(piece2);
         Assert.assertEquals(ligne.size(), 2);
     }
 
