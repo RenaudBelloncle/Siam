@@ -2,6 +2,7 @@ package Siam;
 
 import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
+import Siam.Enum.Theme;
 import Siam.Interface.Ecran;
 
 import java.util.ArrayList;
@@ -44,10 +45,10 @@ public class Plateau {
         plateau[colonne][ligne] = new Case(colonne, ligne);
     }
 
-    public void affichage(Ecran ecran) {
+    public void affichage(Ecran ecran, Theme theme) {
         for(int i = 0; i < tailleCote; i ++){
             for(int j = 0; j < tailleCote; j++){
-                getCase(j,i).affichage(ecran);
+                getCase(j,i).affichage(ecran, theme);
             }
         }
     }

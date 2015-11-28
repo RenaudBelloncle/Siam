@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Enum.Theme;
 import Siam.Interface.Ecran;
 
 public abstract class Piece extends Case {
@@ -8,7 +9,7 @@ public abstract class Piece extends Case {
         super(abscisse, ordonnee);
     }
 
-    public abstract void affichage(Ecran ecran);
+    public abstract void affichage(Ecran ecran, Theme theme);
 
     public boolean estVide(){
         return false;

@@ -13,13 +13,21 @@ public class Sprite implements Constantes{
     private int largeur;
     private int hauteur;
 
-    public static Sprite caseVide = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Case"),TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Elephant"),TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Rhinoceros"),TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"ElephantGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"RhinocerosGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite caseMontagne = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Montagne"),TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite focus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCaseVide = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Case"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCasePionJoueur1 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Elephant"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCasePionJoueur2 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Rhinoceros"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCasePionJoueur1Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"ElephantGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCasePionJoueur2Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"RhinocerosGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCaseMontagne = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Montagne"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardFocus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
+
+    public static Sprite NoelCaseVide = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Case"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCasePionJoueur1 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Elephant"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCasePionJoueur2 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Rhinoceros"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCasePionJoueur1Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"ElephantGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCasePionJoueur2Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"RhinocerosGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCaseMontagne = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Montagne"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelFocus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
 
     public Sprite(BufferedImage image, int hauteur, int largeur){
         this.largeur = largeur;

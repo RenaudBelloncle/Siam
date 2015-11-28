@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Enum.Theme;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
@@ -29,8 +30,9 @@ public class Case {
         this.ordonnee = ordonnee;
     }
 
-    public void affichage(Ecran ecran){
-        ecran.affichageSprite(abscisse, ordonnee, Sprite.caseVide,false,false);
+    public void affichage(Ecran ecran, Theme theme){
+        if (theme == Theme.STANDARD) ecran.affichageSprite(abscisse, ordonnee, Sprite.StandardCaseVide,false,false);
+        else if (theme == Theme.NOEL) ecran.affichageSprite(abscisse, ordonnee, Sprite.NoelCaseVide,false,false);
     }
 
     public boolean estVide(){

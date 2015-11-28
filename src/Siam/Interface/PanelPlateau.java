@@ -28,7 +28,7 @@ public class PanelPlateau extends JPanel implements Constantes{
     @Override
     public void paintComponent(Graphics g){
         ecran.vider();
-        jeu.getPlateau().affichage(ecran);
+        jeu.getPlateau().affichage(ecran, jeu.getTheme());
 
         for (int i = 0; i < pixels.length; i++){
             pixels[i] = ecran.getPixel(i);
