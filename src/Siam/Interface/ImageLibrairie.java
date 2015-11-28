@@ -25,6 +25,12 @@ public class ImageLibrairie {
             imageCollection.get(Theme.STANDARD).put("FondMenu", image);
             image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondCamp.png"));
             imageCollection.get(Theme.STANDARD).put("FondCamp", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondBouton.jpg"));
+            imageCollection.get(Theme.STANDARD).put("FondBouton", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondElephant.jpeg"));
+            imageCollection.get(Theme.STANDARD).put("FondElephant", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondRhinoceros.jpeg"));
+            imageCollection.get(Theme.STANDARD).put("FondRhinoceros", image);
             // Sprites
             image = ImageIO.read(getClass().getResource("/Standard/Sprites/Case.png"));
             imageCollection.get(Theme.STANDARD).put("Case", image);
@@ -45,8 +51,14 @@ public class ImageLibrairie {
             // Images
             image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
             imageCollection.get(Theme.NOEL).put("FondMenu", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondCamp.jpg"));
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
             imageCollection.get(Theme.NOEL).put("FondCamp", image);
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
+            imageCollection.get(Theme.NOEL).put("FondBouton", image);
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
+            imageCollection.get(Theme.NOEL).put("FondElephant", image);
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
+            imageCollection.get(Theme.NOEL).put("FondRhinoceros", image);
             // Sprites
             image = ImageIO.read(getClass().getResource("/Noel/Sprites/Case.png"));
             imageCollection.get(Theme. NOEL).put("Case", image);

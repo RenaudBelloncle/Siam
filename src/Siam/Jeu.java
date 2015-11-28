@@ -160,6 +160,10 @@ public class Jeu implements Runnable, Constantes {
         return fenetre;
     }
 
+    public VueJeu getVueJeu() {
+        return vueJeu;
+    }
+
     public void setTheme(Theme theme) {
         this.theme = theme;
     }

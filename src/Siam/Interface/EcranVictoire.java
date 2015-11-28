@@ -18,6 +18,7 @@ public class EcranVictoire implements ActionListener, Constantes {
     private Jeu jeu;
     private JFrame fenetre;
     private OutilsFont outilsFont;
+    private Camp campGagnant;
 
     private JButton continuer;
     private JButton retourMenu;
@@ -30,11 +31,12 @@ public class EcranVictoire implements ActionListener, Constantes {
     public EcranVictoire(Jeu jeu, JFrame fenetre, Camp campGagnant, Theme theme, Musique musique, boolean son){
         this.jeu = jeu;
         this.fenetre = fenetre;
+        this.campGagnant = campGagnant;
         this.theme = theme;
         this.musique = musique;
         this.son = son;
 
-        initEcranVictoire(campGagnant);
+        initEcranVictoire();
         afficheEcranVictoire();
         setControlEcranVictoire(this);
 
@@ -46,7 +48,7 @@ public class EcranVictoire implements ActionListener, Constantes {
         fenetre.setVisible(true);
     }
 
-    public void initEcranVictoire(Camp campGagnant){
+    public void initEcranVictoire(){
         StringBuilder str = new StringBuilder("Victoire des ");
         if(campGagnant == Camp.ELEPHANT)  str.append("Eléphants");
         else str.append("Rhinocéros");
@@ -67,14 +69,47 @@ public class EcranVictoire implements ActionListener, Constantes {
         vide.setOpaque(false);
         boutonPanel.setOpaque(false);
 
-        panPrincipal = new JPanel() {
-            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme, "FondMenu");
+        if (campGagnant == Camp.ELEPHANT) {
+            if (theme == Theme.STANDARD) {
+                panPrincipal = new JPanel() {
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD, "FondElephant");
 
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    }
+                };
+            } else if (theme == Theme.NOEL) {
+                panPrincipal = new JPanel() {
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.NOEL, "FondElephant");
+
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    }
+                };
             }
-        };
+        } else {
+            if (theme == Theme.STANDARD) {
+                panPrincipal = new JPanel() {
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD, "FondRhinoceros");
+
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    }
+                };
+            } else if (theme == Theme.NOEL) {
+                panPrincipal = new JPanel() {
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.NOEL, "FondRhinoceros");
+
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    }
+                };
+            }
+        }
 
         changerPolice();
 

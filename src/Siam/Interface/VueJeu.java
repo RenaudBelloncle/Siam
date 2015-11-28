@@ -3,6 +3,7 @@ package Siam.Interface;
 import Siam.*;
 import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
+import Siam.Sons.Musique;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +28,15 @@ public class VueJeu implements ActionListener, Constantes {
     private JButton flecheGauche;
     private JButton flecheBas;
 
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private JMenu options;
+    private JMenuItem nouvellepartie;
+    private JMenuItem instructions;
+    private JMenuItem retourMenu;
+    private JMenuItem themeSuivant;
+    private JMenuItem musique;
+
     public VueJeu(Jeu jeu, JFrame fenetre, DetectionSouris souris){
         this.jeu = jeu;
         this.fenetre = fenetre;
@@ -40,7 +50,6 @@ public class VueJeu implements ActionListener, Constantes {
 
         fenetre.setTitle("Siam");
         fenetre.setResizable(false);
-        fenetre.pack();
         fenetre.setLocationRelativeTo(null);
         fenetre.setVisible(true);
     }
@@ -54,6 +63,17 @@ public class VueJeu implements ActionListener, Constantes {
         flecheDroite = new JButton("Droite");
         flecheGauche = new JButton("Gauche");
         flecheBas = new JButton("Bas");
+
+        menu = new JMenu("Menu");
+        options = new JMenu("Options");
+
+        nouvellepartie = new JMenuItem("Nouvelle Partie");
+        instructions = new JMenuItem("Règles");
+        retourMenu = new JMenuItem("Retour au Menu");
+
+        themeSuivant = new JMenuItem("Thème Suivant");
+        if (jeu.isSon()) musique = new JMenuItem("Musique On");
+        else musique = new JMenuItem("Musique Off");
     }
 
     public void affichageVueJeu() {
@@ -69,6 +89,17 @@ public class VueJeu implements ActionListener, Constantes {
         JPanel panelGauche = new JPanel();
         JPanel panelDroite = new JPanel();
         JPanel panelBas = new JPanel();
+
+        menuBar = new JMenuBar();
+
+        menu.add(nouvellepartie);
+        menu.add(instructions);
+        menu.add(retourMenu);
+        options.add(themeSuivant);
+        options.add(musique);
+
+        menuBar.add(menu);
+        menuBar.add(options);
 
         panelJeu.setOpaque(false);
         panelBouton.setOpaque(false);
@@ -106,7 +137,7 @@ public class VueJeu implements ActionListener, Constantes {
         panelBas.add(flecheBas);
 
         panelBouton = new JPanel() {
-            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(jeu.getTheme(), "FondMenu");
+            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(jeu.getTheme(), "FondBouton");
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 fenetre.repaint();
@@ -127,6 +158,7 @@ public class VueJeu implements ActionListener, Constantes {
         panelJeu.add(panelBouton);
 
         panelJeu.setLayout(new BoxLayout(panelJeu, BoxLayout.X_AXIS));
+        fenetre.setJMenuBar(menuBar);
         fenetre.setContentPane(panelJeu);
     }
 
@@ -161,6 +193,12 @@ public class VueJeu implements ActionListener, Constantes {
         flecheBas.addActionListener(actionListener);
         flecheDroite.addActionListener(actionListener);
         flecheGauche.addActionListener(actionListener);
+
+        nouvellepartie.addActionListener(actionListener);
+        instructions.addActionListener(actionListener);
+        retourMenu.addActionListener(actionListener);
+        themeSuivant.addActionListener(actionListener);
+        musique.addActionListener(actionListener);
     }
 
     @Override
@@ -217,6 +255,58 @@ public class VueJeu implements ActionListener, Constantes {
             if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
             jeu.changerJoueurActif();
         }
+        if (source == nouvellepartie)
+        {
+            menuBar.removeAll();
+            new ChoixCamp(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon());
+        }
+        if (source == instructions)
+        {
+            new Instructions(jeu.getTheme());
+        }
+        if (source == retourMenu)
+        {
+            menuBar.removeAll();
+            new Menu(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon());
+        }
+        if (source == themeSuivant)
+        {
+            switch (jeu.getTheme()) {
+                case STANDARD:
+                    jeu.setTheme(Theme.NOEL);
+                    break;
+                case NOEL:
+                    jeu.setTheme(Theme.STANDARD);
+                    break;
+            }
+            if (jeu.isSon()) {
+                jeu.getMusique().arret();
+                jeu.setMusique(new Musique(jeu.getTheme()));
+                jeu.getMusique().start();
+            }
+            affichageVueJeu();
+            fenetre.setVisible(true);
+        }
+        if (source == musique)
+        {
+            if (jeu.isSon())
+            {
+                musique.setLabel("Musique Off");
+                jeu.getMusique().arret();
+                musique.addActionListener(this);
+                jeu.setSon(false);
+            }
+            else
+            {
+                musique.setLabel("Musique On");
+                jeu.setMusique(new Musique(jeu.getTheme()));
+                jeu.getMusique().start();
+                musique.addActionListener(this);
+                jeu.setSon(true);
+            }
+            affichageVueJeu();
+            fenetre.setVisible(true);
+        }
     }
 
     public JButton getPoser() {
@@ -249,5 +339,9 @@ public class VueJeu implements ActionListener, Constantes {
 
     public JButton getFlecheBas() {
         return flecheBas;
+    }
+
+    public JMenuBar getMenuBar() {
+        return menuBar;
     }
 }

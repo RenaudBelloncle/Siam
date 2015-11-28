@@ -4,9 +4,11 @@ import Siam.Enum.Theme;
 
 import java.util.Random;
 
-public class Musique extends Thread{
+public class Musique extends Thread {
 
     private static Random random = new Random();
+
+    private Thread thread;
 
     private MP3 dj;
     private String[] bandeSonStandard;
@@ -22,6 +24,11 @@ public class Musique extends Thread{
         bandeSonNoel = new String[]{"res/Noel/Musiques/Noel1.mp3",
                                     "res/Noel/Musiques/Noel2.mp3",
                                     "res/Noel/Musiques/Noel3.mp3"};
+    }
+
+    public synchronized void start() {
+        thread = new Thread(this, "Musique");
+        thread.start();
     }
 
     public void run(){
@@ -45,10 +52,13 @@ public class Musique extends Thread{
 
         while (true){
 
-            if (dj.getPlayer().isComplete()){
+            if (dj == null) {
+                return;
+            }
+            if (dj.getPlayer().isComplete()) {
                 nouvCompteur = random.nextInt(bandeSon.length);
 
-                while (compteur == nouvCompteur){
+                while (compteur == nouvCompteur) {
                     nouvCompteur = random.nextInt(bandeSon.length);
                 }
 
@@ -63,5 +73,6 @@ public class Musique extends Thread{
 
     public void arret() {
         dj.stop();
+        dj = null;
     }
 }

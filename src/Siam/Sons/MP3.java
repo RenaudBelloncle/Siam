@@ -23,7 +23,9 @@ public class MP3 {
             player = new Player(inputStream);
             PlayerThread pt = new PlayerThread();
             pt.start();
-            while (!player.isComplete()) {}
+            while (!player.isComplete()) {
+                if (player == null) return;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,6 +33,7 @@ public class MP3 {
 
     public void stop() {
         player.close();
+        player = null;
     }
 
     class PlayerThread extends Thread {

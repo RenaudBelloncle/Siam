@@ -48,6 +48,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                     TokenResultatPoussee ret = jeu.getJoueurActif().deplaceAnimalEnPoussant(jeu.getAnimalSelectionnee());
                     if(ret.isPousseeEffectue()){
                         if(ret.getCampGagnant() != null) {
+                            jeu.getVueJeu().getMenuBar().removeAll();
                             new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon());
                             return;
                         }
