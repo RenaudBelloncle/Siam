@@ -23,6 +23,20 @@ public class ImageLibrairie {
             imageCollection.get(Theme.STANDARD).put("FondMenu", image);
             image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondCamp.png"));
             imageCollection.get(Theme.STANDARD).put("FondCamp", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Sprites/Case.png"));
+            imageCollection.get(Theme.STANDARD).put("Case", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Sprites/Elephant.png"));
+            imageCollection.get(Theme.STANDARD).put("Elephant", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Sprites/Rhinoceros.png"));
+            imageCollection.get(Theme.STANDARD).put("Rhinoceros", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Sprites/ElephantGauche.png"));
+            imageCollection.get(Theme.STANDARD).put("ElephantGauche", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Sprites/RhinocerosGauche.png"));
+            imageCollection.get(Theme.STANDARD).put("RhinocerosGauche", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Sprites/Montagne.png"));
+            imageCollection.get(Theme.STANDARD).put("Montagne", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Sprites/Focus.png"));
+            imageCollection.get(Theme.STANDARD).put("Focus", image);
             image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
             imageCollection.get(Theme.NOEL).put("FondMenu", image);
         } catch (IOException e) { System.out.println(e.getMessage()); }
