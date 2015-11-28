@@ -95,13 +95,7 @@ public class ChoixCamp implements ActionListener, Constantes {
             }
         };
 
-        //changement de la police
-        outil.changerFontJLabel(titreCB, 95, Color.orange, outil.getFontMenu());
-        outil.changerFontButton(valider, 80, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(annuler, 80, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(JRBelephant, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(aleatoire, 60, Color.orange, outil.getFontTexte());
+        changerPolice();
 
         panTitre.add(titreCB);
         panBouton1.add(JRBelephant);
@@ -122,6 +116,24 @@ public class ChoixCamp implements ActionListener, Constantes {
         panPrincipal.setLayout(new BoxLayout(panPrincipal, BoxLayout.Y_AXIS));
 
         fenetre.setContentPane(panPrincipal);
+    }
+
+    public void changerPolice() {
+        if (theme == Theme.STANDARD) {
+            outil.changerFontJLabel(titreCB, 95, Color.orange, outil.getFontMenu());
+            outil.changerFontButton(valider, 80, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(annuler, 80, Color.orange, outil.getFontTexte());
+            outil.changerFontJRadioButton(JRBelephant, 60, Color.orange, outil.getFontTexte());
+            outil.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outil.getFontTexte());
+            outil.changerFontJRadioButton(aleatoire, 60, Color.orange, outil.getFontTexte());
+        } else if (theme == Theme.NOEL) {
+            outil.changerFontJLabel(titreCB, 95, Color.black, outil.getFontMenu());
+            outil.changerFontButton(valider, 80, Color.black, outil.getFontTexte());
+            outil.changerFontButton(annuler, 80, Color.black, outil.getFontTexte());
+            outil.changerFontJRadioButton(JRBelephant, 60, Color.black, outil.getFontTexte());
+            outil.changerFontJRadioButton(JRBrhinoceros, 60, Color.black, outil.getFontTexte());
+            outil.changerFontJRadioButton(aleatoire, 60, Color.black, outil.getFontTexte());
+        }
     }
 
     public void setControlChoixCamp(ActionListener listener){

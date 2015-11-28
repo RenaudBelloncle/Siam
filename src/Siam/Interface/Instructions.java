@@ -45,13 +45,12 @@ public class Instructions extends JFrame {
         setVisible(true);
     }
 
-    public void initInstructions(){
-        commentjouer = new JLabel("     Comment jouer :");
+    public void initInstructions() {
+        titrebut = new JLabel("<html><h1>But du jeu</h1></html>", SwingConstants.CENTER);
         but = new JLabel("<html><br>Après avoir choisi votre animal vous devez être " +
                 "le premier à sortir une région montagneuse (bloc de rochers)" +
                 " à l'extérieur du plateau.<br><br></html>");
-
-        titrebut = new JLabel("     But du jeu :");
+        commentjouer = new JLabel("<html><h1>Comment jouer</h1></html>", SwingConstants.CENTER);
         intro = new JLabel("<html><br>Chaque joueur choisit son animal." +
                 " Les joueurs joueront à tour de rôle. " +
                 "Au début du jeu les animaux sont disposés à l'extérieur du plateau " +
@@ -63,14 +62,12 @@ public class Instructions extends JFrame {
                 "<br>-     Se déplacer sur une case libre " +
                 "<br>-     Changer l'orientation de son animal sans changer de case " +
                 "<br>-     Sortir un de ses animaux disposés sur une case extérieure " +
-                "<br>-     Se déplacer en poussant d'autres pièces disposées sur le plateau.<br><br></html> ");
-
-
-        tpart1 = new JLabel("   Poser une pièce :");
-        tpart2 = new JLabel("   Se déplacer sans pousser :");
-        tpart3 = new JLabel("   Changer l'orientation :");
-        tpart4 = new JLabel("   Sortir une pièce :");
-        tpart5 = new JLabel("   Se déplacer en poussant :");
+                "<br>-     Se déplacer en poussant d'autres pièces disposées sur le plateau.<br><br></html>");
+        tpart1 = new JLabel("<html><h3>Poser une pièce</h3></html>", SwingConstants.CENTER);
+        tpart2 = new JLabel("<html><h3>Se déplacer sans pousser</h3></html>", SwingConstants.CENTER);
+        tpart3 = new JLabel("<html><h3>Changer l'orientation</h3></html>", SwingConstants.CENTER);
+        tpart4 = new JLabel("<html><h3>Sortir une pièce</h3></html>", SwingConstants.CENTER);
+        tpart5 = new JLabel("<html><h3>Se déplacer en poussant</h3></html>", SwingConstants.CENTER);
 
         part1 = new JLabel("<html><br> Vous devez entrer un de vos animaux par l'une des cases " +
                 "extérieures. " +
@@ -120,16 +117,16 @@ public class Instructions extends JFrame {
     }
 
     public void afficherInstructions(){
-        JPanel panPrincipal =new JPanel();
-        JPanel panTitre =new JPanel();
+        JPanel panPrincipal = new JPanel();
+        JPanel panTitre = new JPanel();
 
-        JTextArea panRegle = new JTextArea(155, 1);
+        JTextArea panRegle = new JTextArea(88, 1);
         panRegle.setColumns(1);
         panRegle.setLineWrap(true);
         panRegle.setWrapStyleWord(true);
         panRegle.setEditable(false);
 
-        JScrollPane panTest = new JScrollPane(panRegle);
+        JScrollPane scrollPane = new JScrollPane(panRegle);
 
         panRegle.add(titrebut);
         panRegle.add(but);
@@ -150,7 +147,7 @@ public class Instructions extends JFrame {
         panRegle.setOpaque(false);
         panTitre.setOpaque(false);
         panPrincipal.setOpaque(false);
-        panTest.setOpaque(false);
+        scrollPane.setOpaque(false);
 
 
         panPrincipal = new JPanel() {
@@ -162,33 +159,20 @@ public class Instructions extends JFrame {
             }
         };
 
-        changerFont();
+        changerPolice();
 
         panPrincipal.setLayout(new BorderLayout());
         panRegle.setLayout(new BoxLayout(panRegle, BoxLayout.Y_AXIS));
 
 
         panPrincipal.add(panTitre, BorderLayout.NORTH);
-        panPrincipal.add(panTest, BorderLayout.CENTER);
+        panPrincipal.add(scrollPane, BorderLayout.CENTER);
 
         setContentPane(panPrincipal);
     }
 
-    public void changerFont(){
-        outil.changerFontJLabel(titre, 50, Color.black, outil.getFontMenu());
-        outil.changerFontJLabel(titrebut, 40, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(but, 20, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(commentjouer, 40, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(intro, 20, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(tpart1, 30, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(tpart2, 30, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(tpart3, 30, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(tpart4, 30, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(tpart5, 30, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(part1, 20, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(part2, 20, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(part3, 20, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(part4, 20, Color.black, outil.getFontTexte());
-        outil.changerFontJLabel(part5, 20, Color.black, outil.getFontTexte());
+    public void changerPolice(){
+        if (theme == Theme.STANDARD) outil.changerFontJLabel(titre, 50, Color.orange, outil.getFontMenu());
+        else if (theme == Theme.NOEL) outil.changerFontJLabel(titre, 50, Color.black, outil.getFontMenu());
     }
 }

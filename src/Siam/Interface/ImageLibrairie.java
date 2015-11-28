@@ -39,6 +39,8 @@ public class ImageLibrairie {
             imageCollection.get(Theme.STANDARD).put("Focus", image);
             image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
             imageCollection.get(Theme.NOEL).put("FondMenu", image);
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondCamp.jpg"));
+            imageCollection.get(Theme.NOEL).put("FondCamp", image);
         } catch (IOException e) { System.out.println(e.getMessage()); }
     }
 

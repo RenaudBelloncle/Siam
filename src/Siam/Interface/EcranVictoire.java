@@ -4,6 +4,7 @@ import Siam.Enum.Camp;
 import Siam.Constantes;
 import Siam.Enum.Theme;
 import Siam.Game;
+import Siam.Joueur;
 import Siam.Sons.Musique;
 
 import javax.imageio.ImageIO;
@@ -20,7 +21,8 @@ public class EcranVictoire implements ActionListener, Constantes {
     private Game game;
     private JFrame fenetre;
     private OutilsFont outils;
-    private JButton retour;
+    private JButton continuer;
+    private JButton retourMenu;
     private JLabel gagnant;
     private Theme theme;
     private Musique libMuse;
@@ -34,7 +36,8 @@ public class EcranVictoire implements ActionListener, Constantes {
         this.son = son;
         initEcranVictoire(campGagnant);
         afficheEcranVictoire();
-        retour.addActionListener(this);
+        continuer.addActionListener(this);
+        retourMenu.addActionListener(this);
 
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
@@ -45,28 +48,25 @@ public class EcranVictoire implements ActionListener, Constantes {
     }
 
     public void initEcranVictoire(Camp campGagnant){
-        StringBuilder str = new StringBuilder("La victoire est pour les ");
-        if(campGagnant == Camp.ELEPHANT) {
-            str.append("Eléphants");
-        }
-        else{
-            str.append("Rhinocéros");
-        }
+        StringBuilder str = new StringBuilder("Victoire des ");
+        if(campGagnant == Camp.ELEPHANT)  str.append("Eléphants");
+        else str.append("Rhinocéros");
         gagnant = new JLabel(String.valueOf(str));
         outils = new OutilsFont();
-        retour = new JButton("retour");
+        continuer = new JButton("Continuer");
+        retourMenu = new JButton("Retour au Menu");
     }
 
     public void afficheEcranVictoire() {
         JPanel panPrincipal = new JPanel();
         JPanel phraseGagnant = new JPanel();
         JPanel vide = new JPanel();
-        JPanel retourPanel = new JPanel();
+        JPanel boutonPanel = new JPanel();
 
         panPrincipal.setOpaque(false);
         phraseGagnant.setOpaque(false);
         vide.setOpaque(false);
-        retourPanel.setOpaque(false);
+        boutonPanel.setOpaque(false);
 
         panPrincipal = new JPanel() {
             BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme, "FondMenu");
@@ -77,24 +77,44 @@ public class EcranVictoire implements ActionListener, Constantes {
             }
         };
 
-        //changement de la police
-        outils.changerFontJLabel(gagnant, 40, Color.orange, outils.getFontTexte());
-        outils.changerFontButton(retour, 80, Color.orange, outils.getFontMenu());
+        changerPolice();
+
 
         phraseGagnant.add(gagnant);
-        retourPanel.add(retour);
-        panPrincipal.add(phraseGagnant);
+        boutonPanel.add(continuer);
+        boutonPanel.add(retourMenu);
+        boutonPanel.setLayout(new GridLayout(1, 2));
         panPrincipal.add(vide);
-        panPrincipal.add(retourPanel);
-        panPrincipal.setLayout(new BoxLayout(panPrincipal, BoxLayout.Y_AXIS));
+        panPrincipal.add(phraseGagnant);
+        panPrincipal.add(boutonPanel);
+        panPrincipal.setLayout(new GridLayout(3,1));
 
         fenetre.setContentPane(panPrincipal);
+    }
+
+    private void changerPolice() {
+        if (theme == Theme.STANDARD) {
+            outils.changerFontJLabel(gagnant, 80, Color.orange, outils.getFontTexte());
+            outils.changerFontButton(continuer, 40, Color.orange, outils.getFontMenu());
+            outils.changerFontButton(retourMenu, 40, Color.orange, outils.getFontMenu());
+        } else if (theme == Theme.NOEL) {
+            outils.changerFontJLabel(gagnant, 80, Color.black, outils.getFontTexte());
+            outils.changerFontButton(continuer, 40, Color.black, outils.getFontMenu());
+            outils.changerFontButton(retourMenu, 40, Color.black, outils.getFontMenu());
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if (source == retour) {
+        if (source == continuer) {
+            game.setTheme(theme);
+            game.setLibMuse(libMuse);
+            game.setSon(son);
+            game.initGame(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
+            game.start();
+        }
+        if (source == retourMenu) {
             new Menu(game, fenetre, theme, libMuse, son);
         }
     }

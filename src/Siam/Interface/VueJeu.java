@@ -2,16 +2,19 @@ package Siam.Interface;
 
 import Siam.*;
 import Siam.Enum.Orientation;
+import Siam.Enum.Theme;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 public class VueJeu implements ActionListener, Constantes {
 
     private Game game;
     private JFrame fenetre;
+    private OutilsFont outil;
 
     private DetectionSouris souris;
 
@@ -28,6 +31,8 @@ public class VueJeu implements ActionListener, Constantes {
         this.game = game;
         this.fenetre = fenetre;
         this.souris = souris;
+
+        outil = new OutilsFont();
 
         initVueJeu();
         affichageVueJeu();
@@ -66,6 +71,18 @@ public class VueJeu implements ActionListener, Constantes {
         JPanel panelDroite = new JPanel();
         JPanel panelBas = new JPanel();
 
+        panelJeu.setOpaque(false);
+        panelBouton.setOpaque(false);
+        panelPoser.setOpaque(false);
+        panelDeplacer.setOpaque(false);
+        panelSortir.setOpaque(false);
+        panelOrienter.setOpaque(false);
+        panelHaut.setOpaque(false);
+        panelBas.setOpaque(false);
+        panelFleche.setOpaque(false);
+        panelGauche.setOpaque(false);
+        panelDroite.setOpaque(false);
+
         panelJeu.add(panelPlateau);
 
         deplacer.setEnabled(false);
@@ -89,6 +106,17 @@ public class VueJeu implements ActionListener, Constantes {
         panelFleche.add(panelGauche, BorderLayout.WEST);
         panelBas.add(flecheBas);
 
+        panelBouton = new JPanel() {
+            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(game.getTheme(), "FondMenu");
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                fenetre.repaint();
+                g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+            }
+        };
+
+        changerPolice();
+
         panelBouton.add(panelPoser);
         panelBouton.add(panelDeplacer);
         panelBouton.add(panelSortir);
@@ -101,6 +129,28 @@ public class VueJeu implements ActionListener, Constantes {
 
         panelJeu.setLayout(new BoxLayout(panelJeu, BoxLayout.X_AXIS));
         fenetre.setContentPane(panelJeu);
+    }
+
+    private void changerPolice() {
+        if (game.getTheme() == Theme.STANDARD) {
+            outil.changerFontButton(poser, 30, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(deplacer, 30, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(sortir, 30, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(orienter, 30, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(flecheHaut, 30, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(flecheBas, 30, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(flecheGauche, 30, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(flecheDroite, 30, Color.orange, outil.getFontTexte());
+        } else if (game.getTheme() == Theme.NOEL) {
+            outil.changerFontButton(poser, 30, Color.black, outil.getFontTexte());
+            outil.changerFontButton(deplacer, 30, Color.black, outil.getFontTexte());
+            outil.changerFontButton(sortir, 30, Color.black, outil.getFontTexte());
+            outil.changerFontButton(orienter, 30, Color.black, outil.getFontTexte());
+            outil.changerFontButton(flecheHaut, 30, Color.black, outil.getFontTexte());
+            outil.changerFontButton(flecheBas, 30, Color.black, outil.getFontTexte());
+            outil.changerFontButton(flecheGauche, 30, Color.black, outil.getFontTexte());
+            outil.changerFontButton(flecheDroite, 30, Color.black, outil.getFontTexte());
+        }
     }
 
     public void setControlBouton(ActionListener actionListener) {

@@ -130,18 +130,33 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     }
 
     public void changerPolice(){
-        outil.changerFontJLabel(titre, 150, Color.orange, outil.getFontMenu());
-        outil.changerFontButton(jouer, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(scores, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(option, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(quitter, 60, Color.orange, outil.getFontTexte());
+        if (theme == Theme.STANDARD) {
+            outil.changerFontJLabel(titre, 150, Color.orange, outil.getFontMenu());
+            outil.changerFontButton(jouer, 60, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(scores, 60, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(option, 60, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(quitter, 60, Color.orange, outil.getFontTexte());
 
-        outil.changerFontJLabel(multi, 65, Color.orange, outil.getFontMenu());
-        outil.changerFontJLabel(optionL, 65, Color.orange, outil.getFontMenu());
-        outil.changerFontButton(instructions, 55, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(couperSon, 55, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(themeSuivant, 55, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(annuler, 55, Color.orange, outil.getFontTexte());
+            outil.changerFontJLabel(multi, 65, Color.orange, outil.getFontMenu());
+            outil.changerFontJLabel(optionL, 65, Color.orange, outil.getFontMenu());
+            outil.changerFontButton(instructions, 55, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(couperSon, 55, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(themeSuivant, 55, Color.orange, outil.getFontTexte());
+            outil.changerFontButton(annuler, 55, Color.orange, outil.getFontTexte());
+        } else if (theme == Theme.NOEL) {
+            outil.changerFontJLabel(titre, 150, Color.black, outil.getFontMenu());
+            outil.changerFontButton(jouer, 60, Color.black, outil.getFontTexte());
+            outil.changerFontButton(scores, 60, Color.black, outil.getFontTexte());
+            outil.changerFontButton(option, 60, Color.black, outil.getFontTexte());
+            outil.changerFontButton(quitter, 60, Color.black, outil.getFontTexte());
+
+            outil.changerFontJLabel(multi, 65, Color.black, outil.getFontMenu());
+            outil.changerFontJLabel(optionL, 65, Color.black, outil.getFontMenu());
+            outil.changerFontButton(instructions, 55, Color.black, outil.getFontTexte());
+            outil.changerFontButton(couperSon, 55, Color.black, outil.getFontTexte());
+            outil.changerFontButton(themeSuivant, 55, Color.black, outil.getFontTexte());
+            outil.changerFontButton(annuler, 55, Color.black, outil.getFontTexte());
+        }
     }
 
     public void chargerImage(){
