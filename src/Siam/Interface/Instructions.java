@@ -50,7 +50,7 @@ public class Instructions extends JFrame {
                 " Les joueurs joueront à tour de rôle. " +
                 "Au début du jeu les animaux sont disposés à l'extérieur du plateau " +
                 "et les blocs de rochers au centre du plateau." +
-                " Les éléphants blancs commenceront à jouer. " +
+                " Les éléphants commenceront à jouer. " +
                 "Les joueurs ne pourront jouer à chaque tour de jeu qu'un seul de " +
                 "leur animal et ne faire qu'une des 5 actions suivantes : " +
                 "<br>-     Entrer un de ses animaux sur le plateau " +

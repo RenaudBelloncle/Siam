@@ -293,7 +293,6 @@ public class VueJeu implements ActionListener, Constantes {
             {
                 musique.setLabel("Musique Off");
                 jeu.getMusique().arret();
-                musique.addActionListener(this);
                 jeu.setSon(false);
             }
             else
@@ -301,7 +300,6 @@ public class VueJeu implements ActionListener, Constantes {
                 musique.setLabel("Musique On");
                 jeu.setMusique(new Musique(jeu.getTheme()));
                 jeu.getMusique().start();
-                musique.addActionListener(this);
                 jeu.setSon(true);
             }
             affichageVueJeu();
