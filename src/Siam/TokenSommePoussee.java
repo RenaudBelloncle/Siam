@@ -27,10 +27,6 @@ public class TokenSommePoussee {
         somme += a;
     }
 
-    public void setSomme(int somme) {
-        this.somme = somme;
-    }
-
     public void setPeutEtreNull(boolean peutEtreNull) {
         this.peutEtreNull = peutEtreNull;
     }

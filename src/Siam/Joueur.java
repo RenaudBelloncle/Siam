@@ -21,6 +21,11 @@ public class Joueur {
         pieceSurPlateau = 0;
     }
 
+    public Joueur(Plateau plateau) {
+        this(Camp.ELEPHANT);
+        this.plateau = plateau;
+    }
+
     public Plateau getPlateau() {
         return plateau;
     }

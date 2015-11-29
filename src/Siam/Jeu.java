@@ -36,12 +36,18 @@ public class Jeu implements Runnable, Constantes {
 
     public Jeu() {
         this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS),
-                false, false, false, false, false, false, null, new JFrame());
+                false, false, false, false, false, false, false, null, new JFrame(), null, Theme.STANDARD,
+                new Musique(Theme.STANDARD), true);
+    }
+
+    public Jeu(Plateau plateau){
+        this();
+        this.plateau = plateau;
     }
 
     public Jeu(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
-               boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation,
-               Animal animalSelectionnee, JFrame fenetre) {
+               boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation, boolean enCoursDeDeplacement,
+               Animal animalSelectionnee, JFrame fenetre, VueJeu vueJeu, Theme theme, Musique musique, boolean son) {
 
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
@@ -61,14 +67,16 @@ public class Jeu implements Runnable, Constantes {
         this.deplacerPiece = deplacerPiece;
         this.changerOrientation = changerOrientation;
         this.selectionnerOrientation = selectionnerOrientation;
-        this.enCoursDeDeplacement = false;
+        this.enCoursDeDeplacement = enCoursDeDeplacement;
 
         this.animalSelectionnee = animalSelectionnee;
 
-        theme = Theme.STANDARD;
-        musique = new Musique(theme);
-        musique.start();
-        son = true;
+        this.vueJeu = vueJeu;
+
+        this.theme = theme;
+        this.musique = musique;
+        this.musique.start();
+        this.son = son;
 
         running = false;
     }
