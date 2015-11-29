@@ -55,6 +55,15 @@ public class OutilsFont {
         bouton.setFont(police);
     }
 
+    public void changerFontJCheckBox(JCheckBox jcb, int size, Color color, Font font){
+        police = font.deriveFont(Font.TRUETYPE_FONT, size);
+        jcb.setForeground(color);
+        jcb.setOpaque(false);
+        jcb.setBorderPainted(false);
+        jcb.setContentAreaFilled(false);
+        jcb.setFont(police);
+    }
+
     public void changerFontJTextField(JTextField textField, int size, Color color, Font font) {
         police = font.deriveFont(Font.TRUETYPE_FONT, size);
         textField.setForeground(color);
