@@ -65,7 +65,8 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 return;
             }
             if (colonne == 0 || colonne == 4 || ligne == 0 || ligne == 4) {
-                Animal animal = jeu.getJoueurActif().posePiece(colonne, ligne);
+                Animal animal = jeu.getJoueurActif().posePiece(colonne, ligne,jeu.varianteNombreDePieceMaxActive(),
+                        jeu.varianteCaseBannieActive());
                 if (animal == null) {
                     jeu.setPlacerPiece(false);
                     return;

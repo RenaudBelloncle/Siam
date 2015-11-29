@@ -43,9 +43,9 @@ public class JoueurUnitTest {
     @Test
     public void testPosePiece() {
         joueur.setPlateau(new Plateau(5));
-        joueur.posePiece(0, 0);
+        joueur.posePiece(0, 0,false,false);
         Assert.assertNotSame(joueur.getPlateau().getCase(1, 1), joueur.getPlateau().getCase(0, 0));
-        Assert.assertNull(joueur.posePiece(0, 0));
+        Assert.assertNull(joueur.posePiece(0, 0, false, false));
     }
 
     @Test
@@ -60,22 +60,22 @@ public class JoueurUnitTest {
 
         joueur.setPlateau(plateau);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 0);
+        joueur.posePiece(0, 0,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 1);
+        joueur.posePiece(0, 1,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 2);
+        joueur.posePiece(0, 2,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 3);
+        joueur.posePiece(0, 3,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 4);
+        joueur.posePiece(0, 4,false,false);
         Assert.assertFalse(joueur.restePiece());
     }
 
     @Test
     public void testSortirPiece() {
         joueur.setPlateau(new Plateau(5));
-        joueur.posePiece(0, 0);
+        joueur.posePiece(0, 0,false,false);
         Animal animal = (Animal)joueur.getPlateau().getCase(0, 0);
         joueur.sortirPiece(0, 0);
         Assert.assertNotSame(animal, joueur.getPlateau().getCase(0, 0));
@@ -105,5 +105,32 @@ public class JoueurUnitTest {
     @Test
     public void testDeplaceAnimalEnPoussant(){
         //TODO Test Manquant - JP
+    }
+
+    // Tests pour variante du nombre de pièce
+    @Test
+    public void testPiecePose(){
+        Assert.assertEquals(joueur.getPieceRestantAPlacer(), 6);
+        joueur.piecePose();
+        Assert.assertEquals(joueur.getPieceRestantAPlacer(), 5);
+    }
+
+    @Test
+    public void testRestePieceDispo(){
+        Assert.assertTrue(joueur.restePieceDispo());
+        joueur.piecePose();
+        joueur.piecePose();
+        joueur.piecePose();
+        joueur.piecePose();
+        joueur.piecePose();
+        joueur.piecePose();
+        Assert.assertFalse(joueur.restePieceDispo());
+    }
+
+    @Test
+    public void testFinDeTour(){
+        Assert.assertEquals(joueur.getNombreTour(),0);
+        joueur.finDeTour();
+        Assert.assertEquals(joueur.getNombreTour(), 1);
     }
 }

@@ -205,7 +205,7 @@ public class VueJeu implements ActionListener, Constantes {
     public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
         if (source == poser && !jeu.isSelectionnerOrientation()) {
-            jeu.setPlacerPiece(true);
+                jeu.setPlacerPiece(true);
         }
         if (source == sortir && jeu.isPieceSelectionnee()) {
             if (jeu.getAnimalSelectionnee().getAbscisse() == 0 || jeu.getAnimalSelectionnee().getAbscisse() == 4 || jeu.getAnimalSelectionnee().getOrdonnee() == 0 || jeu.getAnimalSelectionnee().getOrdonnee() == 4) {
