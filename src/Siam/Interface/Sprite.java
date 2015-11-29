@@ -1,33 +1,41 @@
 package Siam.Interface;
 
 import Siam.Constantes;
+import Siam.Enum.Theme;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Sprite implements Constantes{
-    private String path;
+
     private int[] pixels;
-    private int largeur, hauteur;
+    private int largeur;
+    private int hauteur;
 
-    public static Sprite caseVide = new Sprite("/images/spriteBasique/case.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1 = new Sprite("/images/spriteBasique/pionBlanc.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2 = new Sprite("/images/spriteBasique/pionNoir.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1Gauche = new Sprite("/images/spriteBasique/pionBlancGauche.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2Gauche = new Sprite("/images/spriteBasique/pionNoirGauche.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1Selec = new Sprite("/images/spriteBasique/pionBlancSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2Selec = new Sprite("/images/spriteBasique/pionNoirSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur1GaucheSelec = new Sprite("/images/spriteBasique/pionBlancGaucheSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite casePionJoueur2GaucheSelec = new Sprite("/images/spriteBasique/pionNoirGaucheSelec.png",TAILLE_SPRITE,TAILLE_SPRITE);
-    public static Sprite caseMontagne = new Sprite("/images/spriteBasique/montagne.png",TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCaseVide = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Case"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCasePionJoueur1 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Elephant"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCasePionJoueur2 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Rhinoceros"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCasePionJoueur1Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"ElephantGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCasePionJoueur2Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"RhinocerosGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCaseMontagne = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Montagne"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardFocus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
 
-    public Sprite(String path,int _hauteur, int _largeur){
-        largeur = _largeur;
-        hauteur = _hauteur;
+    public static Sprite NoelCaseVide = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Case"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCasePionJoueur1 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Elephant"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCasePionJoueur2 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Rhinoceros"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCasePionJoueur1Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"ElephantGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCasePionJoueur2Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"RhinocerosGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCaseMontagne = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Montagne"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelFocus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
+
+    public Sprite(BufferedImage image, int hauteur, int largeur){
+        this.largeur = largeur;
+        this.hauteur = hauteur;
         pixels = new int[hauteur * largeur];
-        this.path = path;
-        load();
+        int w = image.getWidth();
+        int h = image.getHeight();
+        image.getRGB(0, 0, w, h, pixels, 0, w);
     }
 
     public int getLargeur(){
@@ -40,17 +48,5 @@ public class Sprite implements Constantes{
 
     public int getPixel(int index){
         return pixels[index];
-    }
-
-    // Charge un sprite a partir d'une image
-    private void load(){
-        try {
-            BufferedImage image = ImageIO.read(Sprite.class.getResource(path));
-            int w = image.getWidth();
-            int h = image.getHeight();
-            image.getRGB(0, 0, w, h, pixels, 0, w);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

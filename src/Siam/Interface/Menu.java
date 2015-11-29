@@ -1,126 +1,107 @@
 package Siam.Interface;
 
 import Siam.Constantes;
-import Siam.Game;
+import Siam.Enum.Theme;
+import Siam.Jeu;
+import Siam.Sons.Musique;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Menu extends JFrame implements ActionListener, Constantes {
 
-    private Game game;
-    private OutilsFont outil;
-    private Instructions instruction;
+    private Jeu jeu;
+    private OutilsFont outilsFont;
     private JFrame fenetre;
 
     private JLabel titre;
-
-    private JButton jeuxSolo;
-    private JButton jeuxMulti;
+    private JButton jouer;
     private JButton instructions;
+    private JButton option;
+    private JButton themeSuivant;
     private JButton scores;
     private JButton quitter;
-
-    private JButton local;
-    private JButton reseau;
-    private JLabel multi;
+    private JLabel optionL;
+    private JButton couperSon;
     private JButton annuler;
 
-    public Menu(JFrame fenetre){
-        this(new Game(fenetre), fenetre);
-    }
+    private JPanel panPrincipal;
+    private JPanel panTitre;
+    private JPanel panBoutons;
+    private JPanel panVide;
+    private JPanel panVide2;
 
-    public Menu(Game game,JFrame fenetre){
-        this.game = game;
+    private Theme theme;
+    private Musique musique;
+    private boolean son;
+
+    public Menu(Jeu jeu, JFrame fenetre, Theme theme, Musique musique, boolean son){
+        this.jeu = jeu;
         this.fenetre = fenetre;
-        outil = new OutilsFont();
-        menu();
+        this.musique = musique;
+        this.son = son;
+        outilsFont = new OutilsFont();
+        this.theme = theme;
+
+        fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
+        fenetre.setLocationRelativeTo(null);
+        fenetre.setResizable(false);
+        fenetre.setTitle("Siam");
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        initMenu();
+        lanceMenu();
+        setControlMenu(this);
     }
 
-    public void menu(){
-        initMenu();
+    public void lanceMenu(){
         afficheMenu();
-        fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
-        fenetre.setLocationRelativeTo(null);
-        fenetre.setResizable(false);
-        fenetre.setTitle("Siam");
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.setVisible(true);
-        setControlMenu(this);
-    }
-
-    public void menuMulti(){
-        initMenu();
-        afficheMenuMulti();
-        fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
-        fenetre.setLocationRelativeTo(null);
-        fenetre.setResizable(false);
-        fenetre.setTitle("Siam");
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.setVisible(true);
-        setControlMenu(this);
     }
 
     public void initMenu(){
         titre = new JLabel("Siam");
-        jeuxSolo = new JButton("Solo");
-        jeuxMulti = new JButton("Multi");
-        instructions = new JButton("Règles");
+        jouer = new JButton("Jouer");
+        instructions = new JButton("Regles");
         scores = new JButton("Scores");
         quitter = new JButton("Quitter");
 
-        multi = new JLabel("Jeux multi");
-        reseau = new JButton("Réseau");
-        local = new JButton("Local");
+        optionL = new JLabel("Options", SwingConstants.CENTER);
         annuler = new JButton("Annuler");
+        option = new JButton("Options");
+        if (son) couperSon = new JButton("Musique On");
+        else couperSon = new JButton("Musique Off");
+        themeSuivant = new JButton("Theme suivant");
     }
 
-    public void afficheMenu(){
-        JPanel panPrincipal = new JPanel();
-        JPanel panTitre = new JPanel();
-        JPanel panBoutons = new JPanel();
-        JPanel panVide = new JPanel();
-        JPanel panVide2 = new JPanel();
-
-        panTitre.add(titre);
-        panBoutons.add(jeuxSolo);
-        panBoutons.add(jeuxMulti);
-        panBoutons.add(scores);
-        panBoutons.add(instructions);
-        panBoutons.add(quitter);
+    public void initPanel(){
+        panPrincipal = new JPanel();
+        panTitre = new JPanel();
+        panBoutons = new JPanel();
+        panVide = new JPanel();
+        panVide2 = new JPanel();
 
         panPrincipal.setOpaque(false);
         panTitre.setOpaque(false);
         panBoutons.setOpaque(false);
         panVide.setOpaque(false);
         panVide2.setOpaque(false);
+    }
 
-        try {
-            panPrincipal = new JPanel() {
-                BufferedImage image = ImageIO.read(new File("res/images/fondJungle.jpg"));
+    public void afficheMenu(){
+        initPanel();
 
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
-                }
-            };
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        panTitre.add(titre);
+        panBoutons.add(jouer);
+        panBoutons.add(scores);
+        panBoutons.add(option);
+        panBoutons.add(quitter);
 
-        //changement de la police
-        outil.changerFontJLabel(titre, 150, Color.orange, outil.getFontMenu());
-        outil.changerFontButton(jeuxSolo, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(jeuxMulti, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(instructions, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(scores, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(quitter, 60, Color.orange, outil.getFontTexte());
+        chargerImage();
+        changerPolice();
 
         panBoutons.setLayout(new GridLayout(6, 1));
         panPrincipal.setLayout(new GridLayout(2, 2));
@@ -130,50 +111,23 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         panPrincipal.add(panVide2);
         panPrincipal.add(panBoutons);
 
-
         fenetre.setContentPane(panPrincipal);
     }
 
-    public void afficheMenuMulti(){
-        JPanel panPrincipal = new JPanel();
-        JPanel panTitre = new JPanel();
-        JPanel panBoutons = new JPanel();
-        JPanel panVide = new JPanel();
-        JPanel panVide2 = new JPanel();
+    public void afficheMenuOption(){
+        initPanel();
 
         panTitre.add(titre);
-        panBoutons.add(multi);
-        panBoutons.add(local);
-        panBoutons.add(reseau);
+        panBoutons.add(optionL);
+        panBoutons.add(instructions);
+        panBoutons.add(themeSuivant);
+        panBoutons.add(couperSon);
         panBoutons.add(annuler);
 
-        panPrincipal.setOpaque(false);
-        panTitre.setOpaque(false);
-        panBoutons.setOpaque(false);
-        panVide.setOpaque(false);
-        panVide2.setOpaque(false);
+        chargerImage();
+        changerPolice();
 
-        try {
-            panPrincipal = new JPanel() {
-                BufferedImage image = ImageIO.read(new File("res/images/fondJungle.jpg"));
-
-                public void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
-                }
-            };
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //changement de la police
-        outil.changerFontJLabel(titre, 150, Color.orange, outil.getFontMenu());
-        outil.changerFontJLabel(multi, 70, Color.orange, outil.getFontMenu());
-        outil.changerFontButton(local, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(reseau, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(annuler, 60, Color.orange, outil.getFontTexte());
-
-        panBoutons.setLayout(new GridLayout(5, 1));
+        panBoutons.setLayout(new GridLayout(6, 1));
         panPrincipal.setLayout(new GridLayout(2, 2));
 
         panPrincipal.add(panTitre);
@@ -181,19 +135,57 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         panPrincipal.add(panVide2);
         panPrincipal.add(panBoutons);
 
-
         fenetre.setContentPane(panPrincipal);
     }
 
+    public void changerPolice(){
+        if (theme == Theme.STANDARD) {
+            outilsFont.changerFontJLabel(titre, 150, Color.orange, outilsFont.getStandardFontMenu());
+            outilsFont.changerFontButton(jouer, 60, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(scores, 60, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(option, 60, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(quitter, 60, Color.orange, outilsFont.getStandardFontTexte());
+
+            outilsFont.changerFontJLabel(optionL, 65, Color.orange, outilsFont.getStandardFontMenu());
+            outilsFont.changerFontButton(instructions, 55, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(couperSon, 55, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(themeSuivant, 55, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(annuler, 55, Color.orange, outilsFont.getStandardFontTexte());
+        } else if (theme == Theme.NOEL) {
+            outilsFont.changerFontJLabel(titre, 150, Color.red, outilsFont.getNoelFontMenu());
+            outilsFont.changerFontButton(jouer, 70, Color.green, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(scores, 70, Color.green, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(option, 70, Color.green, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(quitter, 70, Color.green, outilsFont.getNoelFontTexte());
+
+            outilsFont.changerFontJLabel(optionL, 65, Color.green, outilsFont.getNoelFontMenu());
+            outilsFont.changerFontButton(instructions, 65, Color.green, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(couperSon, 65, Color.green, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(themeSuivant, 65, Color.green, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(annuler, 65, Color.green, outilsFont.getNoelFontTexte());
+        }
+    }
+
+    public void chargerImage(){
+        panPrincipal = new JPanel() {
+            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme, "FondMenu");
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                fenetre.repaint();
+                g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+            }
+        };
+    }
+
     public void setControlMenu(ActionListener listener){
-        jeuxSolo.addActionListener(listener);
-        jeuxMulti.addActionListener(listener);
+        jouer.addActionListener(listener);
         instructions.addActionListener(listener);
         scores.addActionListener(listener);
         quitter.addActionListener(listener);
-        local.addActionListener(listener);
-        reseau.addActionListener(listener);
         annuler.addActionListener(listener);
+        option.addActionListener(listener);
+        themeSuivant.addActionListener(listener);
+        couperSon.addActionListener(listener);
     }
 
     @Override
@@ -204,27 +196,56 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         if(source == quitter) {
             System.exit(0);
         }
-        else if(source == jeuxSolo) {
-            ChoixCamp choixCamp = new ChoixCamp(game, game.getFenetre());
-        }
-        else if(source == jeuxMulti) {
-            menuMulti();
+        else if(source == jouer) {
+            new ChoixCamp(jeu, jeu.getFenetre(), theme, musique, son);
         }
         else if(source == instructions) {
-            instruction = new Instructions();
+            new Instructions(theme);
         }
-        else if(source == scores) {
-
-        }
-        else if(source == local) {
-            game.start();
-        }
-
-        else if(source == reseau) {
-
-        }
+        //else if(source == scores) {
+            //TODO Afficher les scores
+        //}
         else if(source == annuler) {
-            menu();
+            lanceMenu();
+        }
+        else if(source == option) {
+            afficheMenuOption();
+            fenetre.setVisible(true);
+        }
+        else if(source == themeSuivant) {
+            switch (theme) {
+                case STANDARD:
+                    theme = Theme.NOEL;
+                    break;
+                case NOEL:
+                    theme = Theme.STANDARD;
+                    break;
+            }
+            jeu.setTheme(theme);
+            if (son) {
+                musique.arret();
+                musique = new Musique(theme);
+                musique.start();
+            }
+            afficheMenuOption();
+            fenetre.setVisible(true);
+        }
+        else if(source == couperSon) {
+            if (son){
+                couperSon = new JButton("Musique Off");
+                musique.arret();
+                couperSon.addActionListener(this);
+                son = false;
+            }
+            else{
+                couperSon = new JButton("Musique On");
+                musique = new Musique(theme);
+                musique.start();
+                couperSon.addActionListener(this);
+                son = true;
+            }
+            afficheMenuOption();
+            fenetre.setVisible(true);
         }
     }
 }

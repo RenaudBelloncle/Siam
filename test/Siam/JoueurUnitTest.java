@@ -1,10 +1,9 @@
 package Siam;
 
+import Siam.Enum.Camp;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 
 public class JoueurUnitTest {
@@ -17,7 +16,14 @@ public class JoueurUnitTest {
     }
 
     @Test
-    public void setPlateau() {
+    public void testGetPlateau() {
+        Plateau plateau = Mockito.mock(Plateau.class);
+        joueur = new Joueur(plateau);
+        Assert.assertSame(plateau, joueur.getPlateau());
+    }
+
+    @Test
+    public void testSetPlateau() {
         Plateau plateau = Mockito.mock(Plateau.class);
         joueur.setPlateau(plateau);
         Assert.assertSame(plateau, joueur.getPlateau());
@@ -76,7 +82,7 @@ public class JoueurUnitTest {
     }
 
     @Test
-    public void testMoveAnimalOnFreeCase(){
+    public void testDeplaceAnimalSurCaseVide(){
         Animal animal = Mockito.mock(Animal.class);
         Plateau plateau = Mockito.mock(Plateau.class);
         Case targetCase = Mockito.mock(Case.class);
@@ -88,18 +94,16 @@ public class JoueurUnitTest {
         Mockito.when(targetCase.getOrdonnee()).thenReturn(0);
 
         //test case adjacente et non vide
-        boolean ret = joueur.moveAnimalOnFreeCase(animal, targetCase);
+        boolean ret = joueur.deplaceAnimalSurCaseVide(animal, targetCase);
         Assert.assertEquals(ret, false);
 
         //test case adjacente et vide
-        ret = joueur.moveAnimalOnFreeCase(animal, targetCase);
+        ret = joueur.deplaceAnimalSurCaseVide(animal, targetCase);
         Assert.assertEquals(ret, true);
     }
 
     @Test
-    public void testMoveAnimalToPush(){
-        //TODO JP
-        // quand j'aurais la foi
-        //verifier la condition de victoire
+    public void testDeplaceAnimalEnPoussant(){
+        //TODO Test Manquant - JP
     }
 }

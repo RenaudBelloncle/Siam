@@ -1,9 +1,10 @@
 package Siam;
 
+import Siam.Enum.Camp;
+import Siam.Enum.Orientation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public class AnimalUnitTest {
 
@@ -26,12 +27,12 @@ public class AnimalUnitTest {
     }
 
     @Test
-    public void testIsSelected() {
+    public void testEstSelectionnee() {
         Assert.assertFalse(animal.estSelectionnee());
     }
 
     @Test
-    public void testSetSelected() {
+    public void testSetSelectionnee() {
         animal.setSelectionnee(true);
         Assert.assertTrue(animal.estSelectionnee());
     }
@@ -45,6 +46,10 @@ public class AnimalUnitTest {
     public void testSetCamp() {
         animal.setCamp(Camp.RHINOCEROS);
         Assert.assertEquals(Camp.RHINOCEROS, animal.getCamp());
+    }
 
+    @Test
+    public void testEstVide() {
+        Assert.assertFalse(animal.estVide());
     }
 }
