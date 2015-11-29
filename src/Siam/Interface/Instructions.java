@@ -167,7 +167,7 @@ public class Instructions extends JFrame {
     }
 
     public void changerPolice(){
-        if (theme == Theme.STANDARD) outilsFont.changerFontJLabel(titre, 50, Color.orange, outilsFont.getFontMenu());
-        else if (theme == Theme.NOEL) outilsFont.changerFontJLabel(titre, 50, Color.black, outilsFont.getFontMenu());
+        if (theme == Theme.STANDARD) outilsFont.changerFontJLabel(titre, 50, Color.orange, outilsFont.getStandardFontMenu());
+        else if (theme == Theme.NOEL) outilsFont.changerFontJLabel(titre, 70, Color.red, outilsFont.getNoelFontTexte());
     }
 }

@@ -51,26 +51,26 @@ public class ImageLibrairie {
             // Images
             image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
             imageCollection.get(Theme.NOEL).put("FondMenu", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondCamp.jpg"));
             imageCollection.get(Theme.NOEL).put("FondCamp", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondBouton.jpg"));
             imageCollection.get(Theme.NOEL).put("FondBouton", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondBonhomme.jpeg"));
             imageCollection.get(Theme.NOEL).put("FondElephant", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondMenu.jpg"));
+            image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondRenne.jpg"));
             imageCollection.get(Theme.NOEL).put("FondRhinoceros", image);
             // Sprites
             image = ImageIO.read(getClass().getResource("/Noel/Sprites/Case.png"));
             imageCollection.get(Theme. NOEL).put("Case", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Sprites/Elephant.png"));
+            image = ImageIO.read(getClass().getResource("/Noel/Sprites/Bonhomme.png"));
             imageCollection.get(Theme.NOEL).put("Elephant", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Sprites/Rhinoceros.png"));
+            image = ImageIO.read(getClass().getResource("/Noel/Sprites/Renne.png"));
             imageCollection.get(Theme.NOEL).put("Rhinoceros", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Sprites/ElephantGauche.png"));
+            image = ImageIO.read(getClass().getResource("/Noel/Sprites/BonhommeGauche.png"));
             imageCollection.get(Theme.NOEL).put("ElephantGauche", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Sprites/RhinocerosGauche.png"));
+            image = ImageIO.read(getClass().getResource("/Noel/Sprites/RenneGauche.png"));
             imageCollection.get(Theme.NOEL).put("RhinocerosGauche", image);
-            image = ImageIO.read(getClass().getResource("/Noel/Sprites/Montagne.png"));
+            image = ImageIO.read(getClass().getResource("/Noel/Sprites/Cadeau.png"));
             imageCollection.get(Theme.NOEL).put("Montagne", image);
             image = ImageIO.read(getClass().getResource("/Noel/Sprites/Focus.png"));
             imageCollection.get(Theme.NOEL).put("Focus", image);

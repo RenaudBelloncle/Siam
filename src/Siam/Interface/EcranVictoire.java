@@ -50,8 +50,13 @@ public class EcranVictoire implements ActionListener, Constantes {
 
     public void initEcranVictoire(){
         StringBuilder str = new StringBuilder("Victoire des ");
-        if(campGagnant == Camp.ELEPHANT)  str.append("Eléphants");
-        else str.append("Rhinocéros");
+        if (theme == Theme.STANDARD) {
+            if (campGagnant == Camp.ELEPHANT) str.append("Elephants");
+            else str.append("Rhinoceros");
+        } else if (theme == Theme.NOEL) {
+            if (campGagnant == Camp.ELEPHANT) str.append("Bonhommes");
+            else str.append("Rennes");
+        }
         gagnant = new JLabel(String.valueOf(str));
         outilsFont = new OutilsFont();
         continuer = new JButton("Continuer");
@@ -128,13 +133,13 @@ public class EcranVictoire implements ActionListener, Constantes {
 
     private void changerPolice() {
         if (theme == Theme.STANDARD) {
-            outilsFont.changerFontJLabel(gagnant, 80, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(continuer, 40, Color.orange, outilsFont.getFontMenu());
-            outilsFont.changerFontButton(retourMenu, 40, Color.orange, outilsFont.getFontMenu());
+            outilsFont.changerFontJLabel(gagnant, 80, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(continuer, 40, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(retourMenu, 40, Color.orange, outilsFont.getStandardFontTexte());
         } else if (theme == Theme.NOEL) {
-            outilsFont.changerFontJLabel(gagnant, 80, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(continuer, 40, Color.black, outilsFont.getFontMenu());
-            outilsFont.changerFontButton(retourMenu, 40, Color.black, outilsFont.getFontMenu());
+            outilsFont.changerFontJLabel(gagnant, 120, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(continuer, 60, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(retourMenu, 60, Color.red, outilsFont.getNoelFontTexte());
         }
     }
 

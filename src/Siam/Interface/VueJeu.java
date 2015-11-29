@@ -68,10 +68,10 @@ public class VueJeu implements ActionListener, Constantes {
         options = new JMenu("Options");
 
         nouvellepartie = new JMenuItem("Nouvelle Partie");
-        instructions = new JMenuItem("Règles");
+        instructions = new JMenuItem("Regles");
         retourMenu = new JMenuItem("Retour au Menu");
 
-        themeSuivant = new JMenuItem("Thème Suivant");
+        themeSuivant = new JMenuItem("Theme Suivant");
         if (jeu.isSon()) musique = new JMenuItem("Musique On");
         else musique = new JMenuItem("Musique Off");
     }
@@ -141,7 +141,7 @@ public class VueJeu implements ActionListener, Constantes {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 fenetre.repaint();
-                g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                g.drawImage(image, 0, 0, 350, HAUTEUR_FENETRE, this);
             }
         };
 
@@ -164,23 +164,23 @@ public class VueJeu implements ActionListener, Constantes {
 
     private void changerPolice() {
         if (jeu.getTheme() == Theme.STANDARD) {
-            outilsFont.changerFontButton(poser, 30, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(deplacer, 30, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(sortir, 30, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(orienter, 30, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(flecheHaut, 30, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(flecheBas, 30, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(flecheGauche, 30, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(flecheDroite, 30, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(poser, 30, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(deplacer, 30, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(sortir, 30, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(orienter, 30, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheHaut, 30, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheBas, 30, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheGauche, 30, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheDroite, 30, Color.orange, outilsFont.getStandardFontTexte());
         } else if (jeu.getTheme() == Theme.NOEL) {
-            outilsFont.changerFontButton(poser, 30, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(deplacer, 30, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(sortir, 30, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(orienter, 30, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(flecheHaut, 30, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(flecheBas, 30, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(flecheGauche, 30, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(flecheDroite, 30, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontButton(poser, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(deplacer, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(sortir, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(orienter, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(flecheHaut, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(flecheBas, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(flecheGauche, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(flecheDroite, 50, Color.red, outilsFont.getNoelFontTexte());
         }
     }
 
@@ -291,13 +291,13 @@ public class VueJeu implements ActionListener, Constantes {
         {
             if (jeu.isSon())
             {
-                musique.setLabel("Musique Off");
+                musique.setText("Musique Off");
                 jeu.getMusique().arret();
                 jeu.setSon(false);
             }
             else
             {
-                musique.setLabel("Musique On");
+                musique.setText("Musique On");
                 jeu.setMusique(new Musique(jeu.getTheme()));
                 jeu.getMusique().start();
                 jeu.setSon(true);
