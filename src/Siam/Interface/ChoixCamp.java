@@ -53,9 +53,9 @@ public class ChoixCamp implements ActionListener, Constantes {
 
     public void initChoixCamp(){
         titreCB = new JLabel("Choisis un camp");
-        JRBelephant = new JRadioButton("Éléphant", true);
-        JRBrhinoceros = new JRadioButton("Rhinocéros");
-        aleatoire = new JRadioButton("Aléatoire");
+        JRBelephant = new JRadioButton("Elephant", true);
+        JRBrhinoceros = new JRadioButton("Rhinoceros");
+        aleatoire = new JRadioButton("Aleatoire");
         BGchoix = new ButtonGroup();
         BGchoix.add(JRBelephant);
         BGchoix.add(JRBrhinoceros);
@@ -115,19 +115,19 @@ public class ChoixCamp implements ActionListener, Constantes {
 
     public void changerPolice() {
         if (theme == Theme.STANDARD) {
-            outilsFont.changerFontJLabel(titreCB, 95, Color.orange, outilsFont.getFontMenu());
-            outilsFont.changerFontButton(valider, 80, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(annuler, 80, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontJRadioButton(JRBelephant, 60, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outilsFont.getFontTexte());
-            outilsFont.changerFontJRadioButton(aleatoire, 60, Color.orange, outilsFont.getFontTexte());
+            outilsFont.changerFontJLabel(titreCB, 95, Color.orange, outilsFont.getStandardFontMenu());
+            outilsFont.changerFontButton(valider, 80, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(annuler, 80, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJRadioButton(JRBelephant, 60, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJRadioButton(aleatoire, 60, Color.orange, outilsFont.getStandardFontTexte());
         } else if (theme == Theme.NOEL) {
-            outilsFont.changerFontJLabel(titreCB, 95, Color.black, outilsFont.getFontMenu());
-            outilsFont.changerFontButton(valider, 80, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontButton(annuler, 80, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontJRadioButton(JRBelephant, 60, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontJRadioButton(JRBrhinoceros, 60, Color.black, outilsFont.getFontTexte());
-            outilsFont.changerFontJRadioButton(aleatoire, 60, Color.black, outilsFont.getFontTexte());
+            outilsFont.changerFontJLabel(titreCB, 95, Color.red, outilsFont.getNoelFontMenu());
+            outilsFont.changerFontButton(valider, 100, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(annuler, 100, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJRadioButton(JRBelephant, 80, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJRadioButton(JRBrhinoceros, 80, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJRadioButton(aleatoire, 80, Color.red, outilsFont.getNoelFontTexte());
         }
     }
 
