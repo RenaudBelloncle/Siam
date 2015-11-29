@@ -35,5 +35,8 @@ public class CaseUnitTest {
         Assert.assertEquals(5, aCase.getOrdonnee());
     }
 
-
+    @Test
+    public void testEstVide() {
+        Assert.assertTrue(aCase.estVide());
+    }
 }

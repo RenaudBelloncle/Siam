@@ -18,6 +18,13 @@ public class PlateauUnitTest {
     }
 
     @Test
+    public void testInitMontagne() {
+        Assert.assertFalse(plateau.getCase(2,2).estVide());
+        Assert.assertFalse(plateau.getCase(1,2).estVide());
+        Assert.assertFalse(plateau.getCase(3,2).estVide());
+    }
+
+    @Test
     public void testGetCase(){
         for(int i = 0; i < 2; i++){
             for(int j = 0; j < 2; j++){
@@ -42,17 +49,14 @@ public class PlateauUnitTest {
     }
 
     @Test
-    public void testTestCaseAdjacente(){
-        boolean ret = plateau.testCaseAdjacente(plateau.getCase(1, 1), plateau.getCase(0, 1));
-        Assert.assertEquals(ret, true);
-        ret = plateau.testCaseAdjacente(plateau.getCase(1, 1), plateau.getCase(1, 0));
-        Assert.assertEquals(ret, true);
-        ret = plateau.testCaseAdjacente(plateau.getCase(1, 1), plateau.getCase(2, 1));
-        Assert.assertEquals(ret, true);
-        ret = plateau.testCaseAdjacente(plateau.getCase(1, 1), plateau.getCase(1, 2));
-        Assert.assertEquals(ret, true);
-        ret = plateau.testCaseAdjacente(plateau.getCase(0, 0), plateau.getCase(0, 2));
-        Assert.assertEquals(ret, false);
+    public void testSortirPiece() {
+        Piece piece = Mockito.mock(Piece.class);
+        Mockito.when(piece.getAbscisse()).thenReturn(0);
+        Mockito.when(piece.getOrdonnee()).thenReturn(0);
+        plateau.posePiece(piece);
+        Assert.assertSame(piece, plateau.getCase(0, 0));
+        plateau.sortirPiece(0, 0);
+        Assert.assertNotSame(piece, plateau.getCase(0, 0));
     }
 
     @Test
@@ -68,18 +72,21 @@ public class PlateauUnitTest {
     }
 
     @Test
-    public void testSortirPiece() {
-        Piece piece = Mockito.mock(Piece.class);
-        Mockito.when(piece.getAbscisse()).thenReturn(0);
-        Mockito.when(piece.getOrdonnee()).thenReturn(0);
-        plateau.posePiece(piece);
-        Assert.assertSame(piece, plateau.getCase(0, 0));
-        plateau.sortirPiece(0, 0);
-        Assert.assertNotSame(piece, plateau.getCase(0, 0));
+    public void testTestCaseAdjacente(){
+        boolean ret = plateau.testCaseAdjacente(plateau.getCase(1, 1), plateau.getCase(0, 1));
+        Assert.assertEquals(ret, true);
+        ret = plateau.testCaseAdjacente(plateau.getCase(1, 1), plateau.getCase(1, 0));
+        Assert.assertEquals(ret, true);
+        ret = plateau.testCaseAdjacente(plateau.getCase(1, 1), plateau.getCase(2, 1));
+        Assert.assertEquals(ret, true);
+        ret = plateau.testCaseAdjacente(plateau.getCase(1, 1), plateau.getCase(1, 2));
+        Assert.assertEquals(ret, true);
+        ret = plateau.testCaseAdjacente(plateau.getCase(0, 0), plateau.getCase(0, 2));
+        Assert.assertEquals(ret, false);
     }
 
     @Test
-    public void testGetLinePushed(){
+    public void testGetLignePoussee(){
         //test d'une ligne ne contenant qu'une piece
         Animal piece1 = Mockito.mock(Animal.class);
         Mockito.when(piece1.getAbscisse()).thenReturn(0);
@@ -113,7 +120,7 @@ public class PlateauUnitTest {
 
     @Test
     public void testCalculResultatPoussee(){
-        ArrayList <Piece> ligne = new ArrayList<Piece>();
+        ArrayList <Piece> ligne = new ArrayList<>();
         Animal animal1 = Mockito.mock(Animal.class);
         Animal animal2 = Mockito.mock(Animal.class);
         Animal animal3 = Mockito.mock(Animal.class);
@@ -211,6 +218,11 @@ public class PlateauUnitTest {
         boolean ret = pieceRetournee != null;
 
         Assert.assertEquals(ret, true);
+    }
+
+    @Test
+    public void testTrouveCampGagnant() {
+        //TODO Test Manquant - Nathan
     }
 }
 

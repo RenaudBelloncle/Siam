@@ -27,12 +27,12 @@ public class AnimalUnitTest {
     }
 
     @Test
-    public void testIsSelected() {
+    public void testEstSelectionnee() {
         Assert.assertFalse(animal.estSelectionnee());
     }
 
     @Test
-    public void testSetSelected() {
+    public void testSetSelectionnee() {
         animal.setSelectionnee(true);
         Assert.assertTrue(animal.estSelectionnee());
     }
@@ -46,6 +46,10 @@ public class AnimalUnitTest {
     public void testSetCamp() {
         animal.setCamp(Camp.RHINOCEROS);
         Assert.assertEquals(Camp.RHINOCEROS, animal.getCamp());
+    }
 
+    @Test
+    public void testEstVide() {
+        Assert.assertFalse(animal.estVide());
     }
 }

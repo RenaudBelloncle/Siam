@@ -16,7 +16,14 @@ public class JoueurUnitTest {
     }
 
     @Test
-    public void setPlateau() {
+    public void testGetPlateau() {
+        Plateau plateau = Mockito.mock(Plateau.class);
+        joueur = new Joueur(plateau);
+        Assert.assertSame(plateau, joueur.getPlateau());
+    }
+
+    @Test
+    public void testSetPlateau() {
         Plateau plateau = Mockito.mock(Plateau.class);
         joueur.setPlateau(plateau);
         Assert.assertSame(plateau, joueur.getPlateau());
@@ -75,7 +82,7 @@ public class JoueurUnitTest {
     }
 
     @Test
-    public void testMoveAnimalOnFreeCase(){
+    public void testDeplaceAnimalSurCaseVide(){
         Animal animal = Mockito.mock(Animal.class);
         Plateau plateau = Mockito.mock(Plateau.class);
         Case targetCase = Mockito.mock(Case.class);
@@ -96,9 +103,7 @@ public class JoueurUnitTest {
     }
 
     @Test
-    public void testMoveAnimalToPush(){
-        //TODO JP
-        // quand j'aurais la foi
-        //verifier la condition de victoire
+    public void testDeplaceAnimalEnPoussant(){
+        //TODO Test Manquant - JP
     }
 }
