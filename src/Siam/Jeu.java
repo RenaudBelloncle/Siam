@@ -52,9 +52,6 @@ public class Jeu implements Runnable, Constantes {
                Animal animalSelectionnee, JFrame fenetre, VueJeu vueJeu, Theme theme, Musique musique, boolean son,
                boolean varianteNombre,boolean varianteCase) {
 
-        varianteCaseBannieActive = varianteCase;
-        varianteNombreDePieceActive = varianteNombre;
-
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
@@ -83,6 +80,9 @@ public class Jeu implements Runnable, Constantes {
         this.musique = musique;
         this.musique.start();
         this.son = son;
+
+        varianteCaseBannieActive = varianteCase;
+        varianteNombreDePieceActive = varianteNombre;
 
         running = false;
     }
