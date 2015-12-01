@@ -38,6 +38,8 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Librairies" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">

@@ -44,6 +44,8 @@ public class Jeu implements Runnable, Constantes {
                 false, false, false, false, false, false, false, null, new JFrame(), null, Theme.STANDARD,
                 new Musique(Theme.STANDARD), true, false, false, new SoundsLibrary());
 
+    }
+
     public Jeu(Plateau plateau){
         this();
         this.plateau = plateau;
@@ -52,7 +54,7 @@ public class Jeu implements Runnable, Constantes {
     public Jeu(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
                boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation, boolean enCoursDeDeplacement,
                Animal animalSelectionnee, JFrame fenetre, VueJeu vueJeu, Theme theme, Musique musique, boolean son,
-               boolean varianteNombre,boolean varianteCase) {
+               boolean varianteNombre,boolean varianteCase, SoundsLibrary soundsLibrary) {
 
         varianteCaseBannieActive = varianteCase;
         varianteNombreDePieceActive = varianteNombre;

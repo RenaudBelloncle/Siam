@@ -181,7 +181,7 @@ public class VueJeu implements ActionListener, Constantes {
     @Override
     public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
-        jeu.getSoundsLibrary().playControlSound(game.getTheme());
+        jeu.getSoundsLibrary().playControlSound(jeu.getTheme());
         
         if (source == poser && !jeu.isSelectionnerOrientation()) {
                 jeu.setPlacerPiece(true);
@@ -237,7 +237,7 @@ public class VueJeu implements ActionListener, Constantes {
         if (source == nouvellepartie)
         {
             menuBar.removeAll();
-            new ChoixCamp(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon());
+            new ChoixCamp(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
         }
         if (source == instructions)
         {
@@ -246,7 +246,7 @@ public class VueJeu implements ActionListener, Constantes {
         if (source == retourMenu)
         {
             menuBar.removeAll();
-            new Menu(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon());
+            new Menu(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
         }
         if (source == themeSuivant)
         {

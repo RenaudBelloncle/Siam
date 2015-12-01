@@ -29,7 +29,7 @@ public class SoundsLibrary {
         switch(theme){
             case STANDARD:
             {
-                System.out.println("ca passe");
+                //System.out.println("ca passe");
                 AudioClip sample = soundLibraryStandart.get(name);
                 sample.play();
             }

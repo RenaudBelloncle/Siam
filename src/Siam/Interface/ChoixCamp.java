@@ -168,7 +168,7 @@ public class ChoixCamp implements ActionListener, Constantes {
             jeu.start();
         }
         else if (source == annuler){
-            new Menu(jeu, jeu.getFenetre(), theme, musique, son);
+            new Menu(jeu, jeu.getFenetre(), theme, musique, son, soundsLibrary);
         }
     }
 }
