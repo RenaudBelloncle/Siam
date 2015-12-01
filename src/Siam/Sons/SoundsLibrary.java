@@ -5,24 +5,50 @@ import javafx.scene.media.AudioClip;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class SoundsLibrary {
     private HashMap<String,AudioClip> soundLibraryStandart;
     private HashMap<String,AudioClip> soundLibraryNoel;
+    private static final Random random = new Random();
 
     public SoundsLibrary (){
         AudioClip boutton = null;
+
+        AudioClip elephant1 = null;
+        AudioClip elephant2 = null;
+        AudioClip elephant3 = null;
+
+        AudioClip rinhoceros1 = null;
+        AudioClip rinhoceros2 = null;
+        AudioClip rinhoceros3 = null;
         try {
             boutton = new AudioClip("file:res/Standard/Bruitage/clique_boutton.wav");
+
+            elephant1 = new AudioClip("file:res/Standard/Bruitage/elephant1.mp3");
+            elephant2 = new AudioClip("file:res/Standard/Bruitage/elephant2.mp3");
+            elephant3 = new AudioClip("file:res/Standard/Bruitage/elephant3.mp3");
+
+            rinhoceros1 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros1.mp3");
+            rinhoceros2 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros2.mp3");
+            rinhoceros3 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros3.mp3");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         //TODO ajouter les sons manquants
-        soundLibraryStandart = new HashMap<>(1);
+        soundLibraryStandart = new HashMap<>();
         soundLibraryStandart.put("boutton", boutton);
+
+        soundLibraryStandart.put("elephant1", elephant1);
+        soundLibraryStandart.put("elephant2", elephant2);
+        soundLibraryStandart.put("elephant3", elephant3);
+
+        soundLibraryStandart.put("rinhoceros1", rinhoceros1);
+        soundLibraryStandart.put("rinhoceros2", rinhoceros2);
+        soundLibraryStandart.put("rinhoceros3", rinhoceros3);
     }
 
     private void playAudio(String name, Theme theme){
@@ -44,13 +70,39 @@ public class SoundsLibrary {
     }
 
     public void playElephantSound(Theme theme){
-        //playAudio("boutton", theme);
-        System.out.println("son elephant");
+        String name = "";
+        int rand = random.nextInt(3);
+        switch(rand){
+            case 0 :
+                name = "elephant1";
+                break;
+            case 1 :
+                name = "elephant2";
+                break;
+            case 2 :
+                name = "elephant3";
+                break;
+        }
+        playAudio(name, theme);
+        System.out.println("son elephant " + rand);
     }
 
     public void playRinhocerosSound(Theme theme){
-        //playAudio("boutton", theme);
-        System.out.println("son rinhoceros");
+        String name = "";
+        int rand = random.nextInt(3);
+        switch(rand){
+            case 0 :
+                name = "rinhoceros1";
+                break;
+            case 1 :
+                name = "rinhoceros2";
+                break;
+            case 2 :
+                name = "rinhoceros3";
+                break;
+        }
+        playAudio(name, theme);
+        System.out.println("son rinhoceros " + rand);
     }
 
     public void playBouttonSound(Theme theme){
