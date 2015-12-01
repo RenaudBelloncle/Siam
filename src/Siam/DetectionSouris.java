@@ -95,7 +95,6 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                     animal.setSelectionnee(true);
                     jeu.setPieceSelectionnee(true);
                     jeu.setAnimalSelectionnee(animal);
-                    //TODO jp : peut etre ajouter un son
                 }
             }
         }

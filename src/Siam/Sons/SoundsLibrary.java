@@ -15,12 +15,12 @@ public class SoundsLibrary {
         AudioClip boutton = null;
         try {
             boutton = new AudioClip("file:res/Standard/Bruitage/clique_boutton.wav");
-            //boutton.setVolume(1000000);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+        //TODO ajouter les sons manquants
         soundLibraryStandart = new HashMap<>(1);
         soundLibraryStandart.put("boutton", boutton);
     }
@@ -29,9 +29,16 @@ public class SoundsLibrary {
         switch(theme){
             case STANDARD:
             {
-                //System.out.println("ca passe");
                 AudioClip sample = soundLibraryStandart.get(name);
                 sample.play();
+                break;
+            }
+
+            case NOEL:
+            {
+                AudioClip sample = soundLibraryNoel.get(name);
+                sample.play();
+                break;
             }
         }
     }
