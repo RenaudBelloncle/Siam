@@ -36,11 +36,21 @@ public class SoundsLibrary {
 
             case NOEL:
             {
-                AudioClip sample = soundLibraryNoel.get(name);
-                sample.play();
+                //AudioClip sample = soundLibraryNoel.get(name);
+                //sample.play();
                 break;
             }
         }
+    }
+
+    public void playElephantSound(Theme theme){
+        //playAudio("boutton", theme);
+        System.out.println("son elephant");
+    }
+
+    public void playRinhocerosSound(Theme theme){
+        //playAudio("boutton", theme);
+        System.out.println("son rinhoceros");
     }
 
     public void playBouttonSound(Theme theme){
