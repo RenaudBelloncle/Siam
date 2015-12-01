@@ -38,9 +38,41 @@ public class SoundsLibrary {
 
     public void playBouttonSound(Theme theme){
         playAudio("boutton", theme);
+        System.out.println("son boutton");
     }
 
     public void playControlSound(Theme theme){
         playAudio("boutton", theme);
+        System.out.println("son controle");
+    }
+
+    public void playPousseeSound(Theme theme){
+        //playAudio("boutton", theme);
+        System.out.println("son poussee");
+    }
+
+    public void playMarcheSound(Theme theme){
+        //playAudio("boutton", theme);
+        System.out.println("son marche");
+    }
+
+    public void playOrientationSound(Theme theme){
+        //playAudio("boutton", theme);
+        System.out.println("son orientation");
+    }
+
+    public void playPoserPieceSound(Theme theme){
+        //playAudio("boutton", theme);
+        System.out.println("son poser piece");
+    }
+
+    public void playErrorActionSound(Theme theme){
+        //playAudio("boutton", theme);
+        System.out.println("son erreur");
+    }
+
+    public void playSortieSound(Theme theme){
+        //playAudio("boutton", theme);
+        System.out.println("son sortie");
     }
 }

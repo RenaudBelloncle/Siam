@@ -20,7 +20,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
         if (event.getY() < BORDURE_FENETRE/2 || event.getY() > (1+NOMBRE_CASE_INI)*TAILLE_SPRITE) return;
         int colonne = (event.getX() - BORDURE_FENETRE/2) / TAILLE_SPRITE;
         int ligne = (event.getY() - BORDURE_FENETRE/2) / TAILLE_SPRITE;
-        clicEffectue(colonne,ligne);
+        clicEffectue(colonne, ligne);
     }
 
     private void clicEffectue(int colonne, int ligne) {
@@ -34,6 +34,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             {
                 jeu.deselection();
                 jeu.setDeplacerPiece(false);
+                jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
             }
             else if(jeu.getJoueurActif().deplaceAnimalSurCaseVide(jeu.getAnimalSelectionnee(),
                     plateau.getCase(colonne, ligne)))
@@ -41,12 +42,14 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 jeu.setEnCoursDeDeplacement(true);
                 jeu.setSelectionnerOrientation(true);
                 jeu.setDeplacerPiece(false);
+                jeu.getSoundsLibrary().playMarcheSound(jeu.getTheme());
             }
             else {
                 if(jeu.testOrientationEntreAnimalEtCase(jeu.getAnimalSelectionnee(),
                         plateau.getCase(colonne, ligne))) {
                     TokenResultatPoussee ret = jeu.getJoueurActif().deplaceAnimalEnPoussant(jeu.getAnimalSelectionnee());
                     if(ret.isPousseeEffectue()){
+                        jeu.getSoundsLibrary().playPousseeSound(jeu.getTheme());
                         if(ret.getCampGagnant() != null) {
                             new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(),
                                     jeu.getSoundsLibrary());
@@ -56,6 +59,10 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                         }
                         jeu.changerJoueurActif();
                     }
+                    else
+                    {
+                        jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
+                    }
                 }
                 jeu.deselection();
             }
@@ -63,6 +70,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
         }
         if (jeu.isPlacerPiece()) {
             if (!jeu.getJoueurActif().restePiece()) {
+                jeu.getSoundsLibrary().playPoserPieceSound(jeu.getTheme());
                 jeu.deselection();
                 return;
             }
@@ -71,8 +79,10 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                         jeu.varianteCaseBannieActive());
                 if (animal == null) {
                     jeu.setPlacerPiece(false);
+                    jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
                     return;
                 }
+                jeu.getSoundsLibrary().playPoserPieceSound(jeu.getTheme());
                 animal.setSelectionnee(true);
                 jeu.setAnimalSelectionnee(animal);
                 jeu.setPlacerPiece(false);
@@ -85,6 +95,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                     animal.setSelectionnee(true);
                     jeu.setPieceSelectionnee(true);
                     jeu.setAnimalSelectionnee(animal);
+                    //TODO jp : peut etre ajouter un son
                 }
             }
         }
