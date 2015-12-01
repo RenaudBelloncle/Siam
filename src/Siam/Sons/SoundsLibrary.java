@@ -23,6 +23,9 @@ public class SoundsLibrary {
         AudioClip rinhoceros1 = null;
         AudioClip rinhoceros2 = null;
         AudioClip rinhoceros3 = null;
+
+        AudioClip poserPiece = null;
+        AudioClip pousserPiece = null;
         try {
             boutton = new AudioClip("file:res/Standard/Bruitage/clique_boutton.wav");
 
@@ -33,6 +36,9 @@ public class SoundsLibrary {
             rinhoceros1 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros1.mp3");
             rinhoceros2 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros2.mp3");
             rinhoceros3 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros3.mp3");
+
+            poserPiece = new AudioClip("file:res/Standard/Bruitage/poserPiece.mp3");
+            pousserPiece = new AudioClip("file:res/Standard/Bruitage/pousserPiece.wav");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -49,6 +55,9 @@ public class SoundsLibrary {
         soundLibraryStandart.put("rinhoceros1", rinhoceros1);
         soundLibraryStandart.put("rinhoceros2", rinhoceros2);
         soundLibraryStandart.put("rinhoceros3", rinhoceros3);
+
+        soundLibraryStandart.put("poserPiece", poserPiece);
+        soundLibraryStandart.put("pousserPiece", pousserPiece);
     }
 
     private void playAudio(String name, Theme theme){
@@ -116,7 +125,7 @@ public class SoundsLibrary {
     }
 
     public void playPousseeSound(Theme theme){
-        //playAudio("boutton", theme);
+        playAudio("pousserPiece", theme);
         System.out.println("son poussee");
     }
 
@@ -131,7 +140,7 @@ public class SoundsLibrary {
     }
 
     public void playPoserPieceSound(Theme theme){
-        //playAudio("boutton", theme);
+        playAudio("poserPiece", theme);
         System.out.println("son poser piece");
     }
 
