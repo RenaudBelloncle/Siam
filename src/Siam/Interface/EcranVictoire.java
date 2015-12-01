@@ -3,38 +3,42 @@ package Siam.Interface;
 import Siam.Enum.Camp;
 import Siam.Constantes;
 import Siam.Enum.Theme;
-import Siam.Game;
+import Siam.Jeu;
+import Siam.Joueur;
 import Siam.Sons.Musique;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class EcranVictoire implements ActionListener, Constantes {
 
-    private Game game;
+    private Jeu jeu;
     private JFrame fenetre;
-    private OutilsFont outils;
-    private JButton retour;
+    private OutilsFont outilsFont;
+    private Camp campGagnant;
+
+    private JButton continuer;
+    private JButton retourMenu;
     private JLabel gagnant;
+
     private Theme theme;
-    private Musique libMuse;
+    private Musique musique;
     private boolean son;
 
-    public EcranVictoire(Game game, JFrame fenetre, Camp campGagnant, Theme theme, Musique libMuse, boolean son){
-        this.game = game;
+    public EcranVictoire(Jeu jeu, JFrame fenetre, Camp campGagnant, Theme theme, Musique musique, boolean son){
+        this.jeu = jeu;
         this.fenetre = fenetre;
+        this.campGagnant = campGagnant;
         this.theme = theme;
-        this.libMuse = libMuse;
+        this.musique = musique;
         this.son = son;
-        initEcranVictoire(campGagnant);
+
+        initEcranVictoire();
         afficheEcranVictoire();
-        retour.addActionListener(this);
+        setControlEcranVictoire(this);
 
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
@@ -44,58 +48,118 @@ public class EcranVictoire implements ActionListener, Constantes {
         fenetre.setVisible(true);
     }
 
-    public void initEcranVictoire(Camp campGagnant){
-        StringBuilder str = new StringBuilder("La victoire est pour les ");
-        if(campGagnant == Camp.ELEPHANT) {
-            str.append("Eléphants");
-        }
-        else{
-            str.append("Rhinocéros");
+    public void initEcranVictoire(){
+        StringBuilder str = new StringBuilder("Victoire des ");
+        if (theme == Theme.STANDARD) {
+            if (campGagnant == Camp.ELEPHANT) str.append("Elephants");
+            else str.append("Rhinoceros");
+        } else if (theme == Theme.NOEL) {
+            if (campGagnant == Camp.ELEPHANT) str.append("Bonhommes");
+            else str.append("Rennes");
         }
         gagnant = new JLabel(String.valueOf(str));
-        outils = new OutilsFont();
-        retour = new JButton("retour");
+        outilsFont = new OutilsFont();
+        continuer = new JButton("Continuer");
+        retourMenu = new JButton("Retour au Menu");
     }
 
     public void afficheEcranVictoire() {
         JPanel panPrincipal = new JPanel();
         JPanel phraseGagnant = new JPanel();
         JPanel vide = new JPanel();
-        JPanel retourPanel = new JPanel();
+        JPanel boutonPanel = new JPanel();
 
         panPrincipal.setOpaque(false);
         phraseGagnant.setOpaque(false);
         vide.setOpaque(false);
-        retourPanel.setOpaque(false);
+        boutonPanel.setOpaque(false);
 
-        panPrincipal = new JPanel() {
-            BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme, "FondMenu");
+        if (campGagnant == Camp.ELEPHANT) {
+            if (theme == Theme.STANDARD) {
+                panPrincipal = new JPanel() {
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD, "FondElephant");
 
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    }
+                };
+            } else if (theme == Theme.NOEL) {
+                panPrincipal = new JPanel() {
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.NOEL, "FondElephant");
+
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    }
+                };
             }
-        };
+        } else {
+            if (theme == Theme.STANDARD) {
+                panPrincipal = new JPanel() {
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD, "FondRhinoceros");
 
-        //changement de la police
-        outils.changerFontJLabel(gagnant, 40, Color.orange, outils.getFontTexte());
-        outils.changerFontButton(retour, 80, Color.orange, outils.getFontMenu());
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    }
+                };
+            } else if (theme == Theme.NOEL) {
+                panPrincipal = new JPanel() {
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.NOEL, "FondRhinoceros");
+
+                    public void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
+                    }
+                };
+            }
+        }
+
+        changerPolice();
+
 
         phraseGagnant.add(gagnant);
-        retourPanel.add(retour);
-        panPrincipal.add(phraseGagnant);
+        boutonPanel.add(continuer);
+        boutonPanel.add(retourMenu);
+        boutonPanel.setLayout(new GridLayout(1, 2));
         panPrincipal.add(vide);
-        panPrincipal.add(retourPanel);
-        panPrincipal.setLayout(new BoxLayout(panPrincipal, BoxLayout.Y_AXIS));
+        panPrincipal.add(phraseGagnant);
+        panPrincipal.add(boutonPanel);
+        panPrincipal.setLayout(new GridLayout(3,1));
 
         fenetre.setContentPane(panPrincipal);
+    }
+
+    private void changerPolice() {
+        if (theme == Theme.STANDARD) {
+            outilsFont.changerFontJLabel(gagnant, 80, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(continuer, 40, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(retourMenu, 40, Color.orange, outilsFont.getStandardFontTexte());
+        } else if (theme == Theme.NOEL) {
+            outilsFont.changerFontJLabel(gagnant, 120, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(continuer, 60, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(retourMenu, 60, Color.red, outilsFont.getNoelFontTexte());
+        }
+    }
+
+    private void setControlEcranVictoire(ActionListener listener) {
+        continuer.addActionListener(listener);
+        retourMenu.addActionListener(listener);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if (source == retour) {
-            new Menu(game, fenetre, theme, libMuse, son);
+        if (source == continuer) {
+            jeu.setTheme(theme);
+            jeu.setMusique(musique);
+            jeu.setSon(son);
+            jeu.initJeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
+            jeu.start();
+        }
+        if (source == retourMenu) {
+            new Menu(jeu, fenetre, theme, musique, son);
         }
     }
 }

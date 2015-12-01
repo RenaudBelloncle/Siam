@@ -7,7 +7,7 @@ import Siam.Sons.Musique;
 
 import javax.swing.*;
 
-public class Game implements Runnable, Constantes {
+public class Jeu implements Runnable, Constantes {
 
     private Plateau plateau;
     private Joueur[] joueurs;
@@ -15,8 +15,8 @@ public class Game implements Runnable, Constantes {
     private VueJeu vueJeu;
     private JFrame fenetre;
     private Theme theme;
-    private Musique libMuse;
-    private  boolean son;
+    private Musique musique;
+    private boolean son;
 
     private DetectionSouris souris;
 
@@ -27,20 +27,33 @@ public class Game implements Runnable, Constantes {
     private boolean changerOrientation;
     private boolean selectionnerOrientation;
     private boolean enCoursDeDeplacement;
+
     private Joueur joueurActif;
     private Animal animalSelectionnee;
 
     private Thread thread;
     private boolean running;
+    private boolean varianteNombreDePieceActive;
+    private boolean varianteCaseBannieActive;
 
-    public Game() {
-        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, null,
-                new JFrame());
+    public Jeu() {
+        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS),
+                false, false, false, false, false, false, false, null, new JFrame(), null, Theme.STANDARD,
+                new Musique(Theme.STANDARD), true, false, false);
     }
 
-    public Game(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
-                boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation,
-                Animal animalSelectionnee, JFrame fenetre) {
+    public Jeu(Plateau plateau){
+        this();
+        this.plateau = plateau;
+    }
+
+    public Jeu(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
+               boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation, boolean enCoursDeDeplacement,
+               Animal animalSelectionnee, JFrame fenetre, VueJeu vueJeu, Theme theme, Musique musique, boolean son,
+               boolean varianteNombre,boolean varianteCase) {
+
+        varianteCaseBannieActive = varianteCase;
+        varianteNombreDePieceActive = varianteNombre;
 
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
@@ -60,14 +73,16 @@ public class Game implements Runnable, Constantes {
         this.deplacerPiece = deplacerPiece;
         this.changerOrientation = changerOrientation;
         this.selectionnerOrientation = selectionnerOrientation;
-        this.enCoursDeDeplacement = false;
+        this.enCoursDeDeplacement = enCoursDeDeplacement;
 
         this.animalSelectionnee = animalSelectionnee;
 
-        theme = Theme.STANDARD;
-        libMuse = new Musique();
-        libMuse.start();
-        son = true;
+        this.vueJeu = vueJeu;
+
+        this.theme = theme;
+        this.musique = musique;
+        this.musique.start();
+        this.son = son;
 
         running = false;
     }
@@ -151,12 +166,17 @@ public class Game implements Runnable, Constantes {
     }
 
     public void changerJoueurActif() {
+        joueurActif.finDeTour();
         if (joueurActif == joueurs[0]) joueurActif = joueurs[1];
         else joueurActif = joueurs[0];
     }
 
     public JFrame getFenetre(){
         return fenetre;
+    }
+
+    public VueJeu getVueJeu() {
+        return vueJeu;
     }
 
     public void setTheme(Theme theme) {
@@ -167,12 +187,12 @@ public class Game implements Runnable, Constantes {
         return theme;
     }
 
-    public void setLibMuse(Musique libMuse) {
-        this.libMuse = libMuse;
+    public void setMusique(Musique musique) {
+        this.musique = musique;
     }
 
     public Musique getMusique() {
-        return libMuse;
+        return musique;
     }
 
     public void setSon(boolean son) {
@@ -183,12 +203,20 @@ public class Game implements Runnable, Constantes {
         return son;
     }
 
-    public void initGame(Joueur joueur1, Joueur joueur2) {
+    public boolean varianteCaseBannieActive(){
+        return varianteCaseBannieActive;
+    }
+
+    public boolean varianteNombreDePieceMaxActive(){
+        return varianteNombreDePieceActive;
+    }
+
+    public void initJeu(Joueur joueur1, Joueur joueur2) {
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
         joueurs[1] = joueur2;
-        joueurActif = joueurs[0];
+        setJoueurActif(joueurs[0]);
 
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
@@ -204,6 +232,11 @@ public class Game implements Runnable, Constantes {
         enCoursDeDeplacement = false;
 
         animalSelectionnee = null;
+    }
+
+    public void activerVariante(boolean varCase, boolean varPiece){
+        varianteNombreDePieceActive = varPiece;
+        varianteCaseBannieActive = varCase;
     }
 
     public synchronized void start() {
@@ -240,11 +273,14 @@ public class Game implements Runnable, Constantes {
         }
         else if (pieceSelectionnee) {
             vueJeu.getDeplacer().setEnabled(true);
-            if (animalSelectionnee.getAbscisse() == 0 || animalSelectionnee.getOrdonnee() == 0 || animalSelectionnee.getAbscisse() == NOMBRE_CASE_INI-1 || animalSelectionnee.getOrdonnee() == NOMBRE_CASE_INI-1) vueJeu.getSortir().setEnabled(true);
+            if (animalSelectionnee.getAbscisse() == 0 || animalSelectionnee.getOrdonnee() == 0 ||
+                    animalSelectionnee.getAbscisse() == NOMBRE_CASE_INI-1 ||
+                    animalSelectionnee.getOrdonnee() == NOMBRE_CASE_INI-1) vueJeu.getSortir().setEnabled(true);
             vueJeu.getOrienter().setEnabled(true);
         }
         else if (!selectionnerOrientation) {
-            if (!joueurActif.restePiece()) vueJeu.getPoser().setEnabled(false);
+            if (!joueurActif.restePiece() || (varianteNombreDePieceActive && !joueurActif.restePieceDispo()))
+                vueJeu.getPoser().setEnabled(false);
             else vueJeu.getPoser().setEnabled(true);
             vueJeu.getDeplacer().setEnabled(false);
             vueJeu.getSortir().setEnabled(false);
@@ -261,7 +297,6 @@ public class Game implements Runnable, Constantes {
             vueJeu.getFlecheDroite().setEnabled(true);
             vueJeu.getFlecheGauche().setEnabled(true);
         }
-
     }
 
     public void deselection(){

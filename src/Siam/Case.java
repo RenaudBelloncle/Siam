@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Enum.Theme;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
@@ -11,11 +12,6 @@ public class Case {
     public Case(int abscisse, int ordonnee) {
         this.abscisse = abscisse;
         this.ordonnee = ordonnee;
-    }
-
-    public Case(Case caseModel){
-        this.ordonnee = caseModel.ordonnee;
-        this.abscisse = caseModel.abscisse;
     }
 
     public int getAbscisse() {
@@ -34,8 +30,9 @@ public class Case {
         this.ordonnee = ordonnee;
     }
 
-    public void render(Ecran ecran){
-        ecran.renderSprite(abscisse, ordonnee, Sprite.caseVide,false,false);
+    public void affichage(Ecran ecran, Theme theme){
+        if (theme == Theme.STANDARD) ecran.affichageSprite(abscisse, ordonnee, Sprite.StandardCaseVide,false,false);
+        else if (theme == Theme.NOEL) ecran.affichageSprite(abscisse, ordonnee, Sprite.NoelCaseVide,false,false);
     }
 
     public boolean estVide(){

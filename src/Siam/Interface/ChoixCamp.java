@@ -3,51 +3,47 @@ package Siam.Interface;
 import Siam.Constantes;
 import Siam.Enum.Camp;
 import Siam.Enum.Theme;
-import Siam.Game;
+import Siam.Jeu;
 import Siam.Joueur;
 import Siam.Sons.Musique;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 public class ChoixCamp implements ActionListener, Constantes {
 
-    static final Random random = new Random();
+    private static final Random random = new Random();
 
-    private Game game;
+    private Jeu jeu;
     private JFrame fenetre;
-    private OutilsFont outil;
+    private OutilsFont outilsFont;
 
     private JLabel titreCB;
     private JRadioButton JRBelephant, JRBrhinoceros, aleatoire;
+    private JCheckBox JCBvarianteCase, JCBvariantePiece;
     private ButtonGroup BGchoix;
     private JButton valider, annuler;
 
     private Theme theme;
-    private Musique libMuse;
+    private Musique musique;
     private boolean son;
 
-    public ChoixCamp(Game game, JFrame fenetre, Theme theme, Musique libMuse, boolean son) {
-        this.game = game;
+    public ChoixCamp(Jeu jeu, JFrame fenetre, Theme theme, Musique musique, boolean son) {
+        this.jeu = jeu;
         this.fenetre = fenetre;
         this.theme = theme;
-        this.libMuse = libMuse;
+        this.musique = musique;
         this.son = son;
-        outil = new OutilsFont();
-        lanceChoixCamp();
-        setControlChoixCamp(this);
-    }
+        outilsFont = new OutilsFont();
 
-    public void lanceChoixCamp(){
         initChoixCamp();
         afficheChoixCamp();
+        setControlChoixCamp(this);
+
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
         fenetre.setResizable(false);
@@ -58,15 +54,17 @@ public class ChoixCamp implements ActionListener, Constantes {
 
     public void initChoixCamp(){
         titreCB = new JLabel("Choisis un camp");
-        JRBelephant = new JRadioButton("Éléphant", true);
-        JRBrhinoceros = new JRadioButton("Rhinocéros");
-        aleatoire = new JRadioButton("Aléatoire");
+        JRBelephant = new JRadioButton("Elephant", true);
+        JRBrhinoceros = new JRadioButton("Rhinoceros");
+        aleatoire = new JRadioButton("Aleatoire");
         BGchoix = new ButtonGroup();
         BGchoix.add(JRBelephant);
         BGchoix.add(JRBrhinoceros);
         BGchoix.add(aleatoire);
         valider = new JButton("Valider");
         annuler = new JButton("Annuler");
+        JCBvarianteCase = new JCheckBox("Variante case bannie");
+        JCBvariantePiece = new JCheckBox("Variante nombre de piece limite");
     }
 
     public void afficheChoixCamp(){
@@ -77,6 +75,7 @@ public class ChoixCamp implements ActionListener, Constantes {
         JPanel panBouton2 = new JPanel();
         JPanel panBouton3 = new JPanel();
         JPanel panValiderBouton = new JPanel();
+        JPanel panVariante = new JPanel();
 
         panPrincipal.setOpaque(false);
         panTitre.setOpaque(false);
@@ -85,6 +84,7 @@ public class ChoixCamp implements ActionListener, Constantes {
         panBouton2.setOpaque(false);
         panBouton3.setOpaque(false);
         panValiderBouton.setOpaque(false);
+        panVariante.setOpaque(false);
 
         panPrincipal = new JPanel() {
             BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme,"FondCamp");
@@ -95,13 +95,7 @@ public class ChoixCamp implements ActionListener, Constantes {
             }
         };
 
-        //changement de la police
-        outil.changerFontJLabel(titreCB, 95, Color.orange, outil.getFontMenu());
-        outil.changerFontButton(valider, 80, Color.orange, outil.getFontTexte());
-        outil.changerFontButton(annuler, 80, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(JRBelephant, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outil.getFontTexte());
-        outil.changerFontJRadioButton(aleatoire, 60, Color.orange, outil.getFontTexte());
+        changerPolice();
 
         panTitre.add(titreCB);
         panBouton1.add(JRBelephant);
@@ -110,6 +104,8 @@ public class ChoixCamp implements ActionListener, Constantes {
         panGBouton.add(panBouton1);
         panGBouton.add(panBouton2);
         panGBouton.add(panBouton3);
+        panVariante.add(JCBvariantePiece);
+        panVariante.add(JCBvarianteCase);
         panValiderBouton.add(valider);
         panValiderBouton.add(annuler);
 
@@ -118,10 +114,31 @@ public class ChoixCamp implements ActionListener, Constantes {
 
         panPrincipal.add(panTitre);
         panPrincipal.add(panGBouton);
+        panPrincipal.add(panVariante);
         panPrincipal.add(panValiderBouton);
         panPrincipal.setLayout(new BoxLayout(panPrincipal, BoxLayout.Y_AXIS));
 
         fenetre.setContentPane(panPrincipal);
+    }
+
+    public void changerPolice() {
+        if (theme == Theme.STANDARD) {
+            outilsFont.changerFontJLabel(titreCB, 95, Color.orange, outilsFont.getStandardFontMenu());
+            outilsFont.changerFontButton(valider, 80, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(annuler, 80, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJRadioButton(JRBelephant, 60, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJRadioButton(JRBrhinoceros, 60, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJCheckBox(JCBvarianteCase, 30, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJCheckBox(JCBvariantePiece,30,Color.orange,outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJRadioButton(aleatoire, 60, Color.orange, outilsFont.getStandardFontTexte());
+        } else if (theme == Theme.NOEL) {
+            outilsFont.changerFontJLabel(titreCB, 95, Color.red, outilsFont.getNoelFontMenu());
+            outilsFont.changerFontButton(valider, 100, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(annuler, 100, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJRadioButton(JRBelephant, 80, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJRadioButton(JRBrhinoceros, 80, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJRadioButton(aleatoire, 80, Color.red, outilsFont.getNoelFontTexte());
+        }
     }
 
     public void setControlChoixCamp(ActionListener listener){
@@ -135,35 +152,19 @@ public class ChoixCamp implements ActionListener, Constantes {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (source == getValider())
+        if (source == valider)
         {
-            if(getJRBelephant().isSelected())game.setJoueurActif(game.getJoueurs()[0]);
-            else if (getJRBrhinoceros().isSelected())game.setJoueurActif(game.getJoueurs()[1]);
-            else game.setJoueurActif(game.getJoueurs()[random.nextInt(2)]);
-            game.setTheme(theme);
-            game.setLibMuse(libMuse);
-            game.setSon(son);
-            game.initGame(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
-            game.start();
+            if(JRBelephant.isSelected()) jeu.setJoueurActif(jeu.getJoueurs()[0]);
+            else if (JRBrhinoceros.isSelected()) jeu.setJoueurActif(jeu.getJoueurs()[1]);
+            else jeu.setJoueurActif(jeu.getJoueurs()[random.nextInt(2)]);
+            jeu.setMusique(musique);
+            jeu.setSon(son);
+            jeu.activerVariante(JCBvarianteCase.isSelected(),JCBvariantePiece.isSelected());
+            jeu.initJeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
+            jeu.start();
         }
-        else if (source == getAnnuler()){
-            new Menu(game, game.getFenetre(), theme, libMuse, son);
+        else if (source == annuler){
+            new Menu(jeu, jeu.getFenetre(), theme, musique, son);
         }
-    }
-
-    public JButton getValider(){
-        return valider;
-    }
-
-    public JButton getAnnuler(){
-        return annuler;
-    }
-
-    public JRadioButton getJRBelephant() {
-        return JRBelephant;
-    }
-
-    public JRadioButton getJRBrhinoceros() {
-        return JRBrhinoceros;
     }
 }
