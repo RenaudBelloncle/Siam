@@ -4,6 +4,7 @@ import Siam.Constantes;
 import Siam.Enum.Theme;
 import Siam.Jeu;
 import Siam.Sons.Musique;
+import Siam.Sons.SoundsLibrary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     private Jeu jeu;
     private OutilsFont outilsFont;
     private JFrame fenetre;
+    private SoundsLibrary soundsLibrary;
 
     private JLabel titre;
     private JButton jouer;
@@ -38,7 +40,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     private Musique musique;
     private boolean son;
 
-    public Menu(Jeu jeu, JFrame fenetre, Theme theme, Musique musique, boolean son){
+    public Menu(Jeu jeu, JFrame fenetre, Theme theme, Musique musique, boolean son, SoundsLibrary soundsLibrary){
         this.jeu = jeu;
         this.fenetre = fenetre;
         this.musique = musique;
@@ -46,6 +48,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         outilsFont = new OutilsFont();
         this.theme = theme;
 
+        this.soundsLibrary = soundsLibrary;
         fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
         fenetre.setLocationRelativeTo(null);
         fenetre.setResizable(false);
@@ -192,12 +195,13 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     public void actionPerformed(ActionEvent e) {
 
         Object source = e.getSource();
+        soundsLibrary.playBouttonSound(theme);
 
         if(source == quitter) {
             System.exit(0);
         }
         else if(source == jouer) {
-            new ChoixCamp(jeu, jeu.getFenetre(), theme, musique, son);
+            new ChoixCamp(jeu, jeu.getFenetre(), theme, musique, son, soundsLibrary);
         }
         else if(source == instructions) {
             new Instructions(theme);

@@ -4,6 +4,7 @@ import Siam.Enum.Camp;
 import Siam.Enum.Theme;
 import Siam.Interface.*;
 import Siam.Sons.Musique;
+import Siam.Sons.SoundsLibrary;
 
 import javax.swing.*;
 
@@ -17,10 +18,12 @@ public class Jeu implements Runnable, Constantes {
     private Theme theme;
     private Musique musique;
     private boolean son;
+    private SoundsLibrary soundsLibrary;
 
     private DetectionSouris souris;
 
     private boolean pieceSelectionnee;
+
     private boolean placerPiece;
     private boolean sortirPiece;
     private boolean deplacerPiece;
@@ -39,7 +42,8 @@ public class Jeu implements Runnable, Constantes {
     public Jeu() {
         this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS),
                 false, false, false, false, false, false, false, null, new JFrame(), null, Theme.STANDARD,
-                new Musique(Theme.STANDARD), true, false, false);
+                new Musique(Theme.STANDARD), true, false, false, new SoundsLibrary());
+
     }
 
     public Jeu(Plateau plateau){
@@ -50,7 +54,7 @@ public class Jeu implements Runnable, Constantes {
     public Jeu(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
                boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation, boolean enCoursDeDeplacement,
                Animal animalSelectionnee, JFrame fenetre, VueJeu vueJeu, Theme theme, Musique musique, boolean son,
-               boolean varianteNombre,boolean varianteCase) {
+               boolean varianteNombre,boolean varianteCase, SoundsLibrary soundsLibrary) {
 
         varianteCaseBannieActive = varianteCase;
         varianteNombreDePieceActive = varianteNombre;
@@ -61,6 +65,7 @@ public class Jeu implements Runnable, Constantes {
         joueurs[1] = joueur2;
         joueurActif = joueurs[0];
         this.fenetre = fenetre;
+        this.soundsLibrary = soundsLibrary;
 
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
@@ -297,6 +302,7 @@ public class Jeu implements Runnable, Constantes {
             vueJeu.getFlecheDroite().setEnabled(true);
             vueJeu.getFlecheGauche().setEnabled(true);
         }
+
     }
 
     public void deselection(){
@@ -322,5 +328,9 @@ public class Jeu implements Runnable, Constantes {
                         && animal.getOrdonnee() == uneCase.getOrdonnee();
         }
         return false;
+    }
+
+    public SoundsLibrary getSoundsLibrary() {
+        return soundsLibrary;
     }
 }

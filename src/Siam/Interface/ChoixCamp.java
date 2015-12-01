@@ -6,6 +6,7 @@ import Siam.Enum.Theme;
 import Siam.Jeu;
 import Siam.Joueur;
 import Siam.Sons.Musique;
+import Siam.Sons.SoundsLibrary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,15 +32,17 @@ public class ChoixCamp implements ActionListener, Constantes {
     private Theme theme;
     private Musique musique;
     private boolean son;
+    private SoundsLibrary soundsLibrary;
 
-    public ChoixCamp(Jeu jeu, JFrame fenetre, Theme theme, Musique musique, boolean son) {
+    public ChoixCamp(Jeu jeu, JFrame fenetre, Theme theme, Musique musique, boolean son, SoundsLibrary soundsLibrary) {
         this.jeu = jeu;
         this.fenetre = fenetre;
         this.theme = theme;
         this.musique = musique;
         this.son = son;
         outilsFont = new OutilsFont();
-
+        this.soundsLibrary = soundsLibrary;
+        
         initChoixCamp();
         afficheChoixCamp();
         setControlChoixCamp(this);
@@ -151,6 +154,7 @@ public class ChoixCamp implements ActionListener, Constantes {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
+        soundsLibrary.playBouttonSound(theme);
 
         if (source == valider)
         {
@@ -164,7 +168,7 @@ public class ChoixCamp implements ActionListener, Constantes {
             jeu.start();
         }
         else if (source == annuler){
-            new Menu(jeu, jeu.getFenetre(), theme, musique, son);
+            new Menu(jeu, jeu.getFenetre(), theme, musique, son, soundsLibrary);
         }
     }
 }
