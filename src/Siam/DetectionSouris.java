@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Enum.Camp;
 import Siam.Interface.EcranVictoire;
 
 import javax.swing.event.MouseInputAdapter;
@@ -92,6 +93,12 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             if (plateau.getCase(colonne, ligne) instanceof Animal) {
                 if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == jeu.getJoueurActif().getCamp()) {
                     Animal animal = (Animal)plateau.getCase(colonne, ligne);
+                    if(animal.getCamp() == Camp.ELEPHANT){
+                        jeu.getSoundsLibrary().playElephantSound(jeu.getTheme());
+                    }
+                    else{
+                        jeu.getSoundsLibrary().playRinhocerosSound(jeu.getTheme());
+                    }
                     animal.setSelectionnee(true);
                     jeu.setPieceSelectionnee(true);
                     jeu.setAnimalSelectionnee(animal);
