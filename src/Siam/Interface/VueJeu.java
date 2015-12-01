@@ -90,29 +90,6 @@ public class VueJeu implements ActionListener, Constantes {
         JPanel panelDroite = new JPanel();
         JPanel panelBas = new JPanel();
 
-        menuBar = new JMenuBar();
-
-        menu.add(nouvellepartie);
-        menu.add(instructions);
-        menu.add(retourMenu);
-        options.add(themeSuivant);
-        options.add(musique);
-
-        menuBar.add(menu);
-        menuBar.add(options);
-
-        panelJeu.setOpaque(false);
-        panelBouton.setOpaque(false);
-        panelPoser.setOpaque(false);
-        panelDeplacer.setOpaque(false);
-        panelSortir.setOpaque(false);
-        panelOrienter.setOpaque(false);
-        panelHaut.setOpaque(false);
-        panelBas.setOpaque(false);
-        panelFleche.setOpaque(false);
-        panelGauche.setOpaque(false);
-        panelDroite.setOpaque(false);
-
         panelJeu.add(panelPlateau);
 
         deplacer.setEnabled(false);
@@ -204,6 +181,8 @@ public class VueJeu implements ActionListener, Constantes {
     @Override
     public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
+        jeu.getSoundsLibrary().playControlSound(game.getTheme());
+        
         if (source == poser && !jeu.isSelectionnerOrientation()) {
                 jeu.setPlacerPiece(true);
         }
