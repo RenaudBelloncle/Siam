@@ -90,29 +90,6 @@ public class VueJeu implements ActionListener, Constantes {
         JPanel panelDroite = new JPanel();
         JPanel panelBas = new JPanel();
 
-        menuBar = new JMenuBar();
-
-        menu.add(nouvellepartie);
-        menu.add(instructions);
-        menu.add(retourMenu);
-        options.add(themeSuivant);
-        options.add(musique);
-
-        menuBar.add(menu);
-        menuBar.add(options);
-
-        panelJeu.setOpaque(false);
-        panelBouton.setOpaque(false);
-        panelPoser.setOpaque(false);
-        panelDeplacer.setOpaque(false);
-        panelSortir.setOpaque(false);
-        panelOrienter.setOpaque(false);
-        panelHaut.setOpaque(false);
-        panelBas.setOpaque(false);
-        panelFleche.setOpaque(false);
-        panelGauche.setOpaque(false);
-        panelDroite.setOpaque(false);
-
         panelJeu.add(panelPlateau);
 
         deplacer.setEnabled(false);
@@ -204,11 +181,14 @@ public class VueJeu implements ActionListener, Constantes {
     @Override
     public void actionPerformed(ActionEvent event) {
         Object source = event.getSource();
+        jeu.getSoundsLibrary().playControlSound(jeu.getTheme());
+        
         if (source == poser && !jeu.isSelectionnerOrientation()) {
-            jeu.setPlacerPiece(true);
+                jeu.setPlacerPiece(true);
         }
         if (source == sortir && jeu.isPieceSelectionnee()) {
             if (jeu.getAnimalSelectionnee().getAbscisse() == 0 || jeu.getAnimalSelectionnee().getAbscisse() == 4 || jeu.getAnimalSelectionnee().getOrdonnee() == 0 || jeu.getAnimalSelectionnee().getOrdonnee() == 4) {
+                jeu.getSoundsLibrary().playSortieSound(jeu.getTheme());
                 jeu.setSortirPiece(true);
                 jeu.getJoueurActif().sortirPiece(jeu.getAnimalSelectionnee().getAbscisse(), jeu.getAnimalSelectionnee().getOrdonnee());
                 jeu.changerJoueurActif();
@@ -228,6 +208,7 @@ public class VueJeu implements ActionListener, Constantes {
             jeu.setSelectionnerOrientation(true);
         }
         if (jeu.isSelectionnerOrientation() && source == flecheHaut) {
+            jeu.getSoundsLibrary().playOrientationSound(jeu.getTheme());
             jeu.getAnimalSelectionnee().setOrientation(Orientation.HAUT);
             jeu.deselection();
             jeu.setEnCoursDeDeplacement(false);
@@ -235,6 +216,7 @@ public class VueJeu implements ActionListener, Constantes {
             jeu.changerJoueurActif();
         }
         if (jeu.isSelectionnerOrientation() && source == flecheDroite) {
+            jeu.getSoundsLibrary().playOrientationSound(jeu.getTheme());
             jeu.getAnimalSelectionnee().setOrientation(Orientation.DROITE);
             jeu.deselection();
             jeu.setEnCoursDeDeplacement(false);
@@ -242,6 +224,7 @@ public class VueJeu implements ActionListener, Constantes {
             jeu.changerJoueurActif();
         }
         if (jeu.isSelectionnerOrientation() && source == flecheBas) {
+            jeu.getSoundsLibrary().playOrientationSound(jeu.getTheme());
             jeu.getAnimalSelectionnee().setOrientation(Orientation.BAS);
             jeu.deselection();
             jeu.setEnCoursDeDeplacement(false);
@@ -249,6 +232,7 @@ public class VueJeu implements ActionListener, Constantes {
             jeu.changerJoueurActif();
         }
         if (jeu.isSelectionnerOrientation() && source == flecheGauche) {
+            jeu.getSoundsLibrary().playOrientationSound(jeu.getTheme());
             jeu.getAnimalSelectionnee().setOrientation(Orientation.GAUCHE);
             jeu.deselection();
             jeu.setEnCoursDeDeplacement(false);
@@ -258,7 +242,7 @@ public class VueJeu implements ActionListener, Constantes {
         if (source == nouvellepartie)
         {
             menuBar.removeAll();
-            new ChoixCamp(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon());
+            new ChoixCamp(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
         }
         if (source == instructions)
         {
@@ -267,7 +251,7 @@ public class VueJeu implements ActionListener, Constantes {
         if (source == retourMenu)
         {
             menuBar.removeAll();
-            new Menu(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon());
+            new Menu(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
         }
         if (source == themeSuivant)
         {

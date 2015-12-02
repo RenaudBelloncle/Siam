@@ -2,23 +2,27 @@ package Siam;
 
 import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
+import Siam.Enum.Theme;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
 
-public class Joueur {
+public class Joueur implements Constantes{
 
     private List<Animal> animals;
     private Plateau plateau;
     private Camp camp;
     private int pieceSurPlateau;
+    private int pieceRestantAPlacer, nombreTour;
 
     public Joueur(Camp camp){
+        pieceRestantAPlacer = NOMBRE_DE_PIECE_POSEE_MAX_VARIANTE;
         animals = new ArrayList<>();
         this.camp = camp;
         pieceSurPlateau = 0;
+        nombreTour = 0;
     }
 
     public Joueur(Plateau plateau) {
@@ -42,9 +46,15 @@ public class Joueur {
         this.camp = camp;
     }
 
-    public Animal posePiece(int colonne, int ligne) {
+    public Animal posePiece(int colonne, int ligne,boolean varianteNombrePieceActive,boolean varianteCaseBannieActive) {
+        if(varianteNombrePieceActive && !restePieceDispo())
+            return null;
+        if(varianteCaseBannieActive && nombreTour < 2) {
+            if (colonne == 2 && (ligne == 0 || ligne == 4))
+                return null;
+        }
         if (restePiece()) {
-            if (!(plateau.getCase(colonne,ligne) instanceof Piece)) {
+            if (!(plateau.getCase(colonne, ligne) instanceof Piece)) {
                 pieceSurPlateau++;
                 if (camp == Camp.ELEPHANT) {
                     animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT, false));
@@ -53,6 +63,8 @@ public class Joueur {
                     animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS, false));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 }
+                if(varianteNombrePieceActive && restePieceDispo())
+                    piecePose();
                 return animals.get(pieceSurPlateau - 1);
             }
         }
@@ -61,6 +73,18 @@ public class Joueur {
 
     public boolean restePiece() {
         return pieceSurPlateau < 5;
+    }
+
+    public boolean restePieceDispo(){
+        return pieceRestantAPlacer > 0;
+    }
+
+    public void piecePose(){
+        pieceRestantAPlacer --;
+    }
+
+    public int getPieceRestantAPlacer(){
+        return pieceRestantAPlacer;
     }
 
     public void sortirPiece(int colonne, int ligne) {
@@ -94,5 +118,13 @@ public class Joueur {
             }
         }
         return new TokenResultatPoussee(pousseeReussie, campGagnant);
+    }
+
+    public int getNombreTour(){
+        return nombreTour;
+    }
+
+    public void finDeTour(){
+        nombreTour ++;
     }
 }

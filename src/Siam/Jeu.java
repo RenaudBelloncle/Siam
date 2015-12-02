@@ -4,6 +4,7 @@ import Siam.Enum.Camp;
 import Siam.Enum.Theme;
 import Siam.Interface.*;
 import Siam.Sons.Musique;
+import Siam.Sons.SoundsLibrary;
 
 import javax.swing.*;
 
@@ -16,11 +17,13 @@ public class Jeu implements Runnable, Constantes {
     private JFrame fenetre;
     private Theme theme;
     private Musique musique;
-    private  boolean son;
+    private boolean son;
+    private SoundsLibrary soundsLibrary;
 
     private DetectionSouris souris;
 
     private boolean pieceSelectionnee;
+
     private boolean placerPiece;
     private boolean sortirPiece;
     private boolean deplacerPiece;
@@ -33,11 +36,14 @@ public class Jeu implements Runnable, Constantes {
 
     private Thread thread;
     private boolean running;
+    private boolean varianteNombreDePieceActive;
+    private boolean varianteCaseBannieActive;
 
     public Jeu() {
         this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS),
                 false, false, false, false, false, false, false, null, new JFrame(), null, Theme.STANDARD,
-                new Musique(Theme.STANDARD), true);
+                new Musique(Theme.STANDARD), true, false, false, new SoundsLibrary());
+
     }
 
     public Jeu(Plateau plateau){
@@ -47,7 +53,8 @@ public class Jeu implements Runnable, Constantes {
 
     public Jeu(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
                boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation, boolean enCoursDeDeplacement,
-               Animal animalSelectionnee, JFrame fenetre, VueJeu vueJeu, Theme theme, Musique musique, boolean son) {
+               Animal animalSelectionnee, JFrame fenetre, VueJeu vueJeu, Theme theme, Musique musique, boolean son,
+               boolean varianteNombre,boolean varianteCase, SoundsLibrary soundsLibrary) {
 
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
@@ -55,6 +62,7 @@ public class Jeu implements Runnable, Constantes {
         joueurs[1] = joueur2;
         joueurActif = joueurs[0];
         this.fenetre = fenetre;
+        this.soundsLibrary = soundsLibrary;
 
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
@@ -78,10 +86,15 @@ public class Jeu implements Runnable, Constantes {
         this.musique.start();
         this.son = son;
 
+        varianteCaseBannieActive = varianteCase;
+        varianteNombreDePieceActive = varianteNombre;
+
         running = false;
     }
 
-    public Plateau getPlateau(){return plateau;}
+    public Plateau getPlateau() {
+        return plateau;
+    }
 
     public Joueur[] getJoueurs() {
         return joueurs;
@@ -160,6 +173,7 @@ public class Jeu implements Runnable, Constantes {
     }
 
     public void changerJoueurActif() {
+        joueurActif.finDeTour();
         if (joueurActif == joueurs[0]) joueurActif = joueurs[1];
         else joueurActif = joueurs[0];
     }
@@ -196,12 +210,20 @@ public class Jeu implements Runnable, Constantes {
         return son;
     }
 
+    public boolean varianteCaseBannieActive(){
+        return varianteCaseBannieActive;
+    }
+
+    public boolean varianteNombreDePieceMaxActive(){
+        return varianteNombreDePieceActive;
+    }
+
     public void initJeu(Joueur joueur1, Joueur joueur2) {
         this.plateau = new Plateau(NOMBRE_CASE_INI);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
         joueurs[1] = joueur2;
-        joueurActif = joueurs[0];
+        setJoueurActif(joueurs[0]);
 
         joueurs[0].setPlateau(plateau);
         joueurs[1].setPlateau(plateau);
@@ -217,6 +239,11 @@ public class Jeu implements Runnable, Constantes {
         enCoursDeDeplacement = false;
 
         animalSelectionnee = null;
+    }
+
+    public void activerVariante(boolean varCase, boolean varPiece){
+        varianteNombreDePieceActive = varPiece;
+        varianteCaseBannieActive = varCase;
     }
 
     public synchronized void start() {
@@ -253,11 +280,14 @@ public class Jeu implements Runnable, Constantes {
         }
         else if (pieceSelectionnee) {
             vueJeu.getDeplacer().setEnabled(true);
-            if (animalSelectionnee.getAbscisse() == 0 || animalSelectionnee.getOrdonnee() == 0 || animalSelectionnee.getAbscisse() == NOMBRE_CASE_INI-1 || animalSelectionnee.getOrdonnee() == NOMBRE_CASE_INI-1) vueJeu.getSortir().setEnabled(true);
+            if (animalSelectionnee.getAbscisse() == 0 || animalSelectionnee.getOrdonnee() == 0 ||
+                    animalSelectionnee.getAbscisse() == NOMBRE_CASE_INI-1 ||
+                    animalSelectionnee.getOrdonnee() == NOMBRE_CASE_INI-1) vueJeu.getSortir().setEnabled(true);
             vueJeu.getOrienter().setEnabled(true);
         }
         else if (!selectionnerOrientation) {
-            if (!joueurActif.restePiece()) vueJeu.getPoser().setEnabled(false);
+            if (!joueurActif.restePiece() || (varianteNombreDePieceActive && !joueurActif.restePieceDispo()))
+                vueJeu.getPoser().setEnabled(false);
             else vueJeu.getPoser().setEnabled(true);
             vueJeu.getDeplacer().setEnabled(false);
             vueJeu.getSortir().setEnabled(false);
@@ -300,5 +330,9 @@ public class Jeu implements Runnable, Constantes {
                         && animal.getOrdonnee() == uneCase.getOrdonnee();
         }
         return false;
+    }
+
+    public SoundsLibrary getSoundsLibrary() {
+        return soundsLibrary;
     }
 }

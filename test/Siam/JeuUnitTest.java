@@ -32,13 +32,15 @@ public class JeuUnitTest {
         Joueur[] joueurs = new Joueur[2];
         joueurs[0] = Mockito.mock(Joueur.class);
         joueurs[1] = Mockito.mock(Joueur.class);
-        jeu = new Jeu(joueurs[0], joueurs[1], false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(joueurs[0], joueurs[1], false, false, false, false, false, false, false, null, null, null, null,
+                new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertArrayEquals(joueurs, jeu.getJoueurs());
     }
 
     @Test
     public void testIsPieceSelectionnee() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertFalse(jeu.isPieceSelectionnee());
     }
 
@@ -50,7 +52,8 @@ public class JeuUnitTest {
 
     @Test
     public void testIsPlacerPiece() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertFalse(jeu.isPlacerPiece());
     }
 
@@ -62,7 +65,8 @@ public class JeuUnitTest {
 
     @Test
     public void testIsSortirPiece() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertFalse(jeu.isSortirPiece());
     }
 
@@ -74,7 +78,8 @@ public class JeuUnitTest {
 
     @Test
     public void testIsDeplacerPiece() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertFalse(jeu.isDeplacerPiece());
     }
 
@@ -86,7 +91,8 @@ public class JeuUnitTest {
 
     @Test
     public void testIsChangerOrientation() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertFalse(jeu.isChangerOrientation());
     }
 
@@ -98,7 +104,8 @@ public class JeuUnitTest {
 
     @Test
     public void testIsSelectionnerOrientation() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertFalse(jeu.isSelectionnerOrientation());
     }
 
@@ -110,7 +117,8 @@ public class JeuUnitTest {
 
     @Test
     public void testIsEnCoursDeDeplacement() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertFalse(jeu.isEnCoursDeDeplacement());
     }
 
@@ -124,7 +132,8 @@ public class JeuUnitTest {
     public void testGetJoueurActif() {
         Joueur joueur1 = Mockito.mock(Joueur.class);
         Joueur joueur2 = Mockito.mock(Joueur.class);
-        jeu = new Jeu(joueur1, joueur2, false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(joueur1, joueur2, false, false, false, false, false, false, false, null, null, null, null,
+                new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertSame(joueur1, jeu.getJoueurActif());
     }
 
@@ -138,7 +147,8 @@ public class JeuUnitTest {
     @Test
     public void testGetAnimalSelectionnee() {
         Animal animal = Mockito.mock(Animal.class);
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, animal, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, animal, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertSame(animal, jeu.getAnimalSelectionnee());
     }
 
@@ -153,7 +163,8 @@ public class JeuUnitTest {
     public void testChangerJoueursActif() {
         Joueur joueur1 = Mockito.mock(Joueur.class);
         Joueur joueur2 = Mockito.mock(Joueur.class);
-        jeu = new Jeu(joueur1, joueur2, false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(joueur1, joueur2, false, false, false, false, false, false, false, null, null, null, null,
+                new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertSame(joueur1, jeu.getJoueurActif());
         jeu.changerJoueurActif();
         Assert.assertSame(joueur2, jeu.getJoueurActif());
@@ -162,20 +173,23 @@ public class JeuUnitTest {
     @Test
     public void testGetFenetre() {
         JFrame fenetre = Mockito.mock(JFrame.class);
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, fenetre, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, fenetre, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertSame(fenetre, jeu.getFenetre());
     }
 
     @Test
     public void testGetVueJeu() {
         VueJeu vueJeu = Mockito.mock(VueJeu.class);
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, vueJeu, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, vueJeu, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertSame(vueJeu, jeu.getVueJeu());
     }
 
     @Test
     public void testGetTheme() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, Theme.STANDARD, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, Theme.STANDARD, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertEquals(Theme.STANDARD, jeu.getTheme());
     }
 
@@ -188,7 +202,8 @@ public class JeuUnitTest {
     @Test
     public void testSetMusique() {
         Musique musique = Mockito.mock(Musique.class);
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, musique, false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, musique, false,false,false, null);
         Assert.assertSame(musique, jeu.getMusique());
     }
 
@@ -201,7 +216,8 @@ public class JeuUnitTest {
 
     @Test
     public void testSetSon() {
-        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false, false, null, null, null, null, new Musique(Theme.STANDARD), false);
+        jeu = new Jeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS), false, false, false, false, false, false,
+                false, null, null, null, null, new Musique(Theme.STANDARD), false,false,false, null);
         Assert.assertFalse(jeu.isSon());
     }
 
