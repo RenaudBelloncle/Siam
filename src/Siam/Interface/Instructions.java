@@ -41,6 +41,7 @@ public class Instructions extends JFrame {
     }
 
     public void initInstructions() {
+        titre = new JLabel("Instructions");
         titrebut = new JLabel("<html><h1>But du jeu</h1></html>", SwingConstants.CENTER);
         but = new JLabel("<html><br>Après avoir choisi votre animal vous devez être " +
                 "le premier à sortir une région montagneuse (bloc de rochers)" +
@@ -108,7 +109,6 @@ public class Instructions extends JFrame {
                 "  Un animal expulsé hors du plateau n'est pas éliminé ; " +
                 "il est récupéré et peut être joué à tout moment.<br> " +
                 "    Pendant une poussée, aucun animal ne peut changer d'orientation.<br><br></html>");
-        titre = new JLabel("Instructions");
     }
 
     public void afficherInstructions(){

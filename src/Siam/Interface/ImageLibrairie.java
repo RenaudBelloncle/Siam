@@ -31,6 +31,10 @@ public class ImageLibrairie {
             imageCollection.get(Theme.STANDARD).put("FondElephant", image);
             image = ImageIO.read(getClass().getResource("/Standard/Images/StandardFondRhinoceros.jpeg"));
             imageCollection.get(Theme.STANDARD).put("FondRhinoceros", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Images/Elephant.png"));
+            imageCollection.get(Theme.STANDARD).put("ElephantExemple", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Images/Rhinoceros.png"));
+            imageCollection.get(Theme.STANDARD).put("RhinocerosExemple", image);
             // Sprites
             image = ImageIO.read(getClass().getResource("/Standard/Sprites/Case.png"));
             imageCollection.get(Theme.STANDARD).put("Case", image);
@@ -59,6 +63,10 @@ public class ImageLibrairie {
             imageCollection.get(Theme.NOEL).put("FondElephant", image);
             image = ImageIO.read(getClass().getResource("/Noel/Images/NoelFondRenne.jpg"));
             imageCollection.get(Theme.NOEL).put("FondRhinoceros", image);
+            image = ImageIO.read(getClass().getResource("/Noel/Images/Bonhomme.png"));
+            imageCollection.get(Theme.NOEL).put("ElephantExemple", image);
+            image = ImageIO.read(getClass().getResource("/Noel/Images/Renne.png"));
+            imageCollection.get(Theme.NOEL).put("RhinocerosExemple", image);
             // Sprites
             image = ImageIO.read(getClass().getResource("/Noel/Sprites/Case.png"));
             imageCollection.get(Theme. NOEL).put("Case", image);
