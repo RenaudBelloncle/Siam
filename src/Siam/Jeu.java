@@ -92,7 +92,9 @@ public class Jeu implements Runnable, Constantes {
         running = false;
     }
 
-    public Plateau getPlateau(){return plateau;}
+    public Plateau getPlateau() {
+        return plateau;
+    }
 
     public Joueur[] getJoueurs() {
         return joueurs;
