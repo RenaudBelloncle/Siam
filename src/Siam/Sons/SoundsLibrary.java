@@ -1,8 +1,9 @@
 package Siam.Sons;
 
 import Siam.Enum.Theme;
-import javafx.scene.media.AudioClip;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Random;
@@ -27,18 +28,18 @@ public class SoundsLibrary {
         AudioClip poserPiece = null;
         AudioClip pousserPiece = null;
         try {
-            boutton = new AudioClip("file:res/Standard/Bruitage/clique_boutton.wav");
+            boutton = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/clique_boutton.wav"));
 
-            elephant1 = new AudioClip("file:res/Standard/Bruitage/elephant1.mp3");
-            elephant2 = new AudioClip("file:res/Standard/Bruitage/elephant2.mp3");
-            elephant3 = new AudioClip("file:res/Standard/Bruitage/elephant3.mp3");
+            elephant1 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/elephant1.mp3"));
+            elephant2 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/elephant2.mp3"));
+            elephant3 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/elephant3.mp3"));
 
-            rinhoceros1 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros1.mp3");
-            rinhoceros2 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros2.mp3");
-            rinhoceros3 = new AudioClip("file:res/Standard/Bruitage/Rinhoceros3.mp3");
+            rinhoceros1 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/Rinhoceros1.mp3"));
+            rinhoceros2 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/Rinhoceros2.mp3"));
+            rinhoceros3 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/Rinhoceros3.mp3"));
 
-            poserPiece = new AudioClip("file:res/Standard/Bruitage/poserPiece.mp3");
-            pousserPiece = new AudioClip("file:res/Standard/Bruitage/pousserPiece.wav");
+            poserPiece = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/poserPiece.mp3"));
+            pousserPiece = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/pousserPiece.wav"));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
