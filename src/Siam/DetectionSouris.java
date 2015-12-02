@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Enum.Camp;
 import Siam.Interface.EcranVictoire;
 
 import javax.swing.event.MouseInputAdapter;
@@ -20,7 +21,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
         if (event.getY() < BORDURE_FENETRE/2 || event.getY() > (1+NOMBRE_CASE_INI)*TAILLE_SPRITE) return;
         int colonne = (event.getX() - BORDURE_FENETRE/2) / TAILLE_SPRITE;
         int ligne = (event.getY() - BORDURE_FENETRE/2) / TAILLE_SPRITE;
-        clicEffectue(colonne,ligne);
+        clicEffectue(colonne, ligne);
     }
 
     private void clicEffectue(int colonne, int ligne) {
@@ -34,6 +35,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             {
                 jeu.deselection();
                 jeu.setDeplacerPiece(false);
+                jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
             }
             else if(jeu.getJoueurActif().deplaceAnimalSurCaseVide(jeu.getAnimalSelectionnee(),
                     plateau.getCase(colonne, ligne)))
@@ -41,18 +43,26 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 jeu.setEnCoursDeDeplacement(true);
                 jeu.setSelectionnerOrientation(true);
                 jeu.setDeplacerPiece(false);
+                jeu.getSoundsLibrary().playMarcheSound(jeu.getTheme());
             }
             else {
                 if(jeu.testOrientationEntreAnimalEtCase(jeu.getAnimalSelectionnee(),
                         plateau.getCase(colonne, ligne))) {
                     TokenResultatPoussee ret = jeu.getJoueurActif().deplaceAnimalEnPoussant(jeu.getAnimalSelectionnee());
                     if(ret.isPousseeEffectue()){
+                        jeu.getSoundsLibrary().playPousseeSound(jeu.getTheme());
                         if(ret.getCampGagnant() != null) {
+                            new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(),
+                                    jeu.getSoundsLibrary());
                             jeu.getVueJeu().getMenuBar().removeAll();
-                            new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon());
+                            new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
                             return;
                         }
                         jeu.changerJoueurActif();
+                    }
+                    else
+                    {
+                        jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
                     }
                 }
                 jeu.deselection();
@@ -61,6 +71,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
         }
         if (jeu.isPlacerPiece()) {
             if (!jeu.getJoueurActif().restePiece()) {
+                jeu.getSoundsLibrary().playPoserPieceSound(jeu.getTheme());
                 jeu.deselection();
                 return;
             }
@@ -69,8 +80,10 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                         jeu.varianteCaseBannieActive());
                 if (animal == null) {
                     jeu.setPlacerPiece(false);
+                    jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
                     return;
                 }
+                jeu.getSoundsLibrary().playPoserPieceSound(jeu.getTheme());
                 animal.setSelectionnee(true);
                 jeu.setAnimalSelectionnee(animal);
                 jeu.setPlacerPiece(false);
@@ -80,6 +93,12 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             if (plateau.getCase(colonne, ligne) instanceof Animal) {
                 if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == jeu.getJoueurActif().getCamp()) {
                     Animal animal = (Animal)plateau.getCase(colonne, ligne);
+                    if(animal.getCamp() == Camp.ELEPHANT){
+                        jeu.getSoundsLibrary().playElephantSound(jeu.getTheme());
+                    }
+                    else{
+                        jeu.getSoundsLibrary().playRinhocerosSound(jeu.getTheme());
+                    }
                     animal.setSelectionnee(true);
                     jeu.setPieceSelectionnee(true);
                     jeu.setAnimalSelectionnee(animal);

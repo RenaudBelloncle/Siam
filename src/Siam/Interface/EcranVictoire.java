@@ -6,6 +6,7 @@ import Siam.Enum.Theme;
 import Siam.Jeu;
 import Siam.Joueur;
 import Siam.Sons.Musique;
+import Siam.Sons.SoundsLibrary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,14 +28,16 @@ public class EcranVictoire implements ActionListener, Constantes {
     private Theme theme;
     private Musique musique;
     private boolean son;
+    private SoundsLibrary soundsLibrary;
 
-    public EcranVictoire(Jeu jeu, JFrame fenetre, Camp campGagnant, Theme theme, Musique musique, boolean son){
+    public EcranVictoire(Jeu jeu, JFrame fenetre, Camp campGagnant, Theme theme, Musique musique, boolean son, SoundsLibrary soundsLibrary){
         this.jeu = jeu;
         this.fenetre = fenetre;
         this.campGagnant = campGagnant;
         this.theme = theme;
         this.musique = musique;
         this.son = son;
+        this.soundsLibrary = soundsLibrary;
 
         initEcranVictoire();
         afficheEcranVictoire();
@@ -159,7 +162,7 @@ public class EcranVictoire implements ActionListener, Constantes {
             jeu.start();
         }
         if (source == retourMenu) {
-            new Menu(jeu, fenetre, theme, musique, son);
+            new Menu(jeu, fenetre, theme, musique, son, soundsLibrary);
         }
     }
 }
