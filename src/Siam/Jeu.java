@@ -288,7 +288,7 @@ public class Jeu implements Runnable, Constantes {
             vueJeu.getOrienter().setEnabled(false);
             vueJeu.getPoser().setEnabled(false);
         }
-        else if (pieceSelectionnee) {
+        else if (pieceSelectionnee && animalSelectionnee != null) {
             vueJeu.getDeplacer().setEnabled(true);
             if (animalSelectionnee.getAbscisse() == 0 || animalSelectionnee.getOrdonnee() == 0 ||
                     animalSelectionnee.getAbscisse() == NOMBRE_CASE_INI-1 ||

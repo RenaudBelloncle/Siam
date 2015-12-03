@@ -1,9 +1,9 @@
 package Siam.Sons;
 
+import Siam.Enum.Camp;
 import Siam.Enum.Theme;
+import javafx.scene.media.AudioClip;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Random;
@@ -16,7 +16,9 @@ public class SoundsLibrary {
 
     public SoundsLibrary (){
         AudioClip boutton = null;
+        AudioClip erreur = null;
 
+        // STANDARD
         AudioClip elephant1 = null;
         AudioClip elephant2 = null;
         AudioClip elephant3 = null;
@@ -25,29 +27,88 @@ public class SoundsLibrary {
         AudioClip rinhoceros2 = null;
         AudioClip rinhoceros3 = null;
 
-        AudioClip poserPiece = null;
-        AudioClip pousserPiece = null;
+        AudioClip poserPieceStandard = null;
+        AudioClip sortieStandard = null;
+
+        AudioClip marcheStandard = null;
+        AudioClip pousserPieceStandard = null;
+        AudioClip orienterStandard = null;
+
+        // NOEL
+        AudioClip bonhomme1 = null;
+        AudioClip bonhomme2 = null;
+        AudioClip bonhomme3 = null;
+
+        AudioClip renne1 = null;
+        AudioClip renne2 = null;
+        AudioClip renne3 = null;
+
+        AudioClip apparitionNoel = null;
+        AudioClip sortieNoel = null;
+
+        AudioClip deplacementRenne = null;
+        AudioClip deplacementBonhomme = null;
+        AudioClip pousseeNoel = null;
+        AudioClip orientationNoel = null;
+
         try {
-            boutton = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/clique_boutton.wav"));
 
-            elephant1 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/elephant1.mp3"));
-            elephant2 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/elephant2.mp3"));
-            elephant3 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/elephant3.mp3"));
+            //STANDARD
+            String standardPath = "file:res/Standard/Bruitage/";
 
-            rinhoceros1 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/Rinhoceros1.mp3"));
-            rinhoceros2 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/Rinhoceros2.mp3"));
-            rinhoceros3 = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/Rinhoceros3.mp3"));
+            boutton = new AudioClip(standardPath + "clique_boutton.wav");
+            erreur = new AudioClip(standardPath + "erreur.wav");
 
-            poserPiece = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/poserPiece.mp3"));
-            pousserPiece = Applet.newAudioClip(new URL("file:res/Standard/Bruitage/pousserPiece.wav"));
+            elephant1 = new AudioClip(standardPath + "elephant1.mp3");
+            elephant1.setVolume(0.25);
+            elephant2 = new AudioClip(standardPath +  "elephant2.mp3");
+            elephant2.setVolume(0.1);
+            elephant3 = new AudioClip(standardPath + "elephant3.mp3");
+            elephant3.setVolume(0.25);
+
+            rinhoceros1 = new AudioClip(standardPath + "Rinhoceros1.mp3");
+            rinhoceros2 = new AudioClip(standardPath + "Rinhoceros2.mp3");
+            rinhoceros3 = new AudioClip(standardPath + "Rinhoceros3.mp3");
+
+            poserPieceStandard = new AudioClip(standardPath + "poserPiece.mp3");
+            sortieStandard = new AudioClip(standardPath + "sortie_cartoon.wav");
+
+            marcheStandard = new AudioClip(standardPath + "marche_standard.wav");
+            pousserPieceStandard = new AudioClip(standardPath + "nouvelle_poussee_standard.wav");
+            orienterStandard = new AudioClip(standardPath + "orienter_standard.wav");
+
+            //NOEL
+            String noelPath = "file:res/Noel/Bruitage/";
+
+            bonhomme1 = new AudioClip(noelPath + "hohoho_1.wav");
+            bonhomme2 = new AudioClip(noelPath + "hohoho_2.wav");
+            bonhomme3 = new AudioClip(noelPath + "hohoho_3.wav");
+
+            renne1 = new AudioClip(noelPath + "gremlin_rire_1.wav");
+            renne2 = new AudioClip(noelPath + "gremlin_2.wav");
+            renne3 = new AudioClip(noelPath + "hahaha_jouet.wav");
+
+            apparitionNoel = new AudioClip(noelPath + "apparition_noel.mp3");
+            sortieNoel = new AudioClip(noelPath + "sortir_piece_noel_clochette.wav");
+            sortieNoel.setVolume(0.45);
+
+            deplacementRenne = new AudioClip(noelPath + "deplacement_renne_raccourci.wav");
+            deplacementBonhomme = new AudioClip(noelPath + "deplacement_bonhomme_raccourci.wav");
+            pousseeNoel = new AudioClip(noelPath + "poussee_craquement_noel.wav");
+            orientationNoel = new AudioClip(noelPath + "orientation_noel.wav");
+            orientationNoel.setVolume(0.3);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        //TODO ajouter les sons manquants
+        //TODO jp : ajouter les sons manquants
+        // pour le theme standard : orientation, boutton
+        // pour le theme noel : 3 sons rennes, boutton
+        //STANDARD
         soundLibraryStandart = new HashMap<>();
         soundLibraryStandart.put("boutton", boutton);
+        soundLibraryStandart.put("erreur", erreur);
 
         soundLibraryStandart.put("elephant1", elephant1);
         soundLibraryStandart.put("elephant2", elephant2);
@@ -57,8 +118,33 @@ public class SoundsLibrary {
         soundLibraryStandart.put("rinhoceros2", rinhoceros2);
         soundLibraryStandart.put("rinhoceros3", rinhoceros3);
 
-        soundLibraryStandart.put("poserPiece", poserPiece);
-        soundLibraryStandart.put("pousserPiece", pousserPiece);
+        soundLibraryStandart.put("poserPiece", poserPieceStandard);
+        soundLibraryStandart.put("sortirPiece", sortieStandard);
+
+        soundLibraryStandart.put("deplacerPieceElephant", marcheStandard);
+        soundLibraryStandart.put("deplacerPieceRinhoceros", marcheStandard);
+        soundLibraryStandart.put("pousserPiece", pousserPieceStandard);
+        soundLibraryStandart.put("orienterPiece", orienterStandard);
+
+        // NOEL
+        soundLibraryNoel = new HashMap<>();
+        soundLibraryNoel.put("erreur", erreur);
+
+        soundLibraryNoel.put("elephant1", bonhomme1);
+        soundLibraryNoel.put("elephant2", bonhomme2);
+        soundLibraryNoel.put("elephant3", bonhomme3);
+
+        soundLibraryNoel.put("rinhoceros1", renne1);
+        soundLibraryNoel.put("rinhoceros2", renne2);
+        soundLibraryNoel.put("rinhoceros3", renne3);
+
+        soundLibraryNoel.put("poserPiece", apparitionNoel);
+        soundLibraryNoel.put("sortirPiece", sortieNoel);
+
+        soundLibraryNoel.put("deplacerPieceElephant", deplacementBonhomme);
+        soundLibraryNoel.put("deplacerPieceRinhoceros", deplacementRenne);
+        soundLibraryNoel.put("pousserPiece", pousseeNoel);
+        soundLibraryNoel.put("orienterPiece", orientationNoel);
     }
 
     private void playAudio(String name, Theme theme){
@@ -66,14 +152,18 @@ public class SoundsLibrary {
             case STANDARD:
             {
                 AudioClip sample = soundLibraryStandart.get(name);
-                sample.play();
+                if(sample != null){
+                    sample.play();
+                }
                 break;
             }
 
             case NOEL:
             {
-                //AudioClip sample = soundLibraryNoel.get(name);
-                //sample.play();
+                AudioClip sample = soundLibraryNoel.get(name);
+                if(sample != null){
+                    sample.play();
+                }
                 break;
             }
         }
@@ -112,46 +202,52 @@ public class SoundsLibrary {
                 break;
         }
         playAudio(name, theme);
-        System.out.println("son rinhoceros " + rand);
+        //System.out.println("son rinhoceros " + rand);
     }
 
     public void playBouttonSound(Theme theme){
         playAudio("boutton", theme);
-        System.out.println("son boutton");
+        //System.out.println("son boutton");
     }
 
     public void playControlSound(Theme theme){
         playAudio("boutton", theme);
-        System.out.println("son controle");
+        //System.out.println("son controle");
     }
 
-    public void playPousseeSound(Theme theme){
+    public void playPousseeSound(Theme theme) {
         playAudio("pousserPiece", theme);
-        System.out.println("son poussee");
+        //System.out.println("son poussee");
     }
 
-    public void playMarcheSound(Theme theme){
-        //playAudio("boutton", theme);
-        System.out.println("son marche");
+    public void playMarcheSound(Theme theme, Camp camp){
+        switch (camp){
+            case ELEPHANT:
+                playAudio("deplacerPieceElephant", theme);
+                break;
+            case RHINOCEROS:
+                playAudio("deplacerPieceRinhoceros", theme);
+                break;
+        }
     }
 
     public void playOrientationSound(Theme theme){
-        //playAudio("boutton", theme);
-        System.out.println("son orientation");
+        playAudio("orienterPiece", theme);
+        //System.out.println("son orientation");
     }
 
-    public void playPoserPieceSound(Theme theme){
+    public void playPoserPieceSound(Theme theme) {
         playAudio("poserPiece", theme);
-        System.out.println("son poser piece");
+        //System.out.println("son poser piece");
     }
 
     public void playErrorActionSound(Theme theme){
-        //playAudio("boutton", theme);
-        System.out.println("son erreur");
+        playAudio("erreur", theme);
+        //System.out.println("son erreur");
     }
 
     public void playSortieSound(Theme theme){
-        //playAudio("boutton", theme);
+        playAudio("sortirPiece", theme);
         System.out.println("son sortie");
     }
 }
