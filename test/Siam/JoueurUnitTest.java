@@ -12,7 +12,7 @@ public class JoueurUnitTest {
 
     @Before
     public void setUp() {
-        joueur = new Joueur(Camp.ELEPHANT);
+        joueur = new Joueur(Camp.ELEPHANT, "");
     }
 
     @Test
@@ -107,7 +107,7 @@ public class JoueurUnitTest {
         //TODO Test Manquant - JP
     }
 
-    // Tests pour variante du nombre de pièce
+    // Tests pour variante du nombre de piï¿½ce
     @Test
     public void testPiecePose(){
         Assert.assertEquals(joueur.getPieceRestantAPlacer(), 6);

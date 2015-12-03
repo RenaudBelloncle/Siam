@@ -32,6 +32,7 @@ public class Jeu implements Runnable, Constantes {
     private boolean enCoursDeDeplacement;
 
     private Joueur joueurActif;
+    private String pseudoJoueurActif;
     private Animal animalSelectionnee;
 
     private Thread thread;
@@ -40,7 +41,7 @@ public class Jeu implements Runnable, Constantes {
     private boolean varianteCaseBannieActive;
 
     public Jeu() {
-        this(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS),
+        this(new Joueur(Camp.ELEPHANT, ""), new Joueur(Camp.RHINOCEROS, ""),
                 false, false, false, false, false, false, false, null, new JFrame(), null, Theme.STANDARD,
                 new Musique(Theme.STANDARD), true, false, false, new SoundsLibrary());
 
@@ -164,6 +165,15 @@ public class Jeu implements Runnable, Constantes {
         joueurActif = joueur;
     }
 
+    public String getPseudoJoueur(Camp camp) {
+
+        Joueur[] joueurs;
+        joueurs = getJoueurs();
+        if (joueurs[0].getCamp() == camp) { return joueurs[0].getPseudo(); }
+        else { return joueurs[1].getPseudo(); }
+
+    }
+
     public Animal getAnimalSelectionnee() {
         return animalSelectionnee;
     }
@@ -249,7 +259,7 @@ public class Jeu implements Runnable, Constantes {
     public synchronized void start() {
         running = true;
         thread = new Thread(this, "Affichage");
-
+        pseudoJoueurActif = getPseudoJoueur(joueurActif.getCamp());
         vueJeu = new VueJeu(this, fenetre, souris);
         thread.start();
     }
