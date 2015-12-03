@@ -105,6 +105,12 @@ public class JoueurUnitTest {
     @Test
     public void testDeplaceAnimalEnPoussant(){
         //TODO Test Manquant - JP
+        Animal animal = Mockito.mock(Animal.class);
+        Plateau plateau = Mockito.mock(Plateau.class);
+        //creer situation qui pousse
+
+
+        //creer situation ou la charge est trop importante pour la poussee
     }
 
     // Tests pour variante du nombre de pi�ce

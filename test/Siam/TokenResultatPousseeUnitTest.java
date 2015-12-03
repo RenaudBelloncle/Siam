@@ -1,6 +1,7 @@
 package Siam;
 
 import Siam.Enum.Camp;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,11 +16,11 @@ public class TokenResultatPousseeUnitTest {
 
     @Test
     public void testIsPousseeEffectue() {
-        //TODO Test Manquant - JP
+        Assert.assertEquals(true, tokenResultatPoussee.isPousseeEffectue());
     }
 
     @Test
     public void testGetCampGagnant() {
-        //TODO Test Manquant - JP
+        Assert.assertEquals(Camp.ELEPHANT, tokenResultatPoussee.getCampGagnant());
     }
 }

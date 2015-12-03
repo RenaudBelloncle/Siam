@@ -43,7 +43,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 jeu.setEnCoursDeDeplacement(true);
                 jeu.setSelectionnerOrientation(true);
                 jeu.setDeplacerPiece(false);
-                jeu.getSoundsLibrary().playMarcheSound(jeu.getTheme());
+                jeu.getSoundsLibrary().playMarcheSound(jeu.getTheme(), jeu.getJoueurActif().getCamp());
             }
             else {
                 if(jeu.testOrientationEntreAnimalEtCase(jeu.getAnimalSelectionnee(),
