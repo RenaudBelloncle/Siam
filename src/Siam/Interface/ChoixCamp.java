@@ -23,6 +23,8 @@ public class ChoixCamp implements ActionListener, Constantes {
     private JLabel titreCB;
     private JLabel elephant;
     private JLabel rhinoceros;
+    private JTextField entrerPseudoElephant;
+    private JTextField entrerPseudoRhinoceros;
     private JButton spriteElephant;
     private JButton spriteRhinoceros;
     private JCheckBox JCBvarianteCase;
@@ -61,10 +63,16 @@ public class ChoixCamp implements ActionListener, Constantes {
         if (theme == Theme.STANDARD) {
             elephant = new JLabel("Elephants");
             rhinoceros = new JLabel("Rhinoceros");
+            entrerPseudoElephant = new JTextField("Elephant");
+            entrerPseudoRhinoceros = new JTextField("Rhinoceros");
         } else if (theme == Theme.NOEL) {
             elephant = new JLabel("Bonhommes");
             rhinoceros = new JLabel("Rennes");
+            entrerPseudoElephant = new JTextField("Bonhommes");
+            entrerPseudoRhinoceros = new JTextField("Rennes");
         }
+        entrerPseudoElephant.setPreferredSize(new Dimension(300,40));
+        entrerPseudoRhinoceros.setPreferredSize(new Dimension(300,40));
         spriteElephant = new JButton(new ImageIcon(ImageLibrairie.imageLibrairie.getImage(theme,"ElephantExemple")));
         spriteRhinoceros = new JButton(new ImageIcon(ImageLibrairie.imageLibrairie.getImage(theme,"RhinocerosExemple")));
         valider = new JButton("Valider");
@@ -77,7 +85,9 @@ public class ChoixCamp implements ActionListener, Constantes {
         JPanel panPrincipal = new JPanel();
         JPanel panTitre = new JPanel();
         JPanel panElephant = new JPanel();
+        JPanel pantextElephant = new JPanel();
         JPanel panRhinoceros = new JPanel();
+        JPanel pantextRhinoceros = new JPanel();
         JPanel panValiderBouton = new JPanel();
         JPanel panVariante = new JPanel();
         JPanel panVariante1 = new JPanel();
@@ -86,7 +96,9 @@ public class ChoixCamp implements ActionListener, Constantes {
         panPrincipal.setOpaque(false);
         panTitre.setOpaque(false);
         panElephant.setOpaque(false);
+        pantextElephant.setOpaque(false);
         panRhinoceros.setOpaque(false);
+        pantextRhinoceros.setOpaque(false);
         panValiderBouton.setOpaque(false);
         panVariante.setOpaque(false);
         panVariante1.setOpaque(false);
@@ -105,8 +117,12 @@ public class ChoixCamp implements ActionListener, Constantes {
 
         panTitre.add(titreCB);
         panElephant.add(elephant);
+        pantextElephant.add(entrerPseudoElephant);
+        panElephant.add(pantextElephant);
         panElephant.add(spriteElephant);
         panRhinoceros.add(rhinoceros);
+        pantextRhinoceros.add(entrerPseudoRhinoceros);
+        panRhinoceros.add(pantextRhinoceros);
         panRhinoceros.add(spriteRhinoceros);
         panVariante1.add(JCBvariantePiece);
         panVariante2.add(JCBvarianteCase);
@@ -166,7 +182,7 @@ public class ChoixCamp implements ActionListener, Constantes {
             jeu.setMusique(musique);
             jeu.setSon(son);
             jeu.activerVariante(JCBvarianteCase.isSelected(),JCBvariantePiece.isSelected());
-            jeu.initJeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
+            jeu.initJeu(new Joueur(Camp.ELEPHANT,entrerPseudoElephant.getText()), new Joueur(Camp.RHINOCEROS,entrerPseudoRhinoceros.getText()));
             jeu.start();
         }
         else if (source == annuler){
