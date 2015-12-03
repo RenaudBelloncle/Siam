@@ -16,6 +16,7 @@ public class VueJeu implements ActionListener, Constantes {
     private Jeu jeu;
     private JFrame fenetre;
     private OutilsFont outilsFont;
+    private String pseudoJoueurActif;
 
     private DetectionSouris souris;
 
@@ -43,6 +44,8 @@ public class VueJeu implements ActionListener, Constantes {
         this.souris = souris;
 
         outilsFont = new OutilsFont();
+
+        pseudoJoueurActif = jeu.getJoueurActif().getPseudo();
 
         initVueJeu();
         affichageVueJeu();
@@ -210,10 +213,14 @@ public class VueJeu implements ActionListener, Constantes {
                 jeu.setPlacerPiece(true);
         }
         if (source == sortir && jeu.isPieceSelectionnee()) {
-            if (jeu.getAnimalSelectionnee().getAbscisse() == 0 || jeu.getAnimalSelectionnee().getAbscisse() == 4 || jeu.getAnimalSelectionnee().getOrdonnee() == 0 || jeu.getAnimalSelectionnee().getOrdonnee() == 4) {
+            if (jeu.getAnimalSelectionnee().getAbscisse() == 0 ||
+                    jeu.getAnimalSelectionnee().getAbscisse() == 4 ||
+                    jeu.getAnimalSelectionnee().getOrdonnee() == 0 ||
+                    jeu.getAnimalSelectionnee().getOrdonnee() == 4) {
                 jeu.getSoundsLibrary().playSortieSound(jeu.getTheme());
                 jeu.setSortirPiece(true);
-                jeu.getJoueurActif().sortirPiece(jeu.getAnimalSelectionnee().getAbscisse(), jeu.getAnimalSelectionnee().getOrdonnee());
+                jeu.getJoueurActif().sortirPiece(jeu.getAnimalSelectionnee().getAbscisse(),
+                        jeu.getAnimalSelectionnee().getOrdonnee());
                 jeu.changerJoueurActif();
             } else {
                 jeu.getAnimalSelectionnee().setSelectionnee(false);

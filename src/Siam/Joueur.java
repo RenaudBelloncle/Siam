@@ -15,18 +15,22 @@ public class Joueur implements Constantes{
     private Plateau plateau;
     private Camp camp;
     private int pieceSurPlateau;
-    private int pieceRestantAPlacer, nombreTour;
+    private int pieceRestantAPlacer;
+    private int nombreTour;
+    private String pseudo;
 
-    public Joueur(Camp camp){
+
+    public Joueur(Camp camp, String pseudo){
         pieceRestantAPlacer = NOMBRE_DE_PIECE_POSEE_MAX_VARIANTE;
         animals = new ArrayList<>();
         this.camp = camp;
+        this.pseudo = pseudo;
         pieceSurPlateau = 0;
         nombreTour = 0;
     }
 
     public Joueur(Plateau plateau) {
-        this(Camp.ELEPHANT);
+        this(Camp.ELEPHANT, "");
         this.plateau = plateau;
     }
 
@@ -44,6 +48,10 @@ public class Joueur implements Constantes{
 
     public void setCamp(Camp camp) {
         this.camp = camp;
+    }
+
+    public String getPseudo() {
+        return pseudo;
     }
 
     public Animal posePiece(int colonne, int ligne,boolean varianteNombrePieceActive,boolean varianteCaseBannieActive) {
