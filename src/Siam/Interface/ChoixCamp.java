@@ -160,8 +160,8 @@ public class ChoixCamp implements ActionListener, Constantes {
             outilsFont.changerFontButton(annuler, 80, Color.red, outilsFont.getNoelFontTexte());
             outilsFont.changerFontJLabel(elephant, 80, Color.red, outilsFont.getNoelFontTexte());
             outilsFont.changerFontJLabel(rhinoceros, 80, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvarianteCase, 80, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvariantePiece,80,Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJCheckBox(JCBvarianteCase, 70, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJCheckBox(JCBvariantePiece,70,Color.red, outilsFont.getNoelFontTexte());
         }
         outilsFont.changerFontButton(spriteElephant, 0, Color.black, outilsFont.getStandardFontTexte());
         outilsFont.changerFontButton(spriteRhinoceros, 0, Color.black, outilsFont.getStandardFontTexte());
