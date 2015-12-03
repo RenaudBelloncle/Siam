@@ -14,6 +14,7 @@ public class Instructions extends JFrame {
     private JLabel commentjouer;
     private JLabel intro;
     private JLabel titrebut;
+    private JLabel variante;
     private JLabel but;
     private JLabel tpart1;
     private JLabel part1;
@@ -25,6 +26,10 @@ public class Instructions extends JFrame {
     private JLabel part4;
     private JLabel tpart5;
     private JLabel part5;
+    private JLabel tpart6;
+    private JLabel part6;
+    private JLabel tpart7;
+    private JLabel part7;
     private JLabel titre;
 
     public Instructions(Theme theme){
@@ -47,6 +52,7 @@ public class Instructions extends JFrame {
                 "le premier à sortir une région montagneuse (bloc de rochers)" +
                 " à l'extérieur du plateau.<br><br></html>");
         commentjouer = new JLabel("<html><h1>Comment jouer</h1></html>", SwingConstants.CENTER);
+        variante = new JLabel("<html><h1>Variantes de jeu</h1></html>", SwingConstants.CENTER);
         intro = new JLabel("<html><br>Chaque joueur choisit son animal." +
                 " Les joueurs joueront à tour de rôle. " +
                 "Au début du jeu les animaux sont disposés à l'extérieur du plateau " +
@@ -64,6 +70,9 @@ public class Instructions extends JFrame {
         tpart3 = new JLabel("<html><h3>Changer l'orientation</h3></html>", SwingConstants.CENTER);
         tpart4 = new JLabel("<html><h3>Sortir une pièce</h3></html>", SwingConstants.CENTER);
         tpart5 = new JLabel("<html><h3>Se déplacer en poussant</h3></html>", SwingConstants.CENTER);
+        tpart6 = new JLabel("<html><h3>Cases bannies</h3></html>", SwingConstants.CENTER);
+        tpart7 = new JLabel("<html><h3>Nombre de pièces limité</h3></html>", SwingConstants.CENTER);
+
 
         part1 = new JLabel("<html><br> Vous devez entrer un de vos animaux par l'une des cases " +
                 "extérieures. " +
@@ -109,13 +118,18 @@ public class Instructions extends JFrame {
                 "  Un animal expulsé hors du plateau n'est pas éliminé ; " +
                 "il est récupéré et peut être joué à tout moment.<br> " +
                 "    Pendant une poussée, aucun animal ne peut changer d'orientation.<br><br></html>");
+        part6 = new JLabel("<html><br>Lors des deux premiers tours de jeu" +
+                " les deux joueurs n'auront pas le droit de poser de pièce" +
+                " sur les cases du milieu de la ligne du haut et du bas.<br><br></html> ");
+        part7 = new JLabel("<html><br>Les joueurs ne pourront poser que six pièces" +
+                " lors de la partie.<br><br></html> ");
     }
 
     public void afficherInstructions(){
         JPanel panPrincipal = new JPanel();
         JPanel panTitre = new JPanel();
 
-        JTextArea panRegle = new JTextArea(88, 1);
+        JTextArea panRegle = new JTextArea(95, 1);
         panRegle.setColumns(1);
         panRegle.setLineWrap(true);
         panRegle.setWrapStyleWord(true);
@@ -137,6 +151,11 @@ public class Instructions extends JFrame {
         panRegle.add(part4);
         panRegle.add(tpart5);
         panRegle.add(part5);
+        panRegle.add(variante);
+        panRegle.add(tpart6);
+        panRegle.add(part6);
+        panRegle.add(tpart7);
+        panRegle.add(part7);
         panTitre.add(titre);
 
         panRegle.setOpaque(false);
