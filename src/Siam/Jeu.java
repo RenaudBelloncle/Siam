@@ -186,6 +186,7 @@ public class Jeu implements Runnable, Constantes {
         joueurActif.finDeTour();
         if (joueurActif == joueurs[0]) joueurActif = joueurs[1];
         else joueurActif = joueurs[0];
+        vueJeu.changerJoueurActif();
     }
 
     public JFrame getFenetre(){
