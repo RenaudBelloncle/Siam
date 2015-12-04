@@ -20,6 +20,7 @@ public class EcranVictoire implements ActionListener, Constantes {
     private JFrame fenetre;
     private OutilsFont outilsFont;
     private Camp campGagnant;
+    private String pseudoCampGagnant;
 
     private JButton continuer;
     private JButton retourMenu;
@@ -39,6 +40,8 @@ public class EcranVictoire implements ActionListener, Constantes {
         this.son = son;
         this.soundsLibrary = soundsLibrary;
 
+        pseudoCampGagnant = jeu.getPseudoJoueur(campGagnant);
+
         initEcranVictoire();
         afficheEcranVictoire();
         setControlEcranVictoire(this);
@@ -52,14 +55,7 @@ public class EcranVictoire implements ActionListener, Constantes {
     }
 
     public void initEcranVictoire(){
-        StringBuilder str = new StringBuilder("Victoire des ");
-        if (theme == Theme.STANDARD) {
-            if (campGagnant == Camp.ELEPHANT) str.append("Elephants");
-            else str.append("Rhinoceros");
-        } else if (theme == Theme.NOEL) {
-            if (campGagnant == Camp.ELEPHANT) str.append("Bonhommes");
-            else str.append("Rennes");
-        }
+        StringBuilder str = new StringBuilder("Victoire de " + pseudoCampGagnant);
         gagnant = new JLabel(String.valueOf(str));
         outilsFont = new OutilsFont();
         continuer = new JButton("Continuer");
@@ -158,7 +154,7 @@ public class EcranVictoire implements ActionListener, Constantes {
             jeu.setTheme(theme);
             jeu.setMusique(musique);
             jeu.setSon(son);
-            jeu.initJeu(new Joueur(Camp.ELEPHANT), new Joueur(Camp.RHINOCEROS));
+            jeu.initJeu(new Joueur(Camp.ELEPHANT, jeu.getPseudoJoueur(Camp.RHINOCEROS)), new Joueur(Camp.RHINOCEROS, jeu.getPseudoJoueur(Camp.ELEPHANT)));
             jeu.start();
         }
         if (source == retourMenu) {
