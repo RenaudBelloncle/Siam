@@ -185,15 +185,15 @@ public class VueJeu implements ActionListener, Constantes {
             outilsFont.changerFontButton(flecheGauche, 30, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontButton(flecheDroite, 30, Color.orange, outilsFont.getStandardFontTexte());
         } else if (jeu.getTheme() == Theme.NOEL) {
-            outilsFont.changerFontJLabel(joueurActif, 30, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(poser, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(deplacer, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(sortir, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(orienter, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(flecheHaut, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(flecheBas, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(flecheGauche, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(flecheDroite, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJLabel(joueurActif, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(poser, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(deplacer, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(sortir, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(orienter, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheHaut, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheBas, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheGauche, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheDroite, 30, Color.red, outilsFont.getStandardFontTexte());
         }
     }
 
