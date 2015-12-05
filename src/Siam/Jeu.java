@@ -2,11 +2,12 @@ package Siam;
 
 import Siam.Enum.Camp;
 import Siam.Enum.Theme;
-import Siam.Interface.*;
+import Siam.Interface.VueJeu;
 import Siam.Sons.Musique;
 import Siam.Sons.SoundsLibrary;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Jeu implements Runnable, Constantes {
 
@@ -315,7 +316,24 @@ public class Jeu implements Runnable, Constantes {
             vueJeu.getFlecheDroite().setEnabled(true);
             vueJeu.getFlecheGauche().setEnabled(true);
         }
-
+        if (placerPiece) {
+            vueJeu.getPoser().setForeground(Color.BLUE);
+        } else {
+            if (theme == Theme.STANDARD) vueJeu.getPoser().setForeground(Color.ORANGE);
+            else if (theme == Theme.NOEL) vueJeu.getPoser().setForeground(Color.RED);
+        }
+        if (deplacerPiece) {
+            vueJeu.getDeplacer().setForeground(Color.BLUE);
+        } else {
+            if (theme == Theme.STANDARD) vueJeu.getDeplacer().setForeground(Color.ORANGE);
+            else if (theme == Theme.NOEL) vueJeu.getDeplacer().setForeground(Color.RED);
+        }
+        if (changerOrientation) {
+            vueJeu.getOrienter().setForeground(Color.BLUE);
+        } else {
+            if (theme == Theme.STANDARD) vueJeu.getOrienter().setForeground(Color.ORANGE);
+            else if (theme == Theme.NOEL) vueJeu.getOrienter().setForeground(Color.RED);
+        }
     }
 
     public void deselection(){
