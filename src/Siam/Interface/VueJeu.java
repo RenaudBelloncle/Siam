@@ -246,8 +246,11 @@ public class VueJeu implements ActionListener, Constantes {
         }
         if (source == deplacer && jeu.isPieceSelectionnee()) {
             jeu.setDeplacerPiece(true);
+            jeu.setChangerOrientation(false);
+            jeu.setSelectionnerOrientation(false);
         }
         if (source == orienter && jeu.isPieceSelectionnee()) {
+            jeu.setDeplacerPiece(false);
             jeu.setChangerOrientation(true);
             jeu.setSelectionnerOrientation(true);
         }

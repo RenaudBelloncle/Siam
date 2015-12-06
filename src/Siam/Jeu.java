@@ -292,13 +292,16 @@ public class Jeu implements Runnable, Constantes {
         }
         else if (pieceSelectionnee && animalSelectionnee != null) {
             vueJeu.getDeplacer().setEnabled(true);
-            if (animalSelectionnee.getAbscisse() == 0 || animalSelectionnee.getOrdonnee() == 0 ||
+            if (animalSelectionnee.getAbscisse() == 0 ||
+                    animalSelectionnee.getOrdonnee() == 0 ||
                     animalSelectionnee.getAbscisse() == NOMBRE_CASE_INI-1 ||
-                    animalSelectionnee.getOrdonnee() == NOMBRE_CASE_INI-1) vueJeu.getSortir().setEnabled(true);
+                    animalSelectionnee.getOrdonnee() == NOMBRE_CASE_INI-1)
+                vueJeu.getSortir().setEnabled(true);
             vueJeu.getOrienter().setEnabled(true);
         }
         else if (!selectionnerOrientation) {
-            if (!joueurActif.restePiece() || (varianteNombreDePieceActive && !joueurActif.restePieceDispo()))
+            if (!joueurActif.restePiece() || (varianteNombreDePieceActive &&
+                    !joueurActif.restePieceDispo()))
                 vueJeu.getPoser().setEnabled(false);
             else vueJeu.getPoser().setEnabled(true);
             vueJeu.getDeplacer().setEnabled(false);
@@ -319,20 +322,26 @@ public class Jeu implements Runnable, Constantes {
         if (placerPiece) {
             vueJeu.getPoser().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD) vueJeu.getPoser().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL) vueJeu.getPoser().setForeground(Color.RED);
+            if (theme == Theme.STANDARD)
+                vueJeu.getPoser().setForeground(Color.ORANGE);
+            else if (theme == Theme.NOEL)
+                vueJeu.getPoser().setForeground(Color.RED);
         }
         if (deplacerPiece) {
             vueJeu.getDeplacer().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD) vueJeu.getDeplacer().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL) vueJeu.getDeplacer().setForeground(Color.RED);
+            if (theme == Theme.STANDARD)
+                vueJeu.getDeplacer().setForeground(Color.ORANGE);
+            else if (theme == Theme.NOEL)
+                vueJeu.getDeplacer().setForeground(Color.RED);
         }
         if (changerOrientation) {
             vueJeu.getOrienter().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD) vueJeu.getOrienter().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL) vueJeu.getOrienter().setForeground(Color.RED);
+            if (theme == Theme.STANDARD)
+                vueJeu.getOrienter().setForeground(Color.ORANGE);
+            else if (theme == Theme.NOEL)
+                vueJeu.getOrienter().setForeground(Color.RED);
         }
     }
 
