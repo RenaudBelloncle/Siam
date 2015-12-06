@@ -129,7 +129,7 @@ public class Instructions extends JFrame {
         JPanel panPrincipal = new JPanel();
         JPanel panTitre = new JPanel();
 
-        JTextArea panRegle = new JTextArea(95, 1);
+        JTextArea panRegle = new JTextArea(105, 1);
         panRegle.setColumns(1);
         panRegle.setLineWrap(true);
         panRegle.setWrapStyleWord(true);

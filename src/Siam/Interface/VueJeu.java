@@ -20,6 +20,8 @@ public class VueJeu implements ActionListener, Constantes {
 
     private DetectionSouris souris;
 
+    private JLabel joueurActif;
+
     private JButton poser;
     private JButton deplacer;
     private JButton sortir;
@@ -58,6 +60,8 @@ public class VueJeu implements ActionListener, Constantes {
     }
 
     public void initVueJeu() {
+        joueurActif = new JLabel(jeu.getJoueurActif().getPseudo());
+
         poser = new JButton("Poser une piece");
         deplacer = new JButton("Deplacer une piece");
         sortir = new JButton("Sortir une piece");
@@ -83,6 +87,7 @@ public class VueJeu implements ActionListener, Constantes {
         PanelPlateau panelPlateau = new PanelPlateau(jeu, souris);
         JPanel panelJeu = new JPanel();
         JPanel panelBouton = new JPanel();
+        JPanel panelTexte = new JPanel();
         JPanel panelPoser = new JPanel();
         JPanel panelDeplacer = new JPanel();
         JPanel panelSortir = new JPanel();
@@ -106,6 +111,7 @@ public class VueJeu implements ActionListener, Constantes {
 
         panelJeu.setOpaque(false);
         panelBouton.setOpaque(false);
+        panelTexte.setOpaque(false);
         panelPoser.setOpaque(false);
         panelDeplacer.setOpaque(false);
         panelSortir.setOpaque(false);
@@ -126,6 +132,7 @@ public class VueJeu implements ActionListener, Constantes {
         flecheGauche.setEnabled(false);
         flecheDroite.setEnabled(false);
 
+        panelTexte.add(joueurActif);
         panelPoser.add(poser);
         panelDeplacer.add(deplacer);
         panelSortir.add(sortir);
@@ -150,6 +157,7 @@ public class VueJeu implements ActionListener, Constantes {
 
         changerPolice();
 
+        panelBouton.add(panelTexte);
         panelBouton.add(panelPoser);
         panelBouton.add(panelDeplacer);
         panelBouton.add(panelSortir);
@@ -157,7 +165,7 @@ public class VueJeu implements ActionListener, Constantes {
         panelBouton.add(panelHaut);
         panelBouton.add(panelFleche);
         panelBouton.add(panelBas);
-        panelBouton.setLayout(new GridLayout(7, 1));
+        panelBouton.setLayout(new GridLayout(8, 1));
         panelJeu.add(panelBouton);
 
         panelJeu.setLayout(new BoxLayout(panelJeu, BoxLayout.X_AXIS));
@@ -167,6 +175,7 @@ public class VueJeu implements ActionListener, Constantes {
 
     private void changerPolice() {
         if (jeu.getTheme() == Theme.STANDARD) {
+            outilsFont.changerFontJLabel(joueurActif, 30, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontButton(poser, 30, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontButton(deplacer, 30, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontButton(sortir, 30, Color.orange, outilsFont.getStandardFontTexte());
@@ -176,14 +185,15 @@ public class VueJeu implements ActionListener, Constantes {
             outilsFont.changerFontButton(flecheGauche, 30, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontButton(flecheDroite, 30, Color.orange, outilsFont.getStandardFontTexte());
         } else if (jeu.getTheme() == Theme.NOEL) {
-            outilsFont.changerFontButton(poser, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(deplacer, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(sortir, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(orienter, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(flecheHaut, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(flecheBas, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(flecheGauche, 50, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(flecheDroite, 50, Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJLabel(joueurActif, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(poser, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(deplacer, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(sortir, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(orienter, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheHaut, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheBas, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheGauche, 30, Color.red, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontButton(flecheDroite, 30, Color.red, outilsFont.getStandardFontTexte());
         }
     }
 
@@ -202,6 +212,10 @@ public class VueJeu implements ActionListener, Constantes {
         retourMenu.addActionListener(actionListener);
         themeSuivant.addActionListener(actionListener);
         musique.addActionListener(actionListener);
+    }
+
+    public void changerJoueurActif() {
+        joueurActif.setText(jeu.getJoueurActif().getPseudo());
     }
 
     @Override
