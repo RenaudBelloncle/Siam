@@ -1,10 +1,14 @@
 package Siam;
 
 import Siam.Enum.Camp;
+import Siam.Enum.Orientation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JoueurUnitTest {
 
@@ -104,13 +108,23 @@ public class JoueurUnitTest {
 
     @Test
     public void testDeplaceAnimalEnPoussant(){
-        //TODO Test Manquant - JP
-        Animal animal = Mockito.mock(Animal.class);
+        Animal pousseur = Mockito.mock(Animal.class);
         Plateau plateau = Mockito.mock(Plateau.class);
+        TokenSommePoussee tokenSommePoussee = Mockito.mock(TokenSommePoussee.class);
+        joueur.setPlateau(plateau);
+
+        ArrayList<Piece> ligne = new ArrayList<>();
+
         //creer situation qui pousse
+        Mockito.when(plateau.getLignePoussee(pousseur)).thenReturn(ligne, ligne);
+        Mockito.when(plateau.calculResultatPoussee(ligne)).thenReturn(tokenSommePoussee, tokenSommePoussee);
+        Mockito.when(plateau.analyseTokenPoussee(tokenSommePoussee)).thenReturn(true, false);
+        TokenResultatPoussee tokenResultatPoussee = joueur.deplaceAnimalEnPoussant(pousseur);
+        Assert.assertEquals(tokenResultatPoussee.isPousseeEffectue(), true);
 
-
-        //creer situation ou la charge est trop importante pour la poussee
+        //poussée qui marche pas
+        tokenResultatPoussee = joueur.deplaceAnimalEnPoussant(pousseur);
+        Assert.assertEquals(tokenResultatPoussee.isPousseeEffectue(), false);
     }
 
     // Tests pour variante du nombre de pi�ce
