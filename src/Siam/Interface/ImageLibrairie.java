@@ -50,6 +50,8 @@ public class ImageLibrairie {
             imageCollection.get(Theme.STANDARD).put("Montagne", image);
             image = ImageIO.read(getClass().getResource("/Standard/Sprites/Focus.png"));
             imageCollection.get(Theme.STANDARD).put("Focus", image);
+            image = ImageIO.read(getClass().getResource("/Standard/Sprites/CaseBannie.png"));
+            imageCollection.get(Theme.STANDARD).put("CaseBannie", image);
 
             // Theme Noel
             // Images
@@ -82,6 +84,8 @@ public class ImageLibrairie {
             imageCollection.get(Theme.NOEL).put("Montagne", image);
             image = ImageIO.read(getClass().getResource("/Noel/Sprites/Focus.png"));
             imageCollection.get(Theme.NOEL).put("Focus", image);
+            image = ImageIO.read(getClass().getResource("/Noel/Sprites/CaseBannie.png"));
+            imageCollection.get(Theme.NOEL).put("CaseBannie", image);
         } catch (IOException e) { System.out.println(e.getMessage()); }
     }
 
