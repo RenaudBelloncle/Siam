@@ -27,13 +27,12 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
     private void clicEffectue(int colonne, int ligne) {
         //Si une piece est selectionnee et qu'il n'y pas de deplacement et que le bouton deplacer piece n'est pas appuye
         // et que les deux cases selectionnees ne sont pas adjacentes
-        if (jeu.isPieceSelectionnee()  && !jeu.isEnCoursDeDeplacement() && !jeu.isDeplacerPiece()
-                && !jeu.getPlateau().testCaseAdjacente(jeu.getAnimalSelectionnee(), plateau.getCase(colonne, ligne))) {
+        if (jeu.isPieceSelectionnee()  && !jeu.isEnCoursDeDeplacement() && !jeu.isDeplacerPiece()) {
             jeu.deselection();
             if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
         }
-        //Si le bouton deplacer piece est appuye et si l'animal selectionne n'est pas null   && jeu.isDeplacerPiece()
-        if( jeu.getAnimalSelectionnee() != null) {
+        //Si le bouton deplacer piece est appuye et si l'animal selectionne n'est pas null
+        if( jeu.getAnimalSelectionnee() != null && jeu.isDeplacerPiece()) {
             //Si les deux cases selectionnees ne sont pas cote a cote
             if(!jeu.getPlateau().testCaseAdjacente(jeu.getAnimalSelectionnee(), plateau.getCase(colonne, ligne)))
             {
