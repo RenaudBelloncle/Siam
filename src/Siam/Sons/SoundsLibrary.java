@@ -56,7 +56,7 @@ public class SoundsLibrary {
             //STANDARD
             String standardPath = "file:res/Standard/Bruitage/";
 
-            boutton = new AudioClip(standardPath + "clique_boutton.wav");
+            boutton = new AudioClip(standardPath + "fall_new.wav");
             erreur = new AudioClip(standardPath + "erreur.wav");
 
             elephant1 = new AudioClip(standardPath + "elephant1.mp3");
@@ -102,9 +102,6 @@ public class SoundsLibrary {
             System.out.println(e.getMessage());
         }
 
-        //TODO jp : ajouter les sons manquants
-        // pour le theme standard : orientation, boutton
-        // pour le theme noel : 3 sons rennes, boutton
         //STANDARD
         soundLibraryStandart = new HashMap<>();
         soundLibraryStandart.put("boutton", boutton);
