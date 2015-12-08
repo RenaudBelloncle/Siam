@@ -2,7 +2,6 @@ package Siam;
 
 import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
-import Siam.Enum.Theme;
 import Siam.Enum.TraceType;
 
 import java.util.ArrayList;
@@ -72,9 +71,40 @@ public class Joueur implements Constantes{
                     animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS, false));
                     plateau.posePiece(animals.get(pieceSurPlateau - 1));
                 }
-                if(varianteNombrePieceActive && restePieceDispo())
-                    piecePose();
+                if(varianteNombrePieceActive && restePieceDispo()) piecePose();
                 return animals.get(pieceSurPlateau - 1);
+            } else {
+                Orientation orientation = null;
+                if (colonne == 0 && ligne == 0) {
+
+                } else if (colonne == 4 && ligne == 4) {
+
+                } else if (colonne == 0 && ligne == 4) {
+
+                } else if (colonne == 4 && ligne == 0) {
+
+                } else if (colonne == 0) {
+                    orientation = Orientation.DROITE;
+                } else if (colonne == 4) {
+                    orientation = Orientation.GAUCHE;
+                } else if (ligne == 0) {
+                    orientation = Orientation.BAS;
+                } else if (ligne == 4) {
+                    orientation = Orientation.HAUT;
+                }
+                if (orientation != null) {
+                    TokenResultatPoussee ret = poserAnimalEnPoussant(colonne, ligne, orientation);
+                    pieceSurPlateau++;
+                    if (camp == Camp.ELEPHANT) {
+                        animals.add(new Animal(colonne, ligne, orientation, Camp.ELEPHANT, false));
+                        plateau.posePiece(animals.get(pieceSurPlateau - 1));
+                    } else {
+                        animals.add(new Animal(colonne, ligne, orientation, Camp.RHINOCEROS, false));
+                        plateau.posePiece(animals.get(pieceSurPlateau - 1));
+                    }
+                    if(varianteNombrePieceActive && restePieceDispo()) piecePose();
+                    return animals.get(pieceSurPlateau - 1);
+                }
             }
         }
         return null;
@@ -88,7 +118,7 @@ public class Joueur implements Constantes{
         return pieceRestantAPlacer > 0;
     }
 
-    public void piecePose(){
+    public void piecePose() {
         pieceRestantAPlacer --;
     }
 
@@ -106,6 +136,10 @@ public class Joueur implements Constantes{
         plateau.sortirPiece(colonne, ligne);
     }
 
+    public void enleverPiece() {
+        pieceSurPlateau--;
+    }
+
     public boolean deplaceAnimalSurCaseVide(Animal animal, Case caseCible){
         if(caseCible.estVide()){
             getPlateau().deplacerPiece(animal, caseCible.getAbscisse(), caseCible.getOrdonnee(), TraceType.MARCHE);
@@ -117,16 +151,33 @@ public class Joueur implements Constantes{
     public TokenResultatPoussee deplaceAnimalEnPoussant(Animal pousseur){
         ArrayList<Piece> ligne = plateau.getLignePoussee(pousseur);
         TokenSommePoussee resultat = plateau.calculResultatPoussee(ligne);
-        boolean pousseeReussie = false;
+        boolean pousserReussie = false;
+        Piece pieceSortie = null;
         Camp campGagnant = null;
         if(plateau.analyseTokenPoussee(resultat)){
-            Piece pieceSortie = plateau.decalageLigne(ligne);
-            pousseeReussie = true;
-            if(pieceSortie != null && pieceSortie instanceof Montagne){
+            pieceSortie = plateau.decalageLigne(ligne);
+            pousserReussie = true;
+            if(pieceSortie != null && pieceSortie instanceof Montagne) {
                 campGagnant = plateau.trouveCampGagnant(ligne);
             }
         }
-        return new TokenResultatPoussee(pousseeReussie, campGagnant);
+        return new TokenResultatPoussee(pousserReussie, campGagnant, pieceSortie);
+    }
+
+    public TokenResultatPoussee poserAnimalEnPoussant(int colonne, int ligne, Orientation orientation) {
+        ArrayList<Piece> list = plateau.getLignePoser(colonne, ligne, orientation);
+        TokenSommePoussee resultat = plateau.calculResultatPoussee(list);
+        boolean pousserReussie = false;
+        Piece pieceSortie = null;
+        Camp campGagnant = null;
+        if (plateau.analyseTokenPoussee(resultat)) {
+            pieceSortie = plateau.decalageLigne(list);
+            pousserReussie = true;
+            if (pieceSortie != null && pieceSortie instanceof Montagne) {
+                campGagnant = plateau.trouveCampGagnant(list);
+            }
+        }
+        return new TokenResultatPoussee(pousserReussie, campGagnant, pieceSortie);
     }
 
     public int getNombreTour(){

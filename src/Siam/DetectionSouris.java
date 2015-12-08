@@ -55,7 +55,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 // Evaluation des forces
                 if(jeu.testOrientationEntreAnimalEtCase(jeu.getAnimalSelectionnee(), plateau.getCase(colonne, ligne))) {
                     TokenResultatPoussee ret = jeu.getJoueurActif().deplaceAnimalEnPoussant(jeu.getAnimalSelectionnee());
-                    // Si poussée réussi
+                    // Si poussee reussi
                     if(ret.isPousseeEffectue()){
                         jeu.getSoundsLibrary().playPousseeSound(jeu.getTheme());
                         // Si gagnant
@@ -66,9 +66,17 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                             new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
                             return;
                         }
+                        if (ret.getPieceSortie() != null) {
+                            Animal animalSortie = (Animal)ret.getPieceSortie();
+                            if (animalSortie.getCamp() == jeu.getJoueurActif().getCamp()) {
+                                jeu.getJoueurActif().enleverPiece();
+                            } else {
+                                jeu.getJoueurPassif().enleverPiece();
+                            }
+                        }
                         jeu.changerJoueurActif();
                     }
-                    // Si poussée échouée
+                    // Si poussee echouee
                     else
                     {
                         jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
