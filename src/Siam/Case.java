@@ -1,6 +1,8 @@
 package Siam;
 
+import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
+import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
@@ -37,5 +39,10 @@ public class Case {
 
     public boolean estVide(){
         return true;
+    }
+
+    public Trace creerTrace(TraceType traceType, Orientation direction)
+    {
+        return null;
     }
 }
