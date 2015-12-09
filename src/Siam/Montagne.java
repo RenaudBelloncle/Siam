@@ -1,6 +1,9 @@
 package Siam;
 
+import Siam.Enum.Camp;
+import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
+import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
@@ -19,5 +22,13 @@ public class Montagne extends Piece {
 
     public boolean estVide(){
         return false;
+    }
+
+    public Camp getCamp(){
+        return Camp.MONTAGNE;
+    }
+
+    public Trace creerTrace(TraceType traceType, Orientation direction){
+        return new Trace(getAbscisse(), getOrdonnee(), direction, Orientation.BAS, traceType, getCamp());
     }
 }

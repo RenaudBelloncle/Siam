@@ -25,32 +25,39 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
     }
 
     private void clicEffectue(int colonne, int ligne) {
-        if (jeu.isPieceSelectionnee() && !jeu.isDeplacerPiece() && !jeu.isEnCoursDeDeplacement()) {
+        //Si une piece est selectionnee et qu'il n'y pas de deplacement et que le bouton deplacer piece n'est pas appuye
+        // et que les deux cases selectionnees ne sont pas adjacentes
+        if (jeu.isPieceSelectionnee()  && !jeu.isEnCoursDeDeplacement() && !jeu.isDeplacerPiece()) {
             jeu.deselection();
             if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
         }
-        if(jeu.isDeplacerPiece() && jeu.getAnimalSelectionnee() != null) {
-            if(!jeu.getPlateau().testCaseAdjacente(jeu.getAnimalSelectionnee(),
-                    plateau.getCase(colonne, ligne)))
+        //Si le bouton deplacer piece est appuye et si l'animal selectionne n'est pas null
+        if( jeu.getAnimalSelectionnee() != null && jeu.isDeplacerPiece()) {
+            //Si les deux cases selectionnees ne sont pas cote a cote
+            if(!jeu.getPlateau().testCaseAdjacente(jeu.getAnimalSelectionnee(), plateau.getCase(colonne, ligne)))
             {
                 jeu.deselection();
                 jeu.setDeplacerPiece(false);
                 jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
             }
-            else if(jeu.getJoueurActif().deplaceAnimalSurCaseVide(jeu.getAnimalSelectionnee(),
-                    plateau.getCase(colonne, ligne)))
+            // Les cases sont cote a cote
+            // Si la case destination est vide
+            else if(jeu.getJoueurActif().deplaceAnimalSurCaseVide(jeu.getAnimalSelectionnee(), plateau.getCase(colonne, ligne)))
             {
                 jeu.setEnCoursDeDeplacement(true);
                 jeu.setSelectionnerOrientation(true);
                 jeu.setDeplacerPiece(false);
                 jeu.getSoundsLibrary().playMarcheSound(jeu.getTheme(), jeu.getJoueurActif().getCamp());
             }
+            // La case destination n'est pas vide
             else {
-                if(jeu.testOrientationEntreAnimalEtCase(jeu.getAnimalSelectionnee(),
-                        plateau.getCase(colonne, ligne))) {
+                // Evaluation des forces
+                if(jeu.testOrientationEntreAnimalEtCase(jeu.getAnimalSelectionnee(), plateau.getCase(colonne, ligne))) {
                     TokenResultatPoussee ret = jeu.getJoueurActif().deplaceAnimalEnPoussant(jeu.getAnimalSelectionnee());
+                    // Si poussee reussi
                     if(ret.isPousseeEffectue()){
                         jeu.getSoundsLibrary().playPousseeSound(jeu.getTheme());
+                        // Si gagnant
                         if(ret.getCampGagnant() != null) {
                             new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(),
                                     jeu.getSoundsLibrary());
@@ -58,8 +65,17 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                             new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
                             return;
                         }
+                        if (ret.getPieceSortie() != null) {
+                            Animal animalSortie = (Animal)ret.getPieceSortie();
+                            if (animalSortie.getCamp() == jeu.getJoueurActif().getCamp()) {
+                                jeu.getJoueurActif().enleverPiece();
+                            } else {
+                                jeu.getJoueurPassif().enleverPiece();
+                            }
+                        }
                         jeu.changerJoueurActif();
                     }
+                    // Si poussee echouee
                     else
                     {
                         jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
@@ -69,6 +85,7 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
             }
             jeu.setDeplacerPiece(false);
         }
+
         if (jeu.isPlacerPiece()) {
             if (!jeu.getJoueurActif().restePiece()) {
                 jeu.getSoundsLibrary().playPoserPieceSound(jeu.getTheme());

@@ -11,7 +11,7 @@ public class TokenResultatPousseeUnitTest {
 
     @Before
     public void SetUp() {
-        tokenResultatPoussee = new TokenResultatPoussee(true, Camp.ELEPHANT);
+        tokenResultatPoussee = new TokenResultatPoussee(true, Camp.ELEPHANT, null);
     }
 
     @Test
