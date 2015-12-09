@@ -224,7 +224,8 @@ public class VueJeu implements ActionListener, Constantes {
         jeu.getSoundsLibrary().playControlSound(jeu.getTheme());
         
         if (source == poser && !jeu.isSelectionnerOrientation()) {
-                jeu.setPlacerPiece(true);
+            jeu.setPlacerPiece(true);
+            if (jeu.getAnimalSelectionnee() != null) jeu.deselection();
         }
         if (source == sortir && jeu.isPieceSelectionnee()) {
             if (jeu.getAnimalSelectionnee().getAbscisse() == 0 ||

@@ -30,6 +30,8 @@ public class Instructions extends JFrame {
     private JLabel part6;
     private JLabel tpart7;
     private JLabel part7;
+    private JLabel tpart8;
+    private JLabel part8;
     private JLabel titre;
 
     public Instructions(Theme theme){
@@ -72,6 +74,7 @@ public class Instructions extends JFrame {
         tpart5 = new JLabel("<html><h3>Se déplacer en poussant</h3></html>", SwingConstants.CENTER);
         tpart6 = new JLabel("<html><h3>Cases bannies</h3></html>", SwingConstants.CENTER);
         tpart7 = new JLabel("<html><h3>Nombre de pièces limité</h3></html>", SwingConstants.CENTER);
+        tpart8 = new JLabel("<html><h3>Montagnes de camp</h3></html>", SwingConstants.CENTER);
 
 
         part1 = new JLabel("<html><br> Vous devez entrer un de vos animaux par l'une des cases " +
@@ -123,13 +126,20 @@ public class Instructions extends JFrame {
                 " sur les cases du milieu de la ligne du haut et du bas.<br><br></html> ");
         part7 = new JLabel("<html><br>Les joueurs ne pourront poser que six pièces" +
                 " lors de la partie.<br><br></html> ");
+        part8 = new JLabel("<html><br>Chaque camp a sa propre montagne (reconnaissable par son apparence). " +
+                "La montagne au centre est neutre et ne permet pas la victoire. La victoire est déterminée" +
+                "en fonction de la montagne sortie : si les éléphants sortent la montagne des éléphants, les " +
+                "rhinocéros gagnent. Quand un animal pousse la montagne neutre hors de la grille le joueur peut" +
+                "la poser de suite dans la case qu'il veut (excepté une case occupée par une montagne), si un " +
+                "animal se trouve sur cette case il est alors sorti du plateau, il pouura tout de même être reposé" +
+                "plus tard.<br><br></html> ");
     }
 
     public void afficherInstructions(){
         JPanel panPrincipal = new JPanel();
         JPanel panTitre = new JPanel();
 
-        JTextArea panRegle = new JTextArea(105, 1);
+        JTextArea panRegle = new JTextArea(117, 1);
         panRegle.setColumns(1);
         panRegle.setLineWrap(true);
         panRegle.setWrapStyleWord(true);
@@ -156,6 +166,8 @@ public class Instructions extends JFrame {
         panRegle.add(part6);
         panRegle.add(tpart7);
         panRegle.add(part7);
+        panRegle.add(tpart8);
+        panRegle.add(part8);
         panTitre.add(titre);
 
         panRegle.setOpaque(false);

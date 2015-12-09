@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
 import Siam.Enum.TraceType;
@@ -7,12 +8,12 @@ import Siam.Interface.Ecran;
 
 public abstract class Piece extends Case {
 
+    protected Camp camp;
     private Case lastPosition;
 
-    public Piece(int abscisse, int ordonnee)
-    {
-
+    public Piece(int abscisse, int ordonnee, Camp camp) {
         super(abscisse, ordonnee);
+        this.camp = camp;
         lastPosition = null;
     }
 
@@ -20,6 +21,14 @@ public abstract class Piece extends Case {
 
     public boolean estVide(){
         return false;
+    }
+
+    public Camp getCamp() {
+        return camp;
+    }
+
+    public void setCamp(Camp camp) {
+        this.camp = camp;
     }
 
     public void setLastPosition(Case lastPosition) {

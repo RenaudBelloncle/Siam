@@ -25,9 +25,25 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
     }
 
     private void clicEffectue(int colonne, int ligne) {
+        if(jeu.getPlacerMontagne()){
+            if (plateau.getCase(colonne, ligne) instanceof Montagne) return;
+            if (plateau.getCase(colonne, ligne) instanceof Animal) {
+                if (((Animal)plateau.getCase(colonne, ligne)).getCamp() == jeu.getJoueurActif().getCamp()) {
+                    jeu.getJoueurActif().sortirPiece(colonne, ligne);
+                } else {
+                    if (jeu.getJoueurActif() == jeu.getJoueurs()[0]) jeu.getJoueurs()[1].sortirPiece(colonne, ligne);
+                    else jeu.getJoueurs()[0].sortirPiece(colonne, ligne);
+                }
+            }
+            jeu.getJoueurActif().posePiece(colonne, ligne,jeu.varianteNombreDePieceMaxActive(),
+                    jeu.varianteCaseBannieActive(), true);
+            jeu.setPlacerMontagne(false);
+            jeu.changerJoueurActif();
+            return;
+        }
+        if (jeu.isPieceSelectionnee() && !jeu.isDeplacerPiece() && !jeu.isEnCoursDeDeplacement()) {
         //Si une piece est selectionnee et qu'il n'y pas de deplacement et que le bouton deplacer piece n'est pas appuye
         // et que les deux cases selectionnees ne sont pas adjacentes
-        if (jeu.isPieceSelectionnee()  && !jeu.isEnCoursDeDeplacement() && !jeu.isDeplacerPiece()) {
             jeu.deselection();
             if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
         }
@@ -57,8 +73,14 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                     // Si poussee reussi
                     if(ret.isPousseeEffectue()){
                         jeu.getSoundsLibrary().playPousseeSound(jeu.getTheme());
+                        if(ret.getCampGagnant() == Camp.NEUTRE) {
+                            jeu.setPlacerMontagne(true);
+                            jeu.deselection();
+                            jeu.setDeplacerPiece(false);
+                            return;
+                        }
+                        else if(ret.getCampGagnant() != null && ret.getCampGagnant() != Camp.NEUTRE) {
                         // Si gagnant
-                        if(ret.getCampGagnant() != null) {
                             new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(),
                                     jeu.getSoundsLibrary());
                             jeu.getVueJeu().getMenuBar().removeAll();
@@ -88,13 +110,13 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
 
         if (jeu.isPlacerPiece()) {
             if (!jeu.getJoueurActif().restePiece()) {
-                jeu.getSoundsLibrary().playPoserPieceSound(jeu.getTheme());
+                jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
                 jeu.deselection();
                 return;
             }
             if (colonne == 0 || colonne == 4 || ligne == 0 || ligne == 4) {
                 Animal animal = jeu.getJoueurActif().posePiece(colonne, ligne,jeu.varianteNombreDePieceMaxActive(),
-                        jeu.varianteCaseBannieActive());
+                        jeu.varianteCaseBannieActive(), false);
                 if (animal == null) {
                     jeu.setPlacerPiece(false);
                     jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
@@ -107,18 +129,19 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 jeu.setSelectionnerOrientation(true);
             }
         } else if(!jeu.isSelectionnerOrientation() && !jeu.isEnCoursDeDeplacement() && !jeu.isDeplacerPiece()) {
-            if (plateau.getCase(colonne, ligne) instanceof Animal) {
-                if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == jeu.getJoueurActif().getCamp()) {
-                    Animal animal = (Animal)plateau.getCase(colonne, ligne);
-                    if(animal.getCamp() == Camp.ELEPHANT){
-                        jeu.getSoundsLibrary().playElephantSound(jeu.getTheme());
+            if (colonne >= 0 && colonne < 5 && ligne >= 0 && ligne < 5) {
+                if (plateau.getCase(colonne, ligne) instanceof Animal) {
+                    if (((Animal) plateau.getCase(colonne, ligne)).getCamp() == jeu.getJoueurActif().getCamp()) {
+                        Animal animal = (Animal) plateau.getCase(colonne, ligne);
+                        if (animal.getCamp() == Camp.ELEPHANT) {
+                            jeu.getSoundsLibrary().playElephantSound(jeu.getTheme());
+                        } else {
+                            jeu.getSoundsLibrary().playRinhocerosSound(jeu.getTheme());
+                        }
+                        animal.setSelectionnee(true);
+                        jeu.setPieceSelectionnee(true);
+                        jeu.setAnimalSelectionnee(animal);
                     }
-                    else{
-                        jeu.getSoundsLibrary().playRinhocerosSound(jeu.getTheme());
-                    }
-                    animal.setSelectionnee(true);
-                    jeu.setPieceSelectionnee(true);
-                    jeu.setAnimalSelectionnee(animal);
                 }
             }
         }
