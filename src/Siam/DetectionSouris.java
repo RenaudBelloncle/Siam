@@ -79,21 +79,13 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                             jeu.setDeplacerPiece(false);
                             return;
                         }
-                        else if(ret.getCampGagnant() != null && ret.getCampGagnant() != Camp.NEUTRE) {
+                        else if (ret.getCampGagnant() != null && ret.getCampGagnant() != Camp.NEUTRE) {
                         // Si gagnant
                             new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(),
                                     jeu.getSoundsLibrary());
                             jeu.getVueJeu().getMenuBar().removeAll();
                             new EcranVictoire(jeu, jeu.getFenetre() ,ret.getCampGagnant(), jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
                             return;
-                        }
-                        if (ret.getPieceSortie() != null) {
-                            Animal animalSortie = (Animal)ret.getPieceSortie();
-                            if (animalSortie.getCamp() == jeu.getJoueurActif().getCamp()) {
-                                jeu.getJoueurActif().enleverPiece();
-                            } else {
-                                jeu.getJoueurPassif().enleverPiece();
-                            }
                         }
                         jeu.changerJoueurActif();
                     }
@@ -115,18 +107,22 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 return;
             }
             if (colonne == 0 || colonne == 4 || ligne == 0 || ligne == 4) {
-                Animal animal = jeu.getJoueurActif().posePiece(colonne, ligne,jeu.varianteNombreDePieceMaxActive(),
-                        jeu.varianteCaseBannieActive(), false);
-                if (animal == null) {
+                if (plateau.getCase(colonne, ligne).estVide()) {
+                    Animal animal = jeu.getJoueurActif().posePiece(colonne, ligne,jeu.varianteNombreDePieceMaxActive(),
+                            jeu.varianteCaseBannieActive(), false);
+                    if (animal == null) {
+                        jeu.setPlacerPiece(false);
+                        jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
+                        return;
+                    }
+                    jeu.getSoundsLibrary().playPoserPieceSound(jeu.getTheme());
+                    animal.setSelectionnee(true);
+                    jeu.setAnimalSelectionnee(animal);
                     jeu.setPlacerPiece(false);
-                    jeu.getSoundsLibrary().playErrorActionSound(jeu.getTheme());
-                    return;
+                    jeu.setSelectionnerOrientation(true);
                 }
-                jeu.getSoundsLibrary().playPoserPieceSound(jeu.getTheme());
-                animal.setSelectionnee(true);
-                jeu.setAnimalSelectionnee(animal);
                 jeu.setPlacerPiece(false);
-                jeu.setSelectionnerOrientation(true);
+
             }
         } else if(!jeu.isSelectionnerOrientation() && !jeu.isEnCoursDeDeplacement() && !jeu.isDeplacerPiece()) {
             if (colonne >= 0 && colonne < 5 && ligne >= 0 && ligne < 5) {

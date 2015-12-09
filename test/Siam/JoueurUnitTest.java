@@ -1,14 +1,12 @@
 package Siam;
 
 import Siam.Enum.Camp;
-import Siam.Enum.Orientation;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class JoueurUnitTest {
 
@@ -79,7 +77,7 @@ public class JoueurUnitTest {
     @Test
     public void testSortirPiece() {
         joueur.setPlateau(new Plateau(5, null));
-        joueur.posePiece(0, 0,false,false,false);
+        joueur.posePiece(0, 0,false,false, false);
         Animal animal = (Animal)joueur.getPlateau().getCase(0, 0);
         joueur.sortirPiece(0, 0);
         Assert.assertNotSame(animal, joueur.getPlateau().getCase(0, 0));

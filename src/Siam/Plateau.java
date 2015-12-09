@@ -83,45 +83,6 @@ public class Plateau {
         return (diffAbs == 1 || diffAbs == -1) && diffOrd == 0 || diffAbs == 0 && (diffOrd == 1 || diffOrd == -1);
     }
 
-    public ArrayList<Piece> getLignePoser(int colonne, int ligne, Orientation orientation) {
-        boolean caseSuivanteNonVide = true;
-        ArrayList<Piece> ret = new ArrayList<>();
-        ret.add((Piece)getCase(colonne,ligne));
-        int ajoutx = 0;
-        int ajouty = 0;
-        switch (orientation) {
-            case BAS:
-                ajouty = 1;
-                break;
-            case HAUT:
-                ajouty = -1;
-                break;
-            case GAUCHE:
-                ajoutx = -1;
-                break;
-            case DROITE:
-                ajoutx = 1;
-                break;
-        }
-        while(caseSuivanteNonVide) {
-            colonne +=ajoutx;
-            ligne += ajouty;
-
-            if(colonne < 0 || colonne >= tailleCote
-                    || ligne < 0 || ligne >= tailleCote) {
-                caseSuivanteNonVide = false;
-            }
-            else if(getCase(colonne, ligne).estVide()){
-                caseSuivanteNonVide = false;
-            }
-            else{
-                System.out.println(colonne + "/" + ligne);
-                ret.add((Piece)getCase(colonne, ligne));
-            }
-        }
-        return ret;
-    }
-
     public ArrayList<Piece> getLignePoussee(Animal pousseur) {
         boolean caseSuivanteNonVide = true;
         ArrayList<Piece> ret = new ArrayList<>();

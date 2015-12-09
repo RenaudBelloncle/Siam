@@ -79,38 +79,6 @@ public class Joueur implements Constantes{
                     }
                     if(varianteNombrePieceActive && restePieceDispo()) piecePose();
                     return animals.get(pieceSurPlateau - 1);
-                } else {
-                    Orientation orientation = null;
-                    if (colonne == 0 && ligne == 0) {
-
-                    } else if (colonne == 4 && ligne == 4) {
-
-                    } else if (colonne == 0 && ligne == 4) {
-
-                    } else if (colonne == 4 && ligne == 0) {
-
-                    } else if (colonne == 0) {
-                        orientation = Orientation.DROITE;
-                    } else if (colonne == 4) {
-                        orientation = Orientation.GAUCHE;
-                    } else if (ligne == 0) {
-                        orientation = Orientation.BAS;
-                    } else if (ligne == 4) {
-                        orientation = Orientation.HAUT;
-                    }
-                    if (orientation != null) {
-                        TokenResultatPoussee ret = poserAnimalEnPoussant(colonne, ligne, orientation);
-                        pieceSurPlateau++;
-                        if (camp == Camp.ELEPHANT) {
-                            animals.add(new Animal(colonne, ligne, orientation, Camp.ELEPHANT, false));
-                            plateau.posePiece(animals.get(pieceSurPlateau - 1));
-                        } else {
-                            animals.add(new Animal(colonne, ligne, orientation, Camp.RHINOCEROS, false));
-                            plateau.posePiece(animals.get(pieceSurPlateau - 1));
-                        }
-                        if(varianteNombrePieceActive && restePieceDispo()) piecePose();
-                        return animals.get(pieceSurPlateau - 1);
-                    }
                 }
             }
             return null;
@@ -143,10 +111,6 @@ public class Joueur implements Constantes{
         plateau.sortirPiece(colonne, ligne);
     }
 
-    public void enleverPiece() {
-        pieceSurPlateau--;
-    }
-
     public boolean deplaceAnimalSurCaseVide(Animal animal, Case caseCible){
         if(caseCible.estVide()){
             getPlateau().deplacerPiece(animal, caseCible.getAbscisse(), caseCible.getOrdonnee(), TraceType.MARCHE);
@@ -170,22 +134,6 @@ public class Joueur implements Constantes{
                     return new TokenResultatPoussee(pousseeReussie, campGagnant, pieceSortie);
                 }
                 else campGagnant = plateau.trouveCampGagnant(ligne, pieceSortie);
-            }
-        }
-        return new TokenResultatPoussee(pousserReussie, campGagnant, pieceSortie);
-    }
-
-    public TokenResultatPoussee poserAnimalEnPoussant(int colonne, int ligne, Orientation orientation) {
-        ArrayList<Piece> list = plateau.getLignePoser(colonne, ligne, orientation);
-        TokenSommePoussee resultat = plateau.calculResultatPoussee(list);
-        boolean pousserReussie = false;
-        Piece pieceSortie = null;
-        Camp campGagnant = null;
-        if (plateau.analyseTokenPoussee(resultat)) {
-            pieceSortie = plateau.decalageLigne(list);
-            pousserReussie = true;
-            if (pieceSortie != null && pieceSortie instanceof Montagne) {
-                campGagnant = plateau.trouveCampGagnant(list, pieceSortie);
             }
         }
         return new TokenResultatPoussee(pousserReussie, campGagnant, pieceSortie);
