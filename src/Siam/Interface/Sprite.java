@@ -20,6 +20,8 @@ public class Sprite implements Constantes{
     public static Sprite StandardCasePionJoueur1Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"ElephantGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite StandardCasePionJoueur2Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"RhinocerosGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite StandardCaseMontagne = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Montagne"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCaseMontagneElephant = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"CaillouElephant"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StandardCaseMontagneRhinoceros = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"CaillouRhino"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite StandardFocus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite StandardCaseBannie = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD,"CaseBannie"), TAILLE_SPRITE,TAILLE_SPRITE);
 
@@ -29,6 +31,8 @@ public class Sprite implements Constantes{
     public static Sprite NoelCasePionJoueur1Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"ElephantGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite NoelCasePionJoueur2Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"RhinocerosGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite NoelCaseMontagne = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Montagne"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCaseMontagneElephant = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"CaillouElephant"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite NoelCaseMontagneRhinoceros = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"CaillouRhino"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite NoelFocus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite NoelCaseBannie = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"CaseBannie"), TAILLE_SPRITE,TAILLE_SPRITE);
 

@@ -31,6 +31,7 @@ public class Jeu implements Runnable, Constantes {
     private boolean changerOrientation;
     private boolean selectionnerOrientation;
     private boolean enCoursDeDeplacement;
+    private boolean placerMontagne;
 
     private Joueur joueurActif;
     private String pseudoJoueurActif;
@@ -40,25 +41,27 @@ public class Jeu implements Runnable, Constantes {
     private boolean running;
     private boolean varianteNombreDePieceActive;
     private boolean varianteCaseBannieActive;
+    private boolean varianteMontagneActive;
 
     public Jeu() {
         this(new Joueur(Camp.ELEPHANT, ""), new Joueur(Camp.RHINOCEROS, ""),
                 false, false, false, false, false, false, false, null, new JFrame(), null, Theme.STANDARD,
-                new Musique(Theme.STANDARD), true, false, false, new SoundsLibrary());
+                new Musique(Theme.STANDARD), true, false, false, false, new SoundsLibrary());
 
     }
 
     public Jeu(Plateau plateau){
         this();
         this.plateau = plateau;
+        this.placerMontagne=false;
     }
 
     public Jeu(Joueur joueur1, Joueur joueur2, boolean pieceSelectionnee, boolean placerPiece, boolean sortirPiece,
                boolean deplacerPiece, boolean changerOrientation, boolean selectionnerOrientation, boolean enCoursDeDeplacement,
                Animal animalSelectionnee, JFrame fenetre, VueJeu vueJeu, Theme theme, Musique musique, boolean son,
-               boolean varianteNombre,boolean varianteCase, SoundsLibrary soundsLibrary) {
+               boolean varianteNombre,boolean varianteCase, boolean varianteMontagne, SoundsLibrary soundsLibrary) {
 
-        this.plateau = new Plateau(NOMBRE_CASE_INI);
+        this.plateau = new Plateau(NOMBRE_CASE_INI, this);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
         joueurs[1] = joueur2;
@@ -78,6 +81,7 @@ public class Jeu implements Runnable, Constantes {
         this.changerOrientation = changerOrientation;
         this.selectionnerOrientation = selectionnerOrientation;
         this.enCoursDeDeplacement = enCoursDeDeplacement;
+        this.placerMontagne=false;
 
         this.animalSelectionnee = animalSelectionnee;
 
@@ -90,8 +94,17 @@ public class Jeu implements Runnable, Constantes {
 
         varianteCaseBannieActive = varianteCase;
         varianteNombreDePieceActive = varianteNombre;
+        varianteMontagneActive = varianteMontagne;
 
         running = false;
+    }
+
+    public void setPlacerMontagne(boolean status){
+        this.placerMontagne=status;
+    }
+
+    public boolean getPlacerMontagne(){
+        return placerMontagne;
     }
 
     public Plateau getPlateau() {
@@ -241,8 +254,12 @@ public class Jeu implements Runnable, Constantes {
         return varianteNombreDePieceActive;
     }
 
+    public boolean varianteMontagneActive(){
+        return varianteMontagneActive;
+    }
+
     public void initJeu(Joueur joueur1, Joueur joueur2) {
-        this.plateau = new Plateau(NOMBRE_CASE_INI);
+        this.plateau = new Plateau(NOMBRE_CASE_INI, this);
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
         joueurs[1] = joueur2;
@@ -264,9 +281,10 @@ public class Jeu implements Runnable, Constantes {
         animalSelectionnee = null;
     }
 
-    public void activerVariante(boolean varCase, boolean varPiece){
+    public void activerVariante(boolean varCase, boolean varPiece, boolean varMontagne){
         varianteNombreDePieceActive = varPiece;
         varianteCaseBannieActive = varCase;
+        varianteMontagneActive = varMontagne;
     }
 
     public synchronized void start() {
@@ -301,6 +319,16 @@ public class Jeu implements Runnable, Constantes {
             vueJeu.getOrienter().setEnabled(false);
             vueJeu.getPoser().setEnabled(false);
         }
+        else if (placerMontagne){
+            vueJeu.getPoser().setEnabled(true);
+            vueJeu.getDeplacer().setEnabled(false);
+            vueJeu.getSortir().setEnabled(false);
+            vueJeu.getOrienter().setEnabled(false);
+            vueJeu.getFlecheHaut().setEnabled(false);
+            vueJeu.getFlecheBas().setEnabled(false);
+            vueJeu.getFlecheDroite().setEnabled(false);
+            vueJeu.getFlecheGauche().setEnabled(false);
+        }
         else if (pieceSelectionnee && animalSelectionnee != null) {
             vueJeu.getDeplacer().setEnabled(true);
             if (animalSelectionnee.getAbscisse() == 0 ||
@@ -330,7 +358,7 @@ public class Jeu implements Runnable, Constantes {
             vueJeu.getFlecheDroite().setEnabled(true);
             vueJeu.getFlecheGauche().setEnabled(true);
         }
-        if (placerPiece) {
+        if (placerPiece || placerMontagne) {
             vueJeu.getPoser().setForeground(Color.BLUE);
         } else {
             if (theme == Theme.STANDARD)

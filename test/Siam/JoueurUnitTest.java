@@ -46,10 +46,10 @@ public class JoueurUnitTest {
 
     @Test
     public void testPosePiece() {
-        joueur.setPlateau(new Plateau(5));
-        joueur.posePiece(0, 0,false,false);
+        joueur.setPlateau(new Plateau(5, null));
+        joueur.posePiece(0, 0,false,false, false);
         Assert.assertNotSame(joueur.getPlateau().getCase(1, 1), joueur.getPlateau().getCase(0, 0));
-        Assert.assertNull(joueur.posePiece(0, 0, false, false));
+        Assert.assertNull(joueur.posePiece(0, 0, false, false, false));
     }
 
     @Test
@@ -64,22 +64,22 @@ public class JoueurUnitTest {
 
         joueur.setPlateau(plateau);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 0,false,false);
+        joueur.posePiece(0, 0,false,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 1,false,false);
+        joueur.posePiece(0, 1,false,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 2,false,false);
+        joueur.posePiece(0, 2,false,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 3,false,false);
+        joueur.posePiece(0, 3,false,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 4,false,false);
+        joueur.posePiece(0, 4,false,false,false);
         Assert.assertFalse(joueur.restePiece());
     }
 
     @Test
     public void testSortirPiece() {
-        joueur.setPlateau(new Plateau(5));
-        joueur.posePiece(0, 0,false,false);
+        joueur.setPlateau(new Plateau(5, null));
+        joueur.posePiece(0, 0,false,false,false);
         Animal animal = (Animal)joueur.getPlateau().getCase(0, 0);
         joueur.sortirPiece(0, 0);
         Assert.assertNotSame(animal, joueur.getPlateau().getCase(0, 0));
