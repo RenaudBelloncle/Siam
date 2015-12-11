@@ -198,12 +198,8 @@ public class Jeu implements Runnable, Constantes {
 
     public void changerJoueurActif() {
         joueurActif.finDeTour();
-        if (joueurActif == joueurs[0]) {
-            joueurActif = joueurs[1];
-        }
-        else {
-            joueurActif = joueurs[0];
-        }
+        if (joueurActif == joueurs[0]) joueurActif = joueurs[1];
+        else joueurActif = joueurs[0];
         vueJeu.changerJoueurActif();
     }
 

@@ -125,13 +125,12 @@ public class Joueur implements Constantes{
         boolean pousserReussie = false;
         Piece pieceSortie = null;
         Camp campGagnant = null;
-        boolean pousseeReussie;
         if(plateau.analyseTokenPoussee(resultat)){
             pieceSortie = plateau.decalageLigne(ligne);
-            pousseeReussie = true;
+            pousserReussie = true;
             if(pieceSortie != null && pieceSortie instanceof Montagne){
                 if (pieceSortie.getCamp() == null){
-                    return new TokenResultatPoussee(pousseeReussie, campGagnant, pieceSortie);
+                    return new TokenResultatPoussee(true, null, pieceSortie);
                 }
                 else campGagnant = plateau.trouveCampGagnant(ligne, pieceSortie);
             }

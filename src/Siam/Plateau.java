@@ -13,7 +13,6 @@ public class Plateau {
     private int tailleCote;
     private Case[][] plateau;
     private Jeu jeu;
-    private Montagne montagne;
     private ArrayList <Trace> traceDePas;
 
     public Plateau(int tailleCote, Jeu jeu){
