@@ -31,7 +31,8 @@ public class DetectionSouris extends MouseInputAdapter implements Constantes {
                 if (((Animal)plateau.getCase(colonne, ligne)).getCamp() == jeu.getJoueurActif().getCamp()) {
                     jeu.getJoueurActif().sortirPiece(colonne, ligne);
                 } else {
-                    if (jeu.getJoueurActif() == jeu.getJoueurs()[0]) jeu.getJoueurs()[1].sortirPiece(colonne, ligne);
+                    if (jeu.getJoueurActif() == jeu.getJoueurs()[0])
+                        jeu.getJoueurs()[1].sortirPiece(colonne, ligne);
                     else jeu.getJoueurs()[0].sortirPiece(colonne, ligne);
                 }
             }
