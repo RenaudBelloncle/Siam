@@ -179,8 +179,6 @@ public class Jeu implements Runnable, Constantes {
         joueurActif = joueur;
     }
 
-
-
     public String getPseudoJoueur(Camp camp) {
 
         Joueur[] joueurs;
@@ -200,18 +198,9 @@ public class Jeu implements Runnable, Constantes {
 
     public void changerJoueurActif() {
         joueurActif.finDeTour();
-        if (joueurActif == joueurs[0]) {
-            joueurActif = joueurs[1];
-        }
-        else {
-            joueurActif = joueurs[0];
-        }
+        if (joueurActif == joueurs[0]) joueurActif = joueurs[1];
+        else joueurActif = joueurs[0];
         vueJeu.changerJoueurActif();
-    }
-
-    public Joueur getJoueurPassif() {
-        if (joueurActif == joueurs[0])return joueurs[1];
-        else return joueurs[0];
     }
 
     public JFrame getFenetre(){
@@ -385,10 +374,10 @@ public class Jeu implements Runnable, Constantes {
     }
 
     public void deselection(){
-        setPieceSelectionnee(false);
+        pieceSelectionnee = false;
         getAnimalSelectionnee().setSelectionnee(false);
-        setAnimalSelectionnee(null);
-        setSelectionnerOrientation(false);
+        animalSelectionnee =null;
+        selectionnerOrientation = false;
     }
 
     public boolean testOrientationEntreAnimalEtCase(Animal animal,Case uneCase){

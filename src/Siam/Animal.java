@@ -81,8 +81,6 @@ public class Animal extends Piece {
         }
     }
 
-    
-
     public boolean estVide() {
         return false;
     }
