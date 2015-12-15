@@ -6,10 +6,12 @@ public class TokenResultatPoussee {
 
     private boolean pousseeEffectue;
     private Camp campGagnant;
+    private Piece pieceSortie;
 
-    public TokenResultatPoussee(boolean pousseeEffectue, Camp campGagnant) {
+    public TokenResultatPoussee(boolean pousseeEffectue, Camp campGagnant, Piece pieceSortie) {
         this.pousseeEffectue = pousseeEffectue;
         this.campGagnant = campGagnant;
+        this.pieceSortie = pieceSortie;
     }
 
     public boolean isPousseeEffectue() {
@@ -18,5 +20,9 @@ public class TokenResultatPoussee {
 
     public Camp getCampGagnant() {
         return campGagnant;
+    }
+
+    public Piece getPieceSortie() {
+        return pieceSortie;
     }
 }

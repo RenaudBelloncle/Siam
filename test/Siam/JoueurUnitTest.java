@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+
 public class JoueurUnitTest {
 
     private Joueur joueur;
@@ -42,10 +44,10 @@ public class JoueurUnitTest {
 
     @Test
     public void testPosePiece() {
-        joueur.setPlateau(new Plateau(5));
-        joueur.posePiece(0, 0,false,false);
+        joueur.setPlateau(new Plateau(5, null));
+        joueur.posePiece(0, 0,false,false, false);
         Assert.assertNotSame(joueur.getPlateau().getCase(1, 1), joueur.getPlateau().getCase(0, 0));
-        Assert.assertNull(joueur.posePiece(0, 0, false, false));
+        Assert.assertNull(joueur.posePiece(0, 0, false, false, false));
     }
 
     @Test
@@ -60,22 +62,22 @@ public class JoueurUnitTest {
 
         joueur.setPlateau(plateau);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 0,false,false);
+        joueur.posePiece(0, 0,false,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 1,false,false);
+        joueur.posePiece(0, 1,false,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 2,false,false);
+        joueur.posePiece(0, 2,false,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 3,false,false);
+        joueur.posePiece(0, 3,false,false,false);
         Assert.assertTrue(joueur.restePiece());
-        joueur.posePiece(0, 4,false,false);
+        joueur.posePiece(0, 4,false,false,false);
         Assert.assertFalse(joueur.restePiece());
     }
 
     @Test
     public void testSortirPiece() {
-        joueur.setPlateau(new Plateau(5));
-        joueur.posePiece(0, 0,false,false);
+        joueur.setPlateau(new Plateau(5, null));
+        joueur.posePiece(0, 0,false,false, false);
         Animal animal = (Animal)joueur.getPlateau().getCase(0, 0);
         joueur.sortirPiece(0, 0);
         Assert.assertNotSame(animal, joueur.getPlateau().getCase(0, 0));
@@ -104,13 +106,23 @@ public class JoueurUnitTest {
 
     @Test
     public void testDeplaceAnimalEnPoussant(){
-        //TODO Test Manquant - JP
-        Animal animal = Mockito.mock(Animal.class);
+        Animal pousseur = Mockito.mock(Animal.class);
         Plateau plateau = Mockito.mock(Plateau.class);
+        TokenSommePoussee tokenSommePoussee = Mockito.mock(TokenSommePoussee.class);
+        joueur.setPlateau(plateau);
+
+        ArrayList<Piece> ligne = new ArrayList<>();
+
         //creer situation qui pousse
+        Mockito.when(plateau.getLignePoussee(pousseur)).thenReturn(ligne, ligne);
+        Mockito.when(plateau.calculResultatPoussee(ligne)).thenReturn(tokenSommePoussee, tokenSommePoussee);
+        Mockito.when(plateau.analyseTokenPoussee(tokenSommePoussee)).thenReturn(true, false);
+        TokenResultatPoussee tokenResultatPoussee = joueur.deplaceAnimalEnPoussant(pousseur);
+        Assert.assertEquals(tokenResultatPoussee.isPousseeEffectue(), true);
 
-
-        //creer situation ou la charge est trop importante pour la poussee
+        //poussée qui marche pas
+        tokenResultatPoussee = joueur.deplaceAnimalEnPoussant(pousseur);
+        Assert.assertEquals(tokenResultatPoussee.isPousseeEffectue(), false);
     }
 
     // Tests pour variante du nombre de pi�ce

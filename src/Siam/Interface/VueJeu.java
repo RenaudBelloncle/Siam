@@ -224,9 +224,11 @@ public class VueJeu implements ActionListener, Constantes {
         jeu.getSoundsLibrary().playControlSound(jeu.getTheme());
         
         if (source == poser && !jeu.isSelectionnerOrientation()) {
-                jeu.setPlacerPiece(true);
+            jeu.setPlacerPiece(true);
+            if (jeu.getAnimalSelectionnee() != null) jeu.deselection();
         }
-        if (source == sortir && jeu.isPieceSelectionnee()) {
+        else if (source == sortir && jeu.isPieceSelectionnee())
+        {
             if (jeu.getAnimalSelectionnee().getAbscisse() == 0 ||
                     jeu.getAnimalSelectionnee().getAbscisse() == 4 ||
                     jeu.getAnimalSelectionnee().getOrdonnee() == 0 ||
@@ -244,17 +246,20 @@ public class VueJeu implements ActionListener, Constantes {
             jeu.setSelectionnerOrientation(false);
             jeu.setSortirPiece(false);
         }
-        if (source == deplacer && jeu.isPieceSelectionnee()) {
+        else if (source == deplacer && jeu.isPieceSelectionnee())
+        {
             jeu.setDeplacerPiece(true);
             jeu.setChangerOrientation(false);
             jeu.setSelectionnerOrientation(false);
         }
-        if (source == orienter && jeu.isPieceSelectionnee()) {
+        else if (source == orienter && jeu.isPieceSelectionnee())
+        {
             jeu.setDeplacerPiece(false);
             jeu.setChangerOrientation(true);
             jeu.setSelectionnerOrientation(true);
         }
-        if (jeu.isSelectionnerOrientation() && source == flecheHaut) {
+        else if (jeu.isSelectionnerOrientation() && source == flecheHaut)
+        {
             jeu.getSoundsLibrary().playOrientationSound(jeu.getTheme());
             jeu.getAnimalSelectionnee().setOrientation(Orientation.HAUT);
             jeu.deselection();
@@ -262,7 +267,8 @@ public class VueJeu implements ActionListener, Constantes {
             if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
             jeu.changerJoueurActif();
         }
-        if (jeu.isSelectionnerOrientation() && source == flecheDroite) {
+        else if (jeu.isSelectionnerOrientation() && source == flecheDroite)
+        {
             jeu.getSoundsLibrary().playOrientationSound(jeu.getTheme());
             jeu.getAnimalSelectionnee().setOrientation(Orientation.DROITE);
             jeu.deselection();
@@ -270,7 +276,8 @@ public class VueJeu implements ActionListener, Constantes {
             if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
             jeu.changerJoueurActif();
         }
-        if (jeu.isSelectionnerOrientation() && source == flecheBas) {
+        else if (jeu.isSelectionnerOrientation() && source == flecheBas)
+        {
             jeu.getSoundsLibrary().playOrientationSound(jeu.getTheme());
             jeu.getAnimalSelectionnee().setOrientation(Orientation.BAS);
             jeu.deselection();
@@ -278,7 +285,8 @@ public class VueJeu implements ActionListener, Constantes {
             if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
             jeu.changerJoueurActif();
         }
-        if (jeu.isSelectionnerOrientation() && source == flecheGauche) {
+        else if (jeu.isSelectionnerOrientation() && source == flecheGauche)
+        {
             jeu.getSoundsLibrary().playOrientationSound(jeu.getTheme());
             jeu.getAnimalSelectionnee().setOrientation(Orientation.GAUCHE);
             jeu.deselection();
@@ -286,21 +294,21 @@ public class VueJeu implements ActionListener, Constantes {
             if (jeu.isChangerOrientation()) jeu.setChangerOrientation(false);
             jeu.changerJoueurActif();
         }
-        if (source == nouvellepartie)
+        else if (source == nouvellepartie)
         {
             menuBar.removeAll();
             new ChoixCamp(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
         }
-        if (source == instructions)
+        else if (source == instructions)
         {
             new Instructions(jeu.getTheme());
         }
-        if (source == retourMenu)
+        else if (source == retourMenu)
         {
             menuBar.removeAll();
             new Menu(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
         }
-        if (source == themeSuivant)
+        else if (source == themeSuivant)
         {
             switch (jeu.getTheme()) {
                 case STANDARD:
@@ -318,7 +326,7 @@ public class VueJeu implements ActionListener, Constantes {
             affichageVueJeu();
             fenetre.setVisible(true);
         }
-        if (source == musique)
+        else if (source == musique)
         {
             if (jeu.isSon())
             {

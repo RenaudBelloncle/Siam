@@ -29,6 +29,7 @@ public class ChoixCamp implements ActionListener, Constantes {
     private JButton spriteRhinoceros;
     private JCheckBox JCBvarianteCase;
     private JCheckBox JCBvariantePiece;
+    private JCheckBox JCBvarianteMontagne;
     private JButton valider;
     private JButton annuler;
 
@@ -77,8 +78,9 @@ public class ChoixCamp implements ActionListener, Constantes {
         spriteRhinoceros = new JButton(new ImageIcon(ImageLibrairie.imageLibrairie.getImage(theme,"RhinocerosExemple")));
         valider = new JButton("Valider");
         annuler = new JButton("Annuler");
-        JCBvarianteCase = new JCheckBox("Variante case bannie");
-        JCBvariantePiece = new JCheckBox("Variante nombre de piece limite");
+        JCBvarianteCase = new JCheckBox("Cases bannies aux premiers tours");
+        JCBvariantePiece = new JCheckBox("Nombre de piece limite");
+        JCBvarianteMontagne = new JCheckBox("Montagnes de camp");
     }
 
     public void afficheChoixCamp(){
@@ -92,6 +94,7 @@ public class ChoixCamp implements ActionListener, Constantes {
         JPanel panVariante = new JPanel();
         JPanel panVariante1 = new JPanel();
         JPanel panVariante2 = new JPanel();
+        JPanel panVariante3 = new JPanel();
 
         panPrincipal.setOpaque(false);
         panTitre.setOpaque(false);
@@ -103,6 +106,7 @@ public class ChoixCamp implements ActionListener, Constantes {
         panVariante.setOpaque(false);
         panVariante1.setOpaque(false);
         panVariante2.setOpaque(false);
+        panVariante3.setOpaque(false);
 
         panPrincipal = new JPanel() {
             BufferedImage image = ImageLibrairie.imageLibrairie.getImage(theme,"FondCamp");
@@ -126,12 +130,14 @@ public class ChoixCamp implements ActionListener, Constantes {
         panRhinoceros.add(spriteRhinoceros);
         panVariante1.add(JCBvariantePiece);
         panVariante2.add(JCBvarianteCase);
+        panVariante3.add(JCBvarianteMontagne);
         panVariante.add(panVariante1);
         panVariante.add(panVariante2);
+        panVariante.add(panVariante3);
         panValiderBouton.add(valider);
         panValiderBouton.add(annuler);
 
-        panVariante.setLayout(new GridLayout(2,1));
+        panVariante.setLayout(new GridLayout(3,1));
         panValiderBouton.setLayout(new GridLayout(1, 2));
 
         panPrincipal.add(panTitre);
@@ -152,16 +158,18 @@ public class ChoixCamp implements ActionListener, Constantes {
             outilsFont.changerFontButton(annuler, 60, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontJLabel(elephant, 60, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontJLabel(rhinoceros, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvarianteCase, 40, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvariantePiece, 40,Color.orange,outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJCheckBox(JCBvarianteCase, 35, Color.orange, outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJCheckBox(JCBvariantePiece, 35,Color.orange,outilsFont.getStandardFontTexte());
+            outilsFont.changerFontJCheckBox(JCBvarianteMontagne, 35,Color.orange,outilsFont.getStandardFontTexte());
         } else if (theme == Theme.NOEL) {
             outilsFont.changerFontJLabel(titreCB, 95, Color.red, outilsFont.getNoelFontMenu());
             outilsFont.changerFontButton(valider, 80, Color.red, outilsFont.getNoelFontTexte());
             outilsFont.changerFontButton(annuler, 80, Color.red, outilsFont.getNoelFontTexte());
             outilsFont.changerFontJLabel(elephant, 80, Color.red, outilsFont.getNoelFontTexte());
             outilsFont.changerFontJLabel(rhinoceros, 80, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvarianteCase, 70, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvariantePiece,70,Color.red, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontJCheckBox(JCBvarianteCase, 35, Color.red, outilsFont.getNoelFontMenu());
+            outilsFont.changerFontJCheckBox(JCBvariantePiece,35,Color.red, outilsFont.getNoelFontMenu());
+            outilsFont.changerFontJCheckBox(JCBvarianteMontagne,35,Color.red, outilsFont.getNoelFontMenu());
         }
         outilsFont.changerFontButton(spriteElephant, 0, Color.black, outilsFont.getStandardFontTexte());
         outilsFont.changerFontButton(spriteRhinoceros, 0, Color.black, outilsFont.getStandardFontTexte());
@@ -181,7 +189,7 @@ public class ChoixCamp implements ActionListener, Constantes {
         {
             jeu.setMusique(musique);
             jeu.setSon(son);
-            jeu.activerVariante(JCBvarianteCase.isSelected(),JCBvariantePiece.isSelected());
+            jeu.activerVariante(JCBvarianteCase.isSelected(),JCBvariantePiece.isSelected(), JCBvarianteMontagne.isSelected());
             jeu.initJeu(new Joueur(Camp.ELEPHANT,entrerPseudoElephant.getText()), new Joueur(Camp.RHINOCEROS,entrerPseudoRhinoceros.getText()));
             jeu.start();
         }

@@ -14,7 +14,7 @@ public class PlateauUnitTest {
 
     @Before
     public void setUp() {
-        plateau = new Plateau(5);
+        plateau = new Plateau(5, null);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class PlateauUnitTest {
         Mockito.when(piece.getAbscisse()).thenReturn(0, 0);
         Mockito.when(piece.getOrdonnee()).thenReturn(0, 0);
         plateau.posePiece(piece);
-        plateau.deplacerPiece(piece, 1, 1);
+        plateau.deplacerPiece(piece, 1, 1, null);
         Case acase = plateau.getCase(1, 1);
         boolean ret = acase instanceof Piece;
         Assert.assertEquals(ret, true);

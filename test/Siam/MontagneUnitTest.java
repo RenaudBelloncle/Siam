@@ -7,7 +7,7 @@ public class MontagneUnitTest {
 
     @Test
     public void testEstVide() {
-        Montagne montagne = new Montagne(0,0);
+        Montagne montagne = new Montagne(0,0, null);
         Assert.assertFalse(montagne.estVide());
     }
 }

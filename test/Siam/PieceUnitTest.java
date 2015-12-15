@@ -10,7 +10,7 @@ public class PieceUnitTest {
 
     @Test
     public void testEstVide() {
-        Piece piece = new Piece(0,0) {
+        Piece piece = new Piece(0,0, null) {
             @Override
             public void affichage(Ecran ecran, Theme theme) {}
         };
