@@ -7,6 +7,8 @@ import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
+import java.io.PrintStream;
+
 public class Animal extends Piece {
 
     private Orientation orientation;
@@ -16,6 +18,11 @@ public class Animal extends Piece {
         super(abscisse, ordonnee, camp);
         this.orientation = orientation;
         this.selectionnee = selectionnee;
+    }
+
+    public Animal(int abscisse, int ordonnee,Camp camp) {
+        super(abscisse, ordonnee, camp);
+        this.selectionnee = false;
     }
 
     public Orientation getOrientation() {
@@ -87,5 +94,10 @@ public class Animal extends Piece {
 
     public Trace creerTrace(TraceType traceType, Orientation direction){
         return new Trace(getAbscisse(), getOrdonnee(), direction, getOrientation(), traceType, getCamp());
+    }
+
+    public void sauvegarder(PrintStream ps){
+        super.sauvegarder(ps);
+        ps.println(orientation);
     }
 }

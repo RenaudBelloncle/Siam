@@ -39,6 +39,7 @@ public class VueJeu implements ActionListener, Constantes {
     private JMenuItem retourMenu;
     private JMenuItem themeSuivant;
     private JMenuItem musique;
+    private JMenuItem sauvegarder;
 
     public VueJeu(Jeu jeu, JFrame fenetre, DetectionSouris souris){
         this.jeu = jeu;
@@ -77,6 +78,7 @@ public class VueJeu implements ActionListener, Constantes {
         nouvellepartie = new JMenuItem("Nouvelle Partie");
         instructions = new JMenuItem("Regles");
         retourMenu = new JMenuItem("Retour au Menu");
+        sauvegarder = new JMenuItem("Sauvegarder");
 
         themeSuivant = new JMenuItem("Theme Suivant");
         if (jeu.isSon()) musique = new JMenuItem("Musique On");
@@ -101,8 +103,10 @@ public class VueJeu implements ActionListener, Constantes {
         menuBar = new JMenuBar();
 
         menu.add(nouvellepartie);
+        menu.add(sauvegarder);
         menu.add(instructions);
         menu.add(retourMenu);
+
         options.add(themeSuivant);
         options.add(musique);
 
@@ -210,6 +214,7 @@ public class VueJeu implements ActionListener, Constantes {
         nouvellepartie.addActionListener(actionListener);
         instructions.addActionListener(actionListener);
         retourMenu.addActionListener(actionListener);
+        sauvegarder.addActionListener(actionListener);
         themeSuivant.addActionListener(actionListener);
         musique.addActionListener(actionListener);
     }
@@ -307,6 +312,9 @@ public class VueJeu implements ActionListener, Constantes {
         {
             menuBar.removeAll();
             new Menu(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
+        }
+        else if (source == sauvegarder){
+            jeu.sauvegarder();
         }
         else if (source == themeSuivant)
         {
