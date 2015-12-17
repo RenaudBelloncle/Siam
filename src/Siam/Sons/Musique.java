@@ -79,7 +79,7 @@ public class Musique extends Thread {
     }
 
     public void arret() {
-        dj.stop();
+        if (dj != null) dj.stop();
         dj = null;
     }
 }

@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Random;
 
-
 public class SoundsLibrary {
     private HashMap<String,AudioClip> soundLibraryStandart;
     private HashMap<String,AudioClip> soundLibraryNoel;

@@ -38,17 +38,6 @@ public class AnimalUnitTest {
     }
 
     @Test
-    public void testGetCamp() {
-        Assert.assertEquals(Camp.ELEPHANT, animal.getCamp());
-    }
-
-    @Test
-    public void testSetCamp() {
-        animal.setCamp(Camp.RHINOCEROS);
-        Assert.assertEquals(Camp.RHINOCEROS, animal.getCamp());
-    }
-
-    @Test
     public void testEstVide() {
         Assert.assertFalse(animal.estVide());
     }
