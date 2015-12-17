@@ -13,17 +13,7 @@ public class Montagne extends Piece {
     }
 
     public void affichage(Ecran ecran, Theme theme) {
-        switch (theme) {
-            case STANDARD:
-                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseVide,false,false);
-                break;
-            case NOEL:
-                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseVide,false,false);
-                break;
-            case STARWARS:
-                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCaseVide,false,false);
-                break;
-        }
+        super.affichage(ecran, theme);
         switch (camp) {
             case ELEPHANT:
                 switch (theme) {

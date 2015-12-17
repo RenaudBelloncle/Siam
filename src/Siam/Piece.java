@@ -1,8 +1,6 @@
 package Siam;
 
 import Siam.Enum.Camp;
-import Siam.Enum.Theme;
-import Siam.Interface.Ecran;
 
 import java.io.PrintStream;
 
@@ -16,8 +14,6 @@ public abstract class Piece extends Case {
         this.camp = camp;
         lastPosition = null;
     }
-
-    public abstract void affichage(Ecran ecran, Theme theme);
 
     public boolean estVide(){
         return false;
