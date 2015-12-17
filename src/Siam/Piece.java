@@ -1,9 +1,7 @@
 package Siam;
 
 import Siam.Enum.Camp;
-import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
-import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 
 import java.io.PrintStream;
