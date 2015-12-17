@@ -39,6 +39,7 @@ public class VueJeu implements ActionListener, Constantes {
     private JMenuItem retourMenu;
     private JMenuItem themeSuivant;
     private JMenuItem musique;
+    private JMenuItem sauvegarder;
 
     public VueJeu(Jeu jeu, JFrame fenetre, DetectionSouris souris){
         this.jeu = jeu;
@@ -77,6 +78,7 @@ public class VueJeu implements ActionListener, Constantes {
         nouvellepartie = new JMenuItem("Nouvelle Partie");
         instructions = new JMenuItem("Regles");
         retourMenu = new JMenuItem("Retour au Menu");
+        sauvegarder = new JMenuItem("Sauvegarder");
 
         themeSuivant = new JMenuItem("Theme Suivant");
         if (jeu.isSon()) musique = new JMenuItem("Musique On");
@@ -101,8 +103,10 @@ public class VueJeu implements ActionListener, Constantes {
         menuBar = new JMenuBar();
 
         menu.add(nouvellepartie);
+        menu.add(sauvegarder);
         menu.add(instructions);
         menu.add(retourMenu);
+
         options.add(themeSuivant);
         options.add(musique);
 
@@ -157,6 +161,7 @@ public class VueJeu implements ActionListener, Constantes {
 
         changerPolice();
 
+        panelBouton.setPreferredSize(new Dimension(300,HAUTEUR_AFFICHAGE_PLATEAU));
         panelBouton.add(panelTexte);
         panelBouton.add(panelPoser);
         panelBouton.add(panelDeplacer);
@@ -174,26 +179,40 @@ public class VueJeu implements ActionListener, Constantes {
     }
 
     private void changerPolice() {
-        if (jeu.getTheme() == Theme.STANDARD) {
-            outilsFont.changerFontJLabel(joueurActif, 30, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(poser, 30, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(deplacer, 30, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(sortir, 30, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(orienter, 30, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(flecheHaut, 30, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(flecheBas, 30, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(flecheGauche, 30, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(flecheDroite, 30, Color.orange, outilsFont.getStandardFontTexte());
-        } else if (jeu.getTheme() == Theme.NOEL) {
-            outilsFont.changerFontJLabel(joueurActif, 30, Color.red, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(poser, 30, Color.red, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(deplacer, 30, Color.red, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(sortir, 30, Color.red, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(orienter, 30, Color.red, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(flecheHaut, 30, Color.red, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(flecheBas, 30, Color.red, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(flecheGauche, 30, Color.red, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(flecheDroite, 30, Color.red, outilsFont.getStandardFontTexte());
+        switch (jeu.getTheme()) {
+            case STANDARD:
+                outilsFont.changerFontJLabel(joueurActif, 30, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(poser, 30, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(deplacer, 30, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(sortir, 30, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(orienter, 30, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(flecheHaut, 30, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(flecheBas, 30, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(flecheGauche, 30, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(flecheDroite, 30, Color.orange, outilsFont.getStandardFontTexte());
+                break;
+            case NOEL:
+                outilsFont.changerFontJLabel(joueurActif, 30, Color.red, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(poser, 30, Color.red, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(deplacer, 30, Color.red, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(sortir, 30, Color.red, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(orienter, 30, Color.red, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(flecheHaut, 30, Color.red, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(flecheBas, 30, Color.red, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(flecheGauche, 30, Color.red, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(flecheDroite, 30, Color.red, outilsFont.getStandardFontTexte());
+                break;
+            case STARWARS:
+                outilsFont.changerFontJLabel(joueurActif, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(poser, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(deplacer, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(sortir, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(orienter, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(flecheHaut, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(flecheBas, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(flecheGauche, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(flecheDroite, 20, Color.yellow, outilsFont.getStarWarsTexte());
+                break;
         }
     }
 
@@ -210,6 +229,7 @@ public class VueJeu implements ActionListener, Constantes {
         nouvellepartie.addActionListener(actionListener);
         instructions.addActionListener(actionListener);
         retourMenu.addActionListener(actionListener);
+        sauvegarder.addActionListener(actionListener);
         themeSuivant.addActionListener(actionListener);
         musique.addActionListener(actionListener);
     }
@@ -308,6 +328,9 @@ public class VueJeu implements ActionListener, Constantes {
             menuBar.removeAll();
             new Menu(jeu, fenetre, jeu.getTheme(), jeu.getMusique(), jeu.isSon(), jeu.getSoundsLibrary());
         }
+        else if (source == sauvegarder){
+            jeu.sauvegarder();
+        }
         else if (source == themeSuivant)
         {
             switch (jeu.getTheme()) {
@@ -315,6 +338,9 @@ public class VueJeu implements ActionListener, Constantes {
                     jeu.setTheme(Theme.NOEL);
                     break;
                 case NOEL:
+                    jeu.setTheme(Theme.STARWARS);
+                    break;
+                case STARWARS:
                     jeu.setTheme(Theme.STANDARD);
                     break;
             }

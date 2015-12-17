@@ -1,6 +1,7 @@
 package Siam;
 
 import Siam.Enum.Camp;
+import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
 import Siam.Interface.VueJeu;
 import Siam.Sons.Musique;
@@ -8,6 +9,7 @@ import Siam.Sons.SoundsLibrary;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 public class Jeu implements Runnable, Constantes {
 
@@ -249,6 +251,7 @@ public class Jeu implements Runnable, Constantes {
 
     public void initJeu(Joueur joueur1, Joueur joueur2) {
         this.plateau = new Plateau(NOMBRE_CASE_INI, this);
+        plateau.initMontagne();
         joueurs = new Joueur[2];
         joueurs[0] = joueur1;
         joueurs[1] = joueur2;
@@ -350,26 +353,47 @@ public class Jeu implements Runnable, Constantes {
         if (placerPiece || placerMontagne) {
             vueJeu.getPoser().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD)
-                vueJeu.getPoser().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL)
-                vueJeu.getPoser().setForeground(Color.RED);
+            switch (theme) {
+                case STANDARD:
+                    vueJeu.getPoser().setForeground(Color.ORANGE);
+                    break;
+                case NOEL:
+                    vueJeu.getPoser().setForeground(Color.RED);
+                    break;
+                case STARWARS:
+                    vueJeu.getPoser().setForeground(Color.YELLOW);
+                    break;
+            }
         }
         if (deplacerPiece) {
             vueJeu.getDeplacer().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD)
-                vueJeu.getDeplacer().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL)
-                vueJeu.getDeplacer().setForeground(Color.RED);
+            switch (theme) {
+                case STANDARD:
+                    vueJeu.getDeplacer().setForeground(Color.ORANGE);
+                    break;
+                case NOEL:
+                    vueJeu.getDeplacer().setForeground(Color.RED);
+                    break;
+                case STARWARS:
+                    vueJeu.getDeplacer().setForeground(Color.YELLOW);
+                    break;
+            }
         }
         if (changerOrientation) {
             vueJeu.getOrienter().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD)
-                vueJeu.getOrienter().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL)
-                vueJeu.getOrienter().setForeground(Color.RED);
+            switch (theme) {
+                case STANDARD:
+                    vueJeu.getOrienter().setForeground(Color.ORANGE);
+                    break;
+                case NOEL:
+                    vueJeu.getOrienter().setForeground(Color.RED);
+                    break;
+                case STARWARS:
+                    vueJeu.getOrienter().setForeground(Color.YELLOW);
+                    break;
+            }
         }
     }
 
@@ -400,5 +424,157 @@ public class Jeu implements Runnable, Constantes {
 
     public SoundsLibrary getSoundsLibrary() {
         return soundsLibrary;
+    }
+
+    public void sauvegarder(){
+
+        File file = new File("save.txt");
+        try {
+            PrintStream ps = new PrintStream(file);
+            ps.println(joueurs.length);
+            int numJoueur = -1;
+            for(int i = 0; i < joueurs.length; i++){
+                joueurs[i].sauvegarder(ps);
+                if(joueurActif.equals(joueurs[i]))
+                    numJoueur = i;
+            }
+            ps.println(numJoueur);
+            plateau.sauvegarder(ps);
+            ps.println(theme);
+            ps.println(varianteCaseBannieActive);
+            ps.println(varianteMontagneActive);
+            ps.println(varianteNombreDePieceActive);
+        } catch (FileNotFoundException e) {
+            try {
+                file.createNewFile();
+                PrintStream ps = new PrintStream(file);
+            } catch (IOException e1) {
+                System.err.println("Echec sauvegarde");
+            }
+        }
+    }
+
+    public void charger(){
+        String line;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("save.txt"));
+            int nbJoueur = Integer.parseInt(br.readLine());
+            joueurs = new Joueur[nbJoueur];
+            for(int i = 0; i < nbJoueur; i++ ) {
+                joueurs[i] = new Joueur(br.readLine(), Integer.parseInt(br.readLine()),
+                        Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()));
+                switch (br.readLine()) {
+                    case "ELEPHANT":
+                         joueurs[i].setCamp(Camp.ELEPHANT);
+                        break;
+                    case "RHINOCEROS":
+                        joueurs[i].setCamp(Camp.RHINOCEROS);
+                        break;
+                    case "NEUTRE":
+                        joueurs[i].setCamp(Camp.NEUTRE);
+                        break;
+                    case "MONTAGNE":
+                        joueurs[i].setCamp(Camp.NEUTRE);
+                        break;
+                }
+            }
+            setJoueurActif(joueurs[Integer.parseInt(br.readLine())]);
+            plateau = new Plateau(Integer.parseInt(br.readLine()),this);
+            Case[][] plat = new Case[plateau.getTailleCote()][plateau.getTailleCote()];
+            for(int i = 0; i < plateau.getTailleCote();i++) {
+                for (int j = 0; j < plateau.getTailleCote(); j++) {
+                    switch (br.readLine()) {
+                        case "0":
+                            plat[i][j] = new Case(Integer.parseInt(br.readLine()), Integer.parseInt(br.readLine()));
+                            break;
+                        case "1":
+                            int x = Integer.parseInt(br.readLine());
+                            int y = Integer.parseInt(br.readLine());
+                            Camp c = Camp.NEUTRE;
+                            switch (br.readLine()) {
+                                case "ELEPHANT":
+                                    c = (Camp.ELEPHANT);
+                                    break;
+                                case "RHINOCEROS":
+                                    c = (Camp.RHINOCEROS);
+                                    break;
+                                case "NEUTRE":
+                                    c = (Camp.NEUTRE);
+                                    break;
+                            }
+                            plat[i][j] = new Montagne(x, y, c);
+                            break;
+                        case "2":
+                            int xi = Integer.parseInt(br.readLine());
+                            int yi = Integer.parseInt(br.readLine());
+                            Camp ci = Camp.NEUTRE;
+                            switch (br.readLine()) {
+                                case "ELEPHANT":
+                                    ci = (Camp.ELEPHANT);
+                                    break;
+                                case "RHINOCEROS":
+                                    ci = (Camp.RHINOCEROS);
+                                    break;
+                                case "NEUTRE":
+                                    ci = (Camp.NEUTRE);
+                                    break;
+                            }
+                            Animal a = new Animal(xi,yi,ci);
+                            switch (br.readLine()) {
+                                case "HAUT":
+                                    a.setOrientation(Orientation.HAUT);
+                                    break;
+                                case "BAS":
+                                    a.setOrientation(Orientation.BAS);
+                                    break;
+                                case "GAUCHE":
+                                    a.setOrientation(Orientation.GAUCHE);
+                                    break;
+                                case "DROITE":
+                                    a.setOrientation(Orientation.DROITE);
+                                    break;
+                            }
+                            if(joueurs[0].getCamp() == ci)
+                                joueurs[0].ajouterAnimal(a);
+                            else if(joueurs[1].getCamp() == ci)
+                                joueurs[1].ajouterAnimal(a);
+                            plat[i][j] = a;
+                            break;
+                    }
+                }
+            }
+            plateau.setPlateau(plat);
+            switch (br.readLine()) {
+                case "STANDARD":
+                    setTheme(Theme.STANDARD);
+                    break;
+                case "NOEL":
+                    setTheme(Theme.NOEL);
+                    break;
+            }
+            varianteCaseBannieActive = Boolean.parseBoolean(br.readLine());
+            varianteMontagneActive = Boolean.parseBoolean(br.readLine());
+            varianteNombreDePieceActive = Boolean.parseBoolean(br.readLine());
+
+            joueurs[0].setPlateau(plateau);
+            joueurs[1].setPlateau(plateau);
+
+            souris = new DetectionSouris(this, plateau);
+
+            pieceSelectionnee = false;
+            placerPiece = false;
+            sortirPiece = false;
+            deplacerPiece = false;
+            changerOrientation = false;
+            selectionnerOrientation = false;
+            enCoursDeDeplacement = false;
+
+            animalSelectionnee = null;
+
+            start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

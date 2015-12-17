@@ -6,6 +6,8 @@ import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
+import java.io.PrintStream;
+
 public class Case {
 
     private int abscisse;
@@ -33,8 +35,17 @@ public class Case {
     }
 
     public void affichage(Ecran ecran, Theme theme){
-        if (theme == Theme.STANDARD) ecran.affichageSprite(abscisse, ordonnee, Sprite.StandardCaseVide,false,false);
-        else if (theme == Theme.NOEL) ecran.affichageSprite(abscisse, ordonnee, Sprite.NoelCaseVide,false,false);
+        switch (theme) {
+            case STANDARD:
+                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseVide,false,false);
+                break;
+            case NOEL:
+                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseVide,false,false);
+                break;
+            case STARWARS:
+                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCaseVide,false,false);
+                break;
+        }
     }
 
     public boolean estVide(){
@@ -44,5 +55,10 @@ public class Case {
     public Trace creerTrace(TraceType traceType, Orientation direction)
     {
         return null;
+    }
+
+    public void sauvegarder(PrintStream ps){
+        ps.println(abscisse);
+        ps.println(ordonnee);
     }
 }
