@@ -1,5 +1,6 @@
 package Siam;
 
+import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlateauUnitTest {
 
@@ -222,7 +224,29 @@ public class PlateauUnitTest {
 
     @Test
     public void testTrouveCampGagnant() {
-        //TODO Test Manquant - Nathan
+        Jeu jeu = Mockito.mock(Jeu.class);
+        Mockito.when(jeu.varianteMontagneActive()).thenReturn(false, false, true);
+
+        plateau.setJeu(jeu);
+
+        Animal pousseur = Mockito.mock(Animal.class);
+        Mockito.when(pousseur.getOrientation()).thenReturn(Orientation.BAS, Orientation.BAS);
+        Mockito.when(pousseur.getCamp()).thenReturn(Camp.ELEPHANT);
+        Animal pousse = Mockito.mock(Animal.class);
+        Mockito.when(pousse.getOrientation()).thenReturn(Orientation.DROITE, Orientation.DROITE, Orientation.BAS,Orientation.BAS);
+        Mockito.when(pousse.getCamp()).thenReturn(Camp.RHINOCEROS);
+
+        Montagne montagne = Mockito.mock(Montagne.class);
+        Mockito.when(montagne.getCamp()).thenReturn(Camp.RHINOCEROS);
+
+        ArrayList<Piece> list = new ArrayList<>();
+        list.add(pousseur);
+        list.add(pousse);
+        list.add(montagne);
+
+        Assert.assertEquals(plateau.trouveCampGagnant(list, montagne), Camp.ELEPHANT);
+        Assert.assertEquals(plateau.trouveCampGagnant(list, montagne),Camp.RHINOCEROS);
+        Assert.assertEquals(plateau.trouveCampGagnant(list, montagne),Camp.ELEPHANT);
     }
 }
 
