@@ -2,11 +2,8 @@ package Siam.Interface;
 
 import Siam.Constantes;
 import Siam.Enum.Theme;
-import org.omg.IOP.TAG_ALTERNATE_IIOP_ADDRESS;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Sprite implements Constantes{
 
@@ -35,6 +32,17 @@ public class Sprite implements Constantes{
     public static Sprite NoelCaseMontagneRhinoceros = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"CaillouRhino"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite NoelFocus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
     public static Sprite NoelCaseBannie = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.NOEL,"CaseBannie"), TAILLE_SPRITE,TAILLE_SPRITE);
+
+    public static Sprite StarWarsCaseVide = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"Case"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsCasePionJoueur1 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"Elephant"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsCasePionJoueur2 = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"Rhinoceros"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsCasePionJoueur1Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"ElephantGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsCasePionJoueur2Gauche = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"RhinocerosGauche"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsCaseMontagne = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"Montagne"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsCaseMontagneElephant = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"CaillouElephant"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsCaseMontagneRhinoceros = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"CaillouRhino"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsFocus = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"Focus"),TAILLE_SPRITE,TAILLE_SPRITE);
+    public static Sprite StarWarsCaseBannie = new Sprite(ImageLibrairie.imageLibrairie.getImage(Theme.STARWARS,"CaseBannie"), TAILLE_SPRITE,TAILLE_SPRITE);
 
     public Sprite(BufferedImage image, int hauteur, int largeur){
         this.largeur = largeur;

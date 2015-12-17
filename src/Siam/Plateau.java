@@ -34,9 +34,9 @@ public class Plateau {
             plateau[3][2] = new Montagne(3,2, Camp.RHINOCEROS);
         }
         else{
-            plateau[2][2] = new Montagne(2,2, null);
-            plateau[1][2] = new Montagne(1,2, null);
-            plateau[3][2] = new Montagne(3,2, null);
+            plateau[2][2] = new Montagne(2,2, Camp.NEUTRE);
+            plateau[1][2] = new Montagne(1,2, Camp.NEUTRE);
+            plateau[3][2] = new Montagne(3,2, Camp.NEUTRE);
         }
     }
 

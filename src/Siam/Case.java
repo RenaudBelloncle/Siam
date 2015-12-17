@@ -35,8 +35,17 @@ public class Case {
     }
 
     public void affichage(Ecran ecran, Theme theme){
-        if (theme == Theme.STANDARD) ecran.affichageSprite(abscisse, ordonnee, Sprite.StandardCaseVide,false,false);
-        else if (theme == Theme.NOEL) ecran.affichageSprite(abscisse, ordonnee, Sprite.NoelCaseVide,false,false);
+        switch (theme) {
+            case STANDARD:
+                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseVide,false,false);
+                break;
+            case NOEL:
+                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseVide,false,false);
+                break;
+            case STARWARS:
+                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCaseVide,false,false);
+                break;
+        }
     }
 
     public boolean estVide(){

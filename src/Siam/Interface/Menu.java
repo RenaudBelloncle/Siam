@@ -145,32 +145,49 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     }
 
     public void changerPolice(){
-        if (theme == Theme.STANDARD) {
-            outilsFont.changerFontJLabel(titre, 150, Color.orange, outilsFont.getStandardFontMenu());
-            outilsFont.changerFontButton(charger, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(jouer, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(scores, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(option, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(quitter, 60, Color.orange, outilsFont.getStandardFontTexte());
+        switch (theme) {
+            case STANDARD:
+                outilsFont.changerFontJLabel(titre, 150, Color.orange, outilsFont.getStandardFontMenu());
+                outilsFont.changerFontButton(jouer, 60, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(charger, 60, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(scores, 60, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(option, 60, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(quitter, 60, Color.orange, outilsFont.getStandardFontTexte());
 
-            outilsFont.changerFontJLabel(optionL, 65, Color.orange, outilsFont.getStandardFontMenu());
-            outilsFont.changerFontButton(instructions, 55, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(couperSon, 55, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(themeSuivant, 55, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(retour, 55, Color.orange, outilsFont.getStandardFontTexte());
-        } else if (theme == Theme.NOEL) {
-            outilsFont.changerFontJLabel(titre, 150, Color.red, outilsFont.getNoelFontMenu());
-            outilsFont.changerFontButton(jouer, 70, Color.green, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(charger, 70, Color.green, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(scores, 70, Color.green, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(option, 70, Color.green, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(quitter, 70, Color.green, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontJLabel(optionL, 65, Color.orange, outilsFont.getStandardFontMenu());
+                outilsFont.changerFontButton(instructions, 55, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(couperSon, 55, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(themeSuivant, 55, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(retour, 55, Color.orange, outilsFont.getStandardFontTexte());
+                break;
+            case NOEL:
+                outilsFont.changerFontJLabel(titre, 150, Color.red, outilsFont.getNoelFontMenu());
+                outilsFont.changerFontButton(jouer, 70, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(charger, 70, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(scores, 70, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(option, 70, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(quitter, 70, Color.red, outilsFont.getNoelFontTexte());
 
-            outilsFont.changerFontJLabel(optionL, 65, Color.green, outilsFont.getNoelFontMenu());
-            outilsFont.changerFontButton(instructions, 65, Color.green, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(couperSon, 65, Color.green, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(themeSuivant, 65, Color.green, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(retour, 65, Color.green, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontJLabel(optionL, 65, Color.red, outilsFont.getNoelFontMenu());
+                outilsFont.changerFontButton(instructions, 65, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(couperSon, 65, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(themeSuivant, 65, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(retour, 65, Color.red, outilsFont.getNoelFontTexte());
+                break;
+            case STARWARS:
+                outilsFont.changerFontJLabel(titre, 150, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(jouer, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(charger, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(scores, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(option, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(quitter, 50, Color.yellow, outilsFont.getStarWarsTexte());
+
+                outilsFont.changerFontJLabel(optionL, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(instructions, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(couperSon, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(themeSuivant, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(retour, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                break;
         }
     }
 
@@ -231,6 +248,9 @@ public class Menu extends JFrame implements ActionListener, Constantes {
                     theme = Theme.NOEL;
                     break;
                 case NOEL:
+                    theme = Theme.STARWARS;
+                    break;
+                case STARWARS:
                     theme = Theme.STANDARD;
                     break;
             }

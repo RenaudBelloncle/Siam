@@ -61,16 +61,25 @@ public class ChoixCamp implements ActionListener, Constantes {
 
     public void initChoixCamp(){
         titreCB = new JLabel("Choisis un camp");
-        if (theme == Theme.STANDARD) {
-            elephant = new JLabel("Elephants");
-            rhinoceros = new JLabel("Rhinoceros");
-            entrerPseudoElephant = new JTextField("Elephant");
-            entrerPseudoRhinoceros = new JTextField("Rhinoceros");
-        } else if (theme == Theme.NOEL) {
-            elephant = new JLabel("Bonhommes");
-            rhinoceros = new JLabel("Rennes");
-            entrerPseudoElephant = new JTextField("Bonhommes");
-            entrerPseudoRhinoceros = new JTextField("Rennes");
+        switch (theme) {
+            case STANDARD:
+                elephant = new JLabel("Elephants");
+                rhinoceros = new JLabel("Rhinoceros");
+                entrerPseudoElephant = new JTextField("Elephant");
+                entrerPseudoRhinoceros = new JTextField("Rhinoceros");
+                break;
+            case NOEL:
+                elephant = new JLabel("Bonhommes");
+                rhinoceros = new JLabel("Rennes");
+                entrerPseudoElephant = new JTextField("Bonhommes");
+                entrerPseudoRhinoceros = new JTextField("Rennes");
+                break;
+            case STARWARS:
+                elephant = new JLabel("Rebels");
+                rhinoceros = new JLabel("Empire");
+                entrerPseudoElephant = new JTextField("Rebels");
+                entrerPseudoRhinoceros = new JTextField("Empire");
+                break;
         }
         entrerPseudoElephant.setPreferredSize(new Dimension(300,40));
         entrerPseudoRhinoceros.setPreferredSize(new Dimension(300,40));
@@ -80,7 +89,7 @@ public class ChoixCamp implements ActionListener, Constantes {
         annuler = new JButton("Annuler");
         JCBvarianteCase = new JCheckBox("Cases bannies aux premiers tours");
         JCBvariantePiece = new JCheckBox("Nombre de piece limite");
-        JCBvarianteMontagne = new JCheckBox("Montagnes de camp");
+        JCBvarianteMontagne = new JCheckBox("Protege ta Montagne");
     }
 
     public void afficheChoixCamp(){
@@ -152,24 +161,37 @@ public class ChoixCamp implements ActionListener, Constantes {
     }
 
     public void changerPolice() {
-        if (theme == Theme.STANDARD) {
-            outilsFont.changerFontJLabel(titreCB, 95, Color.orange, outilsFont.getStandardFontMenu());
-            outilsFont.changerFontButton(valider, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(annuler, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontJLabel(elephant, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontJLabel(rhinoceros, 60, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvarianteCase, 35, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvariantePiece, 35,Color.orange,outilsFont.getStandardFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvarianteMontagne, 35,Color.orange,outilsFont.getStandardFontTexte());
-        } else if (theme == Theme.NOEL) {
-            outilsFont.changerFontJLabel(titreCB, 95, Color.red, outilsFont.getNoelFontMenu());
-            outilsFont.changerFontButton(valider, 80, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(annuler, 80, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontJLabel(elephant, 80, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontJLabel(rhinoceros, 80, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontJCheckBox(JCBvarianteCase, 35, Color.red, outilsFont.getNoelFontMenu());
-            outilsFont.changerFontJCheckBox(JCBvariantePiece,35,Color.red, outilsFont.getNoelFontMenu());
-            outilsFont.changerFontJCheckBox(JCBvarianteMontagne,35,Color.red, outilsFont.getNoelFontMenu());
+        switch (theme) {
+            case STANDARD:
+                outilsFont.changerFontJLabel(titreCB, 95, Color.orange, outilsFont.getStandardFontMenu());
+                outilsFont.changerFontButton(valider, 60, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(annuler, 60, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontJLabel(elephant, 60, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontJLabel(rhinoceros, 60, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontJCheckBox(JCBvarianteCase, 35, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontJCheckBox(JCBvariantePiece, 35,Color.orange,outilsFont.getStandardFontTexte());
+                outilsFont.changerFontJCheckBox(JCBvarianteMontagne, 35,Color.orange,outilsFont.getStandardFontTexte());
+                break;
+            case NOEL:
+                outilsFont.changerFontJLabel(titreCB, 95, Color.red, outilsFont.getNoelFontMenu());
+                outilsFont.changerFontButton(valider, 80, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(annuler, 80, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontJLabel(elephant, 80, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontJLabel(rhinoceros, 80, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontJCheckBox(JCBvarianteCase, 45, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontJCheckBox(JCBvariantePiece,45,Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontJCheckBox(JCBvarianteMontagne,45,Color.red, outilsFont.getNoelFontTexte());
+                break;
+            case STARWARS:
+                outilsFont.changerFontJLabel(titreCB, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(valider, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(annuler, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontJLabel(elephant, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontJLabel(rhinoceros, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontJCheckBox(JCBvarianteCase, 35, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontJCheckBox(JCBvariantePiece,35,Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontJCheckBox(JCBvarianteMontagne,35,Color.yellow, outilsFont.getStarWarsTexte());
+                break;
         }
         outilsFont.changerFontButton(spriteElephant, 0, Color.black, outilsFont.getStandardFontTexte());
         outilsFont.changerFontButton(spriteRhinoceros, 0, Color.black, outilsFont.getStandardFontTexte());

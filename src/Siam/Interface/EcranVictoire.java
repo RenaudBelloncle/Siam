@@ -73,48 +73,28 @@ public class EcranVictoire implements ActionListener, Constantes {
         vide.setOpaque(false);
         boutonPanel.setOpaque(false);
 
-        if (campGagnant == Camp.ELEPHANT) {
-            if (theme == Theme.STANDARD) {
+        switch (campGagnant) {
+            case ELEPHANT:
                 panPrincipal = new JPanel() {
-                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD, "FondElephant");
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(jeu.getTheme(), "FondElephant");
 
                     public void paintComponent(Graphics g) {
                         super.paintComponent(g);
                         g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
                     }
                 };
-            } else if (theme == Theme.NOEL) {
+                break;
+            case RHINOCEROS:
                 panPrincipal = new JPanel() {
-                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.NOEL, "FondElephant");
+                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(jeu.getTheme(), "FondRhinoceros");
 
                     public void paintComponent(Graphics g) {
                         super.paintComponent(g);
                         g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
                     }
                 };
-            }
-        } else {
-            if (theme == Theme.STANDARD) {
-                panPrincipal = new JPanel() {
-                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.STANDARD, "FondRhinoceros");
-
-                    public void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
-                    }
-                };
-            } else if (theme == Theme.NOEL) {
-                panPrincipal = new JPanel() {
-                    BufferedImage image = ImageLibrairie.imageLibrairie.getImage(Theme.NOEL, "FondRhinoceros");
-
-                    public void paintComponent(Graphics g) {
-                        super.paintComponent(g);
-                        g.drawImage(image, 0, 0, LARGEUR_FENETRE, HAUTEUR_FENETRE, this);
-                    }
-                };
-            }
+                break;
         }
-
         changerPolice();
 
 
@@ -131,14 +111,22 @@ public class EcranVictoire implements ActionListener, Constantes {
     }
 
     private void changerPolice() {
-        if (theme == Theme.STANDARD) {
-            outilsFont.changerFontJLabel(gagnant, 80, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(continuer, 40, Color.orange, outilsFont.getStandardFontTexte());
-            outilsFont.changerFontButton(retourMenu, 40, Color.orange, outilsFont.getStandardFontTexte());
-        } else if (theme == Theme.NOEL) {
-            outilsFont.changerFontJLabel(gagnant, 120, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(continuer, 60, Color.red, outilsFont.getNoelFontTexte());
-            outilsFont.changerFontButton(retourMenu, 60, Color.red, outilsFont.getNoelFontTexte());
+        switch (theme) {
+            case STANDARD:
+                outilsFont.changerFontJLabel(gagnant, 80, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(continuer, 40, Color.orange, outilsFont.getStandardFontTexte());
+                outilsFont.changerFontButton(retourMenu, 40, Color.orange, outilsFont.getStandardFontTexte());
+                break;
+            case NOEL:
+                outilsFont.changerFontJLabel(gagnant, 120, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(continuer, 60, Color.red, outilsFont.getNoelFontTexte());
+                outilsFont.changerFontButton(retourMenu, 60, Color.red, outilsFont.getNoelFontTexte());
+                break;
+            case STARWARS:
+                outilsFont.changerFontJLabel(gagnant, 80, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(continuer, 40, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontButton(retourMenu, 40, Color.yellow, outilsFont.getStarWarsTexte());
+                break;
         }
     }
 
