@@ -6,6 +6,8 @@ import Siam.Enum.Theme;
 import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 
+import java.io.PrintStream;
+
 public abstract class Piece extends Case {
 
     protected Camp camp;
@@ -37,5 +39,10 @@ public abstract class Piece extends Case {
 
     public Case getLastPosition() {
         return lastPosition;
+    }
+
+    public void sauvegarder(PrintStream ps){
+        super.sauvegarder(ps);
+        ps.println(camp);
     }
 }

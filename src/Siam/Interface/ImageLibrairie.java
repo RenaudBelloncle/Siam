@@ -17,6 +17,7 @@ public class ImageLibrairie {
         imageCollection = new HashMap<>();
         imageCollection.put(Theme.STANDARD, new HashMap<String, BufferedImage>());
         imageCollection.put(Theme.NOEL, new HashMap<String, BufferedImage>());
+        imageCollection.put(Theme.STARWARS, new HashMap<String, BufferedImage>());
         BufferedImage image;
         try {
             // Theme Standard
@@ -94,6 +95,44 @@ public class ImageLibrairie {
             imageCollection.get(Theme.NOEL).put("Focus", image);
             image = ImageIO.read(getClass().getResource("/Noel/Sprites/CaseBannie.png"));
             imageCollection.get(Theme.NOEL).put("CaseBannie", image);
+
+            // Theme Star Wars
+            // Images
+            image = ImageIO.read(getClass().getResource("/StarWars/Images/SWFondMenu.jpg"));
+            imageCollection.get(Theme.STARWARS).put("FondMenu", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Images/SWFondCamp.png"));
+            imageCollection.get(Theme.STARWARS).put("FondCamp", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Images/SWFondBouton.jpg"));
+            imageCollection.get(Theme.STARWARS).put("FondBouton", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Images/SWFondRebels.jpeg"));
+            imageCollection.get(Theme.STARWARS).put("FondElephant", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Images/SWFondEmpire.jpeg"));
+            imageCollection.get(Theme.STARWARS).put("FondRhinoceros", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Images/XWing.png"));
+            imageCollection.get(Theme.STARWARS).put("ElephantExemple", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Images/TIE.png"));
+            imageCollection.get(Theme.STARWARS).put("RhinocerosExemple", image);
+            // Sprites
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/Case.png"));
+            imageCollection.get(Theme. STARWARS).put("Case", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/XWing.png"));
+            imageCollection.get(Theme.STARWARS).put("Elephant", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/TIE.png"));
+            imageCollection.get(Theme.STARWARS).put("Rhinoceros", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/XWingGauche.png"));
+            imageCollection.get(Theme.STARWARS).put("ElephantGauche", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/TIEGauche.png"));
+            imageCollection.get(Theme.STARWARS).put("RhinocerosGauche", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/Planete.png"));
+            imageCollection.get(Theme.STARWARS).put("Montagne", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/PlaneteEmpire.png"));
+            imageCollection.get(Theme.STARWARS).put("CaillouRhino", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/PlaneteRebelle.png"));
+            imageCollection.get(Theme.STARWARS).put("CaillouElephant", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/Focus.png"));
+            imageCollection.get(Theme.STARWARS).put("Focus", image);
+            image = ImageIO.read(getClass().getResource("/StarWars/Sprites/CaseBannie.png"));
+            imageCollection.get(Theme.STARWARS).put("CaseBannie", image);
         } catch (IOException e) { System.out.println(e.getMessage()); }
     }
 

@@ -12,6 +12,7 @@ public class OutilsFont {
     private Font StandardFontTexte;
     private Font NoelFontMenu;
     private Font NoelFontTexte;
+    private Font StarWarsTexte;
 
     public OutilsFont() {
         try {
@@ -19,6 +20,7 @@ public class OutilsFont {
             StandardFontTexte = chargerFont("res/Standard/Fonts/Alabama.ttf");
             NoelFontTexte = chargerFont("res/Noel/Fonts/kr.ttf");
             NoelFontMenu = chargerFont("res/Noel/Fonts/Candcu__.ttf");
+            StarWarsTexte = chargerFont("res/StarWars/Fonts/SFDistantGalaxy.ttf");
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
@@ -46,15 +48,6 @@ public class OutilsFont {
         label.setFont(police);
     }
 
-    public void changerFontJRadioButton(JRadioButton bouton, int size, Color color, Font font) {
-        police = font.deriveFont(Font.TRUETYPE_FONT, size);
-        bouton.setForeground(color);
-        bouton.setOpaque(false);
-        bouton.setBorderPainted(false);
-        bouton.setContentAreaFilled(false);
-        bouton.setFont(police);
-    }
-
     public void changerFontJCheckBox(JCheckBox jcb, int size, Color color, Font font){
         police = font.deriveFont(Font.TRUETYPE_FONT, size);
         jcb.setForeground(color);
@@ -62,20 +55,6 @@ public class OutilsFont {
         jcb.setBorderPainted(false);
         jcb.setContentAreaFilled(false);
         jcb.setFont(police);
-    }
-
-    public void changerFontJTextField(JTextField textField, int size, Color color, Font font) {
-        police = font.deriveFont(Font.TRUETYPE_FONT, size);
-        textField.setForeground(color);
-        textField.setOpaque(false);
-        textField.setBorder(BorderFactory.createLineBorder(color));
-        textField.setFont(police);
-    }
-
-    public void changerFontJTextArea(JTextArea textArea, int size, Color color, Font font) {
-        police = font.deriveFont(Font.TRUETYPE_FONT, size);
-        textArea.setForeground(color);
-        textArea.setFont(police);
     }
 
     public Font getStandardFontMenu() {
@@ -92,5 +71,9 @@ public class OutilsFont {
 
     public Font getNoelFontTexte() {
         return NoelFontTexte;
+    }
+
+    public Font getStarWarsTexte() {
+        return StarWarsTexte;
     }
 }

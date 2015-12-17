@@ -30,7 +30,7 @@ public class Trace extends Case {
         //TODO
         switch(traceType){
             case POSE : {
-                if (camp == Camp.MONTAGNE) {
+                if (camp == Camp.NEUTRE) {
                     sprite = null;
                 } else if (camp == ELEPHANT) {
                     sprite = null;
@@ -75,7 +75,7 @@ public class Trace extends Case {
                 break;
             }
             case POUSSEE : {
-                if (camp == Camp.MONTAGNE) {
+                if (camp == Camp.NEUTRE) {
                     switch (direction_orientation) {
                         case BAS:
                             sprite = null;
