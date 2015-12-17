@@ -6,6 +6,8 @@ import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
+import java.io.PrintStream;
+
 public class Case {
 
     private int abscisse;
@@ -44,5 +46,10 @@ public class Case {
     public Trace creerTrace(TraceType traceType, Orientation direction)
     {
         return null;
+    }
+
+    public void sauvegarder(PrintStream ps){
+        ps.println(abscisse);
+        ps.println(ordonnee);
     }
 }
