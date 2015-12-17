@@ -163,7 +163,8 @@ public class JeuUnitTest {
     public void testChangerJoueursActif() {
         Joueur joueur1 = Mockito.mock(Joueur.class);
         Joueur joueur2 = Mockito.mock(Joueur.class);
-        jeu = new Jeu(joueur1, joueur2, false, false, false, false, false, false, false, null, null, null, null,
+        VueJeu vueJeu = Mockito.mock(VueJeu.class);
+        jeu = new Jeu(joueur1, joueur2, false, false, false, false, false, false, false, null, null, vueJeu, null,
                 new Musique(Theme.STANDARD), false,false,false,false, null);
         Assert.assertSame(joueur1, jeu.getJoueurActif());
         jeu.changerJoueurActif();
@@ -247,6 +248,15 @@ public class JeuUnitTest {
 
     @Test
     public void testDeselection() {
+        jeu.setPieceSelectionnee(true);
+        Animal animal = Mockito.mock(Animal.class);
+        jeu.setAnimalSelectionnee(animal);
+        jeu.getAnimalSelectionnee().setSelectionnee(true);
+        jeu.setSelectionnerOrientation(true);
+        jeu.deselection();
+        Assert.assertFalse(jeu.isPieceSelectionnee());
+        Assert.assertNull(jeu.getAnimalSelectionnee());
+        Assert.assertFalse(jeu.isSelectionnerOrientation());
         //TODO Test Manquant - JP
     }
 

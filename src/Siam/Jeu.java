@@ -400,7 +400,7 @@ public class Jeu implements Runnable, Constantes {
     public void deselection(){
         pieceSelectionnee = false;
         getAnimalSelectionnee().setSelectionnee(false);
-        animalSelectionnee =null;
+        animalSelectionnee = null;
         selectionnerOrientation = false;
     }
 

@@ -19,9 +19,9 @@ public class PlateauUnitTest {
 
     @Test
     public void testInitMontagne() {
-        Assert.assertFalse(plateau.getCase(2,2).estVide());
-        Assert.assertFalse(plateau.getCase(1,2).estVide());
-        Assert.assertFalse(plateau.getCase(3,2).estVide());
+        Assert.assertTrue(plateau.getCase(2,2).estVide());
+        Assert.assertTrue(plateau.getCase(1,2).estVide());
+        Assert.assertTrue(plateau.getCase(3,2).estVide());
     }
 
     @Test
