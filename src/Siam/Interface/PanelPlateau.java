@@ -2,7 +2,6 @@ package Siam.Interface;
 
 import Siam.Constantes;
 import Siam.DetectionSouris;
-import Siam.Enum.Theme;
 import Siam.Jeu;
 
 import javax.swing.*;
@@ -31,13 +30,19 @@ public class PanelPlateau extends JPanel implements Constantes{
         ecran.vider();
         jeu.getPlateau().affichage(ecran, jeu.getTheme());
         if(jeu.varianteCaseBannieActive() && jeu.getJoueurActif().getNombreTour() < 2){
-            if (jeu.getTheme() == Theme.STANDARD){
-                ecran.affichageSprite(2, 0, Sprite.StandardCaseBannie, false, false);
-                ecran.affichageSprite(2, 4, Sprite.StandardCaseBannie, false, false);
-            }
-            else if (jeu.getTheme() == Theme.NOEL){
-                ecran.affichageSprite(2, 0, Sprite.NoelCaseBannie, false, false);
-                ecran.affichageSprite(2, 4, Sprite.NoelCaseBannie, false, false);
+            switch (jeu.getTheme()) {
+                case STANDARD:
+                    ecran.affichageSprite(2, 0, Sprite.StandardCaseBannie, false, false);
+                    ecran.affichageSprite(2, 4, Sprite.StandardCaseBannie, false, false);
+                    break;
+                case NOEL:
+                    ecran.affichageSprite(2, 0, Sprite.NoelCaseBannie, false, false);
+                    ecran.affichageSprite(2, 4, Sprite.NoelCaseBannie, false, false);
+                    break;
+                case STARWARS:
+                    ecran.affichageSprite(2, 0, Sprite.StarWarsCaseBannie, false, false);
+                    ecran.affichageSprite(2, 4, Sprite.StarWarsCaseBannie, false, false);
+                    break;
             }
         }
         for (int i = 0; i < pixels.length; i++){

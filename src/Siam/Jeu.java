@@ -353,33 +353,54 @@ public class Jeu implements Runnable, Constantes {
         if (placerPiece || placerMontagne) {
             vueJeu.getPoser().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD)
-                vueJeu.getPoser().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL)
-                vueJeu.getPoser().setForeground(Color.RED);
+            switch (theme) {
+                case STANDARD:
+                    vueJeu.getPoser().setForeground(Color.ORANGE);
+                    break;
+                case NOEL:
+                    vueJeu.getPoser().setForeground(Color.RED);
+                    break;
+                case STARWARS:
+                    vueJeu.getPoser().setForeground(Color.YELLOW);
+                    break;
+            }
         }
         if (deplacerPiece) {
             vueJeu.getDeplacer().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD)
-                vueJeu.getDeplacer().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL)
-                vueJeu.getDeplacer().setForeground(Color.RED);
+            switch (theme) {
+                case STANDARD:
+                    vueJeu.getDeplacer().setForeground(Color.ORANGE);
+                    break;
+                case NOEL:
+                    vueJeu.getDeplacer().setForeground(Color.RED);
+                    break;
+                case STARWARS:
+                    vueJeu.getDeplacer().setForeground(Color.YELLOW);
+                    break;
+            }
         }
         if (changerOrientation) {
             vueJeu.getOrienter().setForeground(Color.BLUE);
         } else {
-            if (theme == Theme.STANDARD)
-                vueJeu.getOrienter().setForeground(Color.ORANGE);
-            else if (theme == Theme.NOEL)
-                vueJeu.getOrienter().setForeground(Color.RED);
+            switch (theme) {
+                case STANDARD:
+                    vueJeu.getOrienter().setForeground(Color.ORANGE);
+                    break;
+                case NOEL:
+                    vueJeu.getOrienter().setForeground(Color.RED);
+                    break;
+                case STARWARS:
+                    vueJeu.getOrienter().setForeground(Color.YELLOW);
+                    break;
+            }
         }
     }
 
     public void deselection(){
         pieceSelectionnee = false;
         getAnimalSelectionnee().setSelectionnee(false);
-        animalSelectionnee =null;
+        animalSelectionnee = null;
         selectionnerOrientation = false;
     }
 
@@ -453,7 +474,7 @@ public class Jeu implements Runnable, Constantes {
                         joueurs[i].setCamp(Camp.NEUTRE);
                         break;
                     case "MONTAGNE":
-                        joueurs[i].setCamp(Camp.MONTAGNE);
+                        joueurs[i].setCamp(Camp.NEUTRE);
                         break;
                 }
             }
@@ -480,9 +501,6 @@ public class Jeu implements Runnable, Constantes {
                                 case "NEUTRE":
                                     c = (Camp.NEUTRE);
                                     break;
-                                case "MONTAGNE":
-                                    c = (Camp.MONTAGNE);
-                                    break;
                             }
                             plat[i][j] = new Montagne(x, y, c);
                             break;
@@ -499,9 +517,6 @@ public class Jeu implements Runnable, Constantes {
                                     break;
                                 case "NEUTRE":
                                     ci = (Camp.NEUTRE);
-                                    break;
-                                case "MONTAGNE":
-                                    ci = (Camp.MONTAGNE);
                                     break;
                             }
                             Animal a = new Animal(xi,yi,ci);

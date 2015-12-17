@@ -19,9 +19,9 @@ public class PlateauUnitTest {
 
     @Test
     public void testInitMontagne() {
-        Assert.assertFalse(plateau.getCase(2,2).estVide());
-        Assert.assertFalse(plateau.getCase(1,2).estVide());
-        Assert.assertFalse(plateau.getCase(3,2).estVide());
+        Assert.assertTrue(plateau.getCase(2,2).estVide());
+        Assert.assertTrue(plateau.getCase(1,2).estVide());
+        Assert.assertTrue(plateau.getCase(3,2).estVide());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class PlateauUnitTest {
         Mockito.when(piece.getAbscisse()).thenReturn(0, 0);
         Mockito.when(piece.getOrdonnee()).thenReturn(0, 0);
         plateau.posePiece(piece);
-        plateau.deplacerPiece(piece, 1, 1, null);
+        plateau.deplacerPiece(piece, 1, 1);
         Case acase = plateau.getCase(1, 1);
         boolean ret = acase instanceof Piece;
         Assert.assertEquals(ret, true);

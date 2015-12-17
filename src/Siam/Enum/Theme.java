@@ -2,5 +2,6 @@ package Siam.Enum;
 
 public enum Theme {
     STANDARD,
-    NOEL
+    NOEL,
+    STARWARS
 }

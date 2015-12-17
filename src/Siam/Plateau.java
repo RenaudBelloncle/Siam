@@ -3,7 +3,6 @@ package Siam;
 import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
-import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 
 import java.io.PrintStream;
@@ -14,7 +13,6 @@ public class Plateau {
     private int tailleCote;
     private Case[][] plateau;
     private Jeu jeu;
-    private ArrayList <Trace> traceDePas;
 
     public Plateau(int tailleCote, Jeu jeu){
         this.jeu = jeu;
@@ -24,7 +22,6 @@ public class Plateau {
         for(int y = 0; y < tailleCote; y++){
             for(int x = 0; x < tailleCote; x++) plateau[x][y] = new Case(x,y);
         }
-        traceDePas = new ArrayList<>();
     }
 
     public void initMontagne() {
@@ -34,9 +31,9 @@ public class Plateau {
             plateau[3][2] = new Montagne(3,2, Camp.RHINOCEROS);
         }
         else{
-            plateau[2][2] = new Montagne(2,2, null);
-            plateau[1][2] = new Montagne(1,2, null);
-            plateau[3][2] = new Montagne(3,2, null);
+            plateau[2][2] = new Montagne(2,2, Camp.NEUTRE);
+            plateau[1][2] = new Montagne(1,2, Camp.NEUTRE);
+            plateau[3][2] = new Montagne(3,2, Camp.NEUTRE);
         }
     }
 
@@ -54,7 +51,6 @@ public class Plateau {
 
     public void posePiece(Piece piece) {
         plateau[piece.getAbscisse()][piece.getOrdonnee()] = piece;
-        traceDePas.add(piece.creerTrace(TraceType.POSE, null));
     }
 
     public void sortirPiece(int colonne, int ligne) {
@@ -69,10 +65,7 @@ public class Plateau {
         }
     }
 
-    public void deplacerPiece(Piece piece, int absTarget, int ordTarget, TraceType traceType) {
-        //TODO fix it ?
-        traceDePas.add(piece.creerTrace(traceType, getOrientationWithTargetCoord(piece.getAbscisse(),
-                piece.getOrdonnee(), absTarget, ordTarget)));
+    public void deplacerPiece(Piece piece, int absTarget, int ordTarget) {
         piece.setLastPosition(plateau[piece.getAbscisse()][piece.getOrdonnee()]);
         plateau[absTarget][ordTarget] = piece;
         plateau[piece.getAbscisse()][piece.getOrdonnee()] = new Case(piece.getAbscisse(), piece.getOrdonnee());
@@ -139,8 +132,7 @@ public class Plateau {
         return token.getSomme() > 0 || token.getSomme() >= 0 && token.isPeutEtreNull();
     }
 
-    public Piece decalageLigne(ArrayList<Piece> ligne)
-    {
+    public Piece decalageLigne(ArrayList<Piece> ligne) {
         Orientation orientationLigne = ((Animal)ligne.get(0)).getOrientation();
         ArrayList<Integer> vector2f = getAjoutXY(orientationLigne);
         Piece ret = null;
@@ -155,12 +147,12 @@ public class Plateau {
         }
         else
         {
-            deplacerPiece(ligne.get(ligne.size()-1), absDernierePiece, ordDernierePiece, TraceType.POUSSEE);
+            deplacerPiece(ligne.get(ligne.size()-1), absDernierePiece, ordDernierePiece);
         }
 
         for(int i = ligne.size() - 2; i >= 0 ; i--){
             deplacerPiece(ligne.get(i), ligne.get(i).getAbscisse() + vector2f.get(0),
-                    ligne.get(i).getOrdonnee() + vector2f.get(1), TraceType.POUSSEE);
+                    ligne.get(i).getOrdonnee() + vector2f.get(1));
         }
         return ret;
     }

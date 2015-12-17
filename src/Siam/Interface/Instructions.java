@@ -11,11 +11,10 @@ public class Instructions extends JFrame {
     private Theme theme;
     private OutilsFont outilsFont;
 
+    private JLabel titrebut;
+    private JLabel but;
     private JLabel commentjouer;
     private JLabel intro;
-    private JLabel titrebut;
-    private JLabel variante;
-    private JLabel but;
     private JLabel tpart1;
     private JLabel part1;
     private JLabel tpart2;
@@ -33,6 +32,7 @@ public class Instructions extends JFrame {
     private JLabel tpart8;
     private JLabel part8;
     private JLabel titre;
+    private JLabel variante;
 
     public Instructions(Theme theme){
         this.theme = theme;
@@ -139,13 +139,15 @@ public class Instructions extends JFrame {
         JPanel panPrincipal = new JPanel();
         JPanel panTitre = new JPanel();
 
-        JTextArea panRegle = new JTextArea(117, 1);
+        JTextArea panRegle = new JTextArea(118, 1);
         panRegle.setColumns(1);
         panRegle.setLineWrap(true);
         panRegle.setWrapStyleWord(true);
         panRegle.setEditable(false);
 
         JScrollPane scrollPane = new JScrollPane(panRegle);
+
+        panTitre.add(titre);
 
         panRegle.add(titrebut);
         panRegle.add(but);
@@ -168,7 +170,6 @@ public class Instructions extends JFrame {
         panRegle.add(part7);
         panRegle.add(tpart8);
         panRegle.add(part8);
-        panTitre.add(titre);
 
         panRegle.setOpaque(false);
         panTitre.setOpaque(false);
@@ -198,7 +199,16 @@ public class Instructions extends JFrame {
     }
 
     public void changerPolice(){
-        if (theme == Theme.STANDARD) outilsFont.changerFontJLabel(titre, 50, Color.orange, outilsFont.getStandardFontMenu());
-        else if (theme == Theme.NOEL) outilsFont.changerFontJLabel(titre, 70, Color.red, outilsFont.getNoelFontTexte());
+        switch (theme) {
+            case STANDARD:
+                outilsFont.changerFontJLabel(titre, 50, Color.orange, outilsFont.getStandardFontMenu());
+                break;
+            case NOEL:
+                outilsFont.changerFontJLabel(titre, 70, Color.red, outilsFont.getNoelFontTexte());
+                break;
+            case STARWARS:
+                outilsFont.changerFontJLabel(titre, 50, Color.yellow, outilsFont.getStarWarsTexte());
+                break;
+        }
     }
 }

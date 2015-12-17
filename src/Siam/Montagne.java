@@ -1,14 +1,9 @@
 package Siam;
 
 import Siam.Enum.Camp;
-import Siam.Enum.Camp;
-import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
-import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
-
-import java.io.PrintStream;
 
 public class Montagne extends Piece {
 
@@ -18,17 +13,47 @@ public class Montagne extends Piece {
     }
 
     public void affichage(Ecran ecran, Theme theme) {
-        if (theme == Theme.STANDARD) {
-            ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseVide,false,false);
-            if (camp == Camp.ELEPHANT) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseMontagneElephant, false, false);
-            else if (camp == Camp.RHINOCEROS) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseMontagneRhinoceros, false, false);
-            else ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseMontagne, false, false);
-        }
-        else if (theme == Theme.NOEL) {
-            ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseVide,false,false);
-            if (camp == Camp.ELEPHANT) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseMontagneElephant, false, false);
-            else if (camp == Camp.RHINOCEROS) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseMontagneRhinoceros, false, false);
-            else ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseMontagne, false, false);
+        super.affichage(ecran, theme);
+        switch (camp) {
+            case ELEPHANT:
+                switch (theme) {
+                    case STANDARD:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseMontagneElephant, false, false);
+                        break;
+                    case NOEL:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseMontagneElephant, false, false);
+                        break;
+                    case STARWARS:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCaseMontagneElephant, false, false);
+                        break;
+                }
+                break;
+            case RHINOCEROS:
+                switch (theme) {
+                    case STANDARD:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseMontagneRhinoceros, false, false);
+                        break;
+                    case NOEL:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseMontagneRhinoceros, false, false);
+                        break;
+                    case STARWARS:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCaseMontagneRhinoceros, false, false);
+                        break;
+                }
+                break;
+            case NEUTRE:
+                switch (theme) {
+                    case STANDARD:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseMontagne, false, false);
+                        break;
+                    case NOEL:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseMontagne, false, false);
+                        break;
+                    case STARWARS:
+                        ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCaseMontagne, false, false);
+                        break;
+                }
+                break;
         }
     }
 
@@ -37,10 +62,6 @@ public class Montagne extends Piece {
     }
 
     public Camp getCamp(){
-        return Camp.MONTAGNE;
-    }
-
-    public Trace creerTrace(TraceType traceType, Orientation direction){
-        return new Trace(getAbscisse(), getOrdonnee(), direction, Orientation.BAS, traceType, getCamp());
+        return camp;
     }
 }

@@ -2,8 +2,6 @@ package Siam;
 
 import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
-import Siam.Enum.TraceType;
-
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +125,7 @@ public class Joueur implements Constantes{
 
     public boolean deplaceAnimalSurCaseVide(Animal animal, Case caseCible){
         if(caseCible.estVide()){
-            getPlateau().deplacerPiece(animal, caseCible.getAbscisse(), caseCible.getOrdonnee(), TraceType.MARCHE);
+            getPlateau().deplacerPiece(animal, caseCible.getAbscisse(), caseCible.getOrdonnee());
             return true;
         }
         return false;

@@ -3,7 +3,6 @@ package Siam;
 import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
-import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
@@ -42,49 +41,133 @@ public class Animal extends Piece {
     }
 
     public void affichage(Ecran ecran, Theme theme) {
-        if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCaseVide,false,false);
-        else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCaseVide,false,false);
-        if (camp == Camp.ELEPHANT)
-        {
-            if (orientation == Orientation.HAUT) {
-                if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur1, false, false);
-                else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur1, false, false);
-            }
-            if (orientation == Orientation.BAS) {
-                if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur1, false, true);
-                else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur1, false, true);
-            }
-            if (orientation == Orientation.GAUCHE) {
-                if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur1Gauche, false, false);
-                else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur1Gauche, false, false);
-            }
-            if (orientation == Orientation.DROITE) {
-                if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur1Gauche, true, false);
-                else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur1Gauche, true, false);
-            }
-        }
-        if (camp == Camp.RHINOCEROS)
-        {
-            if (orientation == Orientation.HAUT) {
-                if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur2, false, false);
-                else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur2, false, false);
-            }
-            if (orientation == Orientation.BAS) {
-                if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur2, false, true);
-                else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur2, false, true);
-            }
-            if (orientation == Orientation.GAUCHE) {
-                if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur2Gauche, false, false);
-                else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur2Gauche, false, false);
-            }
-            if (orientation == Orientation.DROITE) {
-                if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur2Gauche, true, false);
-                else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur2Gauche, true, false);
-            }
+        super.affichage(ecran, theme);
+        switch (camp) {
+            case ELEPHANT:
+                switch (orientation) {
+                    case HAUT:
+                        switch (theme) {
+                            case STANDARD:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur1, false, false);
+                                break;
+                            case NOEL:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur1, false, false);
+                                break;
+                            case STARWARS:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCasePionJoueur1, false, false);
+                                break;
+                        }
+                        break;
+                    case BAS:
+                        switch (theme) {
+                            case STANDARD:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur1, false, true);
+                                break;
+                            case NOEL:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur1, false, true);
+                                break;
+                            case STARWARS:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCasePionJoueur1, false, true);
+                                break;
+                        }
+                        break;
+                    case GAUCHE:
+                        switch (theme) {
+                            case STANDARD:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur1Gauche, false, false);
+                                break;
+                            case NOEL:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur1Gauche, false, false);
+                                break;
+                            case STARWARS:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCasePionJoueur1Gauche, false, false);
+                                break;
+                        }
+                        break;
+                    case DROITE:
+                        switch (theme) {
+                            case STANDARD:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur1Gauche, true, false);
+                                break;
+                            case NOEL:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur1Gauche, true, false);
+                                break;
+                            case STARWARS:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCasePionJoueur1Gauche, true, false);
+                                break;
+                        }
+                        break;
+                }
+                break;
+            case RHINOCEROS:
+                switch (orientation) {
+                    case HAUT:
+                        switch (theme) {
+                            case STANDARD:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur2, false, false);
+                                break;
+                            case NOEL:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur2, false, false);
+                                break;
+                            case STARWARS:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCasePionJoueur2, false, false);
+                                break;
+                        }
+                        break;
+                    case BAS:
+                        switch (theme) {
+                            case STANDARD:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur2, false, true);
+                                break;
+                            case NOEL:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur2, false, true);
+                                break;
+                            case STARWARS:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCasePionJoueur2, false, true);
+                                break;
+                        }
+                        break;
+                    case GAUCHE:
+                        switch (theme) {
+                            case STANDARD:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur2Gauche, false, false);
+                                break;
+                            case NOEL:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur2Gauche, false, false);
+                                break;
+                            case STARWARS:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCasePionJoueur2Gauche, false, false);
+                                break;
+                        }
+                        break;
+                    case DROITE:
+                        switch (theme) {
+                            case STANDARD:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardCasePionJoueur2Gauche, true, false);
+                                break;
+                            case NOEL:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelCasePionJoueur2Gauche, true, false);
+                                break;
+                            case STARWARS:
+                                ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsCasePionJoueur2Gauche, true, false);
+                                break;
+                        }
+                        break;
+                }
+                break;
         }
         if (selectionnee) {
-            if (theme == Theme.STANDARD) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardFocus, false, false);
-            else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelFocus, false, false);
+            switch (theme) {
+                case STANDARD:
+                    ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StandardFocus, false, false);
+                    break;
+                case NOEL:
+                    ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelFocus, false, false);
+                    break;
+                case STARWARS:
+                    ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.StarWarsFocus, false, false);
+                    break;
+            }
         }
     }
 
@@ -92,11 +175,7 @@ public class Animal extends Piece {
         return false;
     }
 
-    public Trace creerTrace(TraceType traceType, Orientation direction){
-        return new Trace(getAbscisse(), getOrdonnee(), direction, getOrientation(), traceType, getCamp());
-    }
-
-    public void sauvegarder(PrintStream ps){
+    public void sauvegarder(PrintStream ps) {
         super.sauvegarder(ps);
         ps.println(orientation);
     }

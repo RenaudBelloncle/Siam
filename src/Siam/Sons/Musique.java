@@ -13,6 +13,7 @@ public class Musique extends Thread {
     private MP3 dj;
     private String[] bandeSonStandard;
     private String[] bandeSonNoel;
+    private String[] bandeSonStarWars;
 
     private Theme theme;
 
@@ -24,6 +25,12 @@ public class Musique extends Thread {
         bandeSonNoel = new String[]{"res/Noel/Musiques/Noel1.mp3",
                                     "res/Noel/Musiques/Noel2.mp3",
                                     "res/Noel/Musiques/Noel3.mp3"};
+        bandeSonStarWars = new String[]{"res/StarWars/Musiques/StarWars1.mp3",
+                                        "res/StarWars/Musiques/StarWars2.mp3",
+                                        "res/StarWars/Musiques/StarWars3.mp3",
+                                        "res/StarWars/Musiques/StarWars4.mp3",
+                                        "res/StarWars/Musiques/StarWars5.mp3",
+                                        "res/StarWars/Musiques/StarWars6.mp3"};
     }
 
     public synchronized void start() {
@@ -32,7 +39,7 @@ public class Musique extends Thread {
     }
 
     public void run(){
-        String[] bandeSon;
+        String[] bandeSon = null;
         switch (theme) {
             case STANDARD:
                 bandeSon = bandeSonStandard;
@@ -40,8 +47,8 @@ public class Musique extends Thread {
             case NOEL:
                 bandeSon = bandeSonNoel;
                 break;
-            default:
-                bandeSon = null;
+            case STARWARS:
+                bandeSon = bandeSonStarWars;
                 break;
         }
         int nouvCompteur;
@@ -72,7 +79,7 @@ public class Musique extends Thread {
     }
 
     public void arret() {
-        dj.stop();
+        if (dj != null) dj.stop();
         dj = null;
     }
 }
