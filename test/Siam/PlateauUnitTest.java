@@ -65,7 +65,7 @@ public class PlateauUnitTest {
         Mockito.when(piece.getAbscisse()).thenReturn(0, 0);
         Mockito.when(piece.getOrdonnee()).thenReturn(0, 0);
         plateau.posePiece(piece);
-        plateau.deplacerPiece(piece, 1, 1, null);
+        plateau.deplacerPiece(piece, 1, 1);
         Case acase = plateau.getCase(1, 1);
         boolean ret = acase instanceof Piece;
         Assert.assertEquals(ret, true);

@@ -1,13 +1,9 @@
 package Siam;
 
 import Siam.Enum.Camp;
-import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
-import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
-
-import java.io.PrintStream;
 
 public class Montagne extends Piece {
 
@@ -77,9 +73,5 @@ public class Montagne extends Piece {
 
     public Camp getCamp(){
         return camp;
-    }
-
-    public Trace creerTrace(TraceType traceType, Orientation direction){
-        return new Trace(getAbscisse(), getOrdonnee(), direction, Orientation.BAS, traceType, getCamp());
     }
 }
