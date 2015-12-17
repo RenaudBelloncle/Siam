@@ -70,7 +70,6 @@ public class Plateau {
     }
 
     public void deplacerPiece(Piece piece, int absTarget, int ordTarget, TraceType traceType) {
-        //TODO fix it ?
         traceDePas.add(piece.creerTrace(traceType, getOrientationWithTargetCoord(piece.getAbscisse(),
                 piece.getOrdonnee(), absTarget, ordTarget)));
         piece.setLastPosition(plateau[piece.getAbscisse()][piece.getOrdonnee()]);
@@ -139,8 +138,7 @@ public class Plateau {
         return token.getSomme() > 0 || token.getSomme() >= 0 && token.isPeutEtreNull();
     }
 
-    public Piece decalageLigne(ArrayList<Piece> ligne)
-    {
+    public Piece decalageLigne(ArrayList<Piece> ligne) {
         Orientation orientationLigne = ((Animal)ligne.get(0)).getOrientation();
         ArrayList<Integer> vector2f = getAjoutXY(orientationLigne);
         Piece ret = null;

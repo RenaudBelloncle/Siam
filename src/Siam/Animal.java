@@ -190,7 +190,7 @@ public class Animal extends Piece {
         return new Trace(getAbscisse(), getOrdonnee(), direction, getOrientation(), traceType, getCamp());
     }
 
-    public void sauvegarder(PrintStream ps){
+    public void sauvegarder(PrintStream ps) {
         super.sauvegarder(ps);
         ps.println(orientation);
     }
