@@ -12,9 +12,11 @@ public class Plateau {
 
     private int tailleCote;
     private Case[][] plateau;
+    private Jeu jeu;
     private ArrayList <Trace> traceDePas;
 
-    public Plateau(int tailleCote){
+    public Plateau(int tailleCote, Jeu jeu){
+        this.jeu = jeu;
         this.tailleCote = tailleCote;
         plateau = new Case[tailleCote][tailleCote];
 
@@ -26,9 +28,16 @@ public class Plateau {
     }
 
     public void initMontagne() {
-        plateau[2][2] = new Montagne(2,2);
-        plateau[1][2] = new Montagne(1,2);
-        plateau[3][2] = new Montagne(3,2);
+        if(jeu.varianteMontagneActive()){
+            plateau[2][2] = new Montagne(2,2, Camp.NEUTRE);
+            plateau[1][2] = new Montagne(1,2, Camp.ELEPHANT);
+            plateau[3][2] = new Montagne(3,2, Camp.RHINOCEROS);
+        }
+        else{
+            plateau[2][2] = new Montagne(2,2, null);
+            plateau[1][2] = new Montagne(1,2, null);
+            plateau[3][2] = new Montagne(3,2, null);
+        }
     }
 
     public Case getCase(int x, int y) {
@@ -152,22 +161,29 @@ public class Plateau {
         return ret;
     }
 
-    public Camp trouveCampGagnant(ArrayList <Piece> ligne){
+    public Camp trouveCampGagnant(ArrayList <Piece> ligne, Piece montagne){
 
-        Animal pousseur;
-        pousseur = (Animal)ligne.get(0);
-        Animal pieceCourante;
-        Orientation orientationPousseur = pousseur.getOrientation();
-        for (int i = ligne.size() - 2;i >= 1; i++) {
+        if( jeu.varianteMontagneActive()){
+            if(montagne.getCamp() == Camp.ELEPHANT) return Camp.RHINOCEROS;
+            else if(montagne.getCamp() == Camp.RHINOCEROS) return Camp.ELEPHANT;
+            else return Camp.NEUTRE;
+        }
+        else {
+            Animal pousseur;
+            pousseur = (Animal)ligne.get(0);
+            Animal pieceCourante;
+            Orientation orientationPousseur = pousseur.getOrientation();
+            for (int i = ligne.size() - 2;i >= 1; i++) {
 
-            if (ligne.get(i) instanceof Animal) {
-                pieceCourante = (Animal)ligne.get(i);
-                if (pieceCourante.getOrientation() == orientationPousseur) {
-                    return pieceCourante.getCamp();
+                if (ligne.get(i) instanceof Animal) {
+                    pieceCourante = (Animal)ligne.get(i);
+                    if (pieceCourante.getOrientation() == orientationPousseur) {
+                        return pieceCourante.getCamp();
+                    }
                 }
             }
+            return pousseur.getCamp();
         }
-        return pousseur.getCamp();
     }
 
     public ArrayList<Integer> getAjoutXY(Orientation orientation){

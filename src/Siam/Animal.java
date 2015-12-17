@@ -10,13 +10,11 @@ import Siam.Interface.Sprite;
 public class Animal extends Piece {
 
     private Orientation orientation;
-    private Camp camp;
     private boolean selectionnee;
 
     public Animal(int abscisse, int ordonnee, Orientation orientation, Camp camp, boolean selectionnee) {
-        super(abscisse, ordonnee);
+        super(abscisse, ordonnee, camp);
         this.orientation = orientation;
-        this.camp = camp;
         this.selectionnee = selectionnee;
     }
 
@@ -34,14 +32,6 @@ public class Animal extends Piece {
 
     public void setSelectionnee(boolean selectionnee) {
         this.selectionnee = selectionnee;
-    }
-
-    public Camp getCamp() {
-        return camp;
-    }
-
-    public void setCamp(Camp camp) {
-        this.camp = camp;
     }
 
     public void affichage(Ecran ecran, Theme theme) {
@@ -90,8 +80,6 @@ public class Animal extends Piece {
             else if (theme == Theme.NOEL) ecran.affichageSprite(getAbscisse(), getOrdonnee(), Sprite.NoelFocus, false, false);
         }
     }
-
-    
 
     public boolean estVide() {
         return false;

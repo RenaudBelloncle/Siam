@@ -14,7 +14,7 @@ public class PlateauUnitTest {
 
     @Before
     public void setUp() {
-        plateau = new Plateau(5);
+        plateau = new Plateau(5, null);
     }
 
     @Test

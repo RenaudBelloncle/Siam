@@ -2,7 +2,6 @@ package Siam;
 
 import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
-import Siam.Enum.Theme;
 import Siam.Enum.TraceType;
 
 import java.util.ArrayList;
@@ -55,29 +54,35 @@ public class Joueur implements Constantes{
         return pseudo;
     }
 
-    public Animal posePiece(int colonne, int ligne,boolean varianteNombrePieceActive,boolean varianteCaseBannieActive) {
-        if(varianteNombrePieceActive && !restePieceDispo())
+    public Animal posePiece(int colonne, int ligne, boolean varianteNombrePieceActive,
+                            boolean varianteCaseBannieActive, boolean varianteMontagneActive) {
+        if(varianteMontagneActive) {
+            plateau.posePiece(new Montagne(colonne, ligne, Camp.NEUTRE));
             return null;
-        if(varianteCaseBannieActive && nombreTour < 2) {
-            if (colonne == 2 && (ligne == 0 || ligne == 4))
+        }
+        else {
+            if(varianteNombrePieceActive && !restePieceDispo())
                 return null;
-        }
-        if (restePiece()) {
-            if (!(plateau.getCase(colonne, ligne) instanceof Piece)) {
-                pieceSurPlateau++;
-                if (camp == Camp.ELEPHANT) {
-                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT, false));
-                    plateau.posePiece(animals.get(pieceSurPlateau - 1));
-                } else {
-                    animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS, false));
-                    plateau.posePiece(animals.get(pieceSurPlateau - 1));
-                }
-                if(varianteNombrePieceActive && restePieceDispo())
-                    piecePose();
-                return animals.get(pieceSurPlateau - 1);
+            if(varianteCaseBannieActive && nombreTour < 2) {
+                if (colonne == 2 && (ligne == 0 || ligne == 4))
+                    return null;
             }
+            if (restePiece()) {
+                if (!(plateau.getCase(colonne, ligne) instanceof Piece)) {
+                    pieceSurPlateau++;
+                    if (camp == Camp.ELEPHANT) {
+                        animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.ELEPHANT, false));
+                        plateau.posePiece(animals.get(pieceSurPlateau - 1));
+                    } else {
+                        animals.add(new Animal(colonne, ligne, Orientation.HAUT, Camp.RHINOCEROS, false));
+                        plateau.posePiece(animals.get(pieceSurPlateau - 1));
+                    }
+                    if(varianteNombrePieceActive && restePieceDispo()) piecePose();
+                    return animals.get(pieceSurPlateau - 1);
+                }
+            }
+            return null;
         }
-        return null;
     }
 
     public boolean restePiece() {
@@ -88,7 +93,7 @@ public class Joueur implements Constantes{
         return pieceRestantAPlacer > 0;
     }
 
-    public void piecePose(){
+    public void piecePose() {
         pieceRestantAPlacer --;
     }
 
@@ -117,16 +122,20 @@ public class Joueur implements Constantes{
     public TokenResultatPoussee deplaceAnimalEnPoussant(Animal pousseur){
         ArrayList<Piece> ligne = plateau.getLignePoussee(pousseur);
         TokenSommePoussee resultat = plateau.calculResultatPoussee(ligne);
-        boolean pousseeReussie = false;
+        boolean pousserReussie = false;
+        Piece pieceSortie = null;
         Camp campGagnant = null;
         if(plateau.analyseTokenPoussee(resultat)){
-            Piece pieceSortie = plateau.decalageLigne(ligne);
-            pousseeReussie = true;
+            pieceSortie = plateau.decalageLigne(ligne);
+            pousserReussie = true;
             if(pieceSortie != null && pieceSortie instanceof Montagne){
-                campGagnant = plateau.trouveCampGagnant(ligne);
+                if (pieceSortie.getCamp() == null){
+                    return new TokenResultatPoussee(true, null, pieceSortie);
+                }
+                else campGagnant = plateau.trouveCampGagnant(ligne, pieceSortie);
             }
         }
-        return new TokenResultatPoussee(pousseeReussie, campGagnant);
+        return new TokenResultatPoussee(pousserReussie, campGagnant, pieceSortie);
     }
 
     public int getNombreTour(){
