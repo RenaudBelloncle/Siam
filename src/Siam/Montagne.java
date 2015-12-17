@@ -7,6 +7,8 @@ import Siam.Enum.TraceType;
 import Siam.Interface.Ecran;
 import Siam.Interface.Sprite;
 
+import java.io.PrintStream;
+
 public class Montagne extends Piece {
 
     public Montagne(int colonne, int ligne, Camp camp) {

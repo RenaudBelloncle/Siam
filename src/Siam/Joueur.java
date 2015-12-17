@@ -4,6 +4,7 @@ import Siam.Enum.Camp;
 import Siam.Enum.Orientation;
 import Siam.Enum.TraceType;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -19,6 +20,13 @@ public class Joueur implements Constantes{
     private int nombreTour;
     private String pseudo;
 
+    public Joueur(String pseudo, int nbPiecePlat, int nbRestant, int nbTour){
+        this.pseudo = pseudo;
+        this.pieceSurPlateau = nbPiecePlat;
+        this.pieceRestantAPlacer = nbRestant;
+        this.nombreTour = nbTour;
+        animals = new ArrayList<>();
+    }
 
     public Joueur(Camp camp, String pseudo){
         pieceRestantAPlacer = NOMBRE_DE_PIECE_POSEE_MAX_VARIANTE;
@@ -37,6 +45,8 @@ public class Joueur implements Constantes{
     public Plateau getPlateau() {
         return plateau;
     }
+
+    public int getPieceSurPlateau(){return pieceSurPlateau;}
 
     public void setPlateau(Plateau plateau) {
         this.plateau = plateau;
@@ -83,6 +93,10 @@ public class Joueur implements Constantes{
             }
             return null;
         }
+    }
+
+    public void ajouterAnimal(Animal a){
+        animals.add(a);
     }
 
     public boolean restePiece() {
@@ -144,5 +158,13 @@ public class Joueur implements Constantes{
 
     public void finDeTour(){
         nombreTour ++;
+    }
+
+    public void sauvegarder(PrintStream ps){
+        ps.println(pseudo);
+        ps.println(pieceSurPlateau);
+        ps.println(pieceRestantAPlacer);
+        ps.println(nombreTour);
+        ps.println(camp);
     }
 }

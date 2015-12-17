@@ -26,6 +26,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     private JButton themeSuivant;
     private JButton scores;
     private JButton quitter;
+    private JButton charger;
     private JLabel optionL;
     private JButton couperSon;
     private JButton retour;
@@ -68,6 +69,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     public void initMenu(){
         titre = new JLabel("Siam");
         jouer = new JButton("Jouer");
+        charger = new JButton("Charger");
         instructions = new JButton("Regles");
         scores = new JButton("Scores");
         quitter = new JButton("Quitter");
@@ -99,6 +101,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
 
         panTitre.add(titre);
         panBoutons.add(jouer);
+        panBoutons.add(charger);
         panBoutons.add(scores);
         panBoutons.add(option);
         panBoutons.add(quitter);
@@ -144,6 +147,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     public void changerPolice(){
         if (theme == Theme.STANDARD) {
             outilsFont.changerFontJLabel(titre, 150, Color.orange, outilsFont.getStandardFontMenu());
+            outilsFont.changerFontButton(charger, 60, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontButton(jouer, 60, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontButton(scores, 60, Color.orange, outilsFont.getStandardFontTexte());
             outilsFont.changerFontButton(option, 60, Color.orange, outilsFont.getStandardFontTexte());
@@ -157,6 +161,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         } else if (theme == Theme.NOEL) {
             outilsFont.changerFontJLabel(titre, 150, Color.red, outilsFont.getNoelFontMenu());
             outilsFont.changerFontButton(jouer, 70, Color.green, outilsFont.getNoelFontTexte());
+            outilsFont.changerFontButton(charger, 70, Color.green, outilsFont.getNoelFontTexte());
             outilsFont.changerFontButton(scores, 70, Color.green, outilsFont.getNoelFontTexte());
             outilsFont.changerFontButton(option, 70, Color.green, outilsFont.getNoelFontTexte());
             outilsFont.changerFontButton(quitter, 70, Color.green, outilsFont.getNoelFontTexte());
@@ -182,6 +187,7 @@ public class Menu extends JFrame implements ActionListener, Constantes {
 
     public void setControlMenu(ActionListener listener){
         jouer.addActionListener(listener);
+        charger.addActionListener(listener);
         instructions.addActionListener(listener);
         scores.addActionListener(listener);
         quitter.addActionListener(listener);
@@ -211,6 +217,9 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         //}
         else if(source == retour) {
             lanceMenu();
+        }
+        else if(source == charger){
+            jeu.charger();
         }
         else if(source == option) {
             afficheMenuOption();
