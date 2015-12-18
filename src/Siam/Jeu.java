@@ -473,9 +473,6 @@ public class Jeu implements Runnable, Constantes {
                     case "NEUTRE":
                         joueurs[i].setCamp(Camp.NEUTRE);
                         break;
-                    case "MONTAGNE":
-                        joueurs[i].setCamp(Camp.NEUTRE);
-                        break;
                 }
             }
             setJoueurActif(joueurs[Integer.parseInt(br.readLine())]);

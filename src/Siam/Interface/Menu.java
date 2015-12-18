@@ -24,7 +24,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
     private JButton instructions;
     private JButton option;
     private JButton themeSuivant;
-    private JButton scores;
     private JButton quitter;
     private JButton charger;
     private JLabel optionL;
@@ -71,7 +70,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         jouer = new JButton("Jouer");
         charger = new JButton("Charger");
         instructions = new JButton("Regles");
-        scores = new JButton("Scores");
         quitter = new JButton("Quitter");
 
         optionL = new JLabel("Options", SwingConstants.CENTER);
@@ -102,7 +100,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         panTitre.add(titre);
         panBoutons.add(jouer);
         panBoutons.add(charger);
-        panBoutons.add(scores);
         panBoutons.add(option);
         panBoutons.add(quitter);
 
@@ -150,7 +147,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
                 outilsFont.changerFontJLabel(titre, 150, Color.orange, outilsFont.getStandardFontMenu());
                 outilsFont.changerFontButton(jouer, 60, Color.orange, outilsFont.getStandardFontTexte());
                 outilsFont.changerFontButton(charger, 60, Color.orange, outilsFont.getStandardFontTexte());
-                outilsFont.changerFontButton(scores, 60, Color.orange, outilsFont.getStandardFontTexte());
                 outilsFont.changerFontButton(option, 60, Color.orange, outilsFont.getStandardFontTexte());
                 outilsFont.changerFontButton(quitter, 60, Color.orange, outilsFont.getStandardFontTexte());
 
@@ -164,7 +160,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
                 outilsFont.changerFontJLabel(titre, 150, Color.red, outilsFont.getNoelFontMenu());
                 outilsFont.changerFontButton(jouer, 70, Color.red, outilsFont.getNoelFontTexte());
                 outilsFont.changerFontButton(charger, 70, Color.red, outilsFont.getNoelFontTexte());
-                outilsFont.changerFontButton(scores, 70, Color.red, outilsFont.getNoelFontTexte());
                 outilsFont.changerFontButton(option, 70, Color.red, outilsFont.getNoelFontTexte());
                 outilsFont.changerFontButton(quitter, 70, Color.red, outilsFont.getNoelFontTexte());
 
@@ -178,7 +173,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
                 outilsFont.changerFontJLabel(titre, 150, Color.yellow, outilsFont.getStarWarsTexte());
                 outilsFont.changerFontButton(jouer, 50, Color.yellow, outilsFont.getStarWarsTexte());
                 outilsFont.changerFontButton(charger, 50, Color.yellow, outilsFont.getStarWarsTexte());
-                outilsFont.changerFontButton(scores, 50, Color.yellow, outilsFont.getStarWarsTexte());
                 outilsFont.changerFontButton(option, 50, Color.yellow, outilsFont.getStarWarsTexte());
                 outilsFont.changerFontButton(quitter, 50, Color.yellow, outilsFont.getStarWarsTexte());
 
@@ -206,7 +200,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         jouer.addActionListener(listener);
         charger.addActionListener(listener);
         instructions.addActionListener(listener);
-        scores.addActionListener(listener);
         quitter.addActionListener(listener);
         retour.addActionListener(listener);
         option.addActionListener(listener);
@@ -229,9 +222,6 @@ public class Menu extends JFrame implements ActionListener, Constantes {
         else if(source == instructions) {
             new Instructions(theme);
         }
-        //else if(source == scores) {
-            //TODO Afficher les scores
-        //}
         else if(source == retour) {
             lanceMenu();
         }

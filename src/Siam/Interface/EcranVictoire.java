@@ -123,7 +123,7 @@ public class EcranVictoire implements ActionListener, Constantes {
                 outilsFont.changerFontButton(retourMenu, 60, Color.red, outilsFont.getNoelFontTexte());
                 break;
             case STARWARS:
-                outilsFont.changerFontJLabel(gagnant, 80, Color.yellow, outilsFont.getStarWarsTexte());
+                outilsFont.changerFontJLabel(gagnant, 60, Color.yellow, outilsFont.getStarWarsTexte());
                 outilsFont.changerFontButton(continuer, 40, Color.yellow, outilsFont.getStarWarsTexte());
                 outilsFont.changerFontButton(retourMenu, 40, Color.yellow, outilsFont.getStarWarsTexte());
                 break;
