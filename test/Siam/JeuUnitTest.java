@@ -1,6 +1,7 @@
 package Siam;
 
 import Siam.Enum.Camp;
+import Siam.Enum.Orientation;
 import Siam.Enum.Theme;
 import Siam.Interface.VueJeu;
 import Siam.Sons.Musique;
@@ -257,11 +258,19 @@ public class JeuUnitTest {
         Assert.assertFalse(jeu.isPieceSelectionnee());
         Assert.assertNull(jeu.getAnimalSelectionnee());
         Assert.assertFalse(jeu.isSelectionnerOrientation());
-        //TODO Test Manquant - JP
     }
 
     @Test
     public void testTestOrientationEntreAnimalEtCase() {
-        //TODO Test Manquant - JP
+        Animal animal = Mockito.mock(Animal.class);
+        Mockito.when(animal.getAbscisse()).thenReturn(0, 1, 0);
+        Mockito.when(animal.getOrdonnee()).thenReturn(0, 0, 0);
+        Mockito.when(animal.getOrientation()).thenReturn(Orientation.BAS, Orientation.BAS, Orientation.GAUCHE);
+        Case caseTest = Mockito.mock(Case.class);
+        Mockito.when(caseTest.getAbscisse()).thenReturn(0, 0, 0);
+        Mockito.when(caseTest.getOrdonnee()).thenReturn(1, 1, 1);
+        Assert.assertTrue(jeu.testOrientationEntreAnimalEtCase(animal, caseTest));
+        Assert.assertFalse(jeu.testOrientationEntreAnimalEtCase(animal, caseTest));
+        Assert.assertFalse(jeu.testOrientationEntreAnimalEtCase(animal, caseTest));
     }
 }

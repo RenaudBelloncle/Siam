@@ -46,7 +46,7 @@ public class ChoixCamp implements ActionListener, Constantes {
         this.son = son;
         outilsFont = new OutilsFont();
         this.soundsLibrary = soundsLibrary;
-        
+
         initChoixCamp();
         afficheChoixCamp();
         setControlChoixCamp(this);

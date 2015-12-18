@@ -169,15 +169,18 @@ public class Plateau {
             pousseur = (Animal)ligne.get(0);
             Animal pieceCourante;
             Orientation orientationPousseur = pousseur.getOrientation();
-            for (int i = ligne.size() - 2;i >= 1; i++) {
+            for (int i = ligne.size() - 2;i >= 1; i--) {
 
                 if (ligne.get(i) instanceof Animal) {
                     pieceCourante = (Animal)ligne.get(i);
+                    Orientation o = pieceCourante.getOrientation();
                     if (pieceCourante.getOrientation() == orientationPousseur) {
+                        Camp ret = pieceCourante.getCamp();
                         return pieceCourante.getCamp();
                     }
                 }
             }
+            Camp ret = pousseur.getCamp();
             return pousseur.getCamp();
         }
     }
@@ -257,5 +260,10 @@ public class Plateau {
                 }
             }
         }
+    }
+
+    public void setJeu(Jeu jeu)
+    {
+        this.jeu = jeu;
     }
 }
