@@ -1,2 +1,5 @@
-.idea
 Siam.iml
+Siam.ipr
+Siam.iws
+.idea/
+out/
