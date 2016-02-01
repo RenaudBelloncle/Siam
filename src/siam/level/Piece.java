@@ -17,6 +17,10 @@ public abstract class Piece {
         this.camp = camp;
     }
 
+    public int[] getCoord(){
+        return new int[]{x,y};
+    }
+
     public Sprite getSprite() {
         return sprite;
     }

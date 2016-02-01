@@ -2,6 +2,7 @@ package siam;
 
 import siam.graphics.FontTools;
 import siam.graphics.TextureManager;
+import siam.level.Animal;
 import siam.level.Board;
 import siam.player.Player;
 
@@ -17,6 +18,9 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     private Board board;
     private Player[] players;
+    private int playerActive;
+
+    private Animal pieceSelected;
 
     private boolean songEnable = false;
 
@@ -42,6 +46,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public Game() {
         board = new Board(BOARD_SIZE);
         players = new Player[2];
+        playerActive = 0;
         for (int i = 0; i < 2; i++) {
             players[i] = new Player();
         }
@@ -62,12 +67,14 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
+        setButtonStatus(0);
         start();
     }
 
     public Game(JFrame frame) {
         board = new Board(BOARD_SIZE);
         players = new Player[2];
+        playerActive = 0;
         for (int i = 0; i < 2; i++) {
             players[i] = new Player();
         }
@@ -84,11 +91,12 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
         frame.setVisible(true);
 
+        setButtonStatus(0);
         start();
     }
 
     private void initFrame() {
-        playerName = new JLabel(players[0].getName());
+        playerName = new JLabel(players[playerActive].getName());
         put = new JButton(PUT_BUTTON);
         bringOut = new JButton(BRINGOUT_BUTTON);
         move = new JButton(MOVE_BUTTON);
@@ -277,5 +285,77 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 song.setText(SONG_ENABLE_BAR);
             }
         }
+        else if(source == put){
+            setButtonStatus(1);
+        }
+        else if(source == move){
+            setButtonStatus(2);
+        }
+        else if(source == bringOut){
+            setButtonStatus(3);
+        }
+        else if(source == orient){
+            setButtonStatus(4);
+        }
+    }
+
+    public void setButtonStatus(int buttonSelected){
+        top.setEnabled(false);
+        bottom.setEnabled(false);
+        right.setEnabled(false);
+        left.setEnabled(false);
+
+        if(players[playerActive].getPieceNumber() == 0){
+            move.setEnabled(false);
+            bringOut.setEnabled(false);
+            orient.setEnabled(false);
+
+        }
+        else if(pieceSelected != null){
+            move.setEnabled(true);
+            bringOut.setEnabled(testBringOut());
+            orient.setEnabled(true);
+        }
+        switch(buttonSelected){
+            case 1:
+                put.setSelected(true);
+                break;
+            case 2 :
+                move.setSelected(true);
+                break;
+            case 3 :
+                bringOut.setSelected(true);
+                break;
+            case 4 :
+                orient.setSelected(true);
+                break;
+        }
+    }
+
+    public boolean testBringOut(){
+        int[] coord = pieceSelected.getCoord();
+        return coord[1] == 0 || coord[1] == 5 || coord[0] == 0 || coord[0] == 5;
+    }
+
+    public int[] clickDetection(){
+        int [] coord = new int[] {0,0};
+
+        return coord;
+    }
+
+    public void actionPut(){
+        int[] coord = clickDetection();
+    }
+
+    public void actionBringOut(){
+
+    }
+
+    public void actionMove(){
+
+    }
+
+    public void actionOrient(){
+
     }
 }
