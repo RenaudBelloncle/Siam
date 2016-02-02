@@ -40,6 +40,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private JMenuItem backToMenu;
     private JMenuItem song;
 
+    private MouseHandler mouse;
     private Thread thread;
     private boolean running = false;
 
@@ -59,6 +60,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         initFrame();
         renderFrame();
 
+        mouse = new MouseHandler();
         setControl(this);
 
         frame.setResizable(false);
@@ -87,6 +89,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         initFrame();
         renderFrame();
 
+        mouse = new MouseHandler();
         setControl(this);
 
         frame.setVisible(true);
@@ -186,6 +189,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         frame.setContentPane(mainPanel);
 
         JMenuBar menuBar = new JMenuBar();
+        menuBar.setPreferredSize(new Dimension(WIN_WIDTH, TOPBAR_HEIGHT));
         JMenu menu = new JMenu(MENU_BAR);
         JMenu option = new JMenu(OPTION_BAR);
 
@@ -260,6 +264,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         rules.addActionListener(actionListener);
         backToMenu.addActionListener(actionListener);
         song.addActionListener(actionListener);
+        board.addMouseListener(mouse);
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
@@ -337,14 +342,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return coord[1] == 0 || coord[1] == 5 || coord[0] == 0 || coord[0] == 5;
     }
 
-    public int[] clickDetection(){
-        int [] coord = new int[] {0,0};
-
-        return coord;
-    }
-
     public void actionPut(){
-        int[] coord = clickDetection();
+        int[] coord = mouse.getClick();
     }
 
     public void actionBringOut(){
