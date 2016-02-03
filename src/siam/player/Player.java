@@ -1,5 +1,6 @@
 package siam.player;
 
+import siam.graphics.Screen;
 import siam.level.Animal;
 
 import java.util.ArrayList;
@@ -9,14 +10,12 @@ public class Player {
 
     private Camp camp;
     private String name;
-    private List<Animal> piecesList;
 
     public Player() {
         this(Camp.NEUTRAL, "");
     }
 
     public Player(Camp camp, String name) {
-        piecesList = new ArrayList<>();
         this.camp = camp;
         this.name = name;
     }
@@ -29,7 +28,4 @@ public class Player {
         return name;
     }
 
-    public int getPieceNumber(){
-        return piecesList.size();
-    }
 }
