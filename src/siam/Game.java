@@ -90,7 +90,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
         frame.setPreferredSize(dimension);
 
-        putActive=moveActive=orientActive=bringOutActive=upActive=downActive=rightActive=leftActive=  false;
+        putActive = moveActive = orientActive = bringOutActive = upActive = downActive = rightActive = leftActive =  false;
         initFrame();
         renderFrame();
 
