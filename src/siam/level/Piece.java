@@ -25,5 +25,9 @@ public abstract class Piece {
         return sprite;
     }
 
+    public void setSprite(Sprite sprite){
+        this.sprite = sprite;
+    }
+
     public abstract void render(Screen screen);
 }

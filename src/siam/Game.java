@@ -330,6 +330,18 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         else if(source == orient){
             setButtonSelected(4);
         }
+        else if(source == top){
+            upActive = true;
+        }
+        else if(source == bottom){
+            downActive = true;
+        }
+        else if(source == right){
+            rightActive = true;
+        }
+        else if(source == left){
+            leftActive = true;
+        }
     }
 
     public void setButtonEnabled(){
@@ -430,23 +442,31 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public boolean actionOrient(){
         if(pieceSelected != null){
             boolean actionPerformed = false;
-            if(top.isSelected()){
+            Orientation oldOrient = pieceSelected.getOrientation();
+            if(upActive){
                 pieceSelected.setOrientation(Orientation.TOP);
                 actionPerformed = true;
             }
-            else if(bottom.isSelected()){
+            else if(downActive){
                 pieceSelected.setOrientation(Orientation.DOWN);
                 actionPerformed = true;
             }
-            else if(right.isSelected()){
+            else if(rightActive){
                 pieceSelected.setOrientation(Orientation.RIGTH);
                 actionPerformed = true;
             }
-            else if(left.isSelected()){
+            else if(leftActive){
                 pieceSelected.setOrientation(Orientation.LEFT);
                 actionPerformed = true;
             }
             if(actionPerformed) {
+                upActive = false;
+                downActive = false;
+                rightActive = false;
+                leftActive = false;
+                double angle = getAngle(oldOrient,pieceSelected.getOrientation());
+                if(angle != 0)
+                    pieceSelected.setSprite(Sprite.rotate(pieceSelected.getSprite(),angle));
                 pieceSelected = null;
                 return true;
             }
@@ -461,5 +481,55 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public void nextPlayer(){
         if(playerActive == 0) playerActive = 1;
         else if(playerActive == 1) playerActive = 0;
+    }
+
+    public double getAngle(Orientation oldOrient, Orientation newOrient){
+        if(oldOrient != pieceSelected.getOrientation()){
+            if(oldOrient == Orientation.TOP){
+                if(newOrient == Orientation.RIGTH){
+                    return Math.PI/2;
+                }
+                else if(newOrient == Orientation.DOWN){
+                    return Math.PI;
+                }
+                else if(newOrient == Orientation.LEFT){
+                    return Math.PI/2*3;
+                }
+            }
+            else if(oldOrient == Orientation.RIGTH){
+                if(newOrient == Orientation.DOWN){
+                    return Math.PI/2;
+                }
+                else if(newOrient == Orientation.LEFT){
+                    return Math.PI;
+                }
+                else if(newOrient == Orientation.TOP){
+                    return Math.PI/2*3;
+                }
+            }
+            else if(oldOrient == Orientation.DOWN){
+                if(newOrient == Orientation.LEFT){
+                    return Math.PI/2;
+                }
+                else if(newOrient == Orientation.TOP){
+                    return Math.PI;
+                }
+                else if(newOrient == Orientation.RIGTH){
+                    return Math.PI/2*3;
+                }
+            }
+            else if(oldOrient == Orientation.LEFT){
+                if(newOrient == Orientation.TOP){
+                    return Math.PI/2;
+                }
+                else if(newOrient == Orientation.RIGTH){
+                    return Math.PI;
+                }
+                else if(newOrient == Orientation.DOWN){
+                    return Math.PI/2*3;
+                }
+            }
+        }
+        return 0;
     }
 }
