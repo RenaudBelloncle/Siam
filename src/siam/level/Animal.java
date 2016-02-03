@@ -4,6 +4,8 @@ import siam.graphics.Screen;
 import siam.graphics.Sprite;
 import siam.player.Camp;
 
+import javax.print.attribute.standard.OrientationRequested;
+
 public class Animal extends Piece {
 
     private Orientation orientation;
@@ -16,5 +18,13 @@ public class Animal extends Piece {
 
     public void render(Screen screen) {
         screen.renderPiece(x, y, this);
+    }
+
+    public void setOrientation(Orientation o){
+        orientation = o;
+    }
+
+    public Orientation getOrientation(){
+        return orientation;
     }
 }

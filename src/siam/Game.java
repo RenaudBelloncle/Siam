@@ -1,7 +1,6 @@
 package siam;
 
 import siam.graphics.FontTools;
-import siam.graphics.Screen;
 import siam.graphics.Sprite;
 import siam.graphics.TextureManager;
 import siam.level.Animal;
@@ -22,7 +21,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private Board board;
     private Player[] players;
     private int playerActive;
-    private boolean putActive, moveActive, orientActive, bringOutActive;
+    private boolean putActive, moveActive, orientActive, bringOutActive, upActive,downActive,leftActive,rightActive;
 
     private Animal pieceSelected;
 
@@ -67,11 +66,11 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         mouse = new MouseHandler();
         setControl(this);
 
-        putActive=moveActive=orientActive=bringOutActive=false;
+        putActive=moveActive=orientActive=bringOutActive=upActive=downActive=rightActive=leftActive=false;
         frame.setResizable(false);
         frame.setTitle(TITLE);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
         setButtonEnabled();
@@ -91,7 +90,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
         frame.setPreferredSize(dimension);
 
-        putActive=moveActive=orientActive=bringOutActive=false;
+        putActive=moveActive=orientActive=bringOutActive=upActive=downActive=rightActive=leftActive=  false;
         initFrame();
         renderFrame();
 
@@ -259,13 +258,13 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         }
         else{
             if(moveActive){
-
+                actionPerformed = actionMove();
             }
             else if(bringOutActive){
-
+                actionPerformed = actionBringOut();
             }
             else if(orientActive){
-
+                actionPerformed = actionOrient();
             }
         }
         if(actionPerformed){
@@ -334,12 +333,19 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public void setButtonEnabled(){
-        top.setEnabled(false);
-        bottom.setEnabled(false);
-        right.setEnabled(false);
-        left.setEnabled(false);
-        put.setEnabled(true);
-
+        if(orientActive) {
+            top.setEnabled(true);
+            bottom.setEnabled(true);
+            right.setEnabled(true);
+            left.setEnabled(true);
+        }
+        else{
+            top.setEnabled(false);
+            bottom.setEnabled(false);
+            right.setEnabled(false);
+            left.setEnabled(false);
+            put.setEnabled(true);
+        }
         if(true){ // Test du nombre de piece
             move.setEnabled(false);
             bringOut.setEnabled(false);
@@ -400,8 +406,9 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                         players[playerActive].getCamp(), Orientation.DOWN);
             board.putPiece(pieceSelected);
             putActive = false;
-            return true;
-            //return actionOrient();
+            orientActive = true;
+            mouse.closeClick();
+            return actionOrient();
         }
         return false;
     }
@@ -421,9 +428,29 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public boolean actionOrient(){
-
-        pieceSelected = null;
-        mouse.closeClick();
+        if(pieceSelected != null){
+            boolean actionPerformed = false;
+            if(top.isSelected()){
+                pieceSelected.setOrientation(Orientation.TOP);
+                actionPerformed = true;
+            }
+            else if(bottom.isSelected()){
+                pieceSelected.setOrientation(Orientation.DOWN);
+                actionPerformed = true;
+            }
+            else if(right.isSelected()){
+                pieceSelected.setOrientation(Orientation.RIGTH);
+                actionPerformed = true;
+            }
+            else if(left.isSelected()){
+                pieceSelected.setOrientation(Orientation.LEFT);
+                actionPerformed = true;
+            }
+            if(actionPerformed) {
+                pieceSelected = null;
+                return true;
+            }
+        }
         return false;
     }
 
