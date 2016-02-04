@@ -412,10 +412,10 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             int[] coord = convertCaseToPix(mouse.getClick());
             if (playerActive == 0)
                 pieceSelected = new Animal(coord[0],coord[1] , Sprite.whitePiece,
-                        players[playerActive].getCamp(), Orientation.DOWN);
+                        players[playerActive].getCamp(), Orientation.TOP);
             else
                 pieceSelected = new Animal(coord[0],coord[1] , Sprite.blackPiece,
-                        players[playerActive].getCamp(), Orientation.DOWN);
+                        players[playerActive].getCamp(), Orientation.TOP);
             board.putPiece(pieceSelected);
             putActive = false;
             orientActive = true;
@@ -487,46 +487,46 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         if(oldOrient != pieceSelected.getOrientation()){
             if(oldOrient == Orientation.TOP){
                 if(newOrient == Orientation.RIGTH){
-                    return Math.PI/2;
+                    return Math.PI*2;
                 }
                 else if(newOrient == Orientation.DOWN){
-                    return Math.PI;
+                    return Math.PI/2;
                 }
                 else if(newOrient == Orientation.LEFT){
-                    return Math.PI/2*3;
+                    return Math.PI;
                 }
             }
             else if(oldOrient == Orientation.RIGTH){
                 if(newOrient == Orientation.DOWN){
-                    return Math.PI/2;
+                    return Math.PI*2;
                 }
                 else if(newOrient == Orientation.LEFT){
-                    return Math.PI;
+                    return Math.PI/2;
                 }
                 else if(newOrient == Orientation.TOP){
-                    return Math.PI/2*3;
+                    return Math.PI;
                 }
             }
             else if(oldOrient == Orientation.DOWN){
                 if(newOrient == Orientation.LEFT){
-                    return Math.PI/2;
+                    return Math.PI*2;
                 }
                 else if(newOrient == Orientation.TOP){
-                    return Math.PI;
+                    return Math.PI/2;
                 }
                 else if(newOrient == Orientation.RIGTH){
-                    return Math.PI/2*3;
+                    return Math.PI;
                 }
             }
             else if(oldOrient == Orientation.LEFT){
                 if(newOrient == Orientation.TOP){
-                    return Math.PI/2;
+                    return Math.PI*2;
                 }
                 else if(newOrient == Orientation.RIGTH){
-                    return Math.PI;
+                    return Math.PI/2;
                 }
                 else if(newOrient == Orientation.DOWN){
-                    return Math.PI/2*3;
+                    return Math.PI;
                 }
             }
         }
