@@ -30,4 +30,8 @@ public class Tile {
     public Sprite getSprite() {
         return sprite;
     }
+
+    public Piece getPiece(){
+        return piece;
+    }
 }

@@ -55,13 +55,11 @@ public class MouseHandler implements MouseListener, Constants{
     }
 
     public void openClick(){
-        System.out.println("Click ouvert");
         allowed = true;
     }
 
     public void closeClick(){
         allowed = false;
         resetClick();
-        System.out.println("Click fermé");
     }
 }

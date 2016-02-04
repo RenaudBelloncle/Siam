@@ -1,6 +1,7 @@
 package siam.graphics;
 
 import siam.Constants;
+import siam.level.Animal;
 import siam.level.Tile;
 import siam.level.Piece;
 
@@ -45,6 +46,11 @@ public class Screen implements Constants {
                 if (xa < 0) xa = 0;
                 int col = piece.getSprite().getPixel(x + y * SPRITE_SIZE);
                 if (col != 0xFFFF00FF) pixels[xa + ya * width] = col;
+            }
+        }
+        if(piece instanceof Animal){
+            if(((Animal) piece).getIsSelected()){
+                renderSelection(piece.getCoord()[0],piece.getCoord()[1]);
             }
         }
     }

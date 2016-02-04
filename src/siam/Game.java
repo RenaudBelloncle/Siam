@@ -6,6 +6,7 @@ import siam.graphics.TextureManager;
 import siam.level.Animal;
 import siam.level.Board;
 import siam.level.Orientation;
+import siam.level.Piece;
 import siam.player.Player;
 
 import javax.swing.*;
@@ -22,8 +23,6 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private Player[] players;
     private int playerActive;
     private boolean putActive, moveActive, orientActive, bringOutActive, upActive,downActive,leftActive,rightActive;
-
-    private Animal pieceSelected;
 
     private boolean songEnable = false;
 
@@ -250,11 +249,12 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public void update() {
         setButtonEnabled();
         boolean actionPerformed = false;
-        if(pieceSelected == null){
+        if(!board.pieceSelected()){
             System.out.print(""); // Obligatoire... Je sais pas pourquoi
             if(putActive){
                 actionPerformed = actionPut();
             }
+            //selectedPiece();
         }
         else{
             if(moveActive){
@@ -273,9 +273,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public void render() {
-        if(pieceSelected != null){
-            board.renderSelection(pieceSelected.getCoord()[0], pieceSelected.getCoord()[1]);
-        }
+
     }
 
     private void setControl(ActionListener actionListener) {
@@ -358,13 +356,13 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             left.setEnabled(false);
             put.setEnabled(true);
         }
-        if(true){ // Test du nombre de piece
+        if(true){ // Test du nombre de piece == 0
             move.setEnabled(false);
             bringOut.setEnabled(false);
             orient.setEnabled(false);
 
         }
-        else if(pieceSelected != null){
+        else if(board.pieceSelected()){
             move.setEnabled(true);
             bringOut.setEnabled(testBringOut());
             orient.setEnabled(true);
@@ -403,60 +401,64 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public boolean testBringOut(){
-        int[] coord = pieceSelected.getCoord();
+        int[] coord = convertPixToCase(board.getPieceSelected().getCoord());
         return coord[1] == 0 || coord[1] == 5 || coord[0] == 0 || coord[0] == 5;
     }
 
     public boolean actionPut(){
         if(mouse.isSelected()) {
             int[] coord = convertCaseToPix(mouse.getClick());
-            if (playerActive == 0)
-                pieceSelected = new Animal(coord[0],coord[1] , Sprite.whitePiece,
-                        players[playerActive].getCamp(), Orientation.TOP);
-            else
-                pieceSelected = new Animal(coord[0],coord[1] , Sprite.blackPiece,
-                        players[playerActive].getCamp(), Orientation.TOP);
-            board.putPiece(pieceSelected);
-            putActive = false;
-            orientActive = true;
-            mouse.closeClick();
-            return actionOrient();
+            if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])){
+                Animal animal = null;
+                if (playerActive == 0)
+                    animal = new Animal(coord[0], coord[1], Sprite.whitePiece,
+                            players[playerActive].getCamp(), Orientation.TOP);
+                else
+                    animal = new Animal(coord[0], coord[1], Sprite.blackPiece,
+                            players[playerActive].getCamp(), Orientation.TOP);
+                animal.selected();
+                board.putPiece(animal);
+                putActive = false;
+                orientActive = true;
+                mouse.closeClick();
+                return actionOrient();
+            }
+        }else{
+            // entrée en poussant
         }
         return false;
     }
 
     public boolean actionBringOut(){
-
-        pieceSelected = null;
+        board.deselect();
         mouse.closeClick();
         return false;
     }
 
     public boolean actionMove(){
-
-        pieceSelected = null;
+        board.deselect();
         mouse.closeClick();
         return false;
     }
 
     public boolean actionOrient(){
-        if(pieceSelected != null){
+        if(board.getPieceSelected() != null){
             boolean actionPerformed = false;
-            Orientation oldOrient = pieceSelected.getOrientation();
+            Orientation oldOrient = board.getPieceSelected().getOrientation();
             if(upActive){
-                pieceSelected.setOrientation(Orientation.TOP);
+                board.getPieceSelected().setOrientation(Orientation.TOP);
                 actionPerformed = true;
             }
             else if(downActive){
-                pieceSelected.setOrientation(Orientation.DOWN);
+                board.getPieceSelected().setOrientation(Orientation.DOWN);
                 actionPerformed = true;
             }
             else if(rightActive){
-                pieceSelected.setOrientation(Orientation.RIGTH);
+                board.getPieceSelected().setOrientation(Orientation.RIGTH);
                 actionPerformed = true;
             }
             else if(leftActive){
-                pieceSelected.setOrientation(Orientation.LEFT);
+                board.getPieceSelected().setOrientation(Orientation.LEFT);
                 actionPerformed = true;
             }
             if(actionPerformed) {
@@ -464,10 +466,11 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 downActive = false;
                 rightActive = false;
                 leftActive = false;
-                double angle = getAngle(oldOrient,pieceSelected.getOrientation());
+                double angle = getAngle(oldOrient,board.getPieceSelected().getOrientation());
                 if(angle != 0)
-                    pieceSelected.setSprite(Sprite.rotate(pieceSelected.getSprite(),angle));
-                pieceSelected = null;
+                    board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                board.deselect();
+                orientActive = false;
                 return true;
             }
         }
@@ -478,13 +481,17 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return new int[]{point[0]*SPRITE_SIZE+BOARD_BORDER/2,point[1]*SPRITE_SIZE+BOARD_BORDER/2};
     }
 
+    public int[] convertPixToCase(int[] point){
+        return new int[]{point[0]/SPRITE_SIZE,point[1]/SPRITE_SIZE};
+    }
+
     public void nextPlayer(){
         if(playerActive == 0) playerActive = 1;
         else if(playerActive == 1) playerActive = 0;
     }
 
     public double getAngle(Orientation oldOrient, Orientation newOrient){
-        if(oldOrient != pieceSelected.getOrientation()){
+        if(oldOrient != board.getPieceSelected().getOrientation()){
             if(oldOrient == Orientation.TOP){
                 if(newOrient == Orientation.RIGTH){
                     return Math.PI*2;
