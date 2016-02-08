@@ -87,6 +87,14 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         start();
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     private void initFrame() {
         playerName = new JLabel(players[0].getName());
         put = new JButton(PUT_BUTTON);

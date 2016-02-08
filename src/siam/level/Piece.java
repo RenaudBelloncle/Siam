@@ -21,5 +21,9 @@ public abstract class Piece {
         return sprite;
     }
 
+    public Camp getCamp() {
+        return camp;
+    }
+
     public abstract void render(Screen screen);
 }
