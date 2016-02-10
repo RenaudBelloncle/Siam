@@ -1,9 +1,10 @@
 package siam.level;
 
+import siam.Constants;
 import siam.graphics.Screen;
 import siam.graphics.Sprite;
 
-public class Tile {
+public class Tile implements Constants {
 
     private int x, y;
     private boolean banished = false;
@@ -18,20 +19,32 @@ public class Tile {
         else sprite = Sprite.tile;
     }
 
+    public boolean isEmpty(){
+        return piece == null;
+    }
+
+    public boolean isOnEdge(){
+        return x == 0 ||x == (BOARD_BORDER - 1) || y == 0 || y == (BOARD_SIZE - 1);
+    }
+
+    public boolean isBanished(){
+        return banished;
+    }
+
+    public Piece getPiece(){
+        return piece;
+    }
+
     public void insertPiece(Piece piece) {
         this.piece = piece;
     }
 
     public void render(Screen screen) {
         screen.renderTile(x, y, this);
-        if (piece != null) piece.render(screen);
+        if (!isEmpty()) piece.render(screen);
     }
 
     public Sprite getSprite() {
         return sprite;
-    }
-
-    public Piece getPiece(){
-        return piece;
     }
 }

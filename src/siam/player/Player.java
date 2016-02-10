@@ -1,15 +1,9 @@
 package siam.player;
 
-import siam.graphics.Screen;
-import siam.level.Animal;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
 
-    private Camp camp;
-    private String name;
+    protected Camp camp;
+    protected String name;
 
     public Player() {
         this(Camp.NEUTRAL, "");

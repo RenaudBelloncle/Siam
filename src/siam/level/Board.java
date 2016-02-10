@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-public class Board extends JPanel implements Constants {
+public class Board extends JPanel implements Constants,Cloneable {
 
     private final int SIZE;
     private Tile[][] tiles;
