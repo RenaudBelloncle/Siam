@@ -1,8 +1,12 @@
 package siam;
 
 import siam.graphics.FontTools;
+import siam.graphics.Sprite;
 import siam.graphics.TextureManager;
+import siam.level.Animal;
 import siam.level.Board;
+import siam.level.Orientation;
+import siam.level.Piece;
 import siam.player.Player;
 
 import javax.swing.*;
@@ -17,6 +21,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     private Board board;
     private Player[] players;
+    private int playerActive;
+    private boolean putActive, moveActive, orientActive, bringOutActive, upActive,downActive,leftActive,rightActive;
 
     private boolean songEnable = false;
 
@@ -36,12 +42,14 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private JMenuItem backToMenu;
     private JMenuItem song;
 
+    private MouseHandler mouse;
     private Thread thread;
     private boolean running = false;
 
     public Game() {
         board = new Board(BOARD_SIZE);
         players = new Player[2];
+        playerActive = 0;
         for (int i = 0; i < 2; i++) {
             players[i] = new Player();
         }
@@ -54,20 +62,24 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         initFrame();
         renderFrame();
 
+        mouse = new MouseHandler();
         setControl(this);
 
+        putActive=moveActive=orientActive=bringOutActive=upActive=downActive=rightActive=leftActive=false;
         frame.setResizable(false);
         frame.setTitle(TITLE);
         frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
+        setButtonEnabled();
         start();
     }
 
     public Game(JFrame frame) {
         board = new Board(BOARD_SIZE);
         players = new Player[2];
+        playerActive = 0;
         for (int i = 0; i < 2; i++) {
             players[i] = new Player();
         }
@@ -77,13 +89,16 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
         frame.setPreferredSize(dimension);
 
+        putActive = moveActive = orientActive = bringOutActive = upActive = downActive = rightActive = leftActive =  false;
         initFrame();
         renderFrame();
 
+        mouse = new MouseHandler();
         setControl(this);
 
         frame.setVisible(true);
 
+        setButtonEnabled();
         start();
     }
 
@@ -96,7 +111,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     private void initFrame() {
-        playerName = new JLabel(players[0].getName());
+        playerName = new JLabel(players[playerActive].getName());
         put = new JButton(PUT_BUTTON);
         bringOut = new JButton(BRINGOUT_BUTTON);
         move = new JButton(MOVE_BUTTON);
@@ -186,6 +201,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         frame.setContentPane(mainPanel);
 
         JMenuBar menuBar = new JMenuBar();
+        menuBar.setPreferredSize(new Dimension(WIN_WIDTH, TOPBAR_HEIGHT));
         JMenu menu = new JMenu(MENU_BAR);
         JMenu option = new JMenu(OPTION_BAR);
 
@@ -239,11 +255,33 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public void update() {
-
+        setButtonEnabled();
+        boolean actionPerformed = false;
+        if(!board.pieceSelected()){
+            System.out.print(""); // Obligatoire... Je sais pas pourquoi
+            if(putActive){
+                actionPerformed = actionPut();
+            }
+            //selectedPiece();
+        }
+        else{
+            if(moveActive){
+                actionPerformed = actionMove();
+            }
+            else if(bringOutActive){
+                actionPerformed = actionBringOut();
+            }
+            else if(orientActive){
+                actionPerformed = actionOrient();
+            }
+        }
+        if(actionPerformed){
+            nextPlayer();
+        }
     }
 
     public void render() {
-        frame.repaint();
+
     }
 
     private void setControl(ActionListener actionListener) {
@@ -260,6 +298,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         rules.addActionListener(actionListener);
         backToMenu.addActionListener(actionListener);
         song.addActionListener(actionListener);
+        board.addMouseListener(mouse);
     }
 
     public void actionPerformed(ActionEvent actionEvent) {
@@ -285,5 +324,227 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 song.setText(SONG_ENABLE_BAR);
             }
         }
+        else if(source == put){
+            setButtonSelected(1);
+        }
+        else if(source == move){
+            setButtonSelected(2);
+        }
+        else if(source == bringOut){
+            setButtonSelected(3);
+        }
+        else if(source == orient){
+            setButtonSelected(4);
+        }
+        else if(source == top){
+            upActive = true;
+        }
+        else if(source == bottom){
+            downActive = true;
+        }
+        else if(source == right){
+            rightActive = true;
+        }
+        else if(source == left){
+            leftActive = true;
+        }
+    }
+
+    public void setButtonEnabled(){
+        if(orientActive) {
+            top.setEnabled(true);
+            bottom.setEnabled(true);
+            right.setEnabled(true);
+            left.setEnabled(true);
+        }
+        else{
+            top.setEnabled(false);
+            bottom.setEnabled(false);
+            right.setEnabled(false);
+            left.setEnabled(false);
+            put.setEnabled(true);
+        }
+        if(true){ // Test du nombre de piece == 0
+            move.setEnabled(false);
+            bringOut.setEnabled(false);
+            orient.setEnabled(false);
+
+        }
+        else if(board.pieceSelected()){
+            move.setEnabled(true);
+            bringOut.setEnabled(testBringOut());
+            orient.setEnabled(true);
+        }
+    }
+
+    public void setButtonSelected(int buttonSelected){
+        switch(buttonSelected){
+            case 1:
+                //System.out.println("put");
+                putActive = true;
+                mouse.openClick();
+                break;
+            case 2 :
+                //System.out.println("move");
+                moveActive = true;
+                mouse.openClick();
+                break;
+            case 3 :
+                //System.out.println("bringOut");
+                bringOutActive = true;
+                mouse.openClick();
+                break;
+            case 4 :
+                //System.out.println("orient");
+                orientActive = true;
+                mouse.openClick();
+                break;
+            default:
+                System.out.println("je passe ici ? ");
+                putActive = false;
+                moveActive = false;
+                bringOutActive = false;
+                orientActive = false;
+        }
+    }
+
+    public boolean testBringOut(){
+        int[] coord = convertPixToCase(board.getPieceSelected().getCoord());
+        return coord[1] == 0 || coord[1] == 5 || coord[0] == 0 || coord[0] == 5;
+    }
+
+    public boolean actionPut(){
+        if(mouse.isSelected()) {
+            int[] coord = convertCaseToPix(mouse.getClick());
+            if(board.isFree(mouse.getClick()[0],mouse.getClick()[1]) && board.isOnEdge(mouse.getClick()[0],mouse.getClick()[1])){
+                Animal animal = null;
+                if (playerActive == 0)
+                    animal = new Animal(coord[0], coord[1], Sprite.whitePiece,
+                            players[playerActive].getCamp(), Orientation.TOP);
+                else
+                    animal = new Animal(coord[0], coord[1], Sprite.blackPiece,
+                            players[playerActive].getCamp(), Orientation.TOP);
+                animal.selected();
+                board.putPiece(animal);
+                putActive = false;
+                orientActive = true;
+                mouse.closeClick();
+                return actionOrient();
+            }
+        }else{
+            // entrée en poussant
+        }
+        return false;
+    }
+
+    public boolean actionBringOut(){
+        board.deselect();
+        mouse.closeClick();
+        return false;
+    }
+
+    public boolean actionMove(){
+        board.deselect();
+        mouse.closeClick();
+        return false;
+    }
+
+    public boolean actionOrient(){
+        if(board.getPieceSelected() != null){
+            boolean actionPerformed = false;
+            Orientation oldOrient = board.getPieceSelected().getOrientation();
+            if(upActive){
+                board.getPieceSelected().setOrientation(Orientation.TOP);
+                actionPerformed = true;
+            }
+            else if(downActive){
+                board.getPieceSelected().setOrientation(Orientation.DOWN);
+                actionPerformed = true;
+            }
+            else if(rightActive){
+                board.getPieceSelected().setOrientation(Orientation.RIGTH);
+                actionPerformed = true;
+            }
+            else if(leftActive){
+                board.getPieceSelected().setOrientation(Orientation.LEFT);
+                actionPerformed = true;
+            }
+            if(actionPerformed) {
+                upActive = false;
+                downActive = false;
+                rightActive = false;
+                leftActive = false;
+                double angle = getAngle(oldOrient,board.getPieceSelected().getOrientation());
+                if(angle != 0)
+                    board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                board.deselect();
+                orientActive = false;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int[] convertCaseToPix(int[] point){
+        return new int[]{point[0]*SPRITE_SIZE+BOARD_BORDER/2,point[1]*SPRITE_SIZE+BOARD_BORDER/2};
+    }
+
+    public int[] convertPixToCase(int[] point){
+        return new int[]{point[0]/SPRITE_SIZE,point[1]/SPRITE_SIZE};
+    }
+
+    public void nextPlayer(){
+        if(playerActive == 0) playerActive = 1;
+        else if(playerActive == 1) playerActive = 0;
+    }
+
+    public double getAngle(Orientation oldOrient, Orientation newOrient){
+        if(oldOrient != board.getPieceSelected().getOrientation()){
+            if(oldOrient == Orientation.TOP){
+                if(newOrient == Orientation.RIGTH){
+                    return Math.PI*2;
+                }
+                else if(newOrient == Orientation.DOWN){
+                    return Math.PI/2;
+                }
+                else if(newOrient == Orientation.LEFT){
+                    return Math.PI;
+                }
+            }
+            else if(oldOrient == Orientation.RIGTH){
+                if(newOrient == Orientation.DOWN){
+                    return Math.PI*2;
+                }
+                else if(newOrient == Orientation.LEFT){
+                    return Math.PI/2;
+                }
+                else if(newOrient == Orientation.TOP){
+                    return Math.PI;
+                }
+            }
+            else if(oldOrient == Orientation.DOWN){
+                if(newOrient == Orientation.LEFT){
+                    return Math.PI*2;
+                }
+                else if(newOrient == Orientation.TOP){
+                    return Math.PI/2;
+                }
+                else if(newOrient == Orientation.RIGTH){
+                    return Math.PI;
+                }
+            }
+            else if(oldOrient == Orientation.LEFT){
+                if(newOrient == Orientation.TOP){
+                    return Math.PI*2;
+                }
+                else if(newOrient == Orientation.RIGTH){
+                    return Math.PI/2;
+                }
+                else if(newOrient == Orientation.DOWN){
+                    return Math.PI;
+                }
+            }
+        }
+        return 0;
     }
 }

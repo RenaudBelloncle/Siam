@@ -35,7 +35,7 @@ public class Sprite {
         SIZE = (width == heigth) ? width : -1;
         this.width = width;
         this.heigth = heigth;
-        pixels = new int[pixels.length];
+        this.pixels = new int[pixels.length];
         System.arraycopy(pixels, 0, this.pixels, 0, pixels.length);
     }
 

@@ -6,7 +6,6 @@ public class Player {
 
     protected Camp camp;
     protected String name;
-
     protected int pieceOnBoard = 5;
 
     public Player() {

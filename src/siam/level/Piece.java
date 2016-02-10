@@ -17,10 +17,17 @@ public abstract class Piece {
         this.camp = camp;
     }
 
+    public int[] getCoord(){
+        return new int[]{x,y};
+    }
+
     public Sprite getSprite() {
         return sprite;
     }
 
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
     public Camp getCamp() {
         return camp;
     }
