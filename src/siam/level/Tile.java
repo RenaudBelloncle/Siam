@@ -24,7 +24,7 @@ public class Tile implements Constants {
     }
 
     public boolean isOnEdge(){
-        return x == 0 ||x == (BOARD_BORDER - 1) || y == 0 || y == (BOARD_SIZE - 1);
+        return x == 0 || x == (BOARD_SIZE - 1) || y == 0 || y == (BOARD_SIZE - 1);
     }
 
     public boolean isBanished(){

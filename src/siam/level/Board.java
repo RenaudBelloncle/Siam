@@ -149,6 +149,11 @@ public class Board extends JPanel implements Constants, Cloneable {
 
     // Retourne si la case x y est libre ou non
     public boolean isFree(int x, int y){
-        return tiles[x][y].getPiece() == null;
+        return tiles[x][y].isEmpty();
+    }
+
+    public boolean isOnEdge(int x, int y){
+        System.out.println(x+" "+y);
+        return tiles[x][y].isOnEdge();
     }
 }

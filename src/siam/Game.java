@@ -380,22 +380,22 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public void setButtonSelected(int buttonSelected){
         switch(buttonSelected){
             case 1:
-                System.out.println("put");
+                //System.out.println("put");
                 putActive = true;
                 mouse.openClick();
                 break;
             case 2 :
-                System.out.println("move");
+                //System.out.println("move");
                 moveActive = true;
                 mouse.openClick();
                 break;
             case 3 :
-                System.out.println("bringOut");
+                //System.out.println("bringOut");
                 bringOutActive = true;
                 mouse.openClick();
                 break;
             case 4 :
-                System.out.println("orient");
+                //System.out.println("orient");
                 orientActive = true;
                 mouse.openClick();
                 break;
@@ -416,7 +416,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public boolean actionPut(){
         if(mouse.isSelected()) {
             int[] coord = convertCaseToPix(mouse.getClick());
-            if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])){
+            if(board.isFree(mouse.getClick()[0],mouse.getClick()[1]) && board.isOnEdge(mouse.getClick()[0],mouse.getClick()[1])){
                 Animal animal = null;
                 if (playerActive == 0)
                     animal = new Animal(coord[0], coord[1], Sprite.whitePiece,

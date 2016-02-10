@@ -23,7 +23,7 @@ public class MouseHandler implements MouseListener, Constants{
         if(allowed) {
             clickCoord[0] = (e.getX() - BOARD_BORDER / 2) / SPRITE_SIZE;
             clickCoord[1] = (e.getY() - BOARD_BORDER / 2) / SPRITE_SIZE;
-            System.out.println(clickCoord[0]+" "+clickCoord[1]);
+            //System.out.println(clickCoord[0]+" "+clickCoord[1]);
         }
         else{
             resetClick();
