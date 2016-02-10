@@ -28,7 +28,6 @@ public abstract class Piece {
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
     }
-
     public Camp getCamp() {
         return camp;
     }
