@@ -16,6 +16,10 @@ public class Animal extends Piece {
         this.orientation = orientation;
     }
 
+    public Orientation getOrientation() {
+        return orientation;
+    }
+
     public void render(Screen screen) {
         screen.renderPiece(x, y, this);
     }
