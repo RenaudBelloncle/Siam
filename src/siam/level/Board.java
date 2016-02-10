@@ -10,7 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-public class Board extends JPanel implements Constants,Cloneable {
+public class Board extends JPanel implements Constants, Cloneable {
 
     private final int SIZE;
     private Tile[][] tiles;
@@ -33,6 +33,16 @@ public class Board extends JPanel implements Constants,Cloneable {
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     }
 
+    public Board(Board board) {
+        SIZE = board.SIZE;
+        tiles = board.tiles;
+
+        screen = board.screen;
+        image = board.image;
+        pixels = new int[board.pixels.length];
+        System.arraycopy(board.pixels, 0, pixels, 0, board.pixels.length);
+    }
+
     private void initBoard() {
         for (int y = 0; y < SIZE; y++) {
             for (int x = 0; x < SIZE; x++) {
@@ -45,6 +55,10 @@ public class Board extends JPanel implements Constants,Cloneable {
             int ya = 2 * SPRITE_SIZE + BOARD_BORDER / 2;
             tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.mountain, Camp.NEUTRAL));
         }
+    }
+
+    public Tile getTile(int x, int y) {
+        return tiles[x][y];
     }
 
     public void render(Screen screen) {
