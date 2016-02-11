@@ -1,5 +1,7 @@
 package siam;
 
+import siam.audio.Music;
+import siam.audio.SoundsLibrary;
 import siam.graphics.FontTools;
 import siam.graphics.TextureManager;
 import siam.player.Player;
@@ -17,7 +19,10 @@ public class Menu implements ActionListener, Constants, Texts {
     private boolean optionState;
     private boolean campState;
     private boolean winnerState;
-    private boolean songEnable = false;
+    private boolean songEnable = true;
+    private boolean variantPieceOn;
+    private boolean variantTileOn;
+    private boolean variantMountainOn;
 
     private JFrame frame;
     private JLabel title;
@@ -38,8 +43,14 @@ public class Menu implements ActionListener, Constants, Texts {
     private JLabel victory;
 
     private Player winner;
+    private Music music;
+    private SoundsLibrary soundsLibrary;
 
     public Menu() {
+        this.music = new Music();
+        this.soundsLibrary = new SoundsLibrary();
+        music.start();
+
         optionState = false;
         campState = false;
         winnerState = false;
@@ -62,13 +73,21 @@ public class Menu implements ActionListener, Constants, Texts {
         frame.setVisible(true);
     }
 
-    public Menu(JFrame frame, boolean option, boolean camp) {
+    public Menu(JFrame frame, boolean option, boolean camp, Music music,
+                SoundsLibrary soundsLibrary, boolean songEnable) {
         if (option && camp) camp = false;
         optionState = option;
         campState = camp;
         winnerState = false;
 
+        variantMountainOn = false;
+        variantPieceOn = false;
+        variantTileOn = false;
+
         this.frame = frame;
+        this.music = music;
+        this.songEnable = songEnable;
+        this.soundsLibrary = soundsLibrary;
 
         Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
         frame.setPreferredSize(dimension);
@@ -81,7 +100,8 @@ public class Menu implements ActionListener, Constants, Texts {
         frame.setVisible(true);
     }
 
-    public Menu(JFrame frame, Player winner) {
+    public Menu(JFrame frame, Player winner, Music music,
+                SoundsLibrary soundsLibrary, boolean songEnable) {
         optionState = false;
         campState = false;
         winnerState = true;
@@ -89,6 +109,9 @@ public class Menu implements ActionListener, Constants, Texts {
         this.winner = winner;
 
         this.frame = frame;
+        this.music = music;
+        this.songEnable = songEnable;
+        this.soundsLibrary = soundsLibrary;
 
         Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
         frame.setPreferredSize(dimension);
@@ -378,40 +401,43 @@ public class Menu implements ActionListener, Constants, Texts {
 
     public void actionPerformed(ActionEvent actionEvent) {
         Object source = actionEvent.getSource();
+        soundsLibrary.playButtonSound();
         if (winnerState) {
             if (source == play) {
-                new Game(frame);
+                new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,variantPieceOn, variantTileOn);
             } else if (source == exit) {
-                new Menu(frame, false, false);
+                new Menu(frame, false, false, music, soundsLibrary, songEnable);
             }
         } else if (campState) {
             if (source == play) {
-                new Game(frame);
+                new Game(frame, music, soundsLibrary, songEnable, variantMountain.isSelected(),variantPiece.isSelected(), variantTile.isSelected());
             } else if (source == exit) {
-                new Menu(frame, false, false);
+                new Menu(frame, false, false, music, soundsLibrary, songEnable);
             }
         } else if (optionState) {
             if (source == rules) {
                 //TODO - Affichage règles
             } else if (source == song) {
-                if (songEnable) {
-                    songEnable = false;
-                    song.setText(SONG_DISABLE_BUTTON);
-                } else {
-                    songEnable = true;
+                if (!songEnable) {
                     song.setText(SONG_ENABLE_BUTTON);
+                    music.start();
+                    songEnable = true;
+                } else {
+                    song.setText(SONG_DISABLE_BUTTON);
+                    music.stopIt();
+                    songEnable = false;
                 }
             } else if (source == exit) {
-                new Menu(frame, false, false);
+                new Menu(frame, false, false, music, soundsLibrary, songEnable);
             }
         } else {
             if (source == play) {
-                new Menu(frame, false, true);
+                new Menu(frame, false, true, music, soundsLibrary, songEnable);
             } else if (source == load) {
                 //TODO - Charger la partie
-                new Game(frame);
+                new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,variantPieceOn, variantTileOn);
             } else if (source == option) {
-                new Menu(frame, true, false);
+                new Menu(frame, true, false, music, soundsLibrary, songEnable);
             } else if (source == exit) {
                 System.exit(0);
             }

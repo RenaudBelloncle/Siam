@@ -16,11 +16,16 @@ public class Board extends JPanel implements Constants, Cloneable {
     private Tile[][] tiles;
     private Screen screen;
 
+    private boolean variantMountainOn;
+    private boolean variantTileOn;
+
     private BufferedImage image;
     private int[] pixels;
 
-    public Board(int size) {
+    public Board(int size, boolean variantMountainOn, boolean variantTileOn) {
         this.SIZE = size;
+        this.variantMountainOn = variantMountainOn;
+        this.variantTileOn = variantTileOn;
         tiles = new Tile[size][size];
 
         screen = new Screen(BOARD_SIZE * SPRITE_SIZE + BOARD_BORDER, BOARD_SIZE * SPRITE_SIZE + BOARD_BORDER);
@@ -49,11 +54,24 @@ public class Board extends JPanel implements Constants, Cloneable {
                 tiles[x][y] = new Tile(x, y, false);
             }
         }
-
-        for (int i = 0; i < 3; i++) {
-            int xa = (i + 1) * SPRITE_SIZE + BOARD_BORDER / 2;
-            int ya = 2 * SPRITE_SIZE + BOARD_BORDER / 2;
-            tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.mountain, Camp.NEUTRAL));
+        if (variantTileOn) {
+            tiles[2][(BOARD_SIZE - 1)] = new Tile(2, (BOARD_SIZE - 1), true);
+            tiles[2][0] = new Tile(2, 0, true);
+        }
+        if (variantMountainOn) {
+            for (int i = 0; i < 3; i++) {
+                int xa = (i + 1) * SPRITE_SIZE + BOARD_BORDER / 2;
+                int ya = 2 * SPRITE_SIZE + BOARD_BORDER / 2;
+                if (i == 0) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.whiteMountain, Camp.WHITE));
+                else if (i == 2) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.blackMountain, Camp.BLACK));
+                else tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.mountain, Camp.NEUTRAL));
+            }
+        } else {
+            for (int i = 0; i < 3; i++) {
+                int xa = (i + 1) * SPRITE_SIZE + BOARD_BORDER / 2;
+                int ya = 2 * SPRITE_SIZE + BOARD_BORDER / 2;
+                tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.mountain, Camp.NEUTRAL));
+            }
         }
     }
 
@@ -93,6 +111,9 @@ public class Board extends JPanel implements Constants, Cloneable {
         return new int[]{pix[0]/SPRITE_SIZE,pix[1]/SPRITE_SIZE};
     }
 
+    public void changeTile(int x, int y, boolean status) {
+        tiles[x][y] = new Tile(x, y, status);
+    }
 
     // Test si une piece est selectionnee
     public boolean pieceSelected(){
@@ -152,6 +173,10 @@ public class Board extends JPanel implements Constants, Cloneable {
 
     public boolean isOnEdge(int x, int y){
         return tiles[x][y].isOnEdge();
+    }
+
+    public boolean asABanishedTile(int x, int y){
+        return tiles[x][y].isBanished();
     }
 
     public boolean isInBound(int x, int y){
