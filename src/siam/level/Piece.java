@@ -28,9 +28,15 @@ public abstract class Piece {
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
     }
+
     public Camp getCamp() {
         return camp;
     }
 
     public abstract void render(Screen screen);
+
+    public void setPosition(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
 }
