@@ -3,7 +3,7 @@ package siam;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MouseHandler implements MouseListener, Constants{
+public class MouseHandler implements MouseListener, Constants {
 
     private int[] clickCoord;
     private boolean allowed;

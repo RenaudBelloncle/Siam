@@ -28,10 +28,6 @@ public class Animal extends Piece {
         orientation = o;
     }
 
-    public Orientation getOrientation(){
-        return orientation;
-    }
-
     public boolean getIsSelected(){
         return isSelected;
     }
