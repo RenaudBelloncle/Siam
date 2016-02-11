@@ -57,10 +57,6 @@ public class Board extends JPanel implements Constants, Cloneable {
         }
     }
 
-    public Tile getTile(int x, int y) {
-        return tiles[x][y];
-    }
-
     public void render(Screen screen) {
         for (int y = 0; y < SIZE; y++) {
             for (int x = 0; x < SIZE; x++) {
@@ -71,10 +67,6 @@ public class Board extends JPanel implements Constants, Cloneable {
 
     public Piece getPiece(int x, int y){
         return tiles[x][y].getPiece();
-    }
-
-    public void renderSelection(int x, int y){
-        screen.renderSelection(x,y);
     }
 
     public void paintComponent(Graphics graphics) {
@@ -91,6 +83,10 @@ public class Board extends JPanel implements Constants, Cloneable {
         int [] coord = convertPixToCase(p.getCoord());
         System.out.println(coord[0] + " " + coord[1]);
         tiles[coord[0]][coord[1]].insertPiece(p);
+    }
+
+    public void removePiece(int[]coord){
+        tiles[coord[0]][coord[1]].removePiece();
     }
 
     private int[] convertPixToCase(int[] pix){
@@ -134,12 +130,14 @@ public class Board extends JPanel implements Constants, Cloneable {
 
     // Deselectionne la piece selectionnee
     public void deselect(){
+        if(!pieceSelected()) { return;}
         Animal a = getPieceSelected();
         a.deselected();
     }
 
     // Selectionne la piece x y si c'est un animal
     public boolean select(int x, int y){
+        if(getPiece(x,y)== null) return false;
         if(getPiece(x, y) instanceof Animal){
             ((Animal) getPiece(x,y)).selected();
             return true;
@@ -153,7 +151,17 @@ public class Board extends JPanel implements Constants, Cloneable {
     }
 
     public boolean isOnEdge(int x, int y){
-        System.out.println(x+" "+y);
         return tiles[x][y].isOnEdge();
+    }
+
+    public boolean isInBound(int x, int y){
+        return 0 <= x && x < SIZE && 0 <= y && y < SIZE;
+    }
+
+    public void movePiece(int x, int y){
+        Piece p = getPieceSelected();
+        removePiece(convertPixToCase(p.getCoord()));
+        tiles[x][y].insertPiece(p);
+
     }
 }
