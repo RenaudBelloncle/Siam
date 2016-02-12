@@ -39,6 +39,51 @@ public class Sprite {
         System.arraycopy(pixels, 0, this.pixels, 0, pixels.length);
     }
 
+    public void changeToChristmas(){
+
+        tile = new Sprite(128, 0, 0, SpriteSheet.christmas);
+        bannedTile = new Sprite(128, 1, 0, SpriteSheet.christmas);
+
+        focus = new Sprite(128, 2, 0, SpriteSheet.christmas);
+
+        mountain = new Sprite(128, 0, 1, SpriteSheet.christmas);
+        whiteMountain = new Sprite(128, 1, 1, SpriteSheet.christmas);
+        blackMountain = new Sprite(128, 2, 1, SpriteSheet.christmas);
+
+        whitePiece = new Sprite(128, 0, 2, SpriteSheet.christmas);
+        blackPiece = new Sprite(128, 1, 2, SpriteSheet.christmas);
+    }
+
+    public void changeToStarWars(){
+
+        tile = new Sprite(128, 0, 0, SpriteSheet.starwars);
+        bannedTile = new Sprite(128, 1, 0, SpriteSheet.starwars);
+
+        focus = new Sprite(128, 2, 0, SpriteSheet.starwars);
+
+        mountain = new Sprite(128, 0, 1, SpriteSheet.starwars);
+        whiteMountain = new Sprite(128, 1, 1, SpriteSheet.starwars);
+        blackMountain = new Sprite(128, 2, 1, SpriteSheet.starwars);
+
+        whitePiece = new Sprite(128, 0, 2, SpriteSheet.starwars);
+        blackPiece = new Sprite(128, 1, 2, SpriteSheet.starwars);
+    }
+
+    public void changeToStandard(){
+
+        tile = new Sprite(128, 0, 0, SpriteSheet.standard);
+        bannedTile = new Sprite(128, 1, 0, SpriteSheet.standard);
+
+        focus = new Sprite(128, 2, 0, SpriteSheet.standard);
+
+        mountain = new Sprite(128, 0, 1, SpriteSheet.standard);
+        whiteMountain = new Sprite(128, 1, 1, SpriteSheet.standard);
+        blackMountain = new Sprite(128, 2, 1, SpriteSheet.standard);
+
+        whitePiece = new Sprite(128, 0, 2, SpriteSheet.standard);
+        blackPiece = new Sprite(128, 1, 2, SpriteSheet.standard);
+    }
+
     public static Sprite rotate(Sprite sprite, double angle) {
         return new Sprite(rotate(sprite.pixels, sprite.width, sprite.heigth, angle), sprite.width, sprite.heigth);
     }
