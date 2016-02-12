@@ -9,6 +9,7 @@ import siam.level.Animal;
 import siam.level.Board;
 import siam.level.Orientation;
 import siam.player.Camp;
+import siam.player.Theme;
 import siam.player.Player;
 
 import javax.swing.*;
@@ -22,6 +23,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private FontTools fontTools = new FontTools();
     private Music music;
     private SoundsLibrary soundsLibrary;
+
+    private Theme theme = Theme.STANDARD;
 
     private Board board;
     private Player[] players;
@@ -44,7 +47,6 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private JButton right;
     private JButton bottom;
     private JMenuItem newGame;
-    private JMenuItem save;
     private JMenuItem rules;
     private JMenuItem backToMenu;
     private JMenuItem song;
@@ -141,7 +143,6 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         bottom = new JButton(BOTTOM_BUTTON);
 
         newGame = new JMenuItem(NEWGAME_BAR);
-        save = new JMenuItem(SAVE_BAR);
         rules = new JMenuItem(RULES_BAR);
         backToMenu = new JMenuItem(BACKTOMENU_BAR);
         if (songEnable) {
@@ -225,7 +226,6 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         JMenu option = new JMenu(OPTION_BAR);
 
         menu.add(newGame);
-        menu.add(save);
         menu.add(rules);
         menu.add(backToMenu);
 
@@ -281,8 +281,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             selectPiece();
         }
         else{
-            if (board.getPieceSelected().getCamp()== Camp.WHITE)soundsLibrary.playWhiteSound();
-            else soundsLibrary.playBlackSound();
+            if (board.getPieceSelected().getCamp()== Camp.WHITE)soundsLibrary.playWhiteSound(theme);
+            else soundsLibrary.playBlackSound(theme);
             if(moveActive){
                 actionPerformed = actionMove();
             }
@@ -312,7 +312,6 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         right.addActionListener(actionListener);
         bottom.addActionListener(actionListener);
         newGame.addActionListener(actionListener);
-        save.addActionListener(actionListener);
         rules.addActionListener(actionListener);
         backToMenu.addActionListener(actionListener);
         song.addActionListener(actionListener);
@@ -321,15 +320,11 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     public void actionPerformed(ActionEvent actionEvent) {
         Object source = actionEvent.getSource();
-        soundsLibrary.playButtonSound();
+        soundsLibrary.playButtonSound(theme);
         mouse.openClick();
         if (source == newGame) {
             frame.setJMenuBar(null);
             new Menu(frame, false, true, music, soundsLibrary, songEnable);
-        } else if (source == save) {
-            //TODO - Sauvegarde
-            frame.setJMenuBar(null);
-            new Menu(frame, false, false, music, soundsLibrary, songEnable);
         } else if (source == rules) {
             //TODO - Affichage règles
         } else if (source == backToMenu) {
@@ -438,6 +433,10 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return false;
     }
 
+    public boolean testVictory() {
+        return false;
+    }
+
     public boolean actionPut(){
         if(mouse.isSelected()) {
             int[] coord = convertCaseToPix(mouse.getClick());
@@ -446,7 +445,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound();
+                soundsLibrary.playErrorActionSound(theme);
                 return false;
             }
             if (board.isOnEdge(mouse.getClick()[0], mouse.getClick()[1])) {
@@ -460,7 +459,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                                 players[playerActive].getCamp(), Orientation.TOP);
                     animal.selected();
                     board.putPiece(animal);
-                    soundsLibrary.playPutSound();
+                    soundsLibrary.playPutSound(theme);
                     putActive = false;
                     orientActive = true;
                     mouse.closeClick();
@@ -474,7 +473,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound();
+                soundsLibrary.playErrorActionSound(theme);
                 return false;
             }
         }
@@ -483,7 +482,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     public boolean actionBringOut(){
         board.removePiece(convertPixToCase(board.getPieceSelected().getCoord()));
-        soundsLibrary.playOutSound();
+        soundsLibrary.playOutSound(theme);
         players[playerActive].bringOut();
         bringOutActive = false;
         mouse.closeClick();
@@ -498,15 +497,15 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                     int[] newCoordPix = convertCaseToPix(mouse.getClick());
                     board.getPieceSelected().setPosition(newCoordPix[0],newCoordPix[1]);
                     board.movePiece(mouse.getClick()[0],mouse.getClick()[1]);
-                    if(board.getPieceSelected().getCamp() == Camp.WHITE) soundsLibrary.playWalkSound(Camp.WHITE);
-                    else soundsLibrary.playWalkSound(Camp.BLACK);
+                    if(board.getPieceSelected().getCamp() == Camp.WHITE) soundsLibrary.playWalkSound(theme, Camp.WHITE);
+                    else soundsLibrary.playWalkSound(theme, Camp.BLACK);
                 }
             } else {
                 moveActive = false;
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound();
+                soundsLibrary.playErrorActionSound(theme);
                 return false;
             }
             moveActive = false;
@@ -539,7 +538,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 actionPerformed = true;
             }
             if(actionPerformed) {
-                soundsLibrary.playTurnSound();
+                soundsLibrary.playTurnSound(theme);
                 upActive = false;
                 downActive = false;
                 rightActive = false;

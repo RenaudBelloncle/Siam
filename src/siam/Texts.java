@@ -12,8 +12,8 @@ public interface Texts {
     String WINNER_LABEL = "Victory of ";
 
     String PLAY_BUTTON = "Play";
-    String LOAD_BUTTON = "Load";
     String OPTION_BUTTON = "Option";
+    String THEME_BUTTON = "Next theme";
     String EXIT_BUTTON = "Exit";
     String RULES_BUTTON = "Rules";
     String SONG_ENABLE_BUTTON = "Disable Song";
@@ -30,7 +30,6 @@ public interface Texts {
     String MENU_BAR = "Menu";
     String OPTION_BAR = "Option";
     String NEWGAME_BAR = "New Game";
-    String SAVE_BAR = "Save";
     String RULES_BAR = "Rules";
     String BACKTOMENU_BAR = "Back to Menu";
     String SONG_ENABLE_BAR = "Disable Song";

@@ -7,6 +7,8 @@ import java.io.IOException;
 public class SpriteSheet {
 
     public static SpriteSheet standard = new SpriteSheet("/textures/sheets/standardsheet.png", 384);
+    public static SpriteSheet christmas = new SpriteSheet("/textures/sheets/christmassheet.png", 384);
+    public static SpriteSheet starwars = new SpriteSheet("/textures/sheets/starwarssheet.png", 384);
 
     private String path;
     private final int SIZE;

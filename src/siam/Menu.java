@@ -5,6 +5,7 @@ import siam.audio.SoundsLibrary;
 import siam.graphics.FontTools;
 import siam.graphics.TextureManager;
 import siam.player.Player;
+import siam.player.Theme;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,8 +28,8 @@ public class Menu implements ActionListener, Constants, Texts {
     private JFrame frame;
     private JLabel title;
     private JButton play;
-    private JButton load;
     private JButton option;
+    private JButton theme;
     private JButton exit;
     private JLabel optionLabel;
     private JButton rules;
@@ -45,6 +46,8 @@ public class Menu implements ActionListener, Constants, Texts {
     private Player winner;
     private Music music;
     private SoundsLibrary soundsLibrary;
+
+    private Theme themes = Theme.STANDARD;
 
     public Menu() {
         this.music = new Music();
@@ -146,6 +149,7 @@ public class Menu implements ActionListener, Constants, Texts {
             title = new JLabel(TITLE_LABEL);
             optionLabel = new JLabel(OPTION_LABEL);
             rules = new JButton(RULES_BUTTON);
+            theme = new JButton(THEME_BUTTON);
             if (songEnable) {
                 song = new JButton(SONG_ENABLE_BUTTON);
             } else {
@@ -155,7 +159,6 @@ public class Menu implements ActionListener, Constants, Texts {
         } else {
             title = new JLabel(TITLE_LABEL);
             play = new JButton(PLAY_BUTTON);
-            load = new JButton(LOAD_BUTTON);
             option = new JButton(OPTION_BUTTON);
             exit = new JButton(EXIT_BUTTON);
         }
@@ -298,9 +301,10 @@ public class Menu implements ActionListener, Constants, Texts {
 
             titlePanel.add(title);
 
-            buttonPanel.setLayout(new GridLayout(5, 1));
+            buttonPanel.setLayout(new GridLayout(6, 1));
             buttonPanel.add(optionLabel);
             buttonPanel.add(rules);
+            buttonPanel.add(theme);
             buttonPanel.add(song);
             buttonPanel.add(exit);
 
@@ -335,7 +339,6 @@ public class Menu implements ActionListener, Constants, Texts {
 
             buttonPanel.setLayout(new GridLayout(4, 1));
             buttonPanel.add(play);
-            buttonPanel.add(load);
             buttonPanel.add(option);
             buttonPanel.add(exit);
 
@@ -369,12 +372,12 @@ public class Menu implements ActionListener, Constants, Texts {
             fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
             fontTools.updateFontJLabel(optionLabel, 60, Color.orange, fontTools.getMenuFont());
             fontTools.updateFontJButton(rules, 50, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(theme, 50, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(song, 50, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(exit, 50, Color.orange, fontTools.getTextFont());
         } else {
             fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
             fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(load, 60, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(option, 60, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(exit, 60, Color.orange, fontTools.getTextFont());
         }
@@ -389,11 +392,11 @@ public class Menu implements ActionListener, Constants, Texts {
             exit.addActionListener(actionListener);
         } else if (optionState) {
             rules.addActionListener(actionListener);
+            theme.addActionListener(actionListener);
             song.addActionListener(actionListener);
             exit.addActionListener(actionListener);
         } else {
             play.addActionListener(actionListener);
-            load.addActionListener(actionListener);
             option.addActionListener(actionListener);
             exit.addActionListener(actionListener);
         }
@@ -401,7 +404,7 @@ public class Menu implements ActionListener, Constants, Texts {
 
     public void actionPerformed(ActionEvent actionEvent) {
         Object source = actionEvent.getSource();
-        soundsLibrary.playButtonSound();
+        soundsLibrary.playButtonSound(themes);
         if (winnerState) {
             if (source == play) {
                 new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,variantPieceOn, variantTileOn);
@@ -429,13 +432,12 @@ public class Menu implements ActionListener, Constants, Texts {
                 }
             } else if (source == exit) {
                 new Menu(frame, false, false, music, soundsLibrary, songEnable);
+            } else if (source == theme) {
+
             }
         } else {
             if (source == play) {
                 new Menu(frame, false, true, music, soundsLibrary, songEnable);
-            } else if (source == load) {
-                //TODO - Charger la partie
-                new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,variantPieceOn, variantTileOn);
             } else if (source == option) {
                 new Menu(frame, true, false, music, soundsLibrary, songEnable);
             } else if (source == exit) {
