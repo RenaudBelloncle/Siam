@@ -22,7 +22,7 @@ public class TextureManager {
 
     private BufferedImage loadImage(String name) {
         try {
-            return ImageIO.read(getClass().getResource("/textures/images/" + name));
+            return ImageIO.read(getClass().getResource("/textures/images/standard/" + name));
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Exception ! Could not load " + name + " !");

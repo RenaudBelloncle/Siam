@@ -31,6 +31,12 @@ public class Tile implements Constants {
         return banished;
     }
 
+    public void setBanished(boolean status){
+        this.banished = status;
+        if (banished) sprite = Sprite.bannedTile;
+        else sprite = Sprite.tile;
+    }
+
     public Piece getPiece(){
         return piece;
     }
