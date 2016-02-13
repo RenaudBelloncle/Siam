@@ -1,8 +1,5 @@
 package siam.audio;
 
-//import Siam.Enum.Camp;
-//import Siam.Enum.Theme;
-
 import siam.player.Camp;
 import siam.player.Theme;
 
@@ -203,17 +200,17 @@ public class SoundsLibrary {
     private void playAudio(String name, Theme theme){
         AudioClip sample = null;
         sample = soundLibraryStandard.get(name);
-        /*switch(theme){
+        switch(theme){
             case STANDARD:
                 sample = soundLibraryStandard.get(name);
                 break;
-            case NOEL:
+            case CHRISTMAS:
                 sample = soundLibraryChristmas.get(name);
                 break;
             case STARWARS:
                 sample = soundLibraryStarWars.get(name);
                 break;
-        }*/
+        }
         if(sample != null) sample.play();
     }
 
@@ -252,10 +249,6 @@ public class SoundsLibrary {
     }
 
     public void playButtonSound(Theme theme){
-        playAudio("button", theme);
-    }
-
-    public void playControlSound(Theme theme){
         playAudio("button", theme);
     }
 

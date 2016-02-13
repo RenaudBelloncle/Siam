@@ -32,6 +32,8 @@ public class Screen implements Constants {
                 if (xa < -SPRITE_SIZE || xa >= width ||  ya < 0 || ya >= heigth) break;
                 if (xa < 0) xa = 0;
                 pixels[xa + ya * width] = tile.getSprite().getPixel(x + y * SPRITE_SIZE);
+                int col = Sprite.bannedTile.getPixel(x + y * SPRITE_SIZE);
+                if (col != 0xFFFF00FF && tile.isBanished()) pixels[xa + ya * width] = col;
             }
         }
     }

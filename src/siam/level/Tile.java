@@ -15,8 +15,7 @@ public class Tile implements Constants {
         this.x = x;
         this.y = y;
         this.banished = banished;
-        if (banished) sprite = Sprite.bannedTile;
-        else sprite = Sprite.tile;
+        sprite = Sprite.tile;
     }
 
     public boolean isEmpty(){
@@ -29,12 +28,6 @@ public class Tile implements Constants {
 
     public boolean isBanished(){
         return banished;
-    }
-
-    public void setBanished(boolean status){
-        this.banished = status;
-        if (banished) sprite = Sprite.bannedTile;
-        else sprite = Sprite.tile;
     }
 
     public Piece getPiece(){
