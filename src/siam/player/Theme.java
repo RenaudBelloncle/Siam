@@ -3,6 +3,6 @@ package siam.player;
 
 public enum Theme {
     STANDARD,
-    NOEL,
+    CHRISTMAS,
     STARWARS
 }

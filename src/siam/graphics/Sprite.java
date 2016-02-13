@@ -39,7 +39,7 @@ public class Sprite {
         System.arraycopy(pixels, 0, this.pixels, 0, pixels.length);
     }
 
-    public void changeToChristmas(){
+    public static void changeToChristmas(){
 
         tile = new Sprite(128, 0, 0, SpriteSheet.christmas);
         bannedTile = new Sprite(128, 1, 0, SpriteSheet.christmas);
@@ -54,7 +54,7 @@ public class Sprite {
         blackPiece = new Sprite(128, 1, 2, SpriteSheet.christmas);
     }
 
-    public void changeToStarWars(){
+    public static void changeToStarWars(){
 
         tile = new Sprite(128, 0, 0, SpriteSheet.starwars);
         bannedTile = new Sprite(128, 1, 0, SpriteSheet.starwars);
@@ -69,7 +69,7 @@ public class Sprite {
         blackPiece = new Sprite(128, 1, 2, SpriteSheet.starwars);
     }
 
-    public void changeToStandard(){
+    public static void changeToStandard(){
 
         tile = new Sprite(128, 0, 0, SpriteSheet.standard);
         bannedTile = new Sprite(128, 1, 0, SpriteSheet.standard);

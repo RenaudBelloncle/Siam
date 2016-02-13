@@ -3,6 +3,7 @@ package siam;
 import siam.audio.Music;
 import siam.audio.SoundsLibrary;
 import siam.graphics.FontTools;
+import siam.graphics.Sprite;
 import siam.graphics.TextureManager;
 import siam.player.Player;
 import siam.player.Theme;
@@ -20,6 +21,7 @@ public class Menu implements ActionListener, Constants, Texts {
     private boolean optionState;
     private boolean campState;
     private boolean winnerState;
+
     private boolean songEnable = true;
     private boolean variantPieceOn;
     private boolean variantTileOn;
@@ -50,9 +52,9 @@ public class Menu implements ActionListener, Constants, Texts {
     private Theme themes = Theme.STANDARD;
 
     public Menu() {
-        this.music = new Music();
+        this.music = new Music(themes);
         this.soundsLibrary = new SoundsLibrary();
-        music.start();
+        //music.start();
 
         optionState = false;
         campState = false;
@@ -77,7 +79,7 @@ public class Menu implements ActionListener, Constants, Texts {
     }
 
     public Menu(JFrame frame, boolean option, boolean camp, Music music,
-                SoundsLibrary soundsLibrary, boolean songEnable) {
+                SoundsLibrary soundsLibrary, boolean songEnable, Theme theme) {
         if (option && camp) camp = false;
         optionState = option;
         campState = camp;
@@ -86,6 +88,33 @@ public class Menu implements ActionListener, Constants, Texts {
         variantMountainOn = false;
         variantPieceOn = false;
         variantTileOn = false;
+
+        this.frame = frame;
+        this.music = music;
+        this.songEnable = songEnable;
+        this.soundsLibrary = soundsLibrary;
+
+        this.themes = theme;
+
+        Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
+        frame.setPreferredSize(dimension);
+
+        initFrame();
+        renderFrame();
+
+        setControl(this);
+
+        frame.setVisible(true);
+    }
+
+    public Menu(JFrame frame, Player winner, Music music,
+                SoundsLibrary soundsLibrary, boolean songEnable, Theme theme) {
+        optionState = false;
+        campState = false;
+        winnerState = true;
+
+        this.themes = theme;
+        this.winner = winner;
 
         this.frame = frame;
         this.music = music;
@@ -103,28 +132,12 @@ public class Menu implements ActionListener, Constants, Texts {
         frame.setVisible(true);
     }
 
-    public Menu(JFrame frame, Player winner, Music music,
-                SoundsLibrary soundsLibrary, boolean songEnable) {
-        optionState = false;
-        campState = false;
-        winnerState = true;
+    public String getWhiteField() {
+        return whiteField.getText();
+    }
 
-        this.winner = winner;
-
-        this.frame = frame;
-        this.music = music;
-        this.songEnable = songEnable;
-        this.soundsLibrary = soundsLibrary;
-
-        Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
-        frame.setPreferredSize(dimension);
-
-        initFrame();
-        renderFrame();
-
-        setControl(this);
-
-        frame.setVisible(true);
+    public String getBlackField() {
+        return blackField.getText();
     }
 
     private void initFrame() {
@@ -170,7 +183,7 @@ public class Menu implements ActionListener, Constants, Texts {
             switch (winner.getCamp()) {
                 case WHITE:
                     mainPanel = new JPanel() {
-                        BufferedImage image = TextureManager.library.getImage("White Background");
+                        BufferedImage image = TextureManager.library.getImage(themes, "White Background");
                         public void paintComponent(Graphics g) {
                             super.paintComponent(g);
                             frame.repaint();
@@ -180,7 +193,7 @@ public class Menu implements ActionListener, Constants, Texts {
                     break;
                 case BLACK:
                     mainPanel = new JPanel() {
-                        BufferedImage image = TextureManager.library.getImage("Black Background");
+                        BufferedImage image = TextureManager.library.getImage(themes, "Black Background");
                         public void paintComponent(Graphics g) {
                             super.paintComponent(g);
                             frame.repaint();
@@ -215,7 +228,7 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.add(buttonPanel);
         } else if (campState) {
             mainPanel = new JPanel() {
-                BufferedImage image = TextureManager.library.getImage("Camp Background");
+                BufferedImage image = TextureManager.library.getImage(themes, "Camp Background");
                 public void paintComponent(Graphics g) {
                     super.paintComponent(g);
                     frame.repaint();
@@ -279,7 +292,7 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.add(buttonPanel);
         } else if (optionState) {
             mainPanel = new JPanel() {
-                BufferedImage image = TextureManager.library.getImage("Menu Background");
+                BufferedImage image = TextureManager.library.getImage(themes, "Menu Background");
                 public void paintComponent(Graphics g) {
                     super.paintComponent(g);
                     frame.repaint();
@@ -315,7 +328,7 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.add(buttonPanel);
         } else {
             mainPanel = new JPanel() {
-                BufferedImage image = TextureManager.library.getImage("Menu Background");
+                BufferedImage image = TextureManager.library.getImage(themes, "Menu Background");
                 public void paintComponent(Graphics g) {
                     super.paintComponent(g);
                     frame.repaint();
@@ -353,33 +366,93 @@ public class Menu implements ActionListener, Constants, Texts {
     }
 
     private void updateFonts() {
-        if (winnerState) {
-            fontTools.updateFontJLabel(victory, 80, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(play, 40, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(exit, 40, Color.orange, fontTools.getTextFont());
-        } else if (campState) {
-            fontTools.updateFontJLabel(title, 80, Color.orange, fontTools.getMenuFont());
-            fontTools.updateFontJLabel(whiteLabel, 60, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJTextField(whiteField, 40, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJLabel(blackLabel, 60, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJTextField(blackField, 40, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJCheckBox(variantPiece, 30, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJCheckBox(variantTile, 30, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJCheckBox(variantMountain, 30, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(exit, 60, Color.orange, fontTools.getTextFont());
-        } else if (optionState) {
-            fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
-            fontTools.updateFontJLabel(optionLabel, 60, Color.orange, fontTools.getMenuFont());
-            fontTools.updateFontJButton(rules, 50, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(theme, 50, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(song, 50, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(exit, 50, Color.orange, fontTools.getTextFont());
+        if (themes == Theme.STANDARD) {
+            if (winnerState) {
+                fontTools.updateFontJLabel(victory, 80, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(play, 40, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(exit, 40, Color.orange, fontTools.getTextFont());
+            } else if (campState) {
+                fontTools.updateFontJLabel(title, 80, Color.orange, fontTools.getMenuFont());
+                fontTools.updateFontJLabel(whiteLabel, 60, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJTextField(whiteField, 40, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJLabel(blackLabel, 60, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJTextField(blackField, 40, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJCheckBox(variantPiece, 30, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJCheckBox(variantTile, 30, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJCheckBox(variantMountain, 30, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(exit, 60, Color.orange, fontTools.getTextFont());
+            } else if (optionState) {
+                fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
+                fontTools.updateFontJLabel(optionLabel, 60, Color.orange, fontTools.getMenuFont());
+                fontTools.updateFontJButton(rules, 50, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(theme, 50, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(song, 50, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(exit, 50, Color.orange, fontTools.getTextFont());
+            } else {
+                fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
+                fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(option, 60, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(exit, 60, Color.orange, fontTools.getTextFont());
+            }
+        } else if ( themes == Theme.CHRISTMAS) {
+            if (winnerState) {
+                fontTools.updateFontJLabel(victory, 95, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(play, 60, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(exit, 60, Color.red, fontTools.getTextFontChristmas());
+            } else if (campState) {
+                fontTools.updateFontJLabel(title, 95, Color.red, fontTools.getMenuFontChristmas());
+                fontTools.updateFontJLabel(whiteLabel, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJTextField(whiteField, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJLabel(blackLabel, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJTextField(blackField, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJCheckBox(variantPiece, 45, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJCheckBox(variantTile,45,Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJCheckBox(variantMountain,45,Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(play, 60, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(exit, 60, Color.red, fontTools.getTextFontChristmas());
+            } else if (optionState) {
+                fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
+                fontTools.updateFontJLabel(optionLabel, 80, Color.red, fontTools.getMenuFontChristmas());
+                fontTools.updateFontJButton(rules, 65, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(theme, 65, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(song, 65, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(exit, 65, Color.red, fontTools.getTextFontChristmas());
+            } else {
+                fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
+                fontTools.updateFontJButton(play, 70, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(option, 70, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(exit, 70, Color.red, fontTools.getTextFontChristmas());
+            }
         } else {
-            fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
-            fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(option, 60, Color.orange, fontTools.getTextFont());
-            fontTools.updateFontJButton(exit, 60, Color.orange, fontTools.getTextFont());
+            if (winnerState) {
+                fontTools.updateFontJLabel(victory, 105, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(play, 70, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(exit, 70, Color.yellow, fontTools.getTextFontStarWars());
+            } else if (campState) {
+                fontTools.updateFontJLabel(title, 55, Color.yellow, fontTools.getMenuFontStarWars());
+                fontTools.updateFontJLabel(whiteLabel, 60, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJTextField(whiteField, 70, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJLabel(blackLabel, 70, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJTextField(blackField, 70, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJCheckBox(variantPiece, 40, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJCheckBox(variantTile,40,Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJCheckBox(variantMountain,40,Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(play, 60, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(exit, 60, Color.yellow, fontTools.getTextFontStarWars());
+            } else if (optionState) {
+                fontTools.updateFontJLabel(title, 150, Color.yellow, fontTools.getMenuFontStarWars());
+                fontTools.updateFontJLabel(optionLabel, 60, Color.yellow, fontTools.getMenuFontStarWars());
+                fontTools.updateFontJButton(rules, 50, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(theme, 50, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(song, 50, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(exit, 50, Color.yellow, fontTools.getTextFontStarWars());
+            } else {
+                fontTools.updateFontJLabel(title, 150, Color.yellow, fontTools.getMenuFontStarWars());
+                fontTools.updateFontJButton(play, 70, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(option, 70, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(exit, 70, Color.yellow, fontTools.getTextFontStarWars());
+            }
         }
     }
 
@@ -407,19 +480,50 @@ public class Menu implements ActionListener, Constants, Texts {
         soundsLibrary.playButtonSound(themes);
         if (winnerState) {
             if (source == play) {
-                new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,variantPieceOn, variantTileOn);
+                new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,
+                        variantPieceOn, variantTileOn, themes, getBlackField(), getWhiteField());
             } else if (source == exit) {
-                new Menu(frame, false, false, music, soundsLibrary, songEnable);
+                new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
             }
         } else if (campState) {
             if (source == play) {
-                new Game(frame, music, soundsLibrary, songEnable, variantMountain.isSelected(),variantPiece.isSelected(), variantTile.isSelected());
+                new Game(frame, music, soundsLibrary, songEnable, variantMountain.isSelected(),
+                        variantPiece.isSelected(), variantTile.isSelected(),
+                        themes, getBlackField(), getWhiteField());
             } else if (source == exit) {
-                new Menu(frame, false, false, music, soundsLibrary, songEnable);
+                new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
             }
         } else if (optionState) {
             if (source == rules) {
                 //TODO - Affichage règles
+            } else if (source == theme) {
+                if (themes == Theme.STANDARD) {
+                    themes = Theme.CHRISTMAS;
+                    music.stopIt();
+                    updateFonts();
+                    renderFrame();
+                    Sprite.changeToChristmas();
+                    music = new Music(themes);
+                    music.start();
+                }
+                else if (themes == Theme.CHRISTMAS) {
+                    themes = Theme.STARWARS;
+                    music.stopIt();
+                    updateFonts();
+                    renderFrame();
+                    Sprite.changeToStarWars();
+                    music = new Music(themes);
+                    music.start();
+                }
+                else {
+                    themes = Theme.STANDARD;
+                    music.stopIt();
+                    updateFonts();
+                    renderFrame();
+                    Sprite.changeToStandard();
+                    music = new Music(themes);
+                    music.start();
+                }
             } else if (source == song) {
                 if (!songEnable) {
                     song.setText(SONG_ENABLE_BUTTON);
@@ -431,15 +535,15 @@ public class Menu implements ActionListener, Constants, Texts {
                     songEnable = false;
                 }
             } else if (source == exit) {
-                new Menu(frame, false, false, music, soundsLibrary, songEnable);
+                new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
             } else if (source == theme) {
 
             }
         } else {
             if (source == play) {
-                new Menu(frame, false, true, music, soundsLibrary, songEnable);
+                new Menu(frame, false, true, music, soundsLibrary, songEnable, themes);
             } else if (source == option) {
-                new Menu(frame, true, false, music, soundsLibrary, songEnable);
+                new Menu(frame, true, false, music, soundsLibrary, songEnable, themes);
             } else if (source == exit) {
                 System.exit(0);
             }
