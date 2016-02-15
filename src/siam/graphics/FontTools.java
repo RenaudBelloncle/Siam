@@ -7,12 +7,16 @@ import java.io.IOException;
 
 public class FontTools {
 
-    private Font menuFont, police, textFont;
+    private Font menuFont, police, textFont, menuFontStarWars, menuFontChristmas, textFontChristmas, textFontStarWars;
 
     public FontTools() {
         try {
             menuFont = loadFont("res/fonts/Frazzle.ttf");
             textFont = loadFont("res/fonts/Alabama.ttf");
+            menuFontStarWars = loadFont("res/fonts/SFDistantGalaxy.ttf");
+            textFontStarWars = loadFont("res/fonts/SFDistantGalaxy.ttf");
+            menuFontChristmas = loadFont("res/fonts/Candcu.ttf");
+            textFontChristmas = loadFont("res/fonts/kr.ttf");
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
@@ -63,5 +67,21 @@ public class FontTools {
 
     public Font getTextFont() {
         return textFont;
+    }
+
+    public Font getMenuFontStarWars() {
+        return menuFontStarWars;
+    }
+
+    public Font getTextFontStarWars() {
+        return textFontStarWars;
+    }
+
+    public Font getMenuFontChristmas() {
+        return menuFontChristmas;
+    }
+
+    public Font getTextFontChristmas() {
+        return textFontChristmas;
     }
 }

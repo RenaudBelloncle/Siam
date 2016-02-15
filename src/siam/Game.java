@@ -5,9 +5,7 @@ import siam.audio.SoundsLibrary;
 import siam.graphics.FontTools;
 import siam.graphics.Sprite;
 import siam.graphics.TextureManager;
-import siam.level.Animal;
-import siam.level.Board;
-import siam.level.Orientation;
+import siam.level.*;
 import siam.player.Camp;
 import siam.player.Theme;
 import siam.player.Player;
@@ -17,6 +15,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 
 public class Game implements Runnable, ActionListener, Constants, Texts {
 
@@ -56,42 +57,13 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private int nbTours;
     private boolean running = false;
 
-    /*public Game() {
-        board = new Board(BOARD_SIZE);
-        players = new Player[2];
-        playerActive = 0;
-
-        players[0] = new Player(Camp.WHITE,"Pistache");
-        players[1] = new Player(Camp.BLACK,"Cacahuète");
-
-        frame = new JFrame();
-
-        Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
-        frame.setPreferredSize(dimension);
-
-        initFrame();
-        renderFrame();
-
-        mouse = new MouseHandler();
-        setControl(this);
-
-        putActive=moveActive=orientActive=bringOutActive=upActive=downActive=rightActive=leftActive=false;
-        frame.setResizable(false);
-        frame.setTitle(TITLE);
-        frame.pack();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-        setButtonEnabled();
-        start();
-    }*/
-
     public Game(JFrame frame, Music music, SoundsLibrary soundsLibrary,
                 boolean songEnable, boolean variantMountainOn,
-                boolean variantPieceOn, boolean variantTileOn) {
+                boolean variantPieceOn, boolean variantTileOn, Theme theme, String black, String white) {
         this.music = music;
         this.soundsLibrary = soundsLibrary;
         this.songEnable = songEnable;
+        this.theme = theme;
 
         this.variantMountainOn = variantMountainOn;
         this.variantPieceOn = variantPieceOn;
@@ -101,8 +73,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         players = new Player[2];
         playerActive = 0;
 
-        players[0] = new Player(Camp.WHITE,"Pistache");
-        players[1] = new Player(Camp.BLACK,"Cacahuète");
+        players[0] = new Player(Camp.WHITE,white);
+        players[1] = new Player(Camp.BLACK,black);
 
         this.frame = frame;
 
@@ -155,7 +127,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private void renderFrame() {
         JPanel mainPanel = new JPanel();
         JPanel buttonPanel = new JPanel() {
-            BufferedImage image = TextureManager.library.getImage("Button Background");
+            BufferedImage image = TextureManager.library.getImage(theme, "Button Background");
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 frame.repaint();
@@ -238,15 +210,37 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     private void updateFonts() {
-        fontTools.updateFontJLabel(playerName, 30, Color.orange, fontTools.getTextFont());
-        fontTools.updateFontJButton(put, 30, Color.orange, fontTools.getTextFont());
-        fontTools.updateFontJButton(bringOut, 30, Color.orange, fontTools.getTextFont());
-        fontTools.updateFontJButton(move, 30, Color.orange, fontTools.getTextFont());
-        fontTools.updateFontJButton(orient, 30, Color.orange, fontTools.getTextFont());
-        fontTools.updateFontJButton(top, 30, Color.orange, fontTools.getTextFont());
-        fontTools.updateFontJButton(left, 30, Color.orange, fontTools.getTextFont());
-        fontTools.updateFontJButton(right, 30, Color.orange, fontTools.getTextFont());
-        fontTools.updateFontJButton(bottom, 30, Color.orange, fontTools.getTextFont());
+        if (theme == Theme.CHRISTMAS) {
+            fontTools.updateFontJLabel(playerName, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJButton(put, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJButton(bringOut, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJButton(move, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJButton(orient, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJButton(top, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJButton(left, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJButton(right, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJButton(bottom, 60, Color.red, fontTools.getTextFontChristmas());
+        } else if (theme == Theme.STARWARS) {
+            fontTools.updateFontJLabel(playerName, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJButton(put, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJButton(bringOut, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJButton(move, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJButton(orient, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJButton(top, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJButton(left, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJButton(right, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJButton(bottom, 30, Color.yellow, fontTools.getTextFontStarWars());
+        } else {
+            fontTools.updateFontJLabel(playerName, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(put, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(bringOut, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(move, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(orient, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(top, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(left, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(right, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJButton(bottom, 30, Color.orange, fontTools.getTextFont());
+        }
     }
 
     public synchronized void start() {
@@ -284,7 +278,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             if (board.getPieceSelected().getCamp()== Camp.WHITE)soundsLibrary.playWhiteSound(theme);
             else soundsLibrary.playBlackSound(theme);
             if(moveActive){
-                actionPerformed = actionMove();
+                actionPerformed = testMove();
             }
             else if(bringOutActive){
                 actionPerformed = actionBringOut();
@@ -324,12 +318,12 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         mouse.openClick();
         if (source == newGame) {
             frame.setJMenuBar(null);
-            new Menu(frame, false, true, music, soundsLibrary, songEnable);
+            new Menu(frame, false, true, music, soundsLibrary, songEnable, theme);
         } else if (source == rules) {
             //TODO - Affichage règles
         } else if (source == backToMenu) {
             frame.setJMenuBar(null);
-            new Menu(frame, false, false, music, soundsLibrary, songEnable);
+            new Menu(frame, false, false, music, soundsLibrary, songEnable, theme);
         } else if (source == song) {
             if (songEnable) {
                 songEnable = false;
@@ -378,10 +372,10 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         right.setEnabled(orientActive);
         left.setEnabled(orientActive);
 
-        put.setEnabled(players[playerActive].canPut());
-        move.setEnabled(board.pieceSelected());
-        bringOut.setEnabled(testBringOut());
-        orient.setEnabled(board.pieceSelected());
+        put.setEnabled(players[playerActive].canPut() && !orientActive);
+        move.setEnabled(board.pieceSelected() && !orientActive);
+        bringOut.setEnabled(testBringOut() && !orientActive);
+        orient.setEnabled(board.pieceSelected() && !orientActive);
     }
 
     public void setButtonSelected(int buttonSelected){
@@ -434,6 +428,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public boolean testVictory() {
+
         return false;
     }
 
@@ -480,26 +475,58 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return false;
     }
 
-    public boolean actionBringOut(){
-        board.removePiece(convertPixToCase(board.getPieceSelected().getCoord()));
-        soundsLibrary.playOutSound(theme);
-        players[playerActive].bringOut();
-        bringOutActive = false;
-        mouse.closeClick();
-        mouse.openClick();
-        return true;
+    public void testPush() {
+        ArrayList<int[]> pile = new ArrayList<>();
+        int[] coordPiece = convertPixToCase(board.getPieceSelected().getCoord());
+        int[] direction = {-(coordPiece[0]-mouse.getClick()[0]),-(coordPiece[1]-mouse.getClick()[1])};
+        System.out.println(direction[0]+", "+ direction[1]);
+        int nbCase = 1;
+        int force = 2;
+        while(board.isInBound(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1])
+                && !board.isFree(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1])){
+            if(board.getPiece(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]) instanceof Mountain){
+                force --;
+            }
+            else if(board.getPiece(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]) instanceof Animal){
+                Animal a = (Animal)board.getPiece(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]);
+                if(oppositeDirection(board.getPieceSelected().getOrientation(),a.getOrientation())){
+                    force --;
+                }
+                else if(board.getPieceSelected().getOrientation() == a.getOrientation()){
+                    force ++;
+                }
+            }
+            pile.add(new int[]{coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]});
+            nbCase++;
+        }
+        if (force > 0 ) {
+            actionPush(pile, direction);
+        }
     }
 
-    public boolean actionMove(){
+    public boolean oppositeDirection(Orientation o1, Orientation o2){
+        if(o1 == Orientation.DOWN && o2 == Orientation.TOP){
+            return true;
+        }
+        else if(o1 == Orientation.LEFT && o2 == Orientation.RIGTH){
+            return true;
+        }
+        else if(o1 == Orientation.RIGTH && o2 == Orientation.LEFT){
+            return true;
+        }
+        else if(o1 == Orientation.TOP && o2 == Orientation.DOWN){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean testMove() {
         if(mouse.isSelected()) {
             if (isAdjacent()) {
                 if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])){
-                    int[] newCoordPix = convertCaseToPix(mouse.getClick());
-                    board.getPieceSelected().setPosition(newCoordPix[0],newCoordPix[1]);
-                    board.movePiece(mouse.getClick()[0],mouse.getClick()[1]);
-                    if(board.getPieceSelected().getCamp() == Camp.WHITE) soundsLibrary.playWalkSound(theme, Camp.WHITE);
-                    else soundsLibrary.playWalkSound(theme, Camp.BLACK);
+                    actionMove();
                 }
+                else testPush();
             } else {
                 moveActive = false;
                 board.deselect();
@@ -515,6 +542,58 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             return true;
         }
         return false;
+    }
+
+    public boolean actionPush(ArrayList<int[]> pile, int[] direction) {
+        for (int i = 0; i < pile.size(); i++){
+            System.out.println("Ancien : "+pile.get(i)[0]+" "+pile.get(i)[1]);
+            int[] newCoord = {pile.get(i)[0]+direction[0], pile.get(i)[1]+direction[1]};
+            System.out.println("Nouveau : "+newCoord[0]+ " "+newCoord[1]);
+            if (board.isInBound(newCoord[0], newCoord[1])) actionMove(pile.get(i), newCoord);
+            else actionBringOut();
+        }
+        return false;
+    }
+
+    public boolean actionBringOut(){
+        board.removePiece(convertPixToCase(board.getPieceSelected().getCoord()));
+        soundsLibrary.playOutSound(theme);
+        players[playerActive].bringOut();
+        bringOutActive = false;
+        mouse.closeClick();
+        mouse.openClick();
+        return true;
+    }
+
+    public void actionBringOut(int[] coord){
+        Piece p = board.getPiece(coord[0], coord[1]);
+        if (p instanceof Animal) {
+            if(players[0].getCamp() == p.getCamp()){
+                players[0].bringOut();
+            }else{
+                players[1].bringOut();
+            }
+        }
+        else{
+            // condition victoire montagne
+        }
+        board.removePiece(coord);
+        soundsLibrary.playOutSound(theme);
+    }
+
+    public void actionMove(){
+        int[] newCoordPix = convertCaseToPix(mouse.getClick());
+        int[] oldCoordCase = convertPixToCase(board.getPieceSelected().getCoord());
+        board.movePiece(mouse.getClick()[0],mouse.getClick()[1], oldCoordCase[0], oldCoordCase[1]);
+        board.getPieceSelected().setPosition(newCoordPix[0],newCoordPix[1]);
+        if(board.getPieceSelected().getCamp() == Camp.WHITE) soundsLibrary.playWalkSound(theme, Camp.WHITE);
+        else soundsLibrary.playWalkSound(theme, Camp.BLACK);
+    }
+
+    public void actionMove(int[] old, int[] newCoord){
+        int[] newCoordPix = convertCaseToPix(newCoord);
+        board.movePiece(newCoord[0],newCoord[1], old[0], old[1]);
+        board.getPiece(newCoord[0],newCoord[1]).setPosition(newCoordPix[0],newCoordPix[1]);
     }
 
     public boolean actionOrient(){
@@ -570,8 +649,15 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             board.changeTile(2, (BOARD_SIZE - 1), false);
             board.changeTile(2, 0, false);
         }
-        if(playerActive == 0) playerActive = 1;
-        else if(playerActive == 1) playerActive = 0;
+        if(playerActive == 0) {
+            playerActive = 1;
+            soundsLibrary.playBlackSound(theme);
+        }
+        else if(playerActive == 1) {
+            playerActive = 0;
+            soundsLibrary.playWhiteSound(theme);
+        }
+        playerName.setText(players[playerActive].getName());
     }
 
     public double getAngle(Orientation oldOrient, Orientation newOrient){

@@ -183,8 +183,8 @@ public class Board extends JPanel implements Constants, Cloneable {
         return 0 <= x && x < SIZE && 0 <= y && y < SIZE;
     }
 
-    public void movePiece(int x, int y){
-        Piece p = getPieceSelected();
+    public void movePiece(int x, int y, int oldx, int oldy){
+        Piece p = getPiece(oldx,oldy);
         removePiece(convertPixToCase(p.getCoord()));
         tiles[x][y].insertPiece(p);
 
