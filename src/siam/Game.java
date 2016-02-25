@@ -494,6 +494,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 Animal a = (Animal)board.getPiece(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]);
                 if(oppositeDirection(board.getPieceSelected().getOrientation(),a.getOrientation())){
                     force --;
+                    force --;
                 }
                 else if(board.getPieceSelected().getOrientation() == a.getOrientation()){
                     force ++;
@@ -530,6 +531,14 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             if (isAdjacent()) {
                 if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])) actionMove();
                 else if (testPush()) actionMove();
+                else {
+                    moveActive = false;
+                    board.deselect();
+                    mouse.closeClick();
+                    mouse.openClick();
+                    soundsLibrary.playErrorActionSound(theme);
+                    return false;
+                }
             } else {
                 moveActive = false;
                 board.deselect();
