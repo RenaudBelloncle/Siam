@@ -6,8 +6,19 @@ import siam.player.Camp;
 
 public class Mountain extends Piece {
 
-    public Mountain(int x, int y, Sprite sprite, Camp camp) {
-        super(x, y, sprite, camp);
+    public Mountain(int x, int y, Camp camp) {
+        super(x, y, camp);
+        switch (camp) {
+            case WHITE:
+                setSprite(Sprite.whiteMountain);
+                break;
+            case BLACK:
+                setSprite(Sprite.blackMountain);
+                break;
+            case NEUTRAL:
+                setSprite(Sprite.mountain);
+                break;
+        }
     }
 
     public void render(Screen screen) {

@@ -6,7 +6,7 @@ public interface Texts {
     String TITLE_CAMP_LABEL = "Choose your Camp";
     String WHITE_LABEL = "White";
     String BLACK_LABEL = "Black";
-    String VARIANT_PIECE = "Count your Pieces";
+    String VARIANT_PIECE = "Only one can leave";
     String VARIANT_TILE = "You should not pass";
     String VARIANT_MOUNTAIN = "Protect your Mountain";
     String WINNER_LABEL = "Victory of ";
