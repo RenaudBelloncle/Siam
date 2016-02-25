@@ -441,9 +441,78 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return false;
     }
 
-    public boolean testVictory() {
+    public void testVictory(int[]coord) {
+        Camp winner = null;
+        if(coord[0] == -1){
+            int i = 0;
+            while(!(board.getPiece(i,coord[1]) instanceof Animal)){
+                i++;
+                while(board.getPiece(i,coord[1]) instanceof Animal){
+                    if(((Animal)board.getPiece(i,coord[1])).getOrientation() != Orientation.LEFT) {
+                        i++;
+                    }
+                    else break;
+                }
+            }
+            winner = board.getPiece(i,coord[1]).getCamp();
+        }
+        else if(coord[0] == 5){
+            int i = 4;
+            while(!(board.getPiece(i,coord[1]) instanceof Animal)){
+                i--;
+                while(board.getPiece(i,coord[1]) instanceof Animal){
+                    if(((Animal)board.getPiece(i,coord[1])).getOrientation() != Orientation.RIGTH) {
+                        i--;
+                    }
+                    else break;
+                }
+            }
+            winner = board.getPiece(i,coord[1]).getCamp();
+        }
+        else if(coord[1] == -1){
+            int i = 0;
+            while(!(board.getPiece(coord[0],i) instanceof Animal)){
+                i++;
+                while(board.getPiece(coord[0],i) instanceof Animal){
+                    if(((Animal)board.getPiece(coord[0],i)).getOrientation() != Orientation.TOP) {
+                        i++;
+                    }
+                    else break;
+                }
+            }
+            winner = board.getPiece(coord[0],i).getCamp();
+        }
+        else if(coord[1] == 5){
+            int i = 4;
+            while(!(board.getPiece(coord[0],i) instanceof Animal)){
+                i--;
+                while(board.getPiece(coord[0],i) instanceof Animal){
+                    if(((Animal)board.getPiece(coord[0],i)).getOrientation() != Orientation.DOWN) {
+                        i--;
+                    }
+                    else break;
+                }
+            }
+            winner = board.getPiece(coord[0],i).getCamp();
+        }
 
-        return false;
+        frame.setJMenuBar(null);
+        if(players[0].getCamp() == winner){
+            new Menu(frame,players[0],music,soundsLibrary,songEnable,theme);
+        }
+        else if(players[1].getCamp() == winner){
+            new Menu(frame,players[1],music,soundsLibrary,songEnable,theme);
+        }
+    }
+
+    public void testVictoryMountains(int[] coord){
+        frame.setJMenuBar(null);
+        if(board.getPiece(coord[0],coord[1]).getCamp() == Camp.BLACK){
+            new Menu(frame,players[0],music,soundsLibrary,songEnable,theme);
+        }
+        else if(board.getPiece(coord[0],coord[1]).getCamp() == Camp.WHITE){
+            new Menu(frame,players[1],music,soundsLibrary,songEnable,theme);
+        }
     }
 
     public boolean actionPut(){
@@ -590,7 +659,21 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 actionMove(old, newCoord);
             }
             else {
-                actionBringOut(old);
+                if(pile.get(i) instanceof Animal) {
+                    actionBringOut(old);
+                }
+                else{
+                    if(variantMountainOn) {
+                        if(pile.get(i).getCamp() == Camp.NEUTRAL){
+                            // Poser une pierre
+                        }else{
+                            testVictoryMountains(old);
+                        }
+                    }
+                    else{
+                        testVictory(newCoord);
+                    }
+                }
             }
         }
         actionMove();
@@ -608,16 +691,11 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public void actionBringOut(int[] coord){
-        Piece p = board.getPiece(coord[0], coord[1]);
-        if (p instanceof Animal) {
-            if(players[0].getCamp() == p.getCamp()){
-                players[0].bringOut();
-            } else {
-                players[1].bringOut();
-            }
-        }
-        else{
-            testVictory();
+        Animal p = (Animal) board.getPiece(coord[0], coord[1]);
+        if(players[0].getCamp() == p.getCamp()){
+            players[0].bringOut();
+        } else {
+            players[1].bringOut();
         }
         board.removePiece(coord);
         soundsLibrary.playOutSound(theme);
