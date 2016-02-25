@@ -479,33 +479,50 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public boolean testPush() {
-        ArrayList<int[]> pile = new ArrayList<>();
+        ArrayList<Piece> pile = new ArrayList<>();
         int[] coordPiece = convertPixToCase(board.getPieceSelected().getCoord());
         int[] direction = {-(coordPiece[0]-mouse.getClick()[0]),-(coordPiece[1]-mouse.getClick()[1])};
-        System.out.println(direction[0]+", "+ direction[1]);
-        int nbCase = 1;
-        int force = 2;
-        while(board.isInBound(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1])
-                && !board.isFree(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1])){
-            if(board.getPiece(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]) instanceof Mountain){
-                force --;
-            }
-            else if(board.getPiece(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]) instanceof Animal){
-                Animal a = (Animal)board.getPiece(coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]);
-                if(oppositeDirection(board.getPieceSelected().getOrientation(),a.getOrientation())){
-                    force --;
-                    force --;
+        if((direction[0] == 1 && board.getPieceSelected().getOrientation() == Orientation.RIGTH) ||
+                (direction[0] == -1 && board.getPieceSelected().getOrientation() == Orientation.LEFT) ||
+                (direction[1] == 1 && board.getPieceSelected().getOrientation() == Orientation.DOWN) ||
+                (direction[1] == -1 && board.getPieceSelected().getOrientation() == Orientation.TOP) ) {
+            int nbCase = 1;
+            int mountains = 0;
+            int animalOpposed = 0;
+            int animalOriented = 1;
+            while (board.isInBound(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1])
+                    && !board.isFree(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1])) {
+                if (board.getPiece(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1]) instanceof Mountain) {
+                    mountains++;
+                } else if (board.getPiece(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1]) instanceof Animal) {
+                    Animal a = (Animal) board.getPiece(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1]);
+                    if (oppositeDirection(board.getPieceSelected().getOrientation(), a.getOrientation())) {
+                        animalOpposed++;
+                    } else if (board.getPieceSelected().getOrientation() == a.getOrientation()) {
+                        animalOriented++;
+                    }
                 }
-                else if(board.getPieceSelected().getOrientation() == a.getOrientation()){
-                    force ++;
+                pile.add(board.getPiece(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1]));
+                nbCase++;
+            }
+            int offset = 1;
+            while (pile.get(pile.size() - offset) instanceof Animal &&
+                    ((Animal) pile.get(pile.size() - offset)).getOrientation() == board.getPieceSelected().getOrientation()) {
+                animalOriented--;
+                offset++;
+                if (pile.size() - offset < 0) {
+                    break;
                 }
             }
-            pile.add(new int[]{coordPiece[0]+nbCase*direction[0],coordPiece[1]+nbCase*direction[1]});
-            nbCase++;
-        }
-        if (force > 0 ) {
-            actionPush(pile, direction);
-            return true;
+            if (mountains == 0) {
+                if (animalOriented > animalOpposed) {
+                    return actionPush(pile, direction);
+                }
+            } else {
+                if (animalOriented >= animalOpposed + mountains) {
+                    return actionPush(pile, direction);
+                }
+            }
         }
         return false;
     }
@@ -556,17 +573,19 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return false;
     }
 
-    public boolean actionPush(ArrayList<int[]> pile, int[] direction) {
+    public boolean actionPush(ArrayList<Piece> pile, int[] direction) {
         for (int i = pile.size() - 1; i >= 0; i--) {
-            int[] newCoord = {pile.get(i)[0]+direction[0], pile.get(i)[1]+direction[1]};
+            int[] old = convertPixToCase(pile.get(i).getCoord());
+            int[] newCoord = {old[0]+direction[0], old[1]+direction[1]};
             if (board.isInBound(newCoord[0], newCoord[1])) {
-                actionMove(pile.get(i), newCoord);
+                actionMove(old, newCoord);
             }
             else {
-                actionBringOut(pile.get(i));
+                actionBringOut(old);
             }
         }
-        return false;
+        actionMove();
+        return true;
     }
 
     public boolean actionBringOut(){
