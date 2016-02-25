@@ -59,7 +59,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     public Game(JFrame frame, Music music, SoundsLibrary soundsLibrary,
                 boolean songEnable, boolean variantMountainOn,
-                boolean variantPieceOn, boolean variantTileOn, Theme theme, String black, String white) {
+                boolean variantPieceOn, boolean variantTileOn,
+                Theme theme, String black, String white) {
         this.music = music;
         this.soundsLibrary = soundsLibrary;
         this.songEnable = songEnable;
@@ -159,6 +160,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         leftPanel.setOpaque(false);
         rightPanel.setOpaque(false);
         bottomPanel.setOpaque(false);
+
+        put.setBorderPainted(true);
 
         updateFonts();
 
@@ -475,7 +478,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return false;
     }
 
-    public void testPush() {
+    public boolean testPush() {
         ArrayList<int[]> pile = new ArrayList<>();
         int[] coordPiece = convertPixToCase(board.getPieceSelected().getCoord());
         int[] direction = {-(coordPiece[0]-mouse.getClick()[0]),-(coordPiece[1]-mouse.getClick()[1])};
@@ -501,7 +504,9 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         }
         if (force > 0 ) {
             actionPush(pile, direction);
+            return true;
         }
+        return false;
     }
 
     public boolean oppositeDirection(Orientation o1, Orientation o2){
@@ -523,10 +528,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public boolean testMove() {
         if(mouse.isSelected()) {
             if (isAdjacent()) {
-                if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])){
-                    actionMove();
-                }
-                else testPush();
+                if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])) actionMove();
+                else if (testPush()) actionMove();
             } else {
                 moveActive = false;
                 board.deselect();
@@ -545,12 +548,14 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public boolean actionPush(ArrayList<int[]> pile, int[] direction) {
-        for (int i = 0; i < pile.size(); i++){
-            System.out.println("Ancien : "+pile.get(i)[0]+" "+pile.get(i)[1]);
+        for (int i = pile.size() - 1; i >= 0; i--) {
             int[] newCoord = {pile.get(i)[0]+direction[0], pile.get(i)[1]+direction[1]};
-            System.out.println("Nouveau : "+newCoord[0]+ " "+newCoord[1]);
-            if (board.isInBound(newCoord[0], newCoord[1])) actionMove(pile.get(i), newCoord);
-            else actionBringOut();
+            if (board.isInBound(newCoord[0], newCoord[1])) {
+                actionMove(pile.get(i), newCoord);
+            }
+            else {
+                actionBringOut(pile.get(i));
+            }
         }
         return false;
     }
@@ -570,12 +575,12 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         if (p instanceof Animal) {
             if(players[0].getCamp() == p.getCamp()){
                 players[0].bringOut();
-            }else{
+            } else {
                 players[1].bringOut();
             }
         }
         else{
-            // condition victoire montagne
+            testVictory();
         }
         board.removePiece(coord);
         soundsLibrary.playOutSound(theme);
