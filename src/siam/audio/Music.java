@@ -31,8 +31,7 @@ public class Music extends Thread {
                                         "res/audio/songs/StarWars2.mp3",
                                         "res/audio/songs/StarWars3.mp3",
                                         "res/audio/songs/StarWars4.mp3",
-                                        "res/audio/songs/StarWars5.mp3",
-                                        "res/audio/songs/StarWars6.mp3"};
+                                        "res/audio/songs/StarWars5.mp3"};
 
     }
 

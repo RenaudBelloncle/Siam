@@ -54,7 +54,7 @@ public class Menu implements ActionListener, Constants, Texts {
     public Menu() {
         this.music = new Music(themes);
         this.soundsLibrary = new SoundsLibrary();
-        //music.start();
+        music.start();
 
         optionState = false;
         campState = false;
