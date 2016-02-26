@@ -477,7 +477,7 @@ public class Menu implements ActionListener, Constants, Texts {
 
     public void actionPerformed(ActionEvent actionEvent) {
         Object source = actionEvent.getSource();
-        soundsLibrary.playButtonSound(themes);
+        soundsLibrary.playButtonSound();
         if (winnerState) {
             if (source == play) {
                 new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,
@@ -536,8 +536,6 @@ public class Menu implements ActionListener, Constants, Texts {
                 }
             } else if (source == exit) {
                 new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
-            } else if (source == theme) {
-
             }
         } else {
             if (source == play) {
