@@ -99,14 +99,14 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     private void initFrame() {
         playerName = new JLabel(players[playerActive].getName());
-        put = new JButton(PUT_BUTTON);
-        bringOut = new JButton(BRINGOUT_BUTTON);
-        move = new JButton(MOVE_BUTTON);
-        orient = new JButton(ORIENT_BUTTON);
-        top = new JButton(TOP_BUTTON);
-        left = new JButton(LEFT_BUTTON);
-        right = new JButton(RIGHT_BUTTON);
-        bottom = new JButton(BOTTOM_BUTTON);
+        put = new JButton();
+        bringOut = new JButton();
+        move = new JButton();
+        orient = new JButton();
+        top = new JButton();
+        left = new JButton();
+        right = new JButton();
+        bottom = new JButton();
 
         newGame = new JMenuItem(NEWGAME_BAR);
         rules = new JMenuItem(RULES_BAR);
@@ -125,7 +125,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 frame.repaint();
-                g.drawImage(image, 0, 0, BUTTON_WIDTH, WIN_HEIGTH, this);
+                g.drawImage(image, 0, 0, BUTTON_WIDTH, WIN_HEIGTH-TOPBAR_HEIGHT, this);
             }
         };
         Dimension dimension = new Dimension(BUTTON_WIDTH, WIN_HEIGTH);
@@ -154,7 +154,14 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         rightPanel.setOpaque(false);
         bottomPanel.setOpaque(false);
 
-        put.setBorderPainted(true);
+        put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put")));
+        move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move")));
+        orient.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Orient")));
+        bringOut.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Bring Out")));
+        top.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Top")));
+        left.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Left")));
+        right.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Right")));
+        bottom.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Bottom")));
 
         updateFonts();
 
@@ -207,7 +214,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     private void updateFonts() {
         if (theme == Theme.CHRISTMAS) {
-            fontTools.updateFontJLabel(playerName, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJLabel(playerName, 70, Color.red, fontTools.getTextFontChristmas());
             fontTools.updateFontJButton(put, 60, Color.red, fontTools.getTextFontChristmas());
             fontTools.updateFontJButton(bringOut, 60, Color.red, fontTools.getTextFontChristmas());
             fontTools.updateFontJButton(move, 60, Color.red, fontTools.getTextFontChristmas());
@@ -217,7 +224,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             fontTools.updateFontJButton(right, 60, Color.red, fontTools.getTextFontChristmas());
             fontTools.updateFontJButton(bottom, 60, Color.red, fontTools.getTextFontChristmas());
         } else if (theme == Theme.STARWARS) {
-            fontTools.updateFontJLabel(playerName, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJLabel(playerName, 40, Color.black, fontTools.getTextFontStarWars());
             fontTools.updateFontJButton(put, 30, Color.yellow, fontTools.getTextFontStarWars());
             fontTools.updateFontJButton(bringOut, 30, Color.yellow, fontTools.getTextFontStarWars());
             fontTools.updateFontJButton(move, 30, Color.yellow, fontTools.getTextFontStarWars());
@@ -227,7 +234,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             fontTools.updateFontJButton(right, 30, Color.yellow, fontTools.getTextFontStarWars());
             fontTools.updateFontJButton(bottom, 30, Color.yellow, fontTools.getTextFontStarWars());
         } else {
-            fontTools.updateFontJLabel(playerName, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJLabel(playerName, 50, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(put, 30, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(bringOut, 30, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(move, 30, Color.orange, fontTools.getTextFont());
@@ -266,26 +273,27 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public void update() {
         setButtonEnabled();
         boolean actionPerformed = false;
-        if(!board.pieceSelected()){
-            if(putActive) actionPerformed = actionPut();
+        if (!board.pieceSelected()) {
+            if (putActive) actionPerformed = actionPut();
             selectPiece();
-        }
-        else{
-            if (board.getPieceSelected().getCamp()== Camp.WHITE) soundsLibrary.playWhiteSound(theme);
+        } else {
+            if (board.getPieceSelected().getCamp()== Camp.WHITE)soundsLibrary.playWhiteSound(theme);
             else soundsLibrary.playBlackSound(theme);
-            if(moveActive){
-                actionPerformed = testMove();
-            }
-            else if(bringOutActive){
-                actionPerformed = actionBringOut();
-            }
-            else if(orientActive){
-                actionPerformed = actionOrient();
-            }
+            if (moveActive) actionPerformed = testMove();
+            else if (bringOutActive) actionPerformed = actionBringOut();
+            else if (orientActive) actionPerformed = actionOrient();
         }
-        if(actionPerformed){
-            nextPlayer();
+        if(actionPerformed) nextPlayer();
+        if (mouse.isRightClick() && !orientActive) {
+            board.deselect();
+            resetButton();
+            setButtonSelected(10);
         }
+    }
+
+    private void resetButton() {
+        put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put")));
+        move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move")));
     }
 
     public void render() {
@@ -327,16 +335,19 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 song.setText(SONG_DISABLE_BAR);
             } else {
                 song.setText(SONG_ENABLE_BAR);
+                music = new Music(theme);
                 music.start();
                 this.songEnable = true;
             }
         }
         else if(source == put){
+            put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put Selected")));
             mouse.closeClick();
             mouse.openClick();
             setButtonSelected(1);
         }
         else if(source == move){
+            move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move Selected")));
             mouse.closeClick();
             mouse.openClick();
             setButtonSelected(2);
@@ -362,13 +373,13 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     }
 
-    public void setButtonEnabled(){
+    public void setButtonEnabled() {
         top.setEnabled(orientActive);
         bottom.setEnabled(orientActive);
         right.setEnabled(orientActive);
         left.setEnabled(orientActive);
 
-        put.setEnabled(players[playerActive].canPut() && !orientActive);
+        put.setEnabled(players[playerActive].canPut() && !orientActive && !board.pieceSelected());
         move.setEnabled(board.pieceSelected() && !orientActive);
         bringOut.setEnabled(testBringOut() && !orientActive);
         orient.setEnabled(board.pieceSelected() && !orientActive);
@@ -401,7 +412,6 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 putActive = false;
                 break;
             default:
-                System.out.println("je passe ici ? ");
                 putActive = false;
                 moveActive = false;
                 bringOutActive = false;
@@ -760,6 +770,9 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             playerActive = 0;
             soundsLibrary.playWhiteSound(theme);
         }
+        put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put")));
+        move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move")));
+        orient.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Orient")));
         playerName.setText(players[playerActive].getName());
     }
 
