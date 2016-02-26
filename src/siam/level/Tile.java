@@ -23,7 +23,7 @@ public class Tile implements Constants {
     }
 
     public boolean isOnEdge(){
-        return x == 0 ||x == (BOARD_SIZE - 1) || y == 0 || y == (BOARD_SIZE - 1);
+        return x == 0 || x == (BOARD_SIZE - 1) || y == 0 || y == (BOARD_SIZE - 1);
     }
 
     public boolean isBanished(){
@@ -38,8 +38,16 @@ public class Tile implements Constants {
         this.piece = piece;
     }
 
-    public void removePiece(){
+    public void removePiece() {
         this.piece = null;
+    }
+
+    public void brigOutPiece() {
+        piece = null;
+    }
+
+    public void orientPiece(Orientation orientation) {
+        ((Animal)piece).setOrientation(orientation);
     }
 
     public void render(Screen screen) {

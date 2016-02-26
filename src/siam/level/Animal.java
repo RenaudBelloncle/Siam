@@ -4,15 +4,21 @@ import siam.graphics.Screen;
 import siam.graphics.Sprite;
 import siam.player.Camp;
 
-import javax.print.attribute.standard.OrientationRequested;
-
 public class Animal extends Piece {
 
     private Orientation orientation;
     private boolean isSelected = false;
 
-    public Animal(int x, int y, Sprite sprite, Camp camp, Orientation orientation) {
-        super(x, y, sprite, camp);
+    public Animal(int x, int y, Camp camp, Orientation orientation) {
+        super(x, y, camp);
+        switch (camp) {
+            case WHITE:
+                setSprite(Sprite.whitePiece);
+                break;
+            case BLACK:
+                setSprite(Sprite.blackPiece);
+                break;
+        }
         this.orientation = orientation;
     }
 
@@ -20,12 +26,12 @@ public class Animal extends Piece {
         return orientation;
     }
 
-    public void render(Screen screen) {
-        screen.renderPiece(x, y, this);
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
     }
 
-    public void setOrientation(Orientation o){
-        orientation = o;
+    public void render(Screen screen) {
+        screen.renderPiece(x, y, this);
     }
 
     public boolean getIsSelected(){

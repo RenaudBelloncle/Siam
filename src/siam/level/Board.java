@@ -2,7 +2,6 @@ package siam.level;
 
 import siam.Constants;
 import siam.graphics.Screen;
-import siam.graphics.Sprite;
 import siam.player.Camp;
 
 import javax.swing.*;
@@ -62,16 +61,41 @@ public class Board extends JPanel implements Constants, Cloneable {
             for (int i = 0; i < 3; i++) {
                 int xa = (i + 1) * SPRITE_SIZE + BOARD_BORDER / 2;
                 int ya = 2 * SPRITE_SIZE + BOARD_BORDER / 2;
-                if (i == 0) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.whiteMountain, Camp.WHITE));
-                else if (i == 2) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.blackMountain, Camp.BLACK));
-                else tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.mountain, Camp.NEUTRAL));
+                if (i == 0) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Camp.WHITE));
+                else if (i == 2) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Camp.BLACK));
+                else tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Camp.NEUTRAL));
             }
         } else {
             for (int i = 0; i < 3; i++) {
                 int xa = (i + 1) * SPRITE_SIZE + BOARD_BORDER / 2;
                 int ya = 2 * SPRITE_SIZE + BOARD_BORDER / 2;
-                tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.mountain, Camp.NEUTRAL));
+                tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Camp.NEUTRAL));
             }
+        }
+    }
+
+    public Tile getTile(int x, int y) {
+        return tiles[x][y];
+    }
+
+    public void movePiece(int x, int y, Orientation orientation) {
+        switch (orientation) {
+            case TOP:
+                getTile(x, y - 1).insertPiece(getTile(x, y).getPiece());
+                getTile(x, y).brigOutPiece();
+                break;
+            case DOWN:
+                getTile(x, y + 1).insertPiece(getTile(x, y).getPiece());
+                getTile(x, y).brigOutPiece();
+                break;
+            case LEFT:
+                getTile(x - 1, y).insertPiece(getTile(x, y).getPiece());
+                getTile(x, y).brigOutPiece();
+                break;
+            case RIGTH:
+                getTile(x + 1, y).insertPiece(getTile(x, y).getPiece());
+                getTile(x, y).brigOutPiece();
+                break;
         }
     }
 
