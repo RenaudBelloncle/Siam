@@ -123,7 +123,6 @@ public class Board extends JPanel implements Constants, Cloneable {
 
     public void putPiece(Piece p){
         int [] coord = convertPixToCase(p.getCoord());
-        System.out.println(coord[0] + " " + coord[1]);
         tiles[coord[0]][coord[1]].insertPiece(p);
     }
 
@@ -142,21 +141,14 @@ public class Board extends JPanel implements Constants, Cloneable {
     public boolean pieceSelected(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
-                if(pieceSelected(i,j)){
-                    return true;
-                }
+                if(pieceSelected(i,j)) return true;
             }
         }
         return false;
     }
 
-    public boolean pieceSelected(int x, int y){
-        if(tiles[x][y].getPiece() instanceof Animal){
-            if(((Animal)tiles[x][y].getPiece()).getIsSelected()){
-                return true;
-            }
-        }
-        return false;
+    public boolean pieceSelected(int x, int y) {
+        return tiles[x][y].getPiece() instanceof Animal && ((Animal)tiles[x][y].getPiece()).getIsSelected();
     }
 
     public Animal getPieceSelected(){
@@ -205,6 +197,5 @@ public class Board extends JPanel implements Constants, Cloneable {
         Piece p = getPiece(oldx,oldy);
         removePiece(convertPixToCase(p.getCoord()));
         tiles[x][y].insertPiece(p);
-
     }
 }

@@ -602,8 +602,13 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public boolean testMove() {
         if(mouse.isSelected()) {
             if (isAdjacent()) {
-                if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])) actionMove();
-                else if (testPush()) actionMove();
+                if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])) {
+                    actionMove();
+                    moveActive = false;
+                    orientActive = true;
+                    mouse.closeClick();
+                    return actionOrient();
+                } else if (testPush()) actionMove();
                 else {
                     moveActive = false;
                     board.deselect();
@@ -809,7 +814,6 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public void selectPiece(){
-
         if(mouse.isSelected()){
             if(board.getPiece(mouse.getClick()[0],mouse.getClick()[1]) != null){
                 if(board.getPiece(mouse.getClick()[0],mouse.getClick()[1]).getCamp() == players[playerActive].getCamp()){
