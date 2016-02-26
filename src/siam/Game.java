@@ -97,28 +97,6 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return board;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
-    public void put(int x, int y, Orientation orientation, Camp camp) {
-        getBoard().getTile(x, y).insertPiece(
-                new Animal(x * SPRITE_SIZE + BOARD_BORDER / 2, y * SPRITE_SIZE + BOARD_BORDER / 2,
-                        camp, orientation));
-    }
-
-    public void bringOut(int x, int y) {
-        getBoard().getTile(x, y).brigOutPiece();
-    }
-
-    public void move(int x, int y, Orientation orientation) {
-        getBoard().movePiece(x, y, orientation);
-    }
-
-    public void orient(int x, int y, Orientation orientation) {
-        getBoard().getTile(x, y).orientPiece(orientation);
-    }
-
     private void initFrame() {
         playerName = new JLabel(players[playerActive].getName());
         put = new JButton(PUT_BUTTON);
@@ -293,7 +271,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             selectPiece();
         }
         else{
-            if (board.getPieceSelected().getCamp()== Camp.WHITE)soundsLibrary.playWhiteSound(theme);
+            if (board.getPieceSelected().getCamp()== Camp.WHITE) soundsLibrary.playWhiteSound(theme);
             else soundsLibrary.playBlackSound(theme);
             if(moveActive){
                 actionPerformed = testMove();
@@ -332,7 +310,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     public void actionPerformed(ActionEvent actionEvent) {
         Object source = actionEvent.getSource();
-        soundsLibrary.playButtonSound(theme);
+        soundsLibrary.playButtonSound();
         mouse.openClick();
         if (source == newGame) {
             frame.setJMenuBar(null);
@@ -523,7 +501,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound(theme);
+                soundsLibrary.playErrorActionSound();
                 return false;
             }
             if (board.isOnEdge(mouse.getClick()[0], mouse.getClick()[1])) {
@@ -549,7 +527,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound(theme);
+                soundsLibrary.playErrorActionSound();
                 return false;
             }
         }
@@ -631,7 +609,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                     board.deselect();
                     mouse.closeClick();
                     mouse.openClick();
-                    soundsLibrary.playErrorActionSound(theme);
+                    soundsLibrary.playErrorActionSound();
                     return false;
                 }
             } else {
@@ -639,7 +617,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound(theme);
+                soundsLibrary.playErrorActionSound();
                 return false;
             }
             moveActive = false;

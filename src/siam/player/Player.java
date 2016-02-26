@@ -39,8 +39,4 @@ public class Player {
         return pieceOut < 1;
     }
 
-    public int getPieceOnBoard(){
-        return pieceOnBoard;
-    }
-
 }

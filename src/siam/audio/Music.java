@@ -8,8 +8,6 @@ public class Music extends Thread {
 
     private static Random random = new Random();
 
-    private Thread thread;
-
     private MP3 dj;
     private String[] standardSounds;
     private String[] christmasSounds;
@@ -34,7 +32,7 @@ public class Music extends Thread {
     }
 
     public synchronized void start() {
-        thread = new Thread(this, "Music");
+        Thread thread = new Thread(this, "Music");
         thread.start();
     }
 
@@ -52,28 +50,18 @@ public class Music extends Thread {
                 break;
         }
         int newCount;
-    int count = random.nextInt(sounds.length);
+        int count = random.nextInt(sounds.length);
         dj = new MP3(sounds[count]);
-
         dj.play();
 
         while (true){
-
-            if (dj == null) {
-                return;
-            }
+            if (dj == null) return;
             if (dj.getPlayer().isComplete()) {
                 newCount = random.nextInt(sounds.length);
-
-                while (count == newCount) {
-                    newCount = random.nextInt(sounds.length);
-                }
-
+                while (count == newCount) newCount = random.nextInt(sounds.length);
                 count = newCount;
-
                 dj = new MP3(sounds[count]);
             }
-
             dj.play();
         }
     }

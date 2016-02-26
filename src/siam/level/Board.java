@@ -139,7 +139,6 @@ public class Board extends JPanel implements Constants, Cloneable {
         tiles[x][y] = new Tile(x, y, status);
     }
 
-    // Test si une piece est selectionnee
     public boolean pieceSelected(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
@@ -151,7 +150,6 @@ public class Board extends JPanel implements Constants, Cloneable {
         return false;
     }
 
-    // Test si la piece x y est selectionnee
     public boolean pieceSelected(int x, int y){
         if(tiles[x][y].getPiece() instanceof Animal){
             if(((Animal)tiles[x][y].getPiece()).getIsSelected()){
@@ -161,7 +159,6 @@ public class Board extends JPanel implements Constants, Cloneable {
         return false;
     }
 
-    // Recupere la piece selectionnee
     public Animal getPieceSelected(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
@@ -173,14 +170,12 @@ public class Board extends JPanel implements Constants, Cloneable {
         return null;
     }
 
-    // Deselectionne la piece selectionnee
     public void deselect(){
         if(!pieceSelected()) { return;}
         Animal a = getPieceSelected();
         a.deselected();
     }
 
-    // Selectionne la piece x y si c'est un animal
     public boolean select(int x, int y){
         if(getPiece(x,y)== null) return false;
         if(getPiece(x, y) instanceof Animal){
@@ -190,7 +185,6 @@ public class Board extends JPanel implements Constants, Cloneable {
         return false;
     }
 
-    // Retourne si la case x y est libre ou non
     public boolean isFree(int x, int y){
         return tiles[x][y].isEmpty();
     }

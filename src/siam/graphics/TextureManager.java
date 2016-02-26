@@ -12,9 +12,6 @@ public class TextureManager {
     public static TextureManager library = new TextureManager();
 
     private HashMap<Theme,HashMap<String,BufferedImage>> images;
-    private String standardPath = "/textures/images/standard/";
-    private String starwarsPath = "/textures/images/starwars/";
-    private String christmasPath = "/textures/images/christmas/";
 
     public TextureManager() {
         images = new HashMap<>();
@@ -25,22 +22,27 @@ public class TextureManager {
 
     private void loadStandard() {
         images.put(Theme.STANDARD, new HashMap<String, BufferedImage>());
-        images.get(Theme.STANDARD).put("Black Background", loadImage( standardPath, "BlackBackground.jpeg"));
+        String standardPath = "/textures/images/standard/";
+        images.get(Theme.STANDARD).put("Black Background", loadImage(standardPath, "BlackBackground.jpeg"));
         images.get(Theme.STANDARD).put("White Background", loadImage(standardPath, "WhiteBackground.jpeg"));
         images.get(Theme.STANDARD).put("Camp Background", loadImage(standardPath, "CampBackground.png"));
         images.get(Theme.STANDARD).put("Menu Background", loadImage(standardPath, "MenuBackground.jpg"));
         images.get(Theme.STANDARD).put("Button Background", loadImage(standardPath, "ButtonBackground.jpg"));
     }
+
     private void loadStarWars() {
         images.put(Theme.STARWARS, new HashMap<String, BufferedImage>());
+        String starwarsPath = "/textures/images/starwars/";
         images.get(Theme.STARWARS).put("Black Background", loadImage(starwarsPath, "BlackBackground.jpeg"));
         images.get(Theme.STARWARS).put("White Background", loadImage(starwarsPath, "WhiteBackground.jpeg"));
         images.get(Theme.STARWARS).put("Camp Background", loadImage(starwarsPath, "CampBackground.png"));
         images.get(Theme.STARWARS).put("Menu Background", loadImage(starwarsPath, "MenuBackground.jpg"));
         images.get(Theme.STARWARS).put("Button Background", loadImage(starwarsPath, "ButtonBackground.jpg"));
     }
+
     private void loadChristmas() {
         images.put(Theme.CHRISTMAS, new HashMap<String, BufferedImage>());
+        String christmasPath = "/textures/images/christmas/";
         images.get(Theme.CHRISTMAS).put("Black Background", loadImage(christmasPath, "BlackBackground.jpg"));
         images.get(Theme.CHRISTMAS).put("White Background", loadImage(christmasPath, "WhiteBackground.jpeg"));
         images.get(Theme.CHRISTMAS).put("Camp Background", loadImage(christmasPath, "CampBackground.jpg"));

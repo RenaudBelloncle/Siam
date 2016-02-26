@@ -7,7 +7,13 @@ import java.io.IOException;
 
 public class FontTools {
 
-    private Font menuFont, police, textFont, menuFontStarWars, menuFontChristmas, textFontChristmas, textFontStarWars;
+    private Font menuFont;
+    private Font police;
+    private Font textFont;
+    private Font menuFontStarWars;
+    private Font menuFontChristmas;
+    private Font textFontChristmas;
+    private Font textFontStarWars;
 
     public FontTools() {
         try {
