@@ -142,7 +142,7 @@ public class Menu implements ActionListener, Constants, Texts {
 
     private void initFrame() {
         if (winnerState) {
-            victory = new JLabel(WINNER_LABEL + winner.getName());
+            victory = new JLabel( winner.getName() + WINNER_LABEL);
             play = new JButton(PLAY_BUTTON);
             exit = new JButton(EXIT_BUTTON);
         } else if (campState) {
@@ -369,8 +369,8 @@ public class Menu implements ActionListener, Constants, Texts {
         if (themes == Theme.STANDARD) {
             if (winnerState) {
                 fontTools.updateFontJLabel(victory, 80, Color.orange, fontTools.getTextFont());
-                fontTools.updateFontJButton(play, 40, Color.orange, fontTools.getTextFont());
-                fontTools.updateFontJButton(exit, 40, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(play, 80, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(exit, 80, Color.orange, fontTools.getTextFont());
             } else if (campState) {
                 fontTools.updateFontJLabel(title, 80, Color.orange, fontTools.getMenuFont());
                 fontTools.updateFontJLabel(whiteLabel, 60, Color.orange, fontTools.getTextFont());
@@ -398,46 +398,46 @@ public class Menu implements ActionListener, Constants, Texts {
         } else if ( themes == Theme.CHRISTMAS) {
             if (winnerState) {
                 fontTools.updateFontJLabel(victory, 95, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(play, 60, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(exit, 60, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(play, 95, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(exit, 95, Color.red, fontTools.getTextFontChristmas());
             } else if (campState) {
                 fontTools.updateFontJLabel(title, 95, Color.red, fontTools.getMenuFontChristmas());
                 fontTools.updateFontJLabel(whiteLabel, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJTextField(whiteField, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJLabel(blackLabel, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJTextField(blackField, 80, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJCheckBox(variantPiece, 45, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJCheckBox(variantTile,45,Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJCheckBox(variantMountain,45,Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(play, 60, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(exit, 60, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJCheckBox(variantPiece, 50, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJCheckBox(variantTile,50,Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJCheckBox(variantMountain,50,Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(play, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(exit, 80, Color.red, fontTools.getTextFontChristmas());
             } else if (optionState) {
                 fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
                 fontTools.updateFontJLabel(optionLabel, 80, Color.red, fontTools.getMenuFontChristmas());
-                fontTools.updateFontJButton(rules, 65, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(theme, 65, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(song, 65, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(exit, 65, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(rules, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(theme, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(song, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(exit, 80, Color.red, fontTools.getTextFontChristmas());
             } else {
                 fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
-                fontTools.updateFontJButton(play, 70, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(option, 70, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJButton(exit, 70, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(play, 100, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(option, 100, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(exit, 100, Color.red, fontTools.getTextFontChristmas());
             }
         } else {
             if (winnerState) {
-                fontTools.updateFontJLabel(victory, 105, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJLabel(victory, 70, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(play, 70, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(exit, 70, Color.yellow, fontTools.getTextFontStarWars());
             } else if (campState) {
-                fontTools.updateFontJLabel(title, 55, Color.yellow, fontTools.getMenuFontStarWars());
+                fontTools.updateFontJLabel(title, 70, Color.yellow, fontTools.getMenuFontStarWars());
                 fontTools.updateFontJLabel(whiteLabel, 60, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJTextField(whiteField, 70, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJLabel(blackLabel, 70, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJTextField(blackField, 70, Color.yellow, fontTools.getTextFontStarWars());
-                fontTools.updateFontJCheckBox(variantPiece, 40, Color.yellow, fontTools.getTextFontStarWars());
-                fontTools.updateFontJCheckBox(variantTile,40,Color.yellow, fontTools.getTextFontStarWars());
-                fontTools.updateFontJCheckBox(variantMountain,40,Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJCheckBox(variantPiece, 35, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJCheckBox(variantTile,35,Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJCheckBox(variantMountain,35,Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(play, 60, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(exit, 60, Color.yellow, fontTools.getTextFontStarWars());
             } else if (optionState) {
@@ -499,34 +499,41 @@ public class Menu implements ActionListener, Constants, Texts {
             } else if (source == theme) {
                 if (themes == Theme.STANDARD) {
                     themes = Theme.CHRISTMAS;
-                    music.stopIt();
                     updateFonts();
                     renderFrame();
                     Sprite.changeToChristmas();
-                    music = new Music(themes);
-                    music.start();
+                    if (songEnable) {
+                        music.stopIt();
+                        music = new Music(themes);
+                        music.start();
+                    }
                 }
                 else if (themes == Theme.CHRISTMAS) {
                     themes = Theme.STARWARS;
-                    music.stopIt();
                     updateFonts();
                     renderFrame();
                     Sprite.changeToStarWars();
-                    music = new Music(themes);
-                    music.start();
+                    if (songEnable) {
+                        music.stopIt();
+                        music = new Music(themes);
+                        music.start();
+                    }
                 }
                 else {
                     themes = Theme.STANDARD;
-                    music.stopIt();
                     updateFonts();
                     renderFrame();
                     Sprite.changeToStandard();
-                    music = new Music(themes);
-                    music.start();
+                    if (songEnable) {
+                        music.stopIt();
+                        music = new Music(themes);
+                        music.start();
+                    }
                 }
             } else if (source == song) {
                 if (!songEnable) {
                     song.setText(SONG_ENABLE_BUTTON);
+                    music = new Music(themes);
                     music.start();
                     songEnable = true;
                 } else {

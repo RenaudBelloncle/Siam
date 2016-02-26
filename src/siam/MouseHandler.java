@@ -1,5 +1,6 @@
 package siam;
 
+import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -7,10 +8,12 @@ public class MouseHandler implements MouseListener, Constants {
 
     private int[] clickCoord;
     private boolean allowed;
+    private boolean rightClick;
 
     public MouseHandler(){
         super();
         allowed = false;
+        rightClick = false;
         clickCoord = new int[]{-1,-1};
     }
 
@@ -20,18 +23,20 @@ public class MouseHandler implements MouseListener, Constants {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(allowed) {
-            clickCoord[0] = (e.getX() - BOARD_BORDER / 2) / SPRITE_SIZE;
-            clickCoord[1] = (e.getY() - BOARD_BORDER / 2) / SPRITE_SIZE;
-            //System.out.println(clickCoord[0]+" "+clickCoord[1]);
-        }
-        else{
+        if (SwingUtilities.isRightMouseButton(e)) {
+            rightClick = true;
             resetClick();
-        }
+        } else if (SwingUtilities.isLeftMouseButton(e)) {
+            if (allowed) {
+                clickCoord[0] = (e.getX() - BOARD_BORDER / 2) / SPRITE_SIZE;
+                clickCoord[1] = (e.getY() - BOARD_BORDER / 2) / SPRITE_SIZE;
+            }
+        } else resetClick();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        if (SwingUtilities.isRightMouseButton(e)) rightClick = false;
     }
 
     @Override
@@ -61,5 +66,9 @@ public class MouseHandler implements MouseListener, Constants {
     public void closeClick(){
         allowed = false;
         resetClick();
+    }
+
+    public boolean isRightClick() {
+        return rightClick;
     }
 }
