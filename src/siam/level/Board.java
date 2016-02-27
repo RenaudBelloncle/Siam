@@ -2,7 +2,6 @@ package siam.level;
 
 import siam.Constants;
 import siam.graphics.Screen;
-import siam.graphics.Sprite;
 import siam.player.Camp;
 
 import javax.swing.*;
@@ -62,16 +61,41 @@ public class Board extends JPanel implements Constants, Cloneable {
             for (int i = 0; i < 3; i++) {
                 int xa = (i + 1) * SPRITE_SIZE + BOARD_BORDER / 2;
                 int ya = 2 * SPRITE_SIZE + BOARD_BORDER / 2;
-                if (i == 0) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.whiteMountain, Camp.WHITE));
-                else if (i == 2) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.blackMountain, Camp.BLACK));
-                else tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.mountain, Camp.NEUTRAL));
+                if (i == 0) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Camp.WHITE));
+                else if (i == 2) tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Camp.BLACK));
+                else tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Camp.NEUTRAL));
             }
         } else {
             for (int i = 0; i < 3; i++) {
                 int xa = (i + 1) * SPRITE_SIZE + BOARD_BORDER / 2;
                 int ya = 2 * SPRITE_SIZE + BOARD_BORDER / 2;
-                tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Sprite.mountain, Camp.NEUTRAL));
+                tiles[i + 1][2].insertPiece(new Mountain(xa, ya, Camp.NEUTRAL));
             }
+        }
+    }
+
+    public Tile getTile(int x, int y) {
+        return tiles[x][y];
+    }
+
+    public void movePiece(int x, int y, Orientation orientation) {
+        switch (orientation) {
+            case TOP:
+                getTile(x, y - 1).insertPiece(getTile(x, y).getPiece());
+                getTile(x, y).brigOutPiece();
+                break;
+            case DOWN:
+                getTile(x, y + 1).insertPiece(getTile(x, y).getPiece());
+                getTile(x, y).brigOutPiece();
+                break;
+            case LEFT:
+                getTile(x - 1, y).insertPiece(getTile(x, y).getPiece());
+                getTile(x, y).brigOutPiece();
+                break;
+            case RIGTH:
+                getTile(x + 1, y).insertPiece(getTile(x, y).getPiece());
+                getTile(x, y).brigOutPiece();
+                break;
         }
     }
 
@@ -99,7 +123,6 @@ public class Board extends JPanel implements Constants, Cloneable {
 
     public void putPiece(Piece p){
         int [] coord = convertPixToCase(p.getCoord());
-        System.out.println(coord[0] + " " + coord[1]);
         tiles[coord[0]][coord[1]].insertPiece(p);
     }
 
@@ -115,29 +138,19 @@ public class Board extends JPanel implements Constants, Cloneable {
         tiles[x][y] = new Tile(x, y, status);
     }
 
-    // Test si une piece est selectionnee
     public boolean pieceSelected(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
-                if(pieceSelected(i,j)){
-                    return true;
-                }
+                if(pieceSelected(i,j)) return true;
             }
         }
         return false;
     }
 
-    // Test si la piece x y est selectionnee
-    public boolean pieceSelected(int x, int y){
-        if(tiles[x][y].getPiece() instanceof Animal){
-            if(((Animal)tiles[x][y].getPiece()).getIsSelected()){
-                return true;
-            }
-        }
-        return false;
+    public boolean pieceSelected(int x, int y) {
+        return tiles[x][y].getPiece() instanceof Animal && ((Animal)tiles[x][y].getPiece()).getIsSelected();
     }
 
-    // Recupere la piece selectionnee
     public Animal getPieceSelected(){
         for(int i = 0; i < SIZE; i++){
             for(int j = 0; j < SIZE; j++){
@@ -149,14 +162,12 @@ public class Board extends JPanel implements Constants, Cloneable {
         return null;
     }
 
-    // Deselectionne la piece selectionnee
     public void deselect(){
         if(!pieceSelected()) { return;}
         Animal a = getPieceSelected();
         a.deselected();
     }
 
-    // Selectionne la piece x y si c'est un animal
     public boolean select(int x, int y){
         if(getPiece(x,y)== null) return false;
         if(getPiece(x, y) instanceof Animal){
@@ -166,7 +177,6 @@ public class Board extends JPanel implements Constants, Cloneable {
         return false;
     }
 
-    // Retourne si la case x y est libre ou non
     public boolean isFree(int x, int y){
         return tiles[x][y].isEmpty();
     }
@@ -187,6 +197,5 @@ public class Board extends JPanel implements Constants, Cloneable {
         Piece p = getPiece(oldx,oldy);
         removePiece(convertPixToCase(p.getCoord()));
         tiles[x][y].insertPiece(p);
-
     }
 }

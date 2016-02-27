@@ -7,17 +7,15 @@ import siam.graphics.Sprite;
 import siam.graphics.TextureManager;
 import siam.level.*;
 import siam.player.Camp;
-import siam.player.Theme;
 import siam.player.Player;
+import siam.player.Theme;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 
 public class Game implements Runnable, ActionListener, Constants, Texts {
 
@@ -31,6 +29,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     private Player[] players;
     private int playerActive;
     private boolean putActive, moveActive, orientActive, bringOutActive, upActive,downActive,leftActive,rightActive;
+    private boolean enableUp, enableDown, enableLeft, enableRight;
 
     private boolean songEnable = false;
     private boolean variantMountainOn;
@@ -73,9 +72,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         board = new Board(BOARD_SIZE, variantMountainOn, variantTileOn);
         players = new Player[2];
         playerActive = 0;
-
-        players[0] = new Player(Camp.WHITE,white);
-        players[1] = new Player(Camp.BLACK,black);
+        players[0] = new Player(Camp.WHITE, white);
+        players[1] = new Player(Camp.BLACK, black);
 
         this.frame = frame;
 
@@ -83,6 +81,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         frame.setPreferredSize(dimension);
 
         putActive = moveActive = orientActive = bringOutActive = upActive = downActive = rightActive = leftActive =  false;
+        enableUp = enableDown = enableRight = enableLeft = false;
         initFrame();
         renderFrame();
 
@@ -100,20 +99,16 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return board;
     }
 
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
     private void initFrame() {
         playerName = new JLabel(players[playerActive].getName());
-        put = new JButton(PUT_BUTTON);
-        bringOut = new JButton(BRINGOUT_BUTTON);
-        move = new JButton(MOVE_BUTTON);
-        orient = new JButton(ORIENT_BUTTON);
-        top = new JButton(TOP_BUTTON);
-        left = new JButton(LEFT_BUTTON);
-        right = new JButton(RIGHT_BUTTON);
-        bottom = new JButton(BOTTOM_BUTTON);
+        put = new JButton();
+        bringOut = new JButton();
+        move = new JButton();
+        orient = new JButton();
+        top = new JButton();
+        left = new JButton();
+        right = new JButton();
+        bottom = new JButton();
 
         newGame = new JMenuItem(NEWGAME_BAR);
         rules = new JMenuItem(RULES_BAR);
@@ -132,7 +127,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 frame.repaint();
-                g.drawImage(image, 0, 0, BUTTON_WIDTH, WIN_HEIGTH, this);
+                g.drawImage(image, 0, 0, BUTTON_WIDTH, WIN_HEIGTH-TOPBAR_HEIGHT, this);
             }
         };
         Dimension dimension = new Dimension(BUTTON_WIDTH, WIN_HEIGTH);
@@ -161,7 +156,14 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         rightPanel.setOpaque(false);
         bottomPanel.setOpaque(false);
 
-        put.setBorderPainted(true);
+        put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put")));
+        move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move")));
+        orient.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Orient")));
+        bringOut.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Bring Out")));
+        top.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Top")));
+        left.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Left")));
+        right.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Right")));
+        bottom.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Bottom")));
 
         updateFonts();
 
@@ -214,7 +216,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     private void updateFonts() {
         if (theme == Theme.CHRISTMAS) {
-            fontTools.updateFontJLabel(playerName, 60, Color.red, fontTools.getTextFontChristmas());
+            fontTools.updateFontJLabel(playerName, 70, Color.red, fontTools.getTextFontChristmas());
             fontTools.updateFontJButton(put, 60, Color.red, fontTools.getTextFontChristmas());
             fontTools.updateFontJButton(bringOut, 60, Color.red, fontTools.getTextFontChristmas());
             fontTools.updateFontJButton(move, 60, Color.red, fontTools.getTextFontChristmas());
@@ -224,7 +226,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             fontTools.updateFontJButton(right, 60, Color.red, fontTools.getTextFontChristmas());
             fontTools.updateFontJButton(bottom, 60, Color.red, fontTools.getTextFontChristmas());
         } else if (theme == Theme.STARWARS) {
-            fontTools.updateFontJLabel(playerName, 30, Color.yellow, fontTools.getTextFontStarWars());
+            fontTools.updateFontJLabel(playerName, 40, Color.black, fontTools.getTextFontStarWars());
             fontTools.updateFontJButton(put, 30, Color.yellow, fontTools.getTextFontStarWars());
             fontTools.updateFontJButton(bringOut, 30, Color.yellow, fontTools.getTextFontStarWars());
             fontTools.updateFontJButton(move, 30, Color.yellow, fontTools.getTextFontStarWars());
@@ -234,7 +236,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             fontTools.updateFontJButton(right, 30, Color.yellow, fontTools.getTextFontStarWars());
             fontTools.updateFontJButton(bottom, 30, Color.yellow, fontTools.getTextFontStarWars());
         } else {
-            fontTools.updateFontJLabel(playerName, 30, Color.orange, fontTools.getTextFont());
+            fontTools.updateFontJLabel(playerName, 50, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(put, 30, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(bringOut, 30, Color.orange, fontTools.getTextFont());
             fontTools.updateFontJButton(move, 30, Color.orange, fontTools.getTextFont());
@@ -273,26 +275,27 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public void update() {
         setButtonEnabled();
         boolean actionPerformed = false;
-        if(!board.pieceSelected()){
-            if(putActive) actionPerformed = actionPut();
+        if (!board.pieceSelected()) {
+            if (mouse.getClick()[0] < 0 || mouse.getClick()[0] >= BOARD_SIZE ||
+                    mouse.getClick()[1] < 0 || mouse.getClick()[1] >= BOARD_SIZE) return;
+            if (putActive) actionPerformed = actionPut();
             selectPiece();
+        } else {
+            if (moveActive) actionPerformed = testMove();
+            else if (bringOutActive) actionPerformed = actionBringOut();
+            else if (orientActive) actionPerformed = actionOrient();
         }
-        else{
-            if (board.getPieceSelected().getCamp()== Camp.WHITE)soundsLibrary.playWhiteSound(theme);
-            else soundsLibrary.playBlackSound(theme);
-            if(moveActive){
-                actionPerformed = testMove();
-            }
-            else if(bringOutActive){
-                actionPerformed = actionBringOut();
-            }
-            else if(orientActive){
-                actionPerformed = actionOrient();
-            }
+        if(actionPerformed) nextPlayer();
+        if (mouse.isRightClick() && !orientActive) {
+            board.deselect();
+            resetButton();
+            setButtonSelected(10);
         }
-        if(actionPerformed){
-            nextPlayer();
-        }
+    }
+
+    private void resetButton() {
+        put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put")));
+        move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move")));
     }
 
     public void render() {
@@ -317,7 +320,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     public void actionPerformed(ActionEvent actionEvent) {
         Object source = actionEvent.getSource();
-        soundsLibrary.playButtonSound(theme);
+        soundsLibrary.playButtonSound();
         mouse.openClick();
         if (source == newGame) {
             frame.setJMenuBar(null);
@@ -334,16 +337,19 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 song.setText(SONG_DISABLE_BAR);
             } else {
                 song.setText(SONG_ENABLE_BAR);
+                music = new Music(theme);
                 music.start();
                 this.songEnable = true;
             }
         }
         else if(source == put){
+            put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put Selected")));
             mouse.closeClick();
             mouse.openClick();
             setButtonSelected(1);
         }
         else if(source == move){
+            move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move Selected")));
             mouse.closeClick();
             mouse.openClick();
             setButtonSelected(2);
@@ -369,13 +375,13 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
     }
 
-    public void setButtonEnabled(){
-        top.setEnabled(orientActive);
-        bottom.setEnabled(orientActive);
-        right.setEnabled(orientActive);
-        left.setEnabled(orientActive);
+    public void setButtonEnabled() {
+        top.setEnabled(orientActive || enableUp);
+        bottom.setEnabled(orientActive || enableDown);
+        right.setEnabled(orientActive || enableRight);
+        left.setEnabled(orientActive || enableLeft);
 
-        put.setEnabled(players[playerActive].canPut() && !orientActive);
+        put.setEnabled(players[playerActive].canPut() && !orientActive && !board.pieceSelected());
         move.setEnabled(board.pieceSelected() && !orientActive);
         bringOut.setEnabled(testBringOut() && !orientActive);
         orient.setEnabled(board.pieceSelected() && !orientActive);
@@ -384,35 +390,30 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public void setButtonSelected(int buttonSelected){
         switch(buttonSelected){
             case 1:
-                //System.out.println("put");
                 putActive = true;
                 moveActive = false;
                 bringOutActive = false;
                 orientActive = false;
                 break;
             case 2 :
-                //System.out.println("move");
                 moveActive = true;
                 putActive = false;
                 bringOutActive = false;
                 orientActive = false;
                 break;
             case 3 :
-                //System.out.println("bringOut");
                 bringOutActive = true;
                 moveActive = false;
                 putActive = false;
                 orientActive = false;
                 break;
             case 4 :
-                //System.out.println("orient");
                 orientActive = true;
                 moveActive = false;
                 bringOutActive = false;
                 putActive = false;
                 break;
             default:
-                System.out.println("je passe ici ? ");
                 putActive = false;
                 moveActive = false;
                 bringOutActive = false;
@@ -487,24 +488,28 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
 
         frame.setJMenuBar(null);
         if(players[0].getCamp() == winner){
-            new Menu(frame,players[0],music,soundsLibrary,songEnable,theme);
+            new Menu(frame,players[0],players[1],music,soundsLibrary,songEnable,theme,
+                    variantPieceOn,variantTileOn,variantMountainOn);
         }
         else if(players[1].getCamp() == winner){
-            new Menu(frame,players[1],music,soundsLibrary,songEnable,theme);
+            new Menu(frame,players[1],players[0],music,soundsLibrary,songEnable,theme,
+                    variantPieceOn,variantTileOn,variantMountainOn);
         }
     }
 
     public void testVictoryMountains(int[] coord){
         frame.setJMenuBar(null);
         if(board.getPiece(coord[0],coord[1]).getCamp() == Camp.BLACK){
-            new Menu(frame,players[0],music,soundsLibrary,songEnable,theme);
+            new Menu(frame,players[1],players[0],music,soundsLibrary,songEnable,theme,
+                    variantPieceOn,variantTileOn,variantMountainOn);
         }
         else if(board.getPiece(coord[0],coord[1]).getCamp() == Camp.WHITE){
-            new Menu(frame,players[1],music,soundsLibrary,songEnable,theme);
+            new Menu(frame,players[0],players[1],music,soundsLibrary,songEnable,theme,
+                    variantPieceOn,variantTileOn,variantMountainOn);
         }
     }
 
-    public boolean actionPut(){
+    public boolean actionPut() {
         if(mouse.isSelected()) {
             int[] coord = convertCaseToPix(mouse.getClick());
             if (variantTileOn && nbTours < 4 && board.asABanishedTile(mouse.getClick()[0], mouse.getClick()[1])) {
@@ -512,18 +517,17 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound(theme);
+                soundsLibrary.playErrorActionSound();
+                resetButton();
                 return false;
             }
             if (board.isOnEdge(mouse.getClick()[0], mouse.getClick()[1])) {
                 if (board.isFree(mouse.getClick()[0], mouse.getClick()[1])) {
                     Animal animal;
                     if (playerActive == 0)
-                        animal = new Animal(coord[0], coord[1], Sprite.whitePiece,
-                                players[playerActive].getCamp(), Orientation.TOP);
+                        animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
                     else
-                        animal = new Animal(coord[0], coord[1], Sprite.blackPiece,
-                                players[playerActive].getCamp(), Orientation.TOP);
+                        animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
                     animal.selected();
                     board.putPiece(animal);
                     soundsLibrary.playPutSound(theme);
@@ -533,15 +537,312 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                     players[playerActive].put();
                     return actionOrient();
                 } else {
-                    // entrée en poussant
+                    if (mouse.getClick()[0] == 0 && mouse.getClick()[1] == 0) {
+                        Orientation orientation = whichOrient(1);
+                        if (testEnterWithPush(orientation)) {
+                            Animal animal;
+                            if (playerActive == 0)
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            else
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            animal.selected();
+                            board.putPiece(animal);
+                            soundsLibrary.playPutSound(theme);
+                            players[playerActive].put();
+                            animal.setOrientation(orientation);
+                            double angle = getAngle(Orientation.TOP,board.getPieceSelected().getOrientation());
+                            if(angle != 0)
+                                board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                            board.deselect();
+                            putActive = false;
+                            mouse.closeClick();
+                            mouse.openClick();
+                            return true;
+                        }
+                        if (orientation != null) {
+                            putActive = false;
+                            board.deselect();
+                            mouse.closeClick();
+                            mouse.openClick();
+                            soundsLibrary.playErrorActionSound();
+                            resetButton();
+                            return false;
+                        }
+                    } else if (mouse.getClick()[0] == 0 && mouse.getClick()[1] == (BOARD_SIZE - 1)) {
+                        Orientation orientation = whichOrient(4);
+                        if (testEnterWithPush(orientation)) {
+                            Animal animal;
+                            if (playerActive == 0)
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            else
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            animal.selected();
+                            board.putPiece(animal);
+                            soundsLibrary.playPutSound(theme);
+                            players[playerActive].put();
+                            animal.setOrientation(orientation);
+                            double angle = getAngle(Orientation.TOP,board.getPieceSelected().getOrientation());
+                            if(angle != 0)
+                                board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                            board.deselect();
+                            putActive = false;
+                            mouse.closeClick();
+                            mouse.openClick();
+                            return true;
+                        }
+                        if (orientation != null) {
+                            putActive = false;
+                            board.deselect();
+                            mouse.closeClick();
+                            mouse.openClick();
+                            soundsLibrary.playErrorActionSound();
+                            resetButton();
+                            return false;
+                        }
+                    } else if (mouse.getClick()[0] == (BOARD_SIZE - 1) && mouse.getClick()[1] == 0) {
+                        Orientation orientation = whichOrient(2);
+                        if (testEnterWithPush(orientation)) {
+                            Animal animal;
+                            if (playerActive == 0)
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            else
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            animal.selected();
+                            board.putPiece(animal);
+                            soundsLibrary.playPutSound(theme);
+                            players[playerActive].put();
+                            animal.setOrientation(orientation);
+                            double angle = getAngle(Orientation.TOP,board.getPieceSelected().getOrientation());
+                            if(angle != 0)
+                                board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                            board.deselect();
+                            putActive = false;
+                            mouse.closeClick();
+                            mouse.openClick();
+                            return true;
+                        }
+                        if (orientation != null) {
+                            putActive = false;
+                            board.deselect();
+                            mouse.closeClick();
+                            mouse.openClick();
+                            soundsLibrary.playErrorActionSound();
+                            resetButton();
+                            return false;
+                        }
+                    } else if (mouse.getClick()[0] == (BOARD_SIZE - 1) && mouse.getClick()[1] == (BOARD_SIZE - 1)) {
+                        Orientation orientation = whichOrient(3);
+                        if (testEnterWithPush(orientation)) {
+                            Animal animal;
+                            if (playerActive == 0)
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            else
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            animal.selected();
+                            board.putPiece(animal);
+                            soundsLibrary.playPutSound(theme);
+                            players[playerActive].put();
+                            animal.setOrientation(orientation);
+                            double angle = getAngle(Orientation.TOP,board.getPieceSelected().getOrientation());
+                            if(angle != 0)
+                                board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                            board.deselect();
+                            putActive = false;
+                            mouse.closeClick();
+                            mouse.openClick();
+                            return true;
+                        }
+                        if (orientation != null) {
+                            putActive = false;
+                            board.deselect();
+                            mouse.closeClick();
+                            mouse.openClick();
+                            soundsLibrary.playErrorActionSound();
+                            resetButton();
+                            return false;
+                        }
+                    } else if (mouse.getClick()[0] == 0) {
+                        if (testEnterWithPush(Orientation.RIGTH)) {
+                            Animal animal;
+                            if (playerActive == 0)
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            else
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            animal.selected();
+                            board.putPiece(animal);
+                            soundsLibrary.playPutSound(theme);
+                            players[playerActive].put();
+                            animal.setOrientation(Orientation.RIGTH);
+                            double angle = getAngle(Orientation.TOP,board.getPieceSelected().getOrientation());
+                            if(angle != 0)
+                                board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                            board.deselect();
+                            putActive = false;
+                            mouse.closeClick();
+                            mouse.openClick();
+                            return true;
+                        }
+                        putActive = false;
+                        board.deselect();
+                        mouse.closeClick();
+                        mouse.openClick();
+                        soundsLibrary.playErrorActionSound();
+                        resetButton();
+                        return false;
+                    } else if (mouse.getClick()[0] == (BOARD_SIZE - 1)) {
+                        if (testEnterWithPush(Orientation.LEFT)) {
+                            Animal animal;
+                            if (playerActive == 0)
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            else
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            animal.selected();
+                            board.putPiece(animal);
+                            soundsLibrary.playPutSound(theme);
+                            players[playerActive].put();
+                            animal.setOrientation(Orientation.LEFT);
+                            double angle = getAngle(Orientation.TOP,board.getPieceSelected().getOrientation());
+                            if(angle != 0)
+                                board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                            board.deselect();
+                            putActive = false;
+                            mouse.closeClick();
+                            mouse.openClick();
+                            return true;
+                        }
+                        putActive = false;
+                        board.deselect();
+                        mouse.closeClick();
+                        mouse.openClick();
+                        soundsLibrary.playErrorActionSound();
+                        resetButton();
+                        return false;
+                    } else if (mouse.getClick()[1] == 0) {
+                        if (testEnterWithPush(Orientation.DOWN)) {
+                            Animal animal;
+                            if (playerActive == 0)
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            else
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            animal.selected();
+                            board.putPiece(animal);
+                            soundsLibrary.playPutSound(theme);
+                            players[playerActive].put();
+                            animal.setOrientation(Orientation.DOWN);
+                            double angle = getAngle(Orientation.TOP,board.getPieceSelected().getOrientation());
+                            if(angle != 0)
+                                board.getPieceSelected().setSprite(Sprite.rotate(board.getPieceSelected().getSprite(),angle));
+                            board.deselect();
+                            putActive = false;
+                            mouse.closeClick();
+                            mouse.openClick();
+                            return true;
+                        }
+                        putActive = false;
+                        board.deselect();
+                        mouse.closeClick();
+                        mouse.openClick();
+                        soundsLibrary.playErrorActionSound();
+                        resetButton();
+                        return false;
+                    } else if (mouse.getClick()[1] == (BOARD_SIZE - 1)) {
+                        if (testEnterWithPush(Orientation.TOP)) {
+                            Animal animal;
+                            if (playerActive == 0)
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            else
+                                animal = new Animal(coord[0], coord[1], players[playerActive].getCamp(), Orientation.TOP);
+                            board.putPiece(animal);
+                            soundsLibrary.playPutSound(theme);
+                            players[playerActive].put();
+                            putActive = false;
+                            mouse.closeClick();
+                            mouse.openClick();
+                            return true;
+                        }
+                        putActive = false;
+                        board.deselect();
+                        mouse.closeClick();
+                        mouse.openClick();
+                        soundsLibrary.playErrorActionSound();
+                        resetButton();
+                        return false;
+                    }
                 }
             } else {
                 putActive = false;
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound(theme);
+                soundsLibrary.playErrorActionSound();
+                resetButton();
                 return false;
+            }
+        }
+        return false;
+    }
+
+    public boolean testEnterWithPush(Orientation orientation) {
+        if (orientation == null) {
+            return false;
+        }
+        ArrayList<Piece> pile = new ArrayList<>();
+        int[] coordPiece = {mouse.getClick()[0], mouse.getClick()[1]};
+        int[] direction = null;
+        switch (orientation) {
+            case TOP:
+                direction = new int[]{0, -1};
+                break;
+            case DOWN:
+                direction = new int[]{0, 1};
+                break;
+            case LEFT:
+                direction = new int[]{-1, 0};
+                break;
+            case RIGTH:
+                direction = new int[]{1, 0};
+                break;
+        }
+        if((direction[0] == 1 && orientation == Orientation.RIGTH) ||
+                (direction[0] == -1 && orientation == Orientation.LEFT) ||
+                (direction[1] == 1 && orientation == Orientation.DOWN) ||
+                (direction[1] == -1 && orientation == Orientation.TOP) ) {
+            int nbCase = 0;
+            int mountains = 0;
+            int animalOpposed = 0;
+            int animalOriented = 1;
+            while (board.isInBound(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1])
+                    && !board.isFree(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1])) {
+                if (board.getPiece(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1]) instanceof Mountain) {
+                    mountains++;
+                } else if (board.getPiece(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1]) instanceof Animal) {
+                    Animal a = (Animal) board.getPiece(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1]);
+                    if (oppositeDirection(orientation, a.getOrientation())) {
+                        animalOpposed++;
+                    } else if (orientation == a.getOrientation()) {
+                        animalOriented++;
+                    }
+                }
+                pile.add(board.getPiece(coordPiece[0] + nbCase * direction[0], coordPiece[1] + nbCase * direction[1]));
+                nbCase++;
+            }
+            int offset = 1;
+            while (pile.get(pile.size() - offset) instanceof Animal &&
+                    ((Animal) pile.get(pile.size() - offset)).getOrientation() == orientation) {
+                animalOriented--;
+                offset++;
+                if (pile.size() - offset < 0) {
+                    break;
+                }
+            }
+            if (mountains == 0) {
+                if (animalOriented > animalOpposed) {
+                    return actionPush(pile, direction);
+                }
+            } else {
+                if (animalOriented >= animalOpposed + mountains) {
+                    return actionPush(pile, direction);
+                }
             }
         }
         return false;
@@ -615,14 +916,20 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     public boolean testMove() {
         if(mouse.isSelected()) {
             if (isAdjacent()) {
-                if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])) actionMove();
-                else if (testPush()) actionMove();
+                if(board.isFree(mouse.getClick()[0],mouse.getClick()[1])) {
+                    actionMove();
+                    moveActive = false;
+                    orientActive = true;
+                    mouse.closeClick();
+                    return actionOrient();
+                } else if (testPush()) actionMove();
                 else {
                     moveActive = false;
                     board.deselect();
                     mouse.closeClick();
                     mouse.openClick();
-                    soundsLibrary.playErrorActionSound(theme);
+                    soundsLibrary.playErrorActionSound();
+                    resetButton();
                     return false;
                 }
             } else {
@@ -630,7 +937,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 board.deselect();
                 mouse.closeClick();
                 mouse.openClick();
-                soundsLibrary.playErrorActionSound(theme);
+                soundsLibrary.playErrorActionSound();
+                resetButton();
                 return false;
             }
             moveActive = false;
@@ -667,7 +975,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                 }
             }
         }
-        actionMove();
+        soundsLibrary.playPushSound(theme);
         return true;
     }
 
@@ -707,7 +1015,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         board.getPiece(newCoord[0],newCoord[1]).setPosition(newCoordPix[0],newCoordPix[1]);
     }
 
-    public boolean actionOrient(){
+    public boolean actionOrient() {
         if(board.getPieceSelected() != null){
             boolean actionPerformed = false;
             Orientation oldOrient = board.getPieceSelected().getOrientation();
@@ -746,6 +1054,48 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return false;
     }
 
+    public Orientation whichOrient(int where) {
+        switch (where) {
+            case 1:
+                enableDown = enableRight = true;
+                break;
+            case 2:
+                enableDown = enableLeft = true;
+                break;
+            case 3:
+                enableUp = enableLeft = true;
+                break;
+            case 4:
+                enableUp = enableRight = true;
+                break;
+            default:
+                break;
+        }
+        boolean actionPerformed = false;
+        Orientation orientation = null;
+        if(upActive){
+            orientation = Orientation.TOP;
+            actionPerformed = true;
+        }
+        else if(downActive){
+            orientation = Orientation.DOWN;
+            actionPerformed = true;
+        }
+        else if(rightActive){
+            orientation = Orientation.RIGTH;
+            actionPerformed = true;
+        }
+        else if(leftActive){
+            orientation = Orientation.LEFT;
+            actionPerformed = true;
+        }
+        if (actionPerformed) {
+            enableUp = enableDown = enableRight = enableLeft = false;
+            upActive = downActive = rightActive = leftActive = false;
+        }
+        return orientation;
+    }
+
     public int[] convertCaseToPix(int[] point){
         return new int[]{point[0]*SPRITE_SIZE+BOARD_BORDER/2,point[1]*SPRITE_SIZE+BOARD_BORDER/2};
     }
@@ -762,12 +1112,13 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         }
         if(playerActive == 0) {
             playerActive = 1;
-            soundsLibrary.playBlackSound(theme);
         }
         else if(playerActive == 1) {
             playerActive = 0;
-            soundsLibrary.playWhiteSound(theme);
         }
+        put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put")));
+        move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move")));
+        orient.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Orient")));
         playerName.setText(players[playerActive].getName());
     }
 
@@ -822,12 +1173,13 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public void selectPiece(){
-
         if(mouse.isSelected()){
             if(board.getPiece(mouse.getClick()[0],mouse.getClick()[1]) != null){
                 if(board.getPiece(mouse.getClick()[0],mouse.getClick()[1]).getCamp() == players[playerActive].getCamp()){
                     board.deselect();
                     board.select(mouse.getClick()[0],mouse.getClick()[1]);
+                    if (board.getPieceSelected().getCamp()== Camp.WHITE) soundsLibrary.playWhiteSound(theme);
+                    else soundsLibrary.playBlackSound(theme);
                 }
             }
         }

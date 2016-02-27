@@ -6,10 +6,10 @@ public interface Texts {
     String TITLE_CAMP_LABEL = "Choose your Camp";
     String WHITE_LABEL = "White";
     String BLACK_LABEL = "Black";
-    String VARIANT_PIECE = "Count your Pieces";
+    String VARIANT_PIECE = "Only one can leave";
     String VARIANT_TILE = "You should not pass";
     String VARIANT_MOUNTAIN = "Protect your Mountain";
-    String WINNER_LABEL = "Victory of ";
+    String WINNER_LABEL = " won !";
 
     String PLAY_BUTTON = "Play";
     String OPTION_BUTTON = "Option";
@@ -18,14 +18,6 @@ public interface Texts {
     String RULES_BUTTON = "Rules";
     String SONG_ENABLE_BUTTON = "Disable Song";
     String SONG_DISABLE_BUTTON = "Enable Song";
-    String PUT_BUTTON = "Put";
-    String BRINGOUT_BUTTON = "Bring Out";
-    String MOVE_BUTTON = "Move";
-    String ORIENT_BUTTON = "Orient";
-    String TOP_BUTTON = "Top";
-    String LEFT_BUTTON = "Left";
-    String RIGHT_BUTTON = "Right";
-    String BOTTOM_BUTTON = "Bottom";
 
     String MENU_BAR = "Menu";
     String OPTION_BAR = "Option";

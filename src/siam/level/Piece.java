@@ -10,10 +10,10 @@ public abstract class Piece {
     protected Sprite sprite;
     protected Camp camp;
 
-    public Piece(int x, int y, Sprite sprite, Camp camp) {
+    public Piece(int x, int y, Camp camp) {
         this.x = x;
         this.y = y;
-        this.sprite = sprite;
+        sprite = null;
         this.camp = camp;
     }
 
