@@ -95,6 +95,47 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         start();
     }
 
+    public Game(JFrame frame, Music music, SoundsLibrary soundsLibrary,
+                boolean songEnable, boolean variantMountainOn,
+                boolean variantPieceOn, boolean variantTileOn,
+                Theme theme, String black, boolean blackChoose,
+                String white, boolean whiteChoose) {
+        /*this.music = music;
+        this.soundsLibrary = soundsLibrary;
+        this.songEnable = songEnable;
+        this.theme = theme;
+
+        this.variantMountainOn = variantMountainOn;
+        this.variantPieceOn = variantPieceOn;
+        this.variantTileOn = variantTileOn;
+
+        board = new Board(BOARD_SIZE, variantMountainOn, variantTileOn);
+        players = new Player[2];
+        playerActive = 0;
+        players[0] = new Player(Camp.WHITE, white);
+        players[1] = new Player(Camp.BLACK, black);
+
+        this.frame = frame;
+
+        Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
+        frame.setPreferredSize(dimension);
+
+        putActive = moveActive = orientActive = bringOutActive = upActive = downActive = rightActive = leftActive =  false;
+        enableUp = enableDown = enableRight = enableLeft = false;
+        initFrame();
+        renderFrame();
+
+        mouse = new MouseHandler();
+        setControl(this);
+        nbTours = 0;
+
+        frame.setVisible(true);
+
+        setButtonEnabled();
+        start();*/
+        new Menu(frame, false, false, music, soundsLibrary, songEnable, theme);
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -387,7 +428,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         orient.setEnabled(board.pieceSelected() && !orientActive);
     }
 
-    public void setButtonSelected(int buttonSelected){
+    public void setButtonSelected(int buttonSelected) {
         switch(buttonSelected){
             case 1:
                 putActive = true;
@@ -421,7 +462,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         }
     }
 
-    public boolean testBringOut(){
+    public boolean testBringOut() {
         if(board.getPieceSelected() != null){
             if (variantPieceOn && players[playerActive].canBringOut() || !variantPieceOn) {
                 int[] coord = convertPixToCase(board.getPieceSelected().getCoord());
@@ -497,7 +538,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         }
     }
 
-    public void testVictoryMountains(int[] coord){
+    public void testVictoryMountains(int[] coord) {
         frame.setJMenuBar(null);
         if(board.getPiece(coord[0],coord[1]).getCamp() == Camp.BLACK){
             new Menu(frame,players[1],players[0],music,soundsLibrary,songEnable,theme,
@@ -897,7 +938,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return false;
     }
 
-    public boolean oppositeDirection(Orientation o1, Orientation o2){
+    public boolean oppositeDirection(Orientation o1, Orientation o2) {
         if(o1 == Orientation.DOWN && o2 == Orientation.TOP){
             return true;
         }
@@ -979,7 +1020,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return true;
     }
 
-    public boolean actionBringOut(){
+    public boolean actionBringOut() {
         board.removePiece(convertPixToCase(board.getPieceSelected().getCoord()));
         soundsLibrary.playOutSound(theme);
         players[playerActive].bringOut();
@@ -989,7 +1030,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return true;
     }
 
-    public void actionBringOut(int[] coord){
+    public void actionBringOut(int[] coord) {
         Animal p = (Animal) board.getPiece(coord[0], coord[1]);
         if(players[0].getCamp() == p.getCamp()){
             players[0].bringOut();
@@ -1000,7 +1041,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         soundsLibrary.playOutSound(theme);
     }
 
-    public void actionMove(){
+    public void actionMove() {
         int[] newCoordPix = convertCaseToPix(mouse.getClick());
         int[] oldCoordCase = convertPixToCase(board.getPieceSelected().getCoord());
         board.movePiece(mouse.getClick()[0],mouse.getClick()[1], oldCoordCase[0], oldCoordCase[1]);
@@ -1027,7 +1068,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         board.getPieceSelected().setPosition(newCoordPix[0],newCoordPix[1]);
     }
 
-    public void actionMove(int[] old, int[] newCoord){
+    public void actionMove(int[] old, int[] newCoord) {
         int[] newCoordPix = convertCaseToPix(newCoord);
         board.movePiece(newCoord[0],newCoord[1], old[0], old[1]);
         int[] oldCoordPix = convertCaseToPix(old);
