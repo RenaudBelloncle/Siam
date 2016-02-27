@@ -21,6 +21,9 @@ public class Board extends JPanel implements Constants, Cloneable {
     private BufferedImage image;
     private int[] pixels;
 
+    private boolean pieceIsMoving;
+    private Piece pieceMoving;
+
     public Board(int size, boolean variantMountainOn, boolean variantTileOn) {
         this.SIZE = size;
         this.variantMountainOn = variantMountainOn;
@@ -35,6 +38,9 @@ public class Board extends JPanel implements Constants, Cloneable {
 
         image = new BufferedImage(SIZE * SPRITE_SIZE + BOARD_BORDER, SIZE * SPRITE_SIZE + BOARD_BORDER, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
+        pieceIsMoving = false;
+        pieceMoving = null;
     }
 
     public Board(Board board) {
@@ -78,6 +84,16 @@ public class Board extends JPanel implements Constants, Cloneable {
         return tiles[x][y];
     }
 
+    public void pieceMoving(Piece pieceMoving) {
+        pieceIsMoving = true;
+        this.pieceMoving = pieceMoving;
+    }
+
+    public void pieceStopMoving() {
+        pieceIsMoving = false;
+        pieceMoving = null;
+    }
+
     public void movePiece(int x, int y, Orientation orientation) {
         switch (orientation) {
             case TOP:
@@ -105,6 +121,7 @@ public class Board extends JPanel implements Constants, Cloneable {
                 tiles[x][y].render(screen);
             }
         }
+        if (pieceIsMoving) pieceMoving.render(screen);
     }
 
     public Piece getPiece(int x, int y){

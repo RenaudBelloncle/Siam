@@ -299,7 +299,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
     }
 
     public void render() {
-
+        board.repaint();
     }
 
     private void setControl(ActionListener actionListener) {
@@ -1004,14 +1004,52 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         int[] newCoordPix = convertCaseToPix(mouse.getClick());
         int[] oldCoordCase = convertPixToCase(board.getPieceSelected().getCoord());
         board.movePiece(mouse.getClick()[0],mouse.getClick()[1], oldCoordCase[0], oldCoordCase[1]);
-        board.getPieceSelected().setPosition(newCoordPix[0],newCoordPix[1]);
+        int[] oldCoordPix = board.getPieceSelected().getCoord();
+        int[] direction = new int[2];
+        if (oldCoordPix[0]-newCoordPix[0] == 128) direction[0] = -1;
+        else if (oldCoordPix[0]-newCoordPix[0] == -128) direction[0] = 1;
+        else direction[0] = 0;
+        if (oldCoordPix[1]-newCoordPix[1] == 128) direction[1] = -1;
+        else if (oldCoordPix[1]-newCoordPix[1] == -128) direction[1] = 1;
+        else direction[1] = 0;
+        board.pieceMoving(board.getPieceSelected());
         if(board.getPieceSelected().getCamp() == Camp.WHITE) soundsLibrary.playWalkSound(theme, Camp.WHITE);
         else soundsLibrary.playWalkSound(theme, Camp.BLACK);
+        for (int i = 0; i < 128; i++) {
+            board.getPieceSelected().setPosition(oldCoordPix[0] + i*direction[0], oldCoordPix[1] + i*direction[1]);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        board.pieceStopMoving();
+        board.getPieceSelected().setPosition(newCoordPix[0],newCoordPix[1]);
     }
 
     public void actionMove(int[] old, int[] newCoord){
         int[] newCoordPix = convertCaseToPix(newCoord);
         board.movePiece(newCoord[0],newCoord[1], old[0], old[1]);
+        int[] oldCoordPix = convertCaseToPix(old);
+        int[] direction = new int[2];
+        if (oldCoordPix[0]-newCoordPix[0] == 128) direction[0] = -1;
+        else if (oldCoordPix[0]-newCoordPix[0] == -128) direction[0] = 1;
+        else direction[0] = 0;
+        if (oldCoordPix[1]-newCoordPix[1] == 128) direction[1] = -1;
+        else if (oldCoordPix[1]-newCoordPix[1] == -128) direction[1] = 1;
+        else direction[1] = 0;
+        board.pieceMoving(board.getPiece(newCoord[0],newCoord[1]));
+        if(board.getPiece(newCoord[0],newCoord[1]).getCamp() == Camp.WHITE) soundsLibrary.playWalkSound(theme, Camp.WHITE);
+        else soundsLibrary.playWalkSound(theme, Camp.BLACK);
+        for (int i = 0; i < 128; i++) {
+            board.getPiece(newCoord[0],newCoord[1]).setPosition(oldCoordPix[0] + i*direction[0], oldCoordPix[1] + i*direction[1]);
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        board.pieceStopMoving();
         board.getPiece(newCoord[0],newCoord[1]).setPosition(newCoordPix[0],newCoordPix[1]);
     }
 
