@@ -323,7 +323,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         boolean actionPerformed = false;
         if (players[playerActive] instanceof Computer) {
             if (!computerPlay) {
-                ((Computer) players[playerActive]).play(4);
+                ((Computer) players[playerActive]).play(2);
                 computerPlay = true;
             }
         } else {
