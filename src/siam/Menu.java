@@ -13,6 +13,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Menu implements ActionListener, Constants, Texts {
 
@@ -144,7 +148,8 @@ public class Menu implements ActionListener, Constants, Texts {
 
     public Menu(JFrame frame, Player winner, Player loser, Music music,
                 SoundsLibrary soundsLibrary, boolean songEnable, Theme theme,
-                boolean variantPieceOn, boolean variantTileOn, boolean variantMountainOn) {
+                boolean variantPieceOn, boolean variantTileOn, boolean variantMountainOn,
+                boolean ai) {
         optionState = false;
         campState = false;
         winnerState = true;
@@ -162,6 +167,7 @@ public class Menu implements ActionListener, Constants, Texts {
         this.variantPieceOn = variantPieceOn;
         this.variantTileOn = variantTileOn;
         this.variantMountainOn = variantMountainOn;
+        this.ai = ai;
 
         Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
         frame.setPreferredSize(dimension);
@@ -195,9 +201,6 @@ public class Menu implements ActionListener, Constants, Texts {
             blackLabel = new JLabel(BLACK_LABEL);
             blackField = new JTextField(BLACK_LABEL);
             blackField.setPreferredSize(new Dimension(300, 40));
-            variantPiece = new JCheckBox(VARIANT_PIECE_LABEL);
-            variantTile = new JCheckBox(VARIANT_TILE_LABEL);
-            variantMountain = new JCheckBox(VARIANT_MOUNTAIN_LABEL);
             play = new JButton(PLAY_BUTTON);
             exit = new JButton(EXIT_BUTTON);
             if (ai) {
@@ -206,6 +209,10 @@ public class Menu implements ActionListener, Constants, Texts {
                 ButtonGroup group = new ButtonGroup();
                 group.add(whiteCamp);
                 group.add(blackCamp);
+            } else {
+                variantPiece = new JCheckBox(VARIANT_PIECE_LABEL);
+                variantTile = new JCheckBox(VARIANT_TILE_LABEL);
+                variantMountain = new JCheckBox(VARIANT_MOUNTAIN_LABEL);
             }
         } else if (playState) {
             title = new JLabel(TITLE_LABEL);
@@ -298,6 +305,7 @@ public class Menu implements ActionListener, Constants, Texts {
             JPanel variant2Panel = new JPanel();
             JPanel variant3Panel = new JPanel();
             JPanel buttonPanel = new JPanel();
+            JPanel emptyPanel = new JPanel();
             JPanel playPanel = new JPanel();
             JPanel exitPanel = new JPanel();
 
@@ -310,6 +318,7 @@ public class Menu implements ActionListener, Constants, Texts {
             variant2Panel.setOpaque(false);
             variant3Panel.setOpaque(false);
             buttonPanel.setOpaque(false);
+            emptyPanel.setOpaque(false);
             playPanel.setOpaque(false);
             exitPanel.setOpaque(false);
 
@@ -325,14 +334,16 @@ public class Menu implements ActionListener, Constants, Texts {
             blackPanel.add(blackLabel);
             blackPanel.add(blackField);
 
-            variant1Panel.add(variantPiece);
-            variant2Panel.add(variantTile);
-            variant3Panel.add(variantMountain);
+            if (!ai) {
+                variant1Panel.add(variantPiece);
+                variant2Panel.add(variantTile);
+                variant3Panel.add(variantMountain);
 
-            variantPanel.setLayout(new GridLayout(3, 1));
-            variantPanel.add(variant1Panel);
-            variantPanel.add(variant2Panel);
-            variantPanel.add(variant3Panel);
+                variantPanel.setLayout(new GridLayout(3, 1));
+                variantPanel.add(variant1Panel);
+                variantPanel.add(variant2Panel);
+                variantPanel.add(variant3Panel);
+            }
 
             playPanel.add(play);
             exitPanel.add(exit);
@@ -345,7 +356,8 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.add(titlePanel);
             mainPanel.add(whitePanel);
             mainPanel.add(blackPanel);
-            mainPanel.add(variantPanel);
+            if (!ai) mainPanel.add(variantPanel);
+            else mainPanel.add(emptyPanel);
             mainPanel.add(buttonPanel);
         } else if (playState) {
             mainPanel = new JPanel() {
@@ -471,9 +483,11 @@ public class Menu implements ActionListener, Constants, Texts {
                 if (ai) fontTools.updateFondJRadioButton(blackCamp, 60, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJLabel(blackLabel, 60, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJTextField(blackField, 40, Color.orange, fontTools.getTextFont());
-                fontTools.updateFontJCheckBox(variantPiece, 30, Color.orange, fontTools.getTextFont());
-                fontTools.updateFontJCheckBox(variantTile, 30, Color.orange, fontTools.getTextFont());
-                fontTools.updateFontJCheckBox(variantMountain, 30, Color.orange, fontTools.getTextFont());
+                if (!ai) {
+                    fontTools.updateFontJCheckBox(variantPiece, 30, Color.orange, fontTools.getTextFont());
+                    fontTools.updateFontJCheckBox(variantTile, 30, Color.orange, fontTools.getTextFont());
+                    fontTools.updateFontJCheckBox(variantMountain, 30, Color.orange, fontTools.getTextFont());
+                }
                 fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJButton(exit, 60, Color.orange, fontTools.getTextFont());
             } else if (playState) {
@@ -508,9 +522,11 @@ public class Menu implements ActionListener, Constants, Texts {
                 if (ai) fontTools.updateFondJRadioButton(blackCamp, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJLabel(blackLabel, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJTextField(blackField, 80, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJCheckBox(variantPiece, 50, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJCheckBox(variantTile,50,Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJCheckBox(variantMountain,50,Color.red, fontTools.getTextFontChristmas());
+                if (!ai) {
+                    fontTools.updateFontJCheckBox(variantPiece, 50, Color.red, fontTools.getTextFontChristmas());
+                    fontTools.updateFontJCheckBox(variantTile, 50, Color.red, fontTools.getTextFontChristmas());
+                    fontTools.updateFontJCheckBox(variantMountain, 50, Color.red, fontTools.getTextFontChristmas());
+                }
                 fontTools.updateFontJButton(play, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJButton(exit, 80, Color.red, fontTools.getTextFontChristmas());
             } else if (playState) {
@@ -545,9 +561,11 @@ public class Menu implements ActionListener, Constants, Texts {
                 if (ai) fontTools.updateFondJRadioButton(blackCamp, 60, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJLabel(blackLabel, 70, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJTextField(blackField, 70, Color.yellow, fontTools.getTextFontStarWars());
-                fontTools.updateFontJCheckBox(variantPiece, 35, Color.yellow, fontTools.getTextFontStarWars());
-                fontTools.updateFontJCheckBox(variantTile,35,Color.yellow, fontTools.getTextFontStarWars());
-                fontTools.updateFontJCheckBox(variantMountain,35,Color.yellow, fontTools.getTextFontStarWars());
+                if (!ai) {
+                    fontTools.updateFontJCheckBox(variantPiece, 35, Color.yellow, fontTools.getTextFontStarWars());
+                    fontTools.updateFontJCheckBox(variantTile, 35, Color.yellow, fontTools.getTextFontStarWars());
+                    fontTools.updateFontJCheckBox(variantMountain, 35, Color.yellow, fontTools.getTextFontStarWars());
+                }
                 fontTools.updateFontJButton(play, 60, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(exit, 60, Color.yellow, fontTools.getTextFontStarWars());
             } else if (playState) {
@@ -600,8 +618,10 @@ public class Menu implements ActionListener, Constants, Texts {
         soundsLibrary.playButtonSound();
         if (winnerState) {
             if (source == play) {
-                new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,
-                        variantPieceOn, variantTileOn, themes, loser.getName(), winner.getName());
+                if (ai) {
+                    new Menu(frame, true, music, soundsLibrary, songEnable, themes);
+                } else new Game(frame, music, soundsLibrary, songEnable, variantMountainOn,
+                            variantPieceOn, variantTileOn, themes, loser.getName(), winner.getName());
             } else if (source == exit) {
                 new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
             }
@@ -609,9 +629,8 @@ public class Menu implements ActionListener, Constants, Texts {
             if (source == play) {
                 if (ai) {
                     if (!whiteCamp.isSelected() && !blackCamp.isSelected()) return;
-                    new Game(frame, music, soundsLibrary, songEnable, variantMountain.isSelected(),
-                            variantPiece.isSelected(), variantTile.isSelected(), themes,
-                            getBlackField(), blackCamp.isSelected(), getWhiteField(), whiteCamp.isSelected());
+                    new Game(frame, music, soundsLibrary, songEnable, themes,
+                            getBlackField(), blackCamp.isSelected(), getWhiteField());
                 } else {
                     new Game(frame, music, soundsLibrary, songEnable, variantMountain.isSelected(),
                             variantPiece.isSelected(), variantTile.isSelected(),
@@ -630,7 +649,18 @@ public class Menu implements ActionListener, Constants, Texts {
             }
         } else if (optionState) {
             if (source == rules) {
-                //TODO - Affichage règles
+                InputStream pdf = getClass().getClassLoader().getResourceAsStream("rules/rules.pdf");
+                try {
+                    File pdfCree = new File("rules.pdf");
+                    FileOutputStream fos = new FileOutputStream(pdfCree);
+                    while (pdf.available() > 0) {
+                        fos.write(pdf.read());
+                    }
+                    fos.close();
+                    Desktop.getDesktop().open(pdfCree);
+                } catch (IOException e) {
+                    System.out.println("erreur : " + e);
+                }
             } else if (source == theme) {
                 if (themes == Theme.STANDARD) {
                     themes = Theme.CHRISTMAS;
