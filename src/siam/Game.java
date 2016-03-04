@@ -17,9 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Game implements Runnable, ActionListener, Constants, Texts {
@@ -323,7 +321,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         boolean actionPerformed = false;
         if (players[playerActive] instanceof Computer) {
             if (!computerPlay) {
-                ((Computer) players[playerActive]).play(2);
+                ((Computer) players[playerActive]).play(2); // 2 -> 1 coup d'avance
                 computerPlay = true;
             }
         } else {
@@ -379,17 +377,11 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             frame.setJMenuBar(null);
             new Menu(frame, false, true, music, soundsLibrary, songEnable, theme);
         } else if (source == rules) {
-            InputStream pdf = getClass().getClassLoader().getResourceAsStream("rules/rules.pdf");
+            File pdf = new File("res/rules/rules.pdf");
             try {
-                File pdfCree = new File("rules.pdf");
-                FileOutputStream fos = new FileOutputStream(pdfCree);
-                while (pdf.available() > 0) {
-                    fos.write(pdf.read());
-                }
-                fos.close();
-                Desktop.getDesktop().open(pdfCree);
+                Desktop.getDesktop().open(pdf);
             } catch (IOException e) {
-                System.out.println("erreur : " + e);
+                e.printStackTrace();
             }
         } else if (source == backToMenu) {
             frame.setJMenuBar(null);

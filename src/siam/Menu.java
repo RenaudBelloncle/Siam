@@ -14,9 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class Menu implements ActionListener, Constants, Texts {
 
@@ -649,17 +647,11 @@ public class Menu implements ActionListener, Constants, Texts {
             }
         } else if (optionState) {
             if (source == rules) {
-                InputStream pdf = getClass().getClassLoader().getResourceAsStream("rules/rules.pdf");
+                File pdf = new File("res/rules/rules.pdf");
                 try {
-                    File pdfCree = new File("rules.pdf");
-                    FileOutputStream fos = new FileOutputStream(pdfCree);
-                    while (pdf.available() > 0) {
-                        fos.write(pdf.read());
-                    }
-                    fos.close();
-                    Desktop.getDesktop().open(pdfCree);
+                    Desktop.getDesktop().open(pdf);
                 } catch (IOException e) {
-                    System.out.println("erreur : " + e);
+                    e.printStackTrace();
                 }
             } else if (source == theme) {
                 if (themes == Theme.STANDARD) {
