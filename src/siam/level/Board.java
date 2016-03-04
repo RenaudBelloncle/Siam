@@ -209,6 +209,7 @@ public class Board extends JPanel implements Constants, Cloneable {
     }
 
     public boolean isOnEdge(int x, int y){
+        if (!isInBound(x,y)) return false;
         return tiles[x][y].isOnEdge();
     }
 

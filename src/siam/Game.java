@@ -1129,7 +1129,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                         ((Animal) board.getPiece(pile.get(i)[0],pile.get(i)[1])).getOrientation());
             } else {
                 if(board.getPiece(pile.get(i)[0],pile.get(i)[1]) instanceof Mountain) testVictory(newCoord);
-                actionBringOut(pile.get(i));
+                else actionBringOut(pile.get(i));
             }
         }
     }
@@ -1368,6 +1368,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             playerActive = 0;
             computerPlay = false;
         }
+        setButtonSelected(10);
+        enableUp = enableDown = enableRight = enableLeft = false;
         put.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Put")));
         move.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Move")));
         orient.setIcon(new ImageIcon(TextureManager.library.getImage(theme, "Button Orient")));
