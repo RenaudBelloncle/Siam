@@ -377,9 +377,8 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
             frame.setJMenuBar(null);
             new Menu(frame, false, true, music, soundsLibrary, songEnable, theme);
         } else if (source == rules) {
-            File pdf = new File("res/rules/rules.pdf");
             try {
-                Desktop.getDesktop().open(pdf);
+                Desktop.getDesktop().open(new File("rules.pdf"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

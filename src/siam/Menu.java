@@ -647,9 +647,8 @@ public class Menu implements ActionListener, Constants, Texts {
             }
         } else if (optionState) {
             if (source == rules) {
-                File pdf = new File("res/rules/rules.pdf");
                 try {
-                    Desktop.getDesktop().open(pdf);
+                    Desktop.getDesktop().open(new File("rules.pdf"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
