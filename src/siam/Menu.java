@@ -42,6 +42,10 @@ public class Menu implements ActionListener, Constants, Texts {
     private JButton rules;
     private JButton song;
     private JButton local;
+    private JButton host;
+    private JButton join;
+    private JLabel ip;
+    private JButton online;
     private JButton computer;
     private JLabel whiteLabel;
     private JTextField whiteField;
@@ -187,6 +191,32 @@ public class Menu implements ActionListener, Constants, Texts {
         frame.setVisible(true);
     }
 
+    public Menu(JFrame frame, Music music, SoundsLibrary soundsLibrary,
+                boolean songEnable, Theme theme){
+        this.optionState = false;
+        this.playState = false;
+        this.winnerState = false;
+        this.campState = false;
+        this.multiState = true;
+
+        this.frame = frame;
+        this.music = music;
+        this.songEnable = songEnable;
+        this.soundsLibrary = soundsLibrary;
+
+        this.themes = theme;
+
+        Dimension dimension = new Dimension(WIN_WIDTH, WIN_HEIGTH);
+        frame.setPreferredSize(dimension);
+
+        initFrame();
+        renderFrame();
+
+        setControl(this);
+
+        frame.setVisible(true);
+    }
+
     public String getWhiteField() {
         return whiteField.getText();
     }
@@ -225,6 +255,7 @@ public class Menu implements ActionListener, Constants, Texts {
             title = new JLabel(TITLE_LABEL);
             secondTitle = new JLabel(PLAY_LABEL);
             local = new JButton(LOCAL_BUTTON);
+            online = new JButton(ONLINE_BUTTON);
             computer = new JButton(COMPUTER_BUTTON);
             exit = new JButton(EXIT_BUTTON);
         } else if (optionState) {
@@ -238,6 +269,11 @@ public class Menu implements ActionListener, Constants, Texts {
                 song = new JButton(SONG_DISABLE_BUTTON);
             }
             exit = new JButton(EXIT_BUTTON);
+        } else if(multiState) {
+            title = new JLabel(TITLE_LABEL);
+            host = new JButton(HOST_BUTTON);
+            join = new JButton(JOIN_BUTTON);
+            ip = new JLabel(LABEL_IP);
         } else {
             title = new JLabel(TITLE_LABEL);
             play = new JButton(PLAY_BUTTON);
@@ -395,6 +431,7 @@ public class Menu implements ActionListener, Constants, Texts {
             buttonPanel.add(secondTitle);
             buttonPanel.add(local);
             buttonPanel.add(computer);
+            buttonPanel.add(online);
             buttonPanel.add(exit);
 
             mainPanel.setLayout(new GridLayout(2, 2));
@@ -448,6 +485,31 @@ public class Menu implements ActionListener, Constants, Texts {
                     g.drawImage(image, 0, 0, WIN_WIDTH, WIN_HEIGTH, this);
                 }
             };
+            JPanel titlePanel = new JPanel();
+            JPanel emptyPanel1 = new JPanel();
+            JPanel emptyPanel2 = new JPanel();
+            JPanel buttonPanel = new JPanel();
+
+            titlePanel.add(title);
+
+            buttonPanel.setLayout(new GridLayout(3, 1));
+            buttonPanel.add(host);
+            buttonPanel.add(join);
+            buttonPanel.add(ip);
+
+            mainPanel.setOpaque(false);
+            titlePanel.setOpaque(false);
+            emptyPanel1.setOpaque(false);
+            emptyPanel2.setOpaque(false);
+            buttonPanel.setOpaque(false);
+
+            updateFonts();
+
+            mainPanel.setLayout(new GridLayout(2, 2));
+            mainPanel.add(titlePanel);
+            mainPanel.add(emptyPanel1);
+            mainPanel.add(emptyPanel2);
+            mainPanel.add(buttonPanel);
         } else {
             mainPanel = new JPanel() {
                 BufferedImage image = TextureManager.library.getImage(themes, "Menu Background");
@@ -512,6 +574,7 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
                 fontTools.updateFontJLabel(secondTitle, 60, Color.orange, fontTools.getMenuFont());
                 fontTools.updateFontJButton(local, 50, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(online, 50, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJButton(computer, 50, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJButton(exit, 50, Color.orange, fontTools.getTextFont());
             } else if (optionState) {
@@ -521,7 +584,11 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJButton(theme, 50, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJButton(song, 50, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJButton(exit, 50, Color.orange, fontTools.getTextFont());
-            } else {
+            } else if(multiState){
+                fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
+                fontTools.updateFontJButton(host, 50, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJButton(join, 50, Color.orange, fontTools.getTextFont());
+            }else{
                 fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
                 fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJButton(option, 60, Color.orange, fontTools.getTextFont());
@@ -551,6 +618,7 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
                 fontTools.updateFontJLabel(secondTitle, 80, Color.red, fontTools.getMenuFontChristmas());
                 fontTools.updateFontJButton(local, 80, Color.red, fontTools.getTextFontChristmas());
+                fontTools.updateFontJButton(online, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJButton(computer, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJButton(exit, 80, Color.red, fontTools.getTextFontChristmas());
             } else if (optionState) {
@@ -560,7 +628,11 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJButton(theme, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJButton(song, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJButton(exit, 80, Color.red, fontTools.getTextFontChristmas());
-            } else {
+            } else if(multiState){
+                fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
+                fontTools.updateFontJButton(host, 80, Color.red, fontTools.getMenuFontChristmas());
+                fontTools.updateFontJButton(join, 80, Color.red, fontTools.getMenuFontChristmas());
+            }else {
                 fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
                 fontTools.updateFontJButton(play, 100, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJButton(option, 100, Color.red, fontTools.getTextFontChristmas());
@@ -590,6 +662,7 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(title, 150, Color.yellow, fontTools.getMenuFontStarWars());
                 fontTools.updateFontJLabel(secondTitle, 60, Color.yellow, fontTools.getMenuFontStarWars());
                 fontTools.updateFontJButton(local, 50, Color.yellow, fontTools.getTextFontStarWars());
+                fontTools.updateFontJButton(online, 50, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(computer, 50, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(exit, 50, Color.yellow, fontTools.getTextFontStarWars());
             } else if (optionState) {
@@ -599,7 +672,11 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJButton(theme, 50, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(song, 50, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(exit, 50, Color.yellow, fontTools.getTextFontStarWars());
-            } else {
+            } else if(multiState){
+                fontTools.updateFontJLabel(title, 150, Color.yellow, fontTools.getMenuFontStarWars());
+                fontTools.updateFontJButton(host, 50, Color.yellow, fontTools.getMenuFontStarWars());
+                fontTools.updateFontJButton(join, 50, Color.yellow, fontTools.getMenuFontStarWars());
+            }else {
                 fontTools.updateFontJLabel(title, 150, Color.yellow, fontTools.getMenuFontStarWars());
                 fontTools.updateFontJButton(play, 70, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJButton(option, 70, Color.yellow, fontTools.getTextFontStarWars());
@@ -618,12 +695,16 @@ public class Menu implements ActionListener, Constants, Texts {
         } else if (playState) {
             local.addActionListener(actionListener);
             computer.addActionListener(actionListener);
+            online.addActionListener(actionListener);
             exit.addActionListener(actionListener);
         } else if (optionState) {
             rules.addActionListener(actionListener);
             theme.addActionListener(actionListener);
             song.addActionListener(actionListener);
             exit.addActionListener(actionListener);
+        } else if(multiState){
+            host.addActionListener(actionListener);
+            join.addActionListener(actionListener);
         } else {
             play.addActionListener(actionListener);
             option.addActionListener(actionListener);
@@ -664,6 +745,9 @@ public class Menu implements ActionListener, Constants, Texts {
                 new Menu(frame, true, music, soundsLibrary, songEnable, themes);
             } else if (source == exit) {
                 new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
+            }
+            else if(source == online){
+                new Menu(frame, music, soundsLibrary, songEnable, themes);
             }
         } else if (optionState) {
             if (source == rules) {
