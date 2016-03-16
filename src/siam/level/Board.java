@@ -45,12 +45,43 @@ public class Board extends JPanel implements Constants, Cloneable {
 
     public Board(Board board) {
         SIZE = board.SIZE;
-        tiles = board.tiles;
-
-        screen = board.screen;
-        image = board.image;
-        pixels = new int[board.pixels.length];
-        System.arraycopy(board.pixels, 0, pixels, 0, board.pixels.length);
+        tiles = new Tile[SIZE][SIZE];
+        for (int x = 0; x < SIZE; x++) {
+            for (int y = 0; y < SIZE; y++) {
+                tiles[x][y] = new Tile(board.tiles[x][y]);
+                if (!board.isFree(x,y)) {
+                    if (board.getPiece(x,y) instanceof Mountain) {
+                        tiles[x][y].insertPiece(new Mountain(x, y, Camp.NEUTRAL));
+                    } else if (board.getPiece(x,y) instanceof Animal) {
+                        Camp camp = null;
+                        Orientation orientation = null;
+                        switch (board.getPiece(x,y).getCamp()) {
+                            case WHITE:
+                                camp = Camp.WHITE;
+                                break;
+                            case BLACK:
+                                camp = Camp.BLACK;
+                                break;
+                        }
+                        switch (((Animal) board.getPiece(x,y)).getOrientation()) {
+                            case TOP:
+                                orientation = Orientation.TOP;
+                                break;
+                            case DOWN:
+                                orientation = Orientation.DOWN;
+                                break;
+                            case LEFT:
+                                orientation = Orientation.LEFT;
+                                break;
+                            case RIGTH:
+                                orientation = Orientation.RIGTH;
+                                break;
+                        }
+                        putPiece(x, y, new Animal(x, y, camp, orientation));
+                    }
+                }
+            }
+        }
     }
 
     private void initBoard() {
@@ -80,10 +111,6 @@ public class Board extends JPanel implements Constants, Cloneable {
         }
     }
 
-    public Tile getTile(int x, int y) {
-        return tiles[x][y];
-    }
-
     public void pieceMoving(Piece pieceMoving) {
         pieceIsMoving = true;
         this.pieceMoving = pieceMoving;
@@ -92,27 +119,6 @@ public class Board extends JPanel implements Constants, Cloneable {
     public void pieceStopMoving() {
         pieceIsMoving = false;
         pieceMoving = null;
-    }
-
-    public void movePiece(int x, int y, Orientation orientation) {
-        switch (orientation) {
-            case TOP:
-                getTile(x, y - 1).insertPiece(getTile(x, y).getPiece());
-                getTile(x, y).brigOutPiece();
-                break;
-            case DOWN:
-                getTile(x, y + 1).insertPiece(getTile(x, y).getPiece());
-                getTile(x, y).brigOutPiece();
-                break;
-            case LEFT:
-                getTile(x - 1, y).insertPiece(getTile(x, y).getPiece());
-                getTile(x, y).brigOutPiece();
-                break;
-            case RIGTH:
-                getTile(x + 1, y).insertPiece(getTile(x, y).getPiece());
-                getTile(x, y).brigOutPiece();
-                break;
-        }
     }
 
     public void render(Screen screen) {
@@ -141,6 +147,10 @@ public class Board extends JPanel implements Constants, Cloneable {
     public void putPiece(Piece p){
         int [] coord = convertPixToCase(p.getCoord());
         tiles[coord[0]][coord[1]].insertPiece(p);
+    }
+
+    public void putPiece(int x, int y, Piece piece) {
+        tiles[x][y].insertPiece(piece);
     }
 
     public void removePiece(int[]coord){
@@ -199,6 +209,7 @@ public class Board extends JPanel implements Constants, Cloneable {
     }
 
     public boolean isOnEdge(int x, int y){
+        if (!isInBound(x,y)) return false;
         return tiles[x][y].isOnEdge();
     }
 
@@ -214,5 +225,27 @@ public class Board extends JPanel implements Constants, Cloneable {
         Piece p = getPiece(oldx,oldy);
         removePiece(convertPixToCase(p.getCoord()));
         tiles[x][y].insertPiece(p);
+    }
+
+    public void movePiece(int x, int y, Orientation orientation) {
+        int new_x = x;
+        int new_y = y;
+        switch (orientation) {
+            case TOP:
+                new_y--;
+                break;
+            case DOWN:
+                new_y++;
+                break;
+            case LEFT:
+                new_x--;
+                break;
+            case RIGTH:
+                new_x++;
+                break;
+        }
+        Piece p = getPiece(x, y);
+        removePiece(new int[]{x, y});
+        tiles[new_x][new_y].insertPiece(p);
     }
 }
