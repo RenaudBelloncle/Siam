@@ -559,6 +559,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
                     variantPieceOn,variantTileOn,variantMountainOn,
                     players[0] instanceof Computer || players[1] instanceof Computer);
         }
+        board.gameOver();
     }
 
     public void testVictoryMountains(int[] coord) {

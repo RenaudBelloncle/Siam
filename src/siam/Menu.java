@@ -24,6 +24,7 @@ public class Menu implements ActionListener, Constants, Texts {
     private boolean campState;
     private boolean winnerState;
     private boolean playState;
+    private boolean multiState;
 
     private boolean songEnable;
     private boolean ai;
@@ -65,6 +66,7 @@ public class Menu implements ActionListener, Constants, Texts {
         campState = false;
         winnerState = false;
         playState = false;
+        multiState = false;
 
         frame = new JFrame();
         this.music = new Music(themes);
@@ -95,6 +97,7 @@ public class Menu implements ActionListener, Constants, Texts {
         this.playState = play;
         this.winnerState = false;
         this.campState = false;
+        this.multiState = false;
 
         this.frame = frame;
         this.music = music;
@@ -120,6 +123,7 @@ public class Menu implements ActionListener, Constants, Texts {
         campState = true;
         winnerState = false;
         playState = false;
+        multiState = false;
 
         this.ai = ai;
         variantMountainOn = false;
@@ -152,6 +156,7 @@ public class Menu implements ActionListener, Constants, Texts {
         campState = false;
         winnerState = true;
         playState = false;
+        multiState = false;
 
         this.themes = theme;
         this.winner = winner;
@@ -287,6 +292,7 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.add(textPanel);
             mainPanel.add(buttonPanel);
         } else if (campState) {
+            System.out.println("test");
             mainPanel = new JPanel() {
                 BufferedImage image = TextureManager.library.getImage(themes, "Camp Background");
                 public void paintComponent(Graphics g) {
@@ -428,6 +434,16 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.add(emptyPanel1);
             mainPanel.add(emptyPanel2);
             mainPanel.add(buttonPanel);
+        }
+        else if(multiState){
+            mainPanel = new JPanel() {
+                BufferedImage image = TextureManager.library.getImage(themes, "Menu Background");
+                public void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    frame.repaint();
+                    g.drawImage(image, 0, 0, WIN_WIDTH, WIN_HEIGTH, this);
+                }
+            };
         } else {
             mainPanel = new JPanel() {
                 BufferedImage image = TextureManager.library.getImage(themes, "Menu Background");
