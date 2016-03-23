@@ -1469,4 +1469,7 @@ public class Game implements Runnable, ActionListener, Constants, Texts {
         return false;
     }
 
+    public boolean isRunning(){
+        return running;
+    }
 }
