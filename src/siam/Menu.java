@@ -44,7 +44,7 @@ public class Menu implements ActionListener, Constants, Texts {
     private JButton local;
     private JButton host;
     private JButton join;
-    private JLabel ip;
+    private JTextField ip;
     private JButton online;
     private JButton computer;
     private JLabel whiteLabel;
@@ -191,12 +191,13 @@ public class Menu implements ActionListener, Constants, Texts {
         frame.setVisible(true);
     }
 
+    // Constructeur pour le multi
     public Menu(JFrame frame, Music music, SoundsLibrary soundsLibrary,
-                boolean songEnable, Theme theme){
+                boolean songEnable, Theme theme, boolean camp){
         this.optionState = false;
         this.playState = false;
         this.winnerState = false;
-        this.campState = false;
+        this.campState = camp;
         this.multiState = true;
 
         this.frame = frame;
@@ -225,28 +226,46 @@ public class Menu implements ActionListener, Constants, Texts {
         return blackField.getText();
     }
 
+    public String getIpField() {
+        return ip.getText();
+    }
+
     private void initFrame() {
         if (winnerState) {
             victory = new JLabel( winner.getName() + WINNER_LABEL);
             play = new JButton(PLAY_BUTTON);
             exit = new JButton(EXIT_BUTTON);
         } else if (campState) {
-            title = new JLabel(TITLE_CAMP_LABEL);
-            whiteLabel = new JLabel(WHITE_LABEL);
-            whiteField = new JTextField(WHITE_LABEL);
-            whiteField.setPreferredSize(new Dimension(300, 40));
-            blackLabel = new JLabel(BLACK_LABEL);
-            blackField = new JTextField(BLACK_LABEL);
-            blackField.setPreferredSize(new Dimension(300, 40));
-            play = new JButton(PLAY_BUTTON);
-            exit = new JButton(EXIT_BUTTON);
-            if (ai) {
-                whiteCamp = new JRadioButton();
-                blackCamp = new JRadioButton();
-                ButtonGroup group = new ButtonGroup();
-                group.add(whiteCamp);
-                group.add(blackCamp);
-            } else {
+            if(!multiState) {
+                title = new JLabel(TITLE_CAMP_LABEL);
+                whiteLabel = new JLabel(WHITE_LABEL);
+                whiteField = new JTextField(WHITE_LABEL);
+                whiteField.setPreferredSize(new Dimension(300, 40));
+                blackLabel = new JLabel(BLACK_LABEL);
+                blackField = new JTextField(BLACK_LABEL);
+                blackField.setPreferredSize(new Dimension(300, 40));
+                play = new JButton(PLAY_BUTTON);
+                exit = new JButton(EXIT_BUTTON);
+                if (ai) {
+                    whiteCamp = new JRadioButton();
+                    blackCamp = new JRadioButton();
+                    ButtonGroup group = new ButtonGroup();
+                    group.add(whiteCamp);
+                    group.add(blackCamp);
+                } else {
+                    variantPiece = new JCheckBox(VARIANT_PIECE_LABEL);
+                    variantTile = new JCheckBox(VARIANT_TILE_LABEL);
+                    variantMountain = new JCheckBox(VARIANT_MOUNTAIN_LABEL);
+                }
+            }
+            else{
+                title = new JLabel(TITLE_MULTI_LABEL);
+                whiteLabel = new JLabel(NAME_LABEL);
+                whiteField = new JTextField(NAME_LABEL);
+                whiteField.setPreferredSize(new Dimension(300, 40));
+
+                play = new JButton(PLAY_BUTTON);
+                exit = new JButton(EXIT_BUTTON);
                 variantPiece = new JCheckBox(VARIANT_PIECE_LABEL);
                 variantTile = new JCheckBox(VARIANT_TILE_LABEL);
                 variantMountain = new JCheckBox(VARIANT_MOUNTAIN_LABEL);
@@ -273,7 +292,7 @@ public class Menu implements ActionListener, Constants, Texts {
             title = new JLabel(TITLE_LABEL);
             host = new JButton(HOST_BUTTON);
             join = new JButton(JOIN_BUTTON);
-            ip = new JLabel(LABEL_IP);
+            ip = new JTextField(LABEL_IP);
         } else {
             title = new JLabel(TITLE_LABEL);
             play = new JButton(PLAY_BUTTON);
@@ -332,7 +351,6 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.add(textPanel);
             mainPanel.add(buttonPanel);
         } else if (campState) {
-            System.out.println("test");
             mainPanel = new JPanel() {
                 BufferedImage image = TextureManager.library.getImage(themes, "Camp Background");
                 public void paintComponent(Graphics g) {
@@ -343,7 +361,6 @@ public class Menu implements ActionListener, Constants, Texts {
             };
             JPanel titlePanel = new JPanel();
             JPanel whitePanel = new JPanel();
-            JPanel blackPanel = new JPanel();
             JPanel variantPanel = new JPanel();
             JPanel variant1Panel = new JPanel();
             JPanel variant2Panel = new JPanel();
@@ -356,7 +373,6 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.setOpaque(false);
             titlePanel.setOpaque(false);
             whitePanel.setOpaque(false);
-            blackPanel.setOpaque(false);
             variantPanel.setOpaque(false);
             variant1Panel.setOpaque(false);
             variant2Panel.setOpaque(false);
@@ -373,10 +389,6 @@ public class Menu implements ActionListener, Constants, Texts {
             if (ai) whitePanel.add(whiteCamp);
             whitePanel.add(whiteLabel);
             whitePanel.add(whiteField);
-
-            if (ai) blackPanel.add(blackCamp);
-            blackPanel.add(blackLabel);
-            blackPanel.add(blackField);
 
             if (!ai) {
                 variant1Panel.add(variantPiece);
@@ -399,7 +411,14 @@ public class Menu implements ActionListener, Constants, Texts {
             mainPanel.setLayout(new GridLayout(5, 1));
             mainPanel.add(titlePanel);
             mainPanel.add(whitePanel);
-            mainPanel.add(blackPanel);
+            if(!multiState){
+                JPanel blackPanel = new JPanel();
+                blackPanel.setOpaque(false);
+                if (ai) blackPanel.add(blackCamp);
+                blackPanel.add(blackLabel);
+                blackPanel.add(blackField);
+                mainPanel.add(blackPanel);
+            }
             if (!ai) mainPanel.add(variantPanel);
             else mainPanel.add(emptyPanel);
             mainPanel.add(buttonPanel);
@@ -561,13 +580,16 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(whiteLabel, 60, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJTextField(whiteField, 40, Color.orange, fontTools.getTextFont());
                 if (ai) fontTools.updateFondJRadioButton(blackCamp, 60, Color.orange, fontTools.getTextFont());
-                fontTools.updateFontJLabel(blackLabel, 60, Color.orange, fontTools.getTextFont());
-                fontTools.updateFontJTextField(blackField, 40, Color.orange, fontTools.getTextFont());
+                if(!multiState) {
+                    fontTools.updateFontJLabel(blackLabel, 60, Color.orange, fontTools.getTextFont());
+                    fontTools.updateFontJTextField(blackField, 40, Color.orange, fontTools.getTextFont());
+                }
                 if (!ai) {
                     fontTools.updateFontJCheckBox(variantPiece, 30, Color.orange, fontTools.getTextFont());
                     fontTools.updateFontJCheckBox(variantTile, 30, Color.orange, fontTools.getTextFont());
                     fontTools.updateFontJCheckBox(variantMountain, 30, Color.orange, fontTools.getTextFont());
                 }
+
                 fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJButton(exit, 60, Color.orange, fontTools.getTextFont());
             } else if (playState) {
@@ -588,6 +610,7 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
                 fontTools.updateFontJButton(host, 50, Color.orange, fontTools.getTextFont());
                 fontTools.updateFontJButton(join, 50, Color.orange, fontTools.getTextFont());
+                fontTools.updateFontJTextField(ip, 40, Color.orange, fontTools.getTextFont());
             }else{
                 fontTools.updateFontJLabel(title, 150, Color.orange, fontTools.getMenuFont());
                 fontTools.updateFontJButton(play, 60, Color.orange, fontTools.getTextFont());
@@ -605,8 +628,10 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(whiteLabel, 80, Color.red, fontTools.getTextFontChristmas());
                 fontTools.updateFontJTextField(whiteField, 80, Color.red, fontTools.getTextFontChristmas());
                 if (ai) fontTools.updateFondJRadioButton(blackCamp, 80, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJLabel(blackLabel, 80, Color.red, fontTools.getTextFontChristmas());
-                fontTools.updateFontJTextField(blackField, 80, Color.red, fontTools.getTextFontChristmas());
+                if(!multiState) {
+                    fontTools.updateFontJLabel(blackLabel, 80, Color.red, fontTools.getTextFontChristmas());
+                    fontTools.updateFontJTextField(blackField, 80, Color.red, fontTools.getTextFontChristmas());
+                }
                 if (!ai) {
                     fontTools.updateFontJCheckBox(variantPiece, 50, Color.red, fontTools.getTextFontChristmas());
                     fontTools.updateFontJCheckBox(variantTile, 50, Color.red, fontTools.getTextFontChristmas());
@@ -632,6 +657,7 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
                 fontTools.updateFontJButton(host, 80, Color.red, fontTools.getMenuFontChristmas());
                 fontTools.updateFontJButton(join, 80, Color.red, fontTools.getMenuFontChristmas());
+                fontTools.updateFontJTextField(ip, 80, Color.red, fontTools.getTextFontChristmas());
             }else {
                 fontTools.updateFontJLabel(title, 150, Color.red, fontTools.getMenuFontChristmas());
                 fontTools.updateFontJButton(play, 100, Color.red, fontTools.getTextFontChristmas());
@@ -649,8 +675,11 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(whiteLabel, 60, Color.yellow, fontTools.getTextFontStarWars());
                 fontTools.updateFontJTextField(whiteField, 70, Color.yellow, fontTools.getTextFontStarWars());
                 if (ai) fontTools.updateFondJRadioButton(blackCamp, 60, Color.yellow, fontTools.getTextFontStarWars());
-                fontTools.updateFontJLabel(blackLabel, 70, Color.yellow, fontTools.getTextFontStarWars());
-                fontTools.updateFontJTextField(blackField, 70, Color.yellow, fontTools.getTextFontStarWars());
+                if(!multiState) {
+                    fontTools.updateFontJLabel(blackLabel, 70, Color.yellow, fontTools.getTextFontStarWars());
+                    fontTools.updateFontJTextField(blackField, 70, Color.yellow, fontTools.getTextFontStarWars());
+                }
+                //fontTools.updateFontJLabel(whiteLabel, 60, Color.yellow, fontTools.getTextFontStarWars());
                 if (!ai) {
                     fontTools.updateFontJCheckBox(variantPiece, 35, Color.yellow, fontTools.getTextFontStarWars());
                     fontTools.updateFontJCheckBox(variantTile, 35, Color.yellow, fontTools.getTextFontStarWars());
@@ -676,6 +705,7 @@ public class Menu implements ActionListener, Constants, Texts {
                 fontTools.updateFontJLabel(title, 150, Color.yellow, fontTools.getMenuFontStarWars());
                 fontTools.updateFontJButton(host, 50, Color.yellow, fontTools.getMenuFontStarWars());
                 fontTools.updateFontJButton(join, 50, Color.yellow, fontTools.getMenuFontStarWars());
+                fontTools.updateFontJTextField(ip, 70, Color.yellow, fontTools.getTextFontStarWars());
             }else {
                 fontTools.updateFontJLabel(title, 150, Color.yellow, fontTools.getMenuFontStarWars());
                 fontTools.updateFontJButton(play, 70, Color.yellow, fontTools.getTextFontStarWars());
@@ -684,6 +714,7 @@ public class Menu implements ActionListener, Constants, Texts {
             }
         }
     }
+
 
     private void setControl(ActionListener actionListener) {
         if (winnerState) {
@@ -724,7 +755,7 @@ public class Menu implements ActionListener, Constants, Texts {
             } else if (source == exit) {
                 new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
             }
-        } else if (campState) {
+        } else if (campState && !multiState) {
             if (source == play) {
                 if (ai) {
                     if (!whiteCamp.isSelected() && !blackCamp.isSelected()) return;
@@ -747,7 +778,7 @@ public class Menu implements ActionListener, Constants, Texts {
                 new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
             }
             else if(source == online){
-                new Menu(frame, music, soundsLibrary, songEnable, themes);
+                new Menu(frame, music, soundsLibrary, songEnable, themes, false);
             }
         } else if (optionState) {
             if (source == rules) {
@@ -804,7 +835,24 @@ public class Menu implements ActionListener, Constants, Texts {
             } else if (source == exit) {
                 new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
             }
-        } else {
+        } else if(multiState){
+            if(!campState) {
+                if (source == host) {
+                    new Server();
+                    new Menu(frame, music, soundsLibrary, songEnable, themes, true);
+                } else if (source == join) {
+                    new Client(12345,getIpField(),frame, music, soundsLibrary, songEnable,themes,"Jerry");
+                }
+            }else {
+                if (source == play) {
+                    new Client(12345,"localhost",frame, music, soundsLibrary, songEnable, variantMountain.isSelected(),
+                            variantPiece.isSelected(), variantTile.isSelected(),
+                            themes,getWhiteField());
+                } else if (source == exit) {
+                    new Menu(frame, false, false, music, soundsLibrary, songEnable, themes);
+                }
+            }
+        } else{
             if (source == play) {
                 new Menu(frame, false, true, music, soundsLibrary, songEnable, themes);
             } else if (source == option) {
@@ -814,5 +862,4 @@ public class Menu implements ActionListener, Constants, Texts {
             }
         }
     }
-
 }

@@ -7,8 +7,10 @@ public interface Texts {
     String OPTION_LABEL = "     Option";
     String PLAY_LABEL = "      Mode";
     String TITLE_CAMP_LABEL = "Choose your Camp";
+    String TITLE_MULTI_LABEL = "Matchmaking";
     String WHITE_LABEL = "White";
     String BLACK_LABEL = "Black";
+    String NAME_LABEL = "Name";
     String VARIANT_PIECE_LABEL = "Only one can leave";
     String VARIANT_TILE_LABEL = "You should not pass";
     String VARIANT_MOUNTAIN_LABEL = "Protect your Mountain";
