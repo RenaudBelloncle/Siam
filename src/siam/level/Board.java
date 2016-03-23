@@ -194,7 +194,7 @@ public class Board extends JPanel implements Constants, Cloneable {
     }
 
     public void deselect(){
-        if(!pieceSelected()) { return;}
+        if(!pieceSelected()) return;
         Animal a = getPieceSelected();
         a.deselected();
     }
@@ -212,9 +212,8 @@ public class Board extends JPanel implements Constants, Cloneable {
         return tiles[x][y].isEmpty();
     }
 
-    public boolean isOnEdge(int x, int y){
-        if (!isInBound(x,y)) return false;
-        return tiles[x][y].isOnEdge();
+    public boolean isOnEdge(int x, int y) {
+        return isInBound(x, y) && tiles[x][y].isOnEdge();
     }
 
     public boolean asABanishedTile(int x, int y){
@@ -251,6 +250,18 @@ public class Board extends JPanel implements Constants, Cloneable {
         Piece p = getPiece(x, y);
         removePiece(new int[]{x, y});
         tiles[new_x][new_y].insertPiece(p);
+    }
+
+    public Piece getPieceMoving() {
+        return pieceMoving;
+    }
+
+    public boolean isPieceIsMoving() {
+        return pieceIsMoving;
+    }
+
+    public Tile getTile(int x, int y) {
+        return tiles[x][y];
     }
 
     public boolean isGameOver(){

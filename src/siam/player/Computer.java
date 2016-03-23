@@ -25,7 +25,7 @@ public class Computer extends Player implements Constants {
         if (depth <= 0) depth = 1;
         Board board = new Board(game.getBoard());
         winner = null;
-        int max = -10000;
+        int max = -100000;
         int val;
         Move best_move = null;
         int[] best_coord = new int[2];
@@ -393,21 +393,27 @@ public class Computer extends Player implements Constants {
 
         switch (best_move) {
             case PUT:
+                System.out.println("Entrer - " + best_coord[0] + "," + best_coord[1]);
                 game.actionPut(best_coord, best_orient, this);
                 break;
             case PUT_PUSH:
+                System.out.println("Entrer en poussant - " + best_coord[0] + "," + best_coord[1]);
                 game.actionPutPush(best_coord, best_dir, this);
                 break;
             case BRINGOUT:
+                System.out.println("Sortir - " + best_coord[0] + "," + best_coord[1]);
                 game.actionBringOut(best_coord, this);
                 break;
             case MOVE:
+                System.out.println("Déplacement - " + best_coord[0] + "," + best_coord[1]);
                 game.actionMove(best_coord, best_dir, best_orient);
                 break;
             case PUSH:
+                System.out.println("Pousser - " + best_coord[0] + "," + best_coord[1]);
                 game.actionPush(best_coord);
                 break;
             case ORIENT:
+                System.out.println("Orienter - " + best_coord[0] + "," + best_coord[1]);
                 game.actionOrient(best_coord, best_orient);
                 break;
         }
@@ -415,11 +421,11 @@ public class Computer extends Player implements Constants {
     }
 
     private int max(Board gameBoard, int depth) {
-        if (depth == 0 || winner(this) != 0) return eval(gameBoard, this);
+        if (depth == 0 || winner(human) != 0) return eval(gameBoard, human);
 
         Board board = new Board(gameBoard);
         winner = null;
-        int max = -10000;
+        int max = -100000;
         int val;
         int savePieceOnBoard = pieceOnBoard;
 
@@ -634,7 +640,7 @@ public class Computer extends Player implements Constants {
 
         Board board = new Board(gameBoard);
         winner = null;
-        int min = 10000;
+        int min = 100000;
         int val;
         int savePieceOnBoard = human.pieceOnBoard;
 
@@ -1105,10 +1111,11 @@ public class Computer extends Player implements Constants {
                                         u--;
                                     }
                                     int modif;
-                                    if (x + 1 == 2 && y == 2) modif = 5;
-                                    else if (!board.isOnEdge(x + 1,y)) modif = 50;
-                                    else modif = 500;
-                                    if (board.getPiece(u,y).getCamp() == player.camp) result += modif;
+                                    if (!board.isInBound(x + 1, y)) modif = 50000;
+                                    else if (board.isOnEdge(x + 1, y)) modif = 500;
+                                    else if (x + 1 == 2 && y == 2) modif = 5;
+                                    else modif = 50;
+                                    if (board.getPiece(u,y).getCamp() == camp) result += modif;
                                     else result -= modif;
                                 }
                             }
@@ -1125,10 +1132,11 @@ public class Computer extends Player implements Constants {
                                         u++;
                                     }
                                     int modif;
-                                    if (x - 1 == 2 && y == 2) modif = 5;
-                                    else if (!board.isOnEdge(x - 1,y)) modif = 50;
-                                    else modif = 500;
-                                    if (board.getPiece(u,y).getCamp() == player.camp) result += modif;
+                                    if (!board.isInBound(x - 1, y)) modif = 50000;
+                                    else if (board.isOnEdge(x - 1, y)) modif = 500;
+                                    else if (x - 1 == 2 && y == 2) modif = 5;
+                                    else modif = 50;
+                                    if (board.getPiece(u,y).getCamp() == camp) result += modif;
                                     else result -= modif;
                                 }
                             }
@@ -1145,10 +1153,11 @@ public class Computer extends Player implements Constants {
                                         v--;
                                     }
                                     int modif;
-                                    if (x == 2 && y - 1 == 2) modif = 5;
-                                    else if (!board.isOnEdge(x,y - 1)) modif = 50;
-                                    else modif = 500;
-                                    if (board.getPiece(x,v).getCamp() == player.camp) result += modif;
+                                    if (!board.isInBound(x, y - 1)) modif = 50000;
+                                    else if (board.isOnEdge(x, y - 1)) modif = 500;
+                                    else if (x == 2 && y - 1 == 2) modif = 5;
+                                    else modif = 50;
+                                    if (board.getPiece(x,v).getCamp() == camp) result += modif;
                                     else result -= modif;
                                 }
                             }
@@ -1165,10 +1174,11 @@ public class Computer extends Player implements Constants {
                                         v++;
                                     }
                                     int modif;
-                                    if (x == 2 && y + 1 == 2) modif = 5;
-                                    else if (!board.isOnEdge(x,y + 1)) modif = 50;
-                                    else modif = 500;
-                                    if (board.getPiece(x,v).getCamp() == player.camp) result += modif;
+                                    if (!board.isInBound(x, y + 1)) modif = 50000;
+                                    else if (board.isOnEdge(x, y + 1)) modif = 500;
+                                    else if (x == 2 && y + 1 == 2) modif = 5;
+                                    else modif = 50;
+                                    if (board.getPiece(x,v).getCamp() == camp) result += modif;
                                     else result -= modif;
                                 }
                             }
@@ -1181,8 +1191,8 @@ public class Computer extends Player implements Constants {
     }
 
     private int winner(Player player) {
-        if (winner == player.camp) return 10000;
-        else if (winner != null) return -10000;
+        if (winner == player.camp) return 100000;
+        else if (winner != null) return -100000;
         return 0;
     }
 
