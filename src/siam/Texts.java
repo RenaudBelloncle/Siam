@@ -1,7 +1,5 @@
 package siam;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
-
 public interface Texts {
     String TITLE_LABEL = "Siam";
     String OPTION_LABEL = "     Option";
@@ -21,10 +19,6 @@ public interface Texts {
     String RULES_BUTTON = "Rules";
     String SONG_ENABLE_BUTTON = "Disable Song";
     String SONG_DISABLE_BUTTON = "Enable Song";
-    String ONLINE_BUTTON = "Online";
-    String HOST_BUTTON = "Host a party";
-    String JOIN_BUTTON = "Join a party : ";
-    String LABEL_IP = "127.0.0.1";
     String LOCAL_BUTTON = "vs Human";
     String COMPUTER_BUTTON = "vs Computer";
 

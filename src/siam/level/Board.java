@@ -24,8 +24,6 @@ public class Board extends JPanel implements Constants, Cloneable {
     private boolean pieceIsMoving;
     private Piece pieceMoving;
 
-    private boolean gameOver;
-
     public Board(int size, boolean variantMountainOn, boolean variantTileOn) {
         this.SIZE = size;
         this.variantMountainOn = variantMountainOn;
@@ -43,8 +41,6 @@ public class Board extends JPanel implements Constants, Cloneable {
 
         pieceIsMoving = false;
         pieceMoving = null;
-
-        gameOver = false;
     }
 
     public Board(Board board) {
@@ -262,13 +258,5 @@ public class Board extends JPanel implements Constants, Cloneable {
 
     public Tile getTile(int x, int y) {
         return tiles[x][y];
-    }
-
-    public boolean isGameOver(){
-        return gameOver;
-    }
-
-    public void gameOver(){
-        gameOver = true;
     }
 }

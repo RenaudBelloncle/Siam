@@ -32,8 +32,6 @@ public class Computer extends Player implements Constants {
         Orientation best_orient = null;
         Orientation best_dir = null;
         int savePieceOnBoard = pieceOnBoard;
-        int finish = 0;
-        System.out.println(finish + "%");
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
@@ -386,34 +384,26 @@ public class Computer extends Player implements Constants {
                         }
                     }
                 }
-                finish += 4;
-                System.out.println(finish + "%");
             }
         }
 
         switch (best_move) {
             case PUT:
-                System.out.println("Entrer - " + best_coord[0] + "," + best_coord[1]);
                 game.actionPut(best_coord, best_orient, this);
                 break;
             case PUT_PUSH:
-                System.out.println("Entrer en poussant - " + best_coord[0] + "," + best_coord[1]);
                 game.actionPutPush(best_coord, best_dir, this);
                 break;
             case BRINGOUT:
-                System.out.println("Sortir - " + best_coord[0] + "," + best_coord[1]);
                 game.actionBringOut(best_coord, this);
                 break;
             case MOVE:
-                System.out.println("Déplacement - " + best_coord[0] + "," + best_coord[1]);
                 game.actionMove(best_coord, best_dir, best_orient);
                 break;
             case PUSH:
-                System.out.println("Pousser - " + best_coord[0] + "," + best_coord[1]);
                 game.actionPush(best_coord);
                 break;
             case ORIENT:
-                System.out.println("Orienter - " + best_coord[0] + "," + best_coord[1]);
                 game.actionOrient(best_coord, best_orient);
                 break;
         }
